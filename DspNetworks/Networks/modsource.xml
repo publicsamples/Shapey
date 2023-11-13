@@ -89,12 +89,12 @@
           <Connection NodeId="global_mod" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter ID="mod" MinValue="0.0" MaxValue="1.0" Value="0.486796875">
+      <Parameter ID="mod" MinValue="-1.0" MaxValue="1.0" Value="0.486796875">
         <Connections>
           <Connection NodeId="pma" ParameterId="Multiply"/>
         </Connections>
       </Parameter>
-      <Parameter ID="value" MinValue="0.0" MaxValue="1.0" Value="0.0">
+      <Parameter ID="value" MinValue="5.551115123125783e-17" MaxValue="1.0" Value="0.0">
         <Connections>
           <Connection NodeId="pma" ParameterId="Add"/>
         </Connections>

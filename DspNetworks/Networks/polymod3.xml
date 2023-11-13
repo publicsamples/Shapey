@@ -103,8 +103,7 @@
                       <Node ID="softbypass_switch6" FactoryPath="container.chain" ShowParameters="1"
                             Bypassed="0">
                         <Nodes>
-                          <Node ID="cable_table1" FactoryPath="control.cable_table" Bypassed="0"
-                                Folded="1">
+                          <Node ID="cable_table1" FactoryPath="control.cable_table" Bypassed="0">
                             <ModulationTargets>
                               <Connection NodeId="switcher" ParameterId="Value"/>
                             </ModulationTargets>
@@ -730,13 +729,12 @@
           <Connection NodeId="input_toggle" ParameterId="Input"/>
         </Connections>
       </Parameter>
-      <Parameter ID="tempo" MinValue="0.0" MaxValue="18.0" Value="3.562020263671875"
-                 StepSize="1.0">
+      <Parameter ID="tempo" MinValue="0.0" MaxValue="18.0" Value="1.0" StepSize="1.0">
         <Connections>
           <Connection NodeId="tempo_sync" ParameterId="Tempo"/>
         </Connections>
       </Parameter>
-      <Parameter ID="mul" MinValue="1.0" MaxValue="32.0" StepSize="1.0" Value="1.0">
+      <Parameter ID="mul" MinValue="1.0" MaxValue="32.0" StepSize="1.0" Value="29.0">
         <Connections>
           <Connection NodeId="tempo_sync" ParameterId="Multiplier"/>
         </Connections>
@@ -746,27 +744,27 @@
           <Connection NodeId="ramp" ParameterId="LoopStart"/>
         </Connections>
       </Parameter>
-      <Parameter ID="mode" MinValue="0.0" MaxValue="4.0" StepSize="0" Value="0.0">
+      <Parameter ID="mode" MinValue="0.0" MaxValue="4.0" StepSize="0" Value="4.0">
         <Connections>
           <Connection NodeId="oscillator" ParameterId="Mode"/>
         </Connections>
       </Parameter>
-      <Parameter ID="s&amp;h" MinValue="0.0" MaxValue="1.0" Value="0.759953125">
+      <Parameter ID="s&amp;h" MinValue="0.0" MaxValue="1.0" Value="0.150875">
         <Connections>
           <Connection NodeId="xfader2" ParameterId="Value"/>
         </Connections>
       </Parameter>
-      <Parameter ID="mulsh" MinValue="1.0" MaxValue="16.0" StepSize="1.0" Value="1.0">
+      <Parameter ID="mulsh" MinValue="1.0" MaxValue="16.0" StepSize="1.0" Value="9.0">
         <Connections>
           <Connection NodeId="tempo_sync4" ParameterId="Multiplier"/>
         </Connections>
       </Parameter>
-      <Parameter ID="modsel" MinValue="0.0" MaxValue="4.0" Value="2.619966613769531">
+      <Parameter ID="modsel" MinValue="0.0" MaxValue="4.0" Value="2.2766875">
         <Connections>
           <Connection NodeId="cable_table1" ParameterId="Value"/>
         </Connections>
       </Parameter>
-      <Parameter ID="shtempo" MinValue="0.0" MaxValue="18.0" StepSize="1.0" Value="11.0">
+      <Parameter ID="shtempo" MinValue="0.0" MaxValue="18.0" StepSize="1.0" Value="6.0">
         <Connections>
           <Connection NodeId="tempo_sync4" ParameterId="Tempo"/>
         </Connections>
