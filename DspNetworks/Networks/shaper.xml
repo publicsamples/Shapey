@@ -181,7 +181,7 @@
                             <ComplexData>
                               <AudioFiles>
                                 <AudioFile Index="0" EmbeddedData="{XYZ::SampleMap}HR Sqr 7" MinValue="0"
-                                           MaxValue="208245"/>
+                                           MaxValue="512000"/>
                               </AudioFiles>
                             </ComplexData>
                             <Parameters>
