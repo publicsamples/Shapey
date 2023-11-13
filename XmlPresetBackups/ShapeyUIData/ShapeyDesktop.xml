@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentProperties DeviceType="Desktop">
+  <Component type="ScriptPanel" id="Panel1" x="20.0" y="20.0" width="320.0"
+             height="310.0">
+    <Component type="ScriptLabel" id="Label1" x="95.0" y="4.0" parentComponent="Panel1"
+               editable="0" text="WAVETABLE"/>
+    <Component type="ScriptComboBox" id="ShapeModSource1" x="186.0" y="100.0"
+               max="4" width="120.0" height="30.0" items="Mod 1&#10;Mod 2&#10;Mod 3&#10;Envelope"
+               processorId="TableIndexModSrc1" parameterId="ModSource" parentComponent="Panel1"/>
+    <Component type="ScriptSlider" id="ScriptSlider1" x="10.0" y="31.0" width="160.0"
+               height="50.0" parentComponent="Panel1" processorId="TableIndexModSrc1"
+               parameterId="value" max="0.9900000095367432" text="Table Index"/>
+    <Component type="ScriptSlider" id="ScriptSlider2" x="10.0" y="90.0" width="140.0"
+               height="50.0" parentComponent="Panel1" processorId="TableIndexModSrc1"
+               parameterId="mod" min="-1.0" middlePosition="0.0" text="Index Mod"/>
+    <Component type="ScriptComboBox" id="ScriptComboBox1" x="185.0" y="42.0"
+               width="110.0" height="30.0" max="61" parentComponent="Panel1"
+               processorId="Wavetable Synthesiser1" parameterId="LoadedBankIndex"
+               items="Long 1&#10;Long 2&#10;Long 3&#10;BassChain 1&#10;BassChain 2&#10;BassChain 3&#10;BassChain 4&#10;BP Dual&#10;Byte&#10;CS Chain&#10;DFSweep&#10;ffm1&#10;ffm2&#10;ffm3&#10;FmAm1&#10;FmAm2&#10;FMloop&#10;Fold1&#10;Fold2&#10;FSaw&#10;HS80-1&#10;HS80-2&#10;HS80-3&#10;HS80-4&#10;HS80-5&#10;HS80-6&#10;HS80-7&#10;Bright&#10;Bum&#10;Level&#10;Multi&#10;Obvs&#10;Space&#10;JX1&#10;JX2&#10;JX3&#10;JX4&#10;JX5&#10;JX6&#10;JX7&#10;TriFld&#10;PM1&#10;PM2&#10;Sh1&#10;Sh2&#10;Sh2&#10;Sh4&#10;Sh5&#10;Shape&#10;BellLoop1&#10;BellLoop2&#10;BellLoop3&#10;BellLoop4&#10;TZ1&#10;TZ2&#10;Digi&#10;VOW&#10;WfLP&#10;Sweep&#10;WtFM&#10;Z1Chain&#10;&#10;"/>
+    <Component type="ScriptSlider" id="ScriptSlider3" x="10.0" y="150.0" width="150.0"
+               height="50.0" parentComponent="Panel1" processorId="TableIndexModSrc1"
+               parameterId="EnvMod" middlePosition="0.0" min="-1.0" text="Env 2 Mod"/>
+    <Component type="ScriptFloatingTile" id="ScriptFloatingTile1" x="184.0"
+               y="160.0" width="120.0" height="30.0" parentComponent="Panel1"
+               ContentType="WavetableWaterfall" bgColour="4280427042" itemColour="4278239743"
+               itemColour2="234881023" textColour="2164260863" Data="{&#10;  &quot;ProcessorId&quot;: &quot;Wavetable Synthesiser1&quot;,&#10;  &quot;Index&quot;: 0,&#10;  &quot;FollowWorkspace&quot;: false&#10;}"/>
+  </Component>
+  <Component type="ScriptPanel" id="Filter" x="759.0" y="20.0" width="130.0"
+             height="300.0">
+    <Component type="ScriptSlider" id="ScriptSlider4" x="11.0" y="48.0" width="100.0"
+               height="50.0" parentComponent="Filter" processorId="Filter1"
+               parameterId="Frequency" mode="Frequency" min="20.0" max="20000.0"
+               stepSize="1.0" suffix=" Hz" middlePosition="1500.0"/>
+    <Component type="ScriptSlider" id="ScriptSlider5" x="11.0" y="108.0" width="100.0"
+               height="50.0" parentComponent="Filter" processorId="Filter1"
+               parameterId="Q" min="0.300000011920929" max="8.0" middlePosition="1.0"/>
+    <Component type="ScriptSlider" id="ScriptSlider6" x="11.0" y="168.0" width="100.0"
+               height="50.0" parentComponent="Filter" processorId="Global Envelope Modulator2"
+               parameterId="Intensity"/>
+    <Component type="ScriptSlider" id="ScriptSlider7" x="11.0" y="228.0" width="40.0"
+               height="60.0" parentComponent="Filter" processorId="Script Time Variant Modulator4"
+               parameterId="Intensity"/>
+    <Component type="ScriptComboBox" id="ScriptComboBox2" x="58.0" y="240.0"
+               width="60.0" height="40.0" max="3" parentComponent="Filter" processorId="Script Time Variant Modulator4"
+               parameterId="ModSource" items="Mod 1&#10;Mod 2&#10;Mod 3&#10;"/>
+    <Component type="ScriptLabel" id="ScriptLabel1" x="15.0" y="7.0" width="100.0"
+               height="30.0" parentComponent="Filter" editable="0" text="Low Pass Filter"/>
+  </Component>
+  <Component type="ScriptPanel" id="Mod" x="20.0" y="342.0" width="200.0"
+             height="170.0">
+    <Component type="ScriptLabel" id="Mod 1" x="50.0" y="8.0" width="100.0"
+               height="20.0" parentComponent="Mod" editable="0"/>
+  </Component>
+  <Component type="ScriptPanel" id="AMP Env" x="440.0" y="342.0" width="200.0"
+             height="170.0">
+    <Component type="ScriptSlider" id="ScriptSlider9" x="30.0" y="30.0" width="20.0"
+               height="110.0" parentComponent="AMP Env" style="Vertical" processorId="AmpEnv"
+               parameterId="Attack" mode="Time" max="20000.0" stepSize="1.0"
+               suffix=" ms" middlePosition="1000.0"/>
+    <Component type="ScriptSlider" id="ScriptSlider10" x="59.0" y="30.0" width="20.0"
+               height="110.0" parentComponent="AMP Env" style="Vertical" processorId="AmpEnv"
+               parameterId="Hold" mode="Time" max="20000.0" stepSize="1.0" suffix=" ms"
+               middlePosition="1000.0"/>
+    <Component type="ScriptSlider" id="ScriptSlider11" x="89.0" y="30.0" width="20.0"
+               height="110.0" parentComponent="AMP Env" style="Vertical" processorId="AmpEnv"
+               parameterId="Decay" mode="Decibel" min="-100.0" max="0.0" stepSize="0.1000000014901161"
+               suffix=" dB" middlePosition="-18.0"/>
+    <Component type="ScriptSlider" id="ScriptSlider12" x="118.0" y="30.0" width="20.0"
+               height="110.0" parentComponent="AMP Env" style="Vertical" processorId="AmpEnv"
+               parameterId="Sustain" mode="Decibel" min="-100.0" max="0.0" stepSize="0.1000000014901161"
+               suffix=" dB" middlePosition="-18.0"/>
+    <Component type="ScriptSlider" id="ScriptSlider13" x="148.0" y="30.0" width="20.0"
+               height="110.0" parentComponent="AMP Env" style="Vertical" processorId="AmpEnv"
+               parameterId="Release" mode="Time" max="20000.0" stepSize="1.0"
+               suffix=" ms" middlePosition="1000.0"/>
+    <Component type="ScriptLabel" id="Amp AHDSR" x="47.0" y="5.0" width="100.0"
+               height="20.0" parentComponent="AMP Env" editable="0"/>
+  </Component>
+  <Component type="ScriptPanel" id="Shaper" x="350.0" y="20.0" width="400.0"
+             height="300.0">
+    <Component type="ScriptAudioWaveform" id="AudioWaveform1" x="13.0" y="29.0"
+               width="220.0" height="150.0" processorId="shaper" parentComponent="Shaper"/>
+    <Component type="ScriptSlider" id="Shape Mix" x="264.0" y="1.0" processorId="shaper"
+               parameterId="mix" parentComponent="Shaper"/>
+    <Component type="ScriptSlider" id="Gain Offset" x="265.0" y="61.0" processorId="shaper"
+               parameterId="gainoffset" mode="Decibel" stepSize="0.1000000014901161"
+               middlePosition="-18.0" min="-100.0" max="0.0" suffix=" dB" parentComponent="Shaper"/>
+    <Component type="ScriptSlider" id="ShapeGain" x="13.0" y="190.0" processorId="shaper"
+               parameterId="shaper" parentComponent="Shaper"/>
+    <Component type="ScriptSlider" id="Scrub" x="13.0" y="250.0" processorId="shaper"
+               parameterId="scrub" parentComponent="Shaper"/>
+    <Component type="ScriptComboBox" id="ShapeModSource" x="293.0" y="200.0"
+               max="4" width="100.0" height="30.0" items="Mod 1&#10;Mod 2&#10;Mod 3&#10;Envelope"
+               processorId="shaper" parameterId="shapermodsrc" parentComponent="Shaper"/>
+    <Component type="ScriptComboBox" id="ScrubModSource" x="293.0" y="261.0"
+               max="4" width="100.0" height="30.0" items="Mod 1&#10;Mod 2&#10;Mod 3&#10;Envelope"
+               processorId="shaper" parameterId="scrubmodsrc" parentComponent="Shaper"/>
+    <Component type="ScriptSlider" id="ShapeMod" x="153.0" y="190.0" processorId="shaper"
+               parameterId="shapermod" min="-1.0" middlePosition="0.0" parentComponent="Shaper"/>
+    <Component type="ScriptSlider" id="ScrubMod" x="153.0" y="250.0" processorId="shaper"
+               min="-1.0" middlePosition="0.0" parameterId="scrubmod" parentComponent="Shaper"/>
+    <Component type="ScriptSlider" id="Smoothing" x="265.0" y="127.0" processorId="shaper"
+               parameterId="smooth" stepSize="0.1000000014901161" middlePosition="100.0"
+               max="1000.0" suffix=" dB" parentComponent="Shaper"/>
+    <Component type="ScriptLabel" id="SHAPER" x="65.0" y="5.0" width="100.0"
+               height="20.0" parentComponent="Shaper" editable="0"/>
+  </Component>
+  <Component type="ScriptComboBox" id="ShapeModSource2" x="200.0" y="230.0"
+             max="4" width="110.0" height="40.0" items="Mod 1&#10;Mod 2&#10;Mod 3&#10;Envelope"
+             processorId="PitchModSrc" parameterId="Intensity"/>
+  <Component type="ScriptSlider" id="ScriptSlider8" x="35.0" y="230.0" width="130.0"
+             height="50.0" processorId="PitchModSrc" parameterId="mod" middlePosition="0.0"
+             min="-1.0" text="Env 2 Mod"/>
+  <Component type="ScriptPanel" id="MOD Env" x="232.0" y="344.0" width="200.0"
+             height="170.0">
+    <Component type="ScriptSlider" id="ModA" x="30.0" y="30.0" width="20.0"
+               height="110.0" parentComponent="MOD Env" style="Vertical" mode="Time"
+               max="20000.0" stepSize="1.0" suffix=" ms" middlePosition="1000.0"/>
+    <Component type="ScriptSlider" id="ModH" x="59.0" y="30.0" width="20.0"
+               height="110.0" parentComponent="MOD Env" style="Vertical" mode="Time"
+               max="20000.0" stepSize="1.0" suffix=" ms" middlePosition="1000.0"/>
+    <Component type="ScriptSlider" id="ModD" x="89.0" y="30.0" width="20.0"
+               height="110.0" parentComponent="MOD Env" style="Vertical" mode="Decibel"
+               min="-100.0" max="0.0" stepSize="0.1000000014901161" suffix=" dB"
+               middlePosition="-18.0"/>
+    <Component type="ScriptSlider" id="ModS" x="118.0" y="30.0" width="20.0"
+               height="110.0" parentComponent="MOD Env" style="Vertical" mode="Decibel"
+               min="-100.0" max="0.0" stepSize="0.1000000014901161" suffix=" dB"
+               middlePosition="-18.0"/>
+    <Component type="ScriptSlider" id="ModR" x="148.0" y="30.0" width="20.0"
+               height="110.0" parentComponent="MOD Env" style="Vertical" mode="Time"
+               max="20000.0" stepSize="1.0" suffix=" ms" middlePosition="1000.0"/>
+    <Component type="ScriptLabel" id="Mod AHDSR" x="47.0" y="5.0" width="100.0"
+               height="20.0" parentComponent="MOD Env" editable="0"/>
+  </Component>
+</ContentProperties>
