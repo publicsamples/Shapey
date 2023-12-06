@@ -724,7 +724,7 @@
       <Parameter ID="sus1" MinValue="0.0" MaxValue="1.0" Value="1.0">
         <Connections/>
       </Parameter>
-      <Parameter ID="trigin" MinValue="0.0" MaxValue="1.0" Value="0.0" StepSize="1.0">
+      <Parameter ID="trigin" MinValue="0.0" MaxValue="1.0" Value="1.0" StepSize="1.0">
         <Connections>
           <Connection NodeId="input_toggle" ParameterId="Input"/>
         </Connections>
