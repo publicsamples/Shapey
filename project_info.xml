@@ -2,11 +2,11 @@
 
 <ProjectSettings>
   <Name value="Shapey"/>
-  <Version value="1.0.0"/>
+  <Version value="0.0.1"/>
   <Description value=""/>
-  <BundleIdentifier value="com.myCompany.product"/>
-  <PluginCode value="Abcd"/>
-  <EmbedAudioFiles value="Yes"/>
+  <BundleIdentifier value="com.modularsamples.product"/>
+  <PluginCode value="Shpy"/>
+  <EmbedAudioFiles value="1"/>
   <EmbedImageFiles value="Yes"/>
   <SupportFullDynamicsHLAC value="No"/>
   <AdditionalDspLibraries value=""/>
@@ -32,10 +32,10 @@
   <ReadOnlyFactoryPresets value="No"/>
   <ForceStereoOutput value="No"/>
   <AdminPermissions value="No"/>
-  <EmbedUserPresets value="Yes"/>
+  <EmbedUserPresets value="0"/>
   <OverwriteOldUserPresets value="No"/>
   <EnableGlobalPreprocessor value="No"/>
   <UseGlobalAppDataFolderWindows value="No"/>
-  <UseGlobalAppDataFolderMacOS value="No"/>
+  <UseGlobalAppDataFolderMacOS value="1"/>
   <DefaultUserPreset value=""/>
 </ProjectSettings>

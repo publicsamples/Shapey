@@ -2,3 +2,6 @@
 *.wav
 *.hwt
 *.zip
+*.dat
+*.hr1
+Samples/wavetables.hwm

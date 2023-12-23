@@ -1,0 +1,29 @@
+60 Classic and King Tubby style spring reverb impulse responses for convolution reverb
+
+The sound quality of convolution processing relies heavily on the impulse responses used. But in the case of spring reverb a high quality recording is not enough. You need dirt as well. So if you want real dub flavour inna oldskool Jamaican style for your convolution ting you've come to the right place. Enjoy!
+
+Available at http://dubshot.blogspot.com/2008/10/free-download-60-classic-and-king-tubby.html
+
+Licensed under a creative commons attribution-noncommercial-share alike 3.0 Netherlands license
+
+(c) Tony Dubshot 2008 - Recorded @ ISM studio - Leiden - The Low Lands 
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+sample size: 24 bit
+sample rate: 44 kHz
+audio format: wav
+channels: mono
+rar archive file size: 31.1 Mb
+
+* optimized for dub and reggae
+* two ir categories: 'Classic' for harmonic sounds and 'King Tubby style' for drums
+* recorded at 3 levels: loud (l) medium (m) and soft (s)
+* different impulses used for fat (f) and thin (t) sounds
+* load any file a + b for stereo impulse responses
+
+Producers if you use these ir recordings please leave a comment @ the blog. Maybe if there's enough demand i'll do some Scientist style or Mad Professor style ir's in the future.
+
+You can leave comments here: http://dubshot.blogspot.com/2008/10/free-download-60-classic-and-king-tubby.html
+
+Check Tony Dubshot @ Myspace: http://www.myspace.com/tonydubshot
