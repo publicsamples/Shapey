@@ -5,8 +5,7 @@
              height="900.0" itemColour="2504988685" itemColour2="2320835086"
              locked="1"/>
   <Component type="ScriptPanel" id="WaveTable" x="6.0" y="8.0" width="280.0"
-             height="280.0" itemColour="4282529334" itemColour2="4282529334"
-             visible="0">
+             height="280.0" itemColour="4282529334" itemColour2="4282529334">
     <Component type="ScriptPanel" id="Pitch" x="145.0" y="6.0" width="130.0"
                height="140.0" textColour="5525584" bgColour="16777215" itemColour="4281347373"
                itemColour2="4281347373" parentComponent="WaveTable">
@@ -90,7 +89,8 @@
                itemColour2="234881023" textColour="2164260863" Data="{&#10;  &quot;ProcessorId&quot;: &quot;Wavetable Synthesiser1&quot;,&#10;  &quot;Index&quot;: 0,&#10;  &quot;FollowWorkspace&quot;: false&#10;}"/>
   </Component>
   <Component type="ScriptPanel" id="Looper" x="6.0" y="8.0" width="280.0"
-             height="280.0" itemColour="4282529334" itemColour2="4282529334">
+             height="280.0" itemColour="4282529334" itemColour2="4282529334"
+             visible="0">
     <Component type="ScriptPanel" id="Pitch1" x="145.0" y="6.0" width="130.0"
                height="140.0" textColour="5525584" bgColour="16777215" itemColour="4281347373"
                itemColour2="4281347373" parentComponent="Looper">
@@ -175,7 +175,7 @@
   </Component>
   <Component type="ScriptPanel" id="panelswitch" x="118.0" y="216.0" width="30.0"
              height="70.0" bgColour="16777215" itemColour="0" itemColour2="0"
-             textColour="16777215" visible="0">
+             textColour="16777215">
     <Component type="ScriptButton" id="wt" x="1.0" y="26.0" parentComponent="panelswitch"
                width="30.0" height="10.0" bgColour="16777215" itemColour="3355443"
                itemColour2="1118481" textColour="16777215"/>
@@ -520,8 +520,7 @@
     <Component type="ScriptPanel" id="ScriptPanel5" x="186.0" y="4.0" width="110.0"
                height="100.0" parentComponent="Shaper" textColour="16777215">
       <Component type="ScriptImage" id="ScriptImage1" x="26.0" y="50.0" width="50.0"
-                 height="40.0" parentComponent="ScriptPanel5" fileName="{PROJECT_FOLDER}arrow.png"
-                 alpha="0.6200000047683716"/>
+                 height="40.0" parentComponent="ScriptPanel5" fileName="{PROJECT_FOLDER}arrow.png"/>
       <Component type="ScriptLabel" id="ScriptLabel28" x="6.0" y="3.0" width="100.0"
                  height="60.0" parentComponent="ScriptPanel5" fontName="Montserrat"
                  text="Drag or Right click to load sample"/>
@@ -813,8 +812,8 @@
     <Component type="ScriptSlider" id="ScriptSlider51" x="16.0" y="195.0" width="50.0"
                height="50.0" parentComponent="unison" filmstripImage="{PROJECT_FOLDER}bip1.png"
                numStrips="100.0" scaleFactor="0.5" processorId="Syntesizer Group1"
-               parameterId="UnisonoDetune" max="24.0" middlePosition="1.0" showValuePopup="Below"
-               defaultValue="7.0"/>
+               parameterId="UnisonoDetune" max="24.0" middlePosition="12.0"
+               showValuePopup="Below" stepSize="0.1000000014901161"/>
     <Component type="ScriptLabel" id="ScriptLabel67" x="16.0" y="254.0" width="50.0"
                height="10.0" parentComponent="unison" text="detune" editable="0"
                fontName="Montserrat"/>
@@ -855,8 +854,7 @@
   <Component type="ScriptButton" id="Presets" x="676.0" y="485.0" width="30.0"
              height="30.0" bgColour="16777215" itemColour="3355443" itemColour2="1118481"/>
   <Component type="ScriptButton" id="Presets1" x="676.0" y="550.0" width="30.0"
-             height="30.0" bgColour="16777215" itemColour="3355443" itemColour2="1118481"
-             processorId="Legato with Retrigger1" parameterId="Enabled"/>
+             height="30.0" bgColour="16777215" itemColour="3355443" itemColour2="1118481"/>
   <Component type="ScriptLabel" id="Label9" x="663.0" y="514.0" fontName="Montserrat"
              width="60.0" height="30.0" editable="0" text="presets &amp; settiings"/>
   <Component type="ScriptLabel" id="Label10" x="660.0" y="575.0" fontName="Montserrat"
@@ -866,13 +864,14 @@
              textColour="16777215">
     <Component type="ScriptFloatingTile" id="ScriptFloatingTile4" x="-11.0"
                y="-440.0" width="120.0" height="700.0" ContentType="AudioAnalyser"
-               bgColour="2502430989" itemColour="1893681995" itemColour2="1626150422"
+               bgColour="4281545523" itemColour="4286931554" itemColour2="4282664004"
                textColour="0" Data="{&#10;  &quot;ProcessorId&quot;: &quot;Analyser1&quot;,&#10;  &quot;Index&quot;: 1,&#10;  &quot;FollowWorkspace&quot;: false&#10;}"
-               parentComponent="Panel1" locked="1" itemColour3="4279828264"/>
+               parentComponent="Panel1" locked="1"/>
     <Component type="ScriptImage" id="Image1" x="0.0" y="0.0" width="100.0"
                height="100.0" fileName="{PROJECT_FOLDER}shapeymask.png" parentComponent="Panel1"/>
     <Component type="ScriptImage" id="Image2" x="0.0" y="0.0" width="100.0"
-               height="100.0" fileName="{PROJECT_FOLDER}eyes.png" parentComponent="Panel1"/>
+               height="100.0" fileName="{PROJECT_FOLDER}shapey.png" parentComponent="Panel1"
+               blendMode="Add"/>
   </Component>
   <Component type="ScriptLabel" id="Label5" x="725.0" y="578.0" text="SHAPEY!"
              width="110.0" height="20.0" editable="0" fontSize="20.0" fontName="Montserrat"
