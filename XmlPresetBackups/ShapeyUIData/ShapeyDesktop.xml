@@ -870,8 +870,7 @@
     <Component type="ScriptImage" id="Image1" x="0.0" y="0.0" width="100.0"
                height="100.0" fileName="{PROJECT_FOLDER}shapeymask.png" parentComponent="Panel1"/>
     <Component type="ScriptImage" id="Image2" x="0.0" y="0.0" width="100.0"
-               height="100.0" fileName="{PROJECT_FOLDER}shapey.png" parentComponent="Panel1"
-               blendMode="Add"/>
+               height="100.0" fileName="{PROJECT_FOLDER}eyes.png" parentComponent="Panel1"/>
   </Component>
   <Component type="ScriptLabel" id="Label5" x="725.0" y="578.0" text="SHAPEY!"
              width="110.0" height="20.0" editable="0" fontSize="20.0" fontName="Montserrat"
