@@ -1,5 +1,7 @@
 # Shapey
 
+![Shapey](https://raw.githubusercontent.com/publicsamples/Shapey/main/Shapey.png)
+
 # Features 
 
 - A wavetable/sample oscillator with sub osc and FM
@@ -10,6 +12,5 @@
 - Unison detune
 - Fancy Arpeggiator
 
-![Shapey](https://raw.githubusercontent.com/publicsamples/Shapey/main/Shapey.png)
 
 Shapey is built with [HISE](http://hise.audio), an open source framework for sample based instruments. 
