@@ -14,7 +14,7 @@
             <Control type="ScriptSlider" id="ScriptSlider14" value="0.0"/>
             <Control type="ScriptSlider" id="ScriptSlider15" value="0.0"/>
             <Control type="ScriptComboBox" id="ShapeModSource1" value="1.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider1" value="0.09000000357627869"/>
+            <Control type="ScriptSlider" id="ScriptSlider1" value="0.5699999928474426"/>
             <Control type="ScriptSlider" id="ScriptSlider2" value="0.5199999809265137"/>
             <Control type="ScriptSlider" id="ScriptSlider3" value="0.0"/>
             <Control type="ScriptComboBox" id="WTsel" value="47.0"/>
@@ -53,7 +53,7 @@
             <Control type="ScriptSlider" id="ScriptSlider10" value="0.0"/>
             <Control type="ScriptSlider" id="ScriptSlider11" value="20000.0"/>
             <Control type="ScriptSlider" id="ScriptSlider12" value="-0.5999985337257385"/>
-            <Control type="ScriptSlider" id="ScriptSlider13" value="0.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider13" value="9494.0"/>
             <Control type="ScriptSlider" id="ScriptSlider4" value="0.0"/>
             <Control type="ScriptSlider" id="ScriptSlider5" value="0.0"/>
             <Control type="ScriptSlider" id="ScriptSlider6" value="1.0"/>
@@ -78,22 +78,22 @@
             <Control type="ScriptButton" id="ModTrig" value="0.0"/>
             <Control type="ScriptSlider" id="ModDiv" value="0.0"/>
             <Control type="ScriptSlider" id="ModTempo" value="7.0"/>
-            <Control type="ScriptSlider" id="ModA" value="3095.0"/>
+            <Control type="ScriptSlider" id="ModA" value="0.0"/>
             <Control type="ScriptSlider" id="ModH" value="0.0"/>
             <Control type="ScriptSlider" id="ModD" value="12398.0"/>
             <Control type="ScriptSlider" id="ModS" value="0.4000000059604645"/>
-            <Control type="ScriptSlider" id="ModR" value="2706.0"/>
+            <Control type="ScriptSlider" id="ModR" value="12164.0"/>
             <Control type="ScriptComboBox" id="ComboBox1" value="1.0"/>
             <Control type="ScriptSlider" id="ScriptSlider18" value="7.0"/>
             <Control type="ScriptSlider" id="ScriptSlider19" value="0.0"/>
             <Control type="ScriptButton" id="Button1" value="1.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider22" value="1.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider22" value="0.0"/>
             <Control type="ScriptTable" id="Table1" value="0.0" data="36...............vOZlY19....9C...vO...f+.........vO"/>
-            <Control type="ScriptSlider" id="ScriptSlider28" value="3.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider28" value="12.0"/>
             <Control type="ScriptButton" id="Button2" value="0.0"/>
             <Control type="ScriptComboBox" id="ComboBox2" value="5.0"/>
             <Control type="ScriptSlider" id="ScriptSlider20" value="2.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider21" value="1.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider21" value="0.0"/>
             <Control type="ScriptButton" id="Button3" value="1.0"/>
             <Control type="ScriptSlider" id="ScriptSlider29" value="0.0"/>
             <Control type="ScriptTable" id="Table2" value="0.0" data=""/>
@@ -112,15 +112,11 @@
             <Control type="ScriptButton" id="ScriptButton7" value="0.0"/>
             <Control type="ScriptSlider" id="ScriptSlider51" value="18.39999961853027"/>
             <Control type="ScriptSlider" id="ScriptSlider52" value="0.5600000023841858"/>
-            <Control type="ScriptSlider" id="ScriptSlider53" value="1.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider53" value="8.0"/>
             <Control type="ScriptButton" id="Presets" value="0.0"/>
-            <Control type="ScriptButton" id="Presets1" value="0.0"/>
+            <Control type="ScriptButton" id="Presets1" value="1.0"/>
           </Content>
           <UIData Source="ShapeyUIData"/>
-        </Processor>
-        <Processor Type="LegatoWithRetrigger" ID="Legato with Retrigger1" Bypassed="0">
-          <ChildProcessors/>
-          <Content/>
         </Processor>
         <Processor Type="Arpeggiator" ID="Arpeggiator1" Bypassed="1">
           <ChildProcessors/>
@@ -146,6 +142,10 @@
             <Control type="ScriptComboBox" id="MPEEndChannel" value="16.0"/>
             <Control type="ScriptButton" id="Hold" value="1.0"/>
           </Content>
+        </Processor>
+        <Processor Type="LegatoWithRetrigger" ID="Legato with Retrigger1" Bypassed="0">
+          <ChildProcessors/>
+          <Content/>
         </Processor>
       </ChildProcessors>
     </Processor>
@@ -255,8 +255,8 @@
       <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
     </Processor>
     <Processor Type="SynthGroup" ID="Syntesizer Group1" Bypassed="0" Gain="1.0"
-               Balance="0.0" VoiceLimit="256.0" KillFadeTime="20.0" IconColour="0"
-               EnableFM="1.0" CarrierIndex="2.0" ModulatorIndex="1.0" UnisonoVoiceAmount="1.0"
+               Balance="0.0" VoiceLimit="32.0" KillFadeTime="20.0" IconColour="0"
+               EnableFM="1.0" CarrierIndex="2.0" ModulatorIndex="1.0" UnisonoVoiceAmount="8.0"
                UnisonoDetune="18.39999961853027" UnisonoSpread="0.5600000023841858"
                KillSecondVoices="1.0">
       <ChildProcessors>
@@ -268,7 +268,7 @@
             <Processor Type="AHDSR" ID="AmpEnv" Bypassed="0" Monophonic="0.0" Retrigger="1.0"
                        Intensity="1.0" AttackCurve="0.0" DecayCurve="0.0" Attack="0.0"
                        AttackLevel="0.0" Hold="0.0" Decay="20000.0" Sustain="-0.5999982953071594"
-                       Release="1.0" EcoMode="1.0">
+                       Release="9494.0" EcoMode="1.0">
               <ChildProcessors>
                 <Processor Type="ModulatorChain" ID="Attack Time" Bypassed="0" Intensity="1.0">
                   <ChildProcessors/>
@@ -325,10 +325,10 @@
             </Processor>
           </ChildProcessors>
         </Processor>
-        <Processor Type="ModulatorChain" ID="Detune Mod" Bypassed="1" Intensity="1.0">
+        <Processor Type="ModulatorChain" ID="Detune Mod" Bypassed="0" Intensity="1.0">
           <ChildProcessors/>
         </Processor>
-        <Processor Type="ModulatorChain" ID="Spread Mod" Bypassed="1" Intensity="1.0">
+        <Processor Type="ModulatorChain" ID="Spread Mod" Bypassed="0" Intensity="1.0">
           <ChildProcessors/>
         </Processor>
         <Processor Type="AudioLooper" ID="Audio Loop Player1" Bypassed="0" Gain="1.0"

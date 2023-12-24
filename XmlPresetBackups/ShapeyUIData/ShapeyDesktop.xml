@@ -854,7 +854,8 @@
   <Component type="ScriptButton" id="Presets" x="676.0" y="485.0" width="30.0"
              height="30.0" bgColour="16777215" itemColour="3355443" itemColour2="1118481"/>
   <Component type="ScriptButton" id="Presets1" x="676.0" y="550.0" width="30.0"
-             height="30.0" bgColour="16777215" itemColour="3355443" itemColour2="1118481"/>
+             height="30.0" bgColour="16777215" itemColour="3355443" itemColour2="1118481"
+             processorId="Legato with Retrigger1" parameterId="Enabled"/>
   <Component type="ScriptLabel" id="Label9" x="663.0" y="514.0" fontName="Montserrat"
              width="60.0" height="30.0" editable="0" text="presets &amp; settiings"/>
   <Component type="ScriptLabel" id="Label10" x="660.0" y="575.0" fontName="Montserrat"
