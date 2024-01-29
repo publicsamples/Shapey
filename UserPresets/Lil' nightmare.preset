@@ -102,7 +102,9 @@
     <Control type="ScriptComboBox" id="ScriptComboBox2" value="1.0"/>
     <Control type="ScriptButton" id="ScriptButton4" value="1.0"/>
     <Control type="ScriptButton" id="ScriptButton5" value="0.0"/>
-    <Control type="ScriptButton" id="ScriptButton7" value="0.0"/>
+    <Control type="ScriptButton" id="ScriptButton7" value="0.0"/>   
+	 <Control type="ScriptAudioWaveform" id="Imp" value="0.0" data="{PROJECT_FOLDER}classic-tl1a.wav"
+             rangeStart="0" rangeEnd="432001"/>
     <Control type="ScriptSlider" id="ScriptSlider51" value="7.099999904632568"/>
     <Control type="ScriptSlider" id="ScriptSlider52" value="0.0"/>
     <Control type="ScriptSlider" id="ScriptSlider53" value="1.0"/>

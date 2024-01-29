@@ -93,6 +93,27 @@ inline function onPresetsControl(component, value)
 
 Content.getComponent("Presets").setControlCallback(onPresetsControl);
 
+const var Imp = Content.getComponent("Imp");
+
+
+inline function onIrControl(component, value)
+{
+	if(value == 0)
+	{	 	    
+		 Imp.showControl(0);
+
+	}	
+if(value == 1)
+	{	 	    
+		 Imp.showControl(1);
+	
+	}	
+};
+
+Content.getComponent("Ir").setControlCallback(onIrControl);
+
+
+
 
 
 
