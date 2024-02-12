@@ -37,7 +37,7 @@
   <EnableGlobalPreprocessor value="No"/>
   <UseGlobalAppDataFolderWindows value="1"/>
   <UseGlobalAppDataFolderMacOS value="1"/>
-  <DefaultUserPreset value="rando"/>
+  <DefaultUserPreset value=""/>
   <CompileWithPerfetto value="No"/>
   <CompileWithDebugSymbols value="No"/>
 </ProjectSettings>
