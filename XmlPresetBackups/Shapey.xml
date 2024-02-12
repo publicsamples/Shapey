@@ -13,9 +13,9 @@
             <Control type="ScriptSlider" id="ScriptSlider8" value="0.0"/>
             <Control type="ScriptSlider" id="ScriptSlider14" value="0.0"/>
             <Control type="ScriptSlider" id="ScriptSlider15" value="0.0"/>
-            <Control type="ScriptComboBox" id="ShapeModSource1" value="2.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider1" value="0.25"/>
-            <Control type="ScriptSlider" id="ScriptSlider2" value="0.3899999856948853"/>
+            <Control type="ScriptComboBox" id="ShapeModSource1" value="6.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider1" value="0.07999999821186066"/>
+            <Control type="ScriptSlider" id="ScriptSlider2" value="1.0"/>
             <Control type="ScriptSlider" id="ScriptSlider3" value="0.0"/>
             <Control type="ScriptComboBox" id="WTsel" value="50.0"/>
             <Control type="ScriptComboBox" id="ShapeModSource5" value="1.0"/>
@@ -33,7 +33,7 @@
             <Control type="ScriptComboBox" id="Smap" value="14.0"/>
             <Control type="ScriptAudioWaveform" id="AudioWaveform2" value="0.0" data=""
                      rangeStart="0" rangeEnd="0"/>
-            <Control type="ScriptSlider" id="Knob1" value="0.1800000071525574"/>
+            <Control type="ScriptSlider" id="Knob1" value="0.0"/>
             <Control type="ScriptSlider" id="Knob2" value="0.0"/>
             <Control type="ScriptSlider" id="Knob3" value="0.0"/>
             <Control type="ScriptSlider" id="Knob4" value="0.7200000286102295"/>
@@ -51,34 +51,34 @@
             <Control type="ScriptComboBox" id="ScriptComboBox3" value="1.0"/>
             <Control type="ScriptSlider" id="ScriptSlider9" value="0.0"/>
             <Control type="ScriptSlider" id="ScriptSlider10" value="0.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider11" value="707.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider11" value="1863.0"/>
             <Control type="ScriptSlider" id="ScriptSlider12" value="-100.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider13" value="374.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider13" value="443.0"/>
             <Control type="ScriptSlider" id="ScriptSlider4" value="-8.79999828338623"/>
-            <Control type="ScriptSlider" id="ScriptSlider5" value="0.3899999856948853"/>
+            <Control type="ScriptSlider" id="ScriptSlider5" value="0.3300000131130219"/>
             <Control type="ScriptSlider" id="ScriptSlider6" value="0.0"/>
             <Control type="ScriptSlider" id="ScriptSlider7" value="13380.0"/>
             <Control type="ScriptSlider" id="ScriptSlider41" value="0.0"/>
             <Control type="ScriptSlider" id="ScriptSlider42" value="6612.0"/>
-            <Control type="ScriptAudioWaveform" id="Imp" value="0.0" data="" rangeStart="0"
-                     rangeEnd="0"/>
+            <Control type="ScriptAudioWaveform" id="Imp" value="0.0" data="{PROJECT_FOLDER}classic-tl1a.wav"
+                     rangeStart="0" rangeEnd="432001"/>
             <Control type="ScriptButton" id="Ir" value="0.0"/>
-            <Control type="ScriptComboBox" id="ShapeModSource8" value="1.0"/>
-            <Control type="ScriptSlider" id="PreShape" value="1.0"/>
-            <Control type="ScriptComboBox" id="ShapeModSource3" value="2.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider16" value="0.5299999713897705"/>
-            <Control type="ScriptSlider" id="ScriptSlider17" value="0.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider23" value="1.0"/>
-            <Control type="ScriptAudioWaveform" id="AudioWaveform1" value="0.0" data="{PROJECT_FOLDER}single/single_-06.wav"
-                     rangeStart="0" rangeEnd="256"/>
-            <Control type="ScriptSlider" id="Shape Mix" value="0.02999999932944775"/>
-            <Control type="ScriptSlider" id="Gain Offset" value="0.0"/>
-            <Control type="ScriptSlider" id="Smoothing" value="31.20000076293945"/>
-            <Control type="ScriptComboBox" id="ShapeModSource4" value="6.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider24" value="0.05000000074505806"/>
-            <Control type="ScriptSlider" id="ScriptSlider25" value="0.0"/>
+            <Control type="ScriptComboBox" id="ShapeModSource8" value="6.0"/>
+            <Control type="ScriptSlider" id="PreShape" value="0.75"/>
+            <Control type="ScriptComboBox" id="ShapeModSource3" value="5.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider16" value="0.4799999892711639"/>
+            <Control type="ScriptSlider" id="ScriptSlider17" value="2.081668171172169e-17"/>
+            <Control type="ScriptSlider" id="ScriptSlider23" value="2.081668171172169e-17"/>
+            <Control type="ScriptAudioWaveform" id="AudioWaveform1" value="0.0" data="{PROJECT_FOLDER}Roland/jx3p-13.wav"
+                     rangeStart="0" rangeEnd="66579"/>
+            <Control type="ScriptSlider" id="Shape Mix" value="1.0"/>
+            <Control type="ScriptSlider" id="Gain Offset" value="-22.29999923706055"/>
+            <Control type="ScriptSlider" id="Smoothing" value="0.1000000014901161"/>
+            <Control type="ScriptComboBox" id="ShapeModSource4" value="2.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider24" value="0.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider25" value="2.081668171172169e-17"/>
             <Control type="ScriptSlider" id="ScriptSlider26" value="0.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider27" value="0.4900000095367432"/>
+            <Control type="ScriptSlider" id="ScriptSlider27" value="0.0"/>
             <Control type="ScriptButton" id="ModTrig" value="0.0"/>
             <Control type="ScriptSlider" id="ModDiv" value="0.0"/>
             <Control type="ScriptSlider" id="ModTempo" value="0.0"/>
@@ -104,7 +104,7 @@
             <Control type="ScriptSlider" id="ScriptSlider40" value="0.0"/>
             <Control type="ScriptButton" id="Button4" value="0.0"/>
             <Control type="ScriptSliderPack" id="ScriptSliderPack1" value="2.0" data="32....PAC..vDL...Jv.........CL........HAA....."/>
-            <Control type="ScriptSliderPack" id="ScriptSliderPack2" value="6.0" data="32...f+BA..9KD..3uP..f+BA..9KD..3uP..f+BA..9KD"/>
+            <Control type="ScriptSliderPack" id="ScriptSliderPack2" value="6.0" data="32....ABA...9C...3O...f+....9C..PfP...f+....9C"/>
             <Control type="ScriptSliderPack" id="ScriptSliderPack3" value="7.0" data="32...fkBA..VJD..XoP..fkBA..VJD..XoP..fkBA..VJD"/>
             <Control type="ScriptSlider" id="ScriptSlider43" value="8.0"/>
             <Control type="ScriptSlider" id="ScriptSlider44" value="0.0"/>
@@ -116,7 +116,7 @@
             <Control type="ScriptButton" id="ScriptButton7" value="1.0"/>
             <Control type="ScriptSlider" id="ScriptSlider51" value="0.4000000059604645"/>
             <Control type="ScriptSlider" id="ScriptSlider52" value="0.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider53" value="3.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider53" value="1.0"/>
             <Control type="ScriptButton" id="Presets1" value="0.0"/>
           </Content>
           <UIData Source="ShapeyUIData"/>
@@ -137,8 +137,7 @@
             <Control type="ScriptButton" id="EnableTie" value="1.0"/>
             <Control type="ScriptSliderPack" id="SemiToneSliderPack" value="-1.0"
                      data="32....PAC..vDL...Jv.........CL........HAA....."/>
-            <Control type="ScriptSliderPack" id="VelocitySliderPack" value="-1.0"
-                     data="32...f+BA..9KD..3uP..f+BA..9KD..3uP..f+BA..9KD"/>
+            <Control type="ScriptSliderPack" id="VelocitySliderPack" value="4.0" data="32....ABA...9C...3O...f+....9C..PfP...f+....9C"/>
             <Control type="ScriptSliderPack" id="LengthSliderPack" value="-1.0" data="32...fkBA..VJD..XoP..fkBA..VJD..XoP..fkBA..VJD"/>
             <Control type="ScriptComboBox" id="ChannelSelector" value="1.0"/>
             <Control type="ScriptComboBox" id="OutputChannelSelector" value="1.0"/>
@@ -259,8 +258,8 @@
       <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
     </Processor>
     <Processor Type="SynthGroup" ID="Syntesizer Group1" Bypassed="0" Gain="1.0"
-               Balance="0.0" VoiceLimit="85.0" KillFadeTime="20.0" IconColour="0"
-               EnableFM="1.0" CarrierIndex="2.0" ModulatorIndex="3.0" UnisonoVoiceAmount="3.0"
+               Balance="0.0" VoiceLimit="256.0" KillFadeTime="20.0" IconColour="0"
+               EnableFM="1.0" CarrierIndex="2.0" ModulatorIndex="3.0" UnisonoVoiceAmount="1.0"
                UnisonoDetune="0.4000000059604645" UnisonoSpread="0.0" KillSecondVoices="1.0">
       <ChildProcessors>
         <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
@@ -270,8 +269,8 @@
           <ChildProcessors>
             <Processor Type="AHDSR" ID="AmpEnv" Bypassed="0" Monophonic="0.0" Retrigger="1.0"
                        Intensity="1.0" AttackCurve="0.0" DecayCurve="0.0" Attack="0.0"
-                       AttackLevel="0.0" Hold="0.0" Decay="707.0" Sustain="-100.0" Release="374.0"
-                       EcoMode="1.0">
+                       AttackLevel="0.0" Hold="0.0" Decay="1863.0" Sustain="-100.0"
+                       Release="443.0" EcoMode="1.0">
               <ChildProcessors>
                 <Processor Type="ModulatorChain" ID="Attack Time" Bypassed="0" Intensity="1.0">
                   <ChildProcessors/>
@@ -328,13 +327,13 @@
             </Processor>
           </ChildProcessors>
         </Processor>
-        <Processor Type="ModulatorChain" ID="Detune Mod" Bypassed="0" Intensity="1.0">
+        <Processor Type="ModulatorChain" ID="Detune Mod" Bypassed="1" Intensity="1.0">
           <ChildProcessors/>
         </Processor>
-        <Processor Type="ModulatorChain" ID="Spread Mod" Bypassed="0" Intensity="1.0">
+        <Processor Type="ModulatorChain" ID="Spread Mod" Bypassed="1" Intensity="1.0">
           <ChildProcessors/>
         </Processor>
-        <Processor Type="AudioLooper" ID="Audio Loop Player1" Bypassed="1" Gain="1.0"
+        <Processor Type="AudioLooper" ID="Audio Loop Player1" Bypassed="1" Gain="0.75"
                    Balance="0.0" VoiceLimit="256.0" KillFadeTime="20.0" IconColour="0"
                    SyncMode="1.0" PitchTracking="1.0" LoopEnabled="1.0" RootNote="64.0"
                    SampleStartMod="0.0" Reversed="0.0" FileName="{PROJECT_FOLDER}mod/fmam_1.wav"
@@ -368,7 +367,7 @@
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
         <Processor Type="WavetableSynth" ID="Wavetable Synthesiser1" Bypassed="0"
-                   Gain="1.0" Balance="0.0" VoiceLimit="256.0" KillFadeTime="20.0"
+                   Gain="0.75" Balance="0.0" VoiceLimit="256.0" KillFadeTime="20.0"
                    IconColour="0" HqMode="0.0" LoadedBankIndex="50.0" TableIndexValue="1.0"
                    RefreshMipMap="0.0">
           <ChildProcessors>
@@ -428,7 +427,7 @@
           </ChildProcessors>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="SineSynth" ID="Sine Wave Generator1" Bypassed="0" Gain="0.1800000071525574"
+        <Processor Type="SineSynth" ID="Sine Wave Generator1" Bypassed="0" Gain="0.0"
                    Balance="0.0" VoiceLimit="256.0" KillFadeTime="20.0" IconColour="0"
                    OctaveTranspose="0.0" SemiTones="0.0" UseFreqRatio="0.0" CoarseFreqRatio="3.0"
                    FineFreqRatio="0.0" SaturationAmount="0.7200000286102295">
