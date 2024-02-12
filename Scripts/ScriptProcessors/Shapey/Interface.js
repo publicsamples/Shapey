@@ -1,4 +1,4 @@
-Content.makeFrontInterface(845, 605);
+Content.makeFrontInterface(845, 630);
 
 include("laf.js");
 include("mod.js");

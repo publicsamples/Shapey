@@ -2,7 +2,7 @@
 
 <ProjectSettings>
   <Name value="Shapey"/>
-  <Version value="0.0.1"/>
+  <Version value="0.0.2"/>
   <Description value=""/>
   <BundleIdentifier value="com.modularsamples.product"/>
   <PluginCode value="Shpy"/>
@@ -38,4 +38,6 @@
   <UseGlobalAppDataFolderWindows value="No"/>
   <UseGlobalAppDataFolderMacOS value="1"/>
   <DefaultUserPreset value=""/>
+  <CompileWithPerfetto value="No"/>
+  <CompileWithDebugSymbols value="No"/>
 </ProjectSettings>

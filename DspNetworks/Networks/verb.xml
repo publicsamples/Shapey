@@ -47,7 +47,7 @@
                 <ComplexData>
                   <AudioFiles>
                     <AudioFile Index="0" EmbeddedData="/Users/rick/Downloads/springreverb_ir/Classic/classic-tl1a.wav"
-                               MinValue="0" MaxValue="0"/>
+                               MinValue="0" MaxValue="432001"/>
                   </AudioFiles>
                 </ComplexData>
                 <Parameters>
