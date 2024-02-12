@@ -5,8 +5,7 @@
              height="900.0" itemColour="4283373581" itemColour2="4283769358"
              locked="1"/>
   <Component type="ScriptPanel" id="WaveTable" x="6.0" y="8.0" width="280.0"
-             height="310.0" itemColour="4282529334" itemColour2="4282529334"
-             visible="0">
+             height="310.0" itemColour="4282529334" itemColour2="4282529334">
     <Component type="ScriptPanel" id="Pitch" x="145.0" y="30.0" width="130.0"
                height="140.0" textColour="5525584" bgColour="16777215" itemColour="4281347373"
                itemColour2="4281347373" parentComponent="WaveTable">
@@ -93,7 +92,8 @@
                itemColour2="234881023" textColour="2164260863" Data="{&#10;  &quot;ProcessorId&quot;: &quot;Wavetable Synthesiser1&quot;,&#10;  &quot;Index&quot;: 0,&#10;  &quot;FollowWorkspace&quot;: false&#10;}"/>
   </Component>
   <Component type="ScriptPanel" id="Looper" x="6.0" y="7.0" width="280.0"
-             height="310.0" itemColour="4282529334" itemColour2="4282529334">
+             height="310.0" itemColour="4282529334" itemColour2="4282529334"
+             visible="0">
     <Component type="ScriptPanel" id="Pitch1" x="145.0" y="41.0" width="130.0"
                height="140.0" textColour="5525584" bgColour="16777215" itemColour="4281347373"
                itemColour2="4281347373" parentComponent="Looper">
@@ -547,7 +547,7 @@
                  height="40.0" parentComponent="ScriptPanel5" fileName="{PROJECT_FOLDER}arrow.png"/>
       <Component type="ScriptLabel" id="ScriptLabel28" x="6.0" y="0.0" width="100.0"
                  height="60.0" parentComponent="ScriptPanel5" fontName="Montserrat"
-                 text="Drag or Right click to load sample"/>
+                 text="Drag or Right click to load sample" editable="0"/>
     </Component>
     <Component type="ScriptLabel" id="ScriptLabel79" x="99.0" y="2.0" width="111.0"
                height="20.0" text="SHAPER" editable="0" fontName="Montserrat"
@@ -868,7 +868,7 @@
              height="20.0" text="tune" editable="0" fontName="Montserrat"/>
   <Component type="ScriptLabel" id="ScriptLabel73" x="246.0" y="295.0" width="40.0"
              height="20.0" text="sat" editable="0" fontName="Montserrat"/>
-  <Component type="ScriptPanel" id="PnS" x="7.0" y="3.0" width="828.0" height="285.0"
+  <Component type="ScriptPanel" id="PnS" x="7.0" y="6.0" width="820.0" height="310.0"
              itemColour="3288334336" itemColour2="2835349504" visible="0">
     <Component type="ScriptFloatingTile" id="ScriptFloatingTile2" x="2.0" y="7.0"
                width="310.0" height="260.0" parentComponent="PnS" ContentType="PresetBrowser"
@@ -879,7 +879,8 @@
                bgColour="4278190080" itemColour="0" itemColour2="0" Data="{&#10;  &quot;Driver&quot;: false,&#10;  &quot;Device&quot;: false,&#10;  &quot;Output&quot;: false,&#10;  &quot;BufferSize&quot;: false,&#10;  &quot;SampleRate&quot;: false,&#10;  &quot;GlobalBPM&quot;: false,&#10;  &quot;StreamingMode&quot;: true,&#10;  &quot;ScaleFactor&quot;: true,&#10;  &quot;VoiceAmountMultiplier&quot;: true,&#10;  &quot;ClearMidiCC&quot;: true,&#10;  &quot;SampleLocation&quot;: true,&#10;  &quot;DebugMode&quot;: false,&#10;  &quot;UseOpenGL&quot;: false,&#10;  &quot;ScaleFactorList&quot;: [&#10;    0.5,&#10;    0.75,&#10;    1.0,&#10;    1.25,&#10;    1.5,&#10;    2.0&#10;  ]&#10;}"/>
   </Component>
   <Component type="ScriptButton" id="Presets" x="676.0" y="519.0" width="30.0"
-             height="30.0" bgColour="16777215" itemColour="3355443" itemColour2="1118481"/>
+             height="30.0" bgColour="16777215" itemColour="3355443" itemColour2="1118481"
+             saveInPreset="0"/>
   <Component type="ScriptButton" id="Presets1" x="676.0" y="581.0" width="30.0"
              height="30.0" bgColour="16777215" itemColour="3355443" itemColour2="1118481"
              processorId="Legato with Retrigger1" parameterId="Enabled"/>
