@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="verb" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="verb" Bypassed="0" ShowParameters="1"
+        Name="verb">
+    <Nodes>
+      <Node ID="dry_wet1" FactoryPath="container.split" ShowParameters="1"
+            NodeColour="4288243575" Bypassed="0" Name="dry_wet1">
+        <Nodes>
+          <Node ID="dry_path" FactoryPath="container.chain" Bypassed="0" Name="dry_path">
+            <Nodes>
+              <Node ID="dry_wet_mixer" FactoryPath="control.xfader" Bypassed="0"
+                    NodeColour="4288243575" Name="dry_wet_mixer">
+                <Properties>
+                  <Property ID="NumParameters" Value="2"/>
+                  <Property ID="Mode" Value="Linear"/>
+                </Properties>
+                <SwitchTargets>
+                  <SwitchTarget>
+                    <Connections/>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="wet_gain" ParameterId="Gain"/>
+                    </Connections>
+                  </SwitchTarget>
+                </SwitchTargets>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                </Parameters>
+              </Node>
+              <Node ID="dry_gain" FactoryPath="core.gain" Bypassed="0" NodeColour="4288243575"
+                    Name="dry_gain">
+                <Parameters>
+                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                             SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                             SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                             SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="wet_path" FactoryPath="container.chain" Bypassed="0" Name="wet_path">
+            <Nodes>
+              <Node ID="convolution" FactoryPath="filters.convolution" Bypassed="0"
+                    Name="convolution">
+                <ComplexData>
+                  <AudioFiles>
+                    <AudioFile Index="0" EmbeddedData="/Users/rick/Downloads/springreverb_ir/Classic/classic-tl1a.wav"
+                               MinValue="0" MaxValue="0"/>
+                  </AudioFiles>
+                </ComplexData>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="1.0" ID="Predelay"
+                             Automated="1"/>
+                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                             SkewFactor="5.422270774841309" ID="Damping" Value="0.0"/>
+                  <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="1.0" SkewFactor="0.2299045622348785"
+                             ID="HiCut" Value="20000.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Multithread"
+                             Value="1.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="one_pole" FactoryPath="filters.one_pole" Bypassed="0" Name="one_pole">
+                <ComplexData>
+                  <Filters>
+                    <Filter Index="-1" EmbeddedData=""/>
+                  </Filters>
+                </ComplexData>
+                <Parameters>
+                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                             ID="Frequency" Automated="1"/>
+                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                             ID="Q" Value="0.300000011920929"/>
+                  <Parameter MinValue="-18.0" MaxValue="18.0" ID="Gain" Value="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                             ID="Smoothing" Value="0.009999999776482582"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Mode" Value="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="one_pole1" FactoryPath="filters.one_pole" Bypassed="0" Name="one_pole1">
+                <ComplexData>
+                  <Filters>
+                    <Filter Index="-1" EmbeddedData=""/>
+                  </Filters>
+                </ComplexData>
+                <Parameters>
+                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                             ID="Frequency" Automated="1"/>
+                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                             ID="Q" Value="0.300000011920929"/>
+                  <Parameter MinValue="-18.0" MaxValue="18.0" ID="Gain" Value="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                             ID="Smoothing" Value="0.009999999776482582"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Mode" Value="1.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="wet_gain" FactoryPath="core.gain" Bypassed="0" NodeColour="4288243575"
+                    Folded="1" Name="wet_gain">
+                <Parameters>
+                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                             SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                             SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                             SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+        </Nodes>
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1.0" ID="DryWet" Automated="1">
+            <Connections>
+              <Connection NodeId="dry_wet_mixer" ParameterId="Value"/>
+            </Connections>
+          </Parameter>
+        </Parameters>
+      </Node>
+    </Nodes>
+    <Parameters>
+      <Parameter ID="master" MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                 SkewFactor="5.422270774841309" Value="-8.799998641014112" DefaultValue="-7.799998626112952">
+        <Connections>
+          <Connection NodeId="dry_gain" ParameterId="Gain"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="wet" MinValue="0.0" MaxValue="1.0" Value="0.3300000131130219"
+                 DefaultValue="0.5837100830078126">
+        <Connections>
+          <Connection NodeId="dry_wet1" ParameterId="DryWet"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="pro" MinValue="0.0" MaxValue="1000.0" StepSize="1.0" Value="0.0"
+                 DefaultValue="676.0">
+        <Connections>
+          <Connection NodeId="convolution" ParameterId="Predelay"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="damp" MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                 Value="13380.0" DefaultValue="226.4230626496129">
+        <Connections>
+          <Connection NodeId="one_pole" ParameterId="Frequency"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="hi" MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                 Value="6612.0" DefaultValue="1359.592809624341">
+        <Connections>
+          <Connection NodeId="one_pole1" ParameterId="Frequency"/>
+        </Connections>
+      </Parameter>
+    </Parameters>
+  </Node>
+</Network>

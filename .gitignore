@@ -5,3 +5,7 @@
 *.dat
 *.hr1
 Samples/wavetables.hwm
+.DS_Store
+/DspNetworks/Binaries
+*.ch1
+/un

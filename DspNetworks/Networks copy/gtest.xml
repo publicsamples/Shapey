@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="gtest" Version="0.0.0" AllowPolyphonic="1">
+  <Node FactoryPath="container.chain" ID="gtest" Bypassed="0">
+    <Nodes>
+      <Node ID="midichain" FactoryPath="container.midichain" Bypassed="0">
+        <Nodes>
+          <Node ID="granulator" FactoryPath="core.granulator" Bypassed="0">
+            <ComplexData>
+              <AudioFiles>
+                <AudioFile Index="-1" EmbeddedData="{PROJECT_FOLDER}mod/DW_Dom7.1.wav" MinValue="0"
+                           MaxValue="210244"/>
+              </AudioFiles>
+            </ComplexData>
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Position" Value="0.3353358154296875"/>
+              <Parameter MinValue="0.5" MaxValue="2.0" SkewFactor="0.6309297680854797"
+                         ID="Pitch" Value="1.634263877879038"/>
+              <Parameter MinValue="20.0" MaxValue="800.0" ID="GrainSize" Value="800.0"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Density" Value="0.5249887695312501"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Spread" Value="0.0"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Detune" Value="0.0"/>
+            </Parameters>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
+      <Node ID="global_mod" FactoryPath="core.global_mod" Bypassed="0">
+        <ModulationTargets>
+          <Connection NodeId="gain" ParameterId="Gain"/>
+        </ModulationTargets>
+        <ComplexData>
+          <DisplayBuffers>
+            <DisplayBuffer Index="-1"/>
+          </DisplayBuffers>
+        </ComplexData>
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="16.0" StepSize="1.0" ID="Index" Value="0.0"/>
+        </Parameters>
+      </Node>
+      <Node ID="gain" FactoryPath="core.gain" Bypassed="0">
+        <Parameters>
+          <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                     SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
+          <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                     SkewFactor="0.3010300099849701" ID="Smoothing" Value="0.0"/>
+          <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                     SkewFactor="5.422270774841309" ID="ResetValue" Value="-100.0"/>
+        </Parameters>
+      </Node>
+    </Nodes>
+    <Parameters/>
+  </Node>
+</Network>

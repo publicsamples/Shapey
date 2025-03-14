@@ -40,4 +40,6 @@
   <DefaultUserPreset value=""/>
   <CompileWithPerfetto value="No"/>
   <CompileWithDebugSymbols value="No"/>
+  <ExtraDefinitionsNetworkDll value=""/>
+  <IncludeLorisInFrontend value="No"/>
 </ProjectSettings>

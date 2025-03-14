@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="out" AllowPolyphonic="1" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="out" Bypassed="0">
+    <Nodes>
+      <Node ID="fix8_block" FactoryPath="container.fix8_block" Bypassed="0">
+        <Nodes>
+          <Node ID="peak" FactoryPath="core.peak" Bypassed="0">
+            <ComplexData>
+              <DisplayBuffers>
+                <DisplayBuffer Index="-1"/>
+              </DisplayBuffers>
+            </ComplexData>
+            <Parameters/>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
+    </Nodes>
+    <Parameters/>
+  </Node>
+</Network>

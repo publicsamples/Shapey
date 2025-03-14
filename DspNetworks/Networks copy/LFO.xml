@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="lfo" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="lfo" Bypassed="0" ShowParameters="1"
+        Name="lfo">
+    <Nodes>
+      <Node ID="tempo_sync" FactoryPath="control.tempo_sync" Bypassed="0"
+            Name="tempo_sync">
+        <ModulationTargets>
+          <Connection NodeId="converter" ParameterId="Value"/>
+          <Connection NodeId="sampleandhold" ParameterId="Counter"/>
+        </ModulationTargets>
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="18.0" StepSize="1.0" ID="Tempo" Automated="1"/>
+          <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Multiplier"
+                     Automated="1"/>
+          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+          <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                     ID="UnsyncedTime" Value="200.0"/>
+        </Parameters>
+      </Node>
+      <Node ID="converter" FactoryPath="control.converter" Bypassed="0" Name="converter">
+        <Properties>
+          <Property ID="Mode" Value="Ms2Freq"/>
+        </Properties>
+        <ModulationTargets>
+          <Connection NodeId="oscillator1" ParameterId="Frequency"/>
+        </ModulationTargets>
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+        </Parameters>
+      </Node>
+      <Node ID="no_midi" FactoryPath="container.no_midi" Bypassed="0" Name="no_midi">
+        <Nodes>
+          <Node ID="oscillator1" FactoryPath="core.oscillator" Bypassed="0" Name="oscillator1">
+            <ComplexData>
+              <DisplayBuffers>
+                <DisplayBuffer Index="-1"/>
+              </DisplayBuffers>
+            </ComplexData>
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="4.0" StepSize="1.0" ID="Mode" Automated="1"/>
+              <Parameter MinValue="20.00000029802322" MaxValue="20000.0" StepSize="0.1000000014901161"
+                         SkewFactor="0.2299045622348785" ID="Frequency" Automated="1"/>
+              <Parameter MinValue="0.0" MaxValue="16.0" StepSize="1.0" ID="Freq Ratio"
+                         Value="1.0"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Phase" Value="0.0"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Gain" Value="1.0"/>
+            </Parameters>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
+      <Node ID="sig2mod" FactoryPath="math.sig2mod" Bypassed="0" Name="sig2mod">
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+        </Parameters>
+      </Node>
+      <Node ID="cable_table" FactoryPath="control.cable_table" Bypassed="0"
+            Name="cable_table">
+        <ModulationTargets>
+          <Connection NodeId="switcher" ParameterId="Value"/>
+        </ModulationTargets>
+        <ComplexData>
+          <Tables>
+            <Table Index="-1" EmbeddedData="36...............vO...Y+.........vO...f+....9C...vO"/>
+          </Tables>
+        </ComplexData>
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+        </Parameters>
+      </Node>
+      <Node ID="softbypass_switch3" FactoryPath="container.chain" ShowParameters="1"
+            Bypassed="0" Name="softbypass_switch3">
+        <Nodes>
+          <Node ID="switcher" FactoryPath="control.xfader" Bypassed="0" NodeColour="4284975257"
+                Name="switcher">
+            <Properties>
+              <Property ID="NumParameters" Value="2"/>
+              <Property ID="Mode" Value="Switch"/>
+            </Properties>
+            <SwitchTargets>
+              <SwitchTarget>
+                <Connections>
+                  <Connection NodeId="sb1" ParameterId="Bypassed"/>
+                </Connections>
+              </SwitchTarget>
+              <SwitchTarget>
+                <Connections>
+                  <Connection NodeId="sb2" ParameterId="Bypassed"/>
+                </Connections>
+              </SwitchTarget>
+            </SwitchTargets>
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+            </Parameters>
+          </Node>
+          <Node ID="sb_container" FactoryPath="container.chain" NodeColour="4284975257"
+                Bypassed="0" Name="sb_container">
+            <Properties>
+              <Property ID="IsVertical" Value="0"/>
+            </Properties>
+            <Nodes>
+              <Node ID="sb1" FactoryPath="container.soft_bypass" NodeColour="4284975257"
+                    Bypassed="0" Name="sb1">
+                <Nodes/>
+                <Properties>
+                  <Property ID="SmoothingTime" Value="20"/>
+                </Properties>
+                <Parameters/>
+              </Node>
+              <Node ID="sb2" FactoryPath="container.soft_bypass" NodeColour="4284975257"
+                    Bypassed="0" Name="sb2">
+                <Nodes>
+                  <Node ID="sampleandhold" FactoryPath="fx.sampleandhold" Bypassed="0"
+                        Name="sampleandhold">
+                    <Parameters>
+                      <Parameter MinValue="1.0" MaxValue="64.0" StepSize="1.0" ID="Counter" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Properties>
+                  <Property ID="SmoothingTime" Value="20"/>
+                </Properties>
+                <Parameters/>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
+      <Node ID="branch" FactoryPath="container.branch" Bypassed="0" Name="branch"
+            ShowParameters="1">
+        <Nodes>
+          <Node ID="chain" FactoryPath="container.chain" Bypassed="0" Name="chain">
+            <Nodes>
+              <Node ID="peak1" FactoryPath="core.peak" Bypassed="0" Name="peak1">
+                <ModulationTargets>
+                  <Connection NodeId="global_cable" ParameterId="Value"/>
+                </ModulationTargets>
+                <ComplexData>
+                  <DisplayBuffers>
+                    <DisplayBuffer Index="-1"/>
+                  </DisplayBuffers>
+                </ComplexData>
+                <Parameters/>
+              </Node>
+              <Node ID="global_cable" FactoryPath="routing.global_cable" Bypassed="0"
+                    Name="global_cable" NodeColour="4282883250">
+                <Properties>
+                  <Property ID="Connection" Value="LFO1"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="chain1" FactoryPath="container.chain" Bypassed="0" Name="chain">
+            <Nodes>
+              <Node ID="peak2" FactoryPath="core.peak" Bypassed="0" Name="peak1">
+                <ModulationTargets>
+                  <Connection NodeId="global_cable1" ParameterId="Value"/>
+                </ModulationTargets>
+                <ComplexData>
+                  <DisplayBuffers>
+                    <DisplayBuffer Index="-1"/>
+                  </DisplayBuffers>
+                </ComplexData>
+                <Parameters/>
+              </Node>
+              <Node ID="global_cable1" FactoryPath="routing.global_cable" Bypassed="0"
+                    Name="global_cable" NodeColour="4282948786">
+                <Properties>
+                  <Property ID="Connection" Value="LFO2"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+        </Nodes>
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1" StepSize="1.0" ID="Index" Automated="1"/>
+        </Parameters>
+      </Node>
+    </Nodes>
+    <Parameters>
+      <Parameter ID="tempo" MinValue="0.0" MaxValue="18.0" StepSize="1.0" Value="2.0"
+                 DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="tempo_sync" ParameterId="Tempo"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="div" MinValue="1.0" MaxValue="16.0" StepSize="1.0" Value="9.0"
+                 DefaultValue="1.0">
+        <Connections>
+          <Connection NodeId="tempo_sync" ParameterId="Multiplier"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="mode" MinValue="0.0" MaxValue="4.0" StepSize="0.1" Value="4.0"
+                 DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="cable_table" ParameterId="Value"/>
+          <Connection NodeId="oscillator1" ParameterId="Mode"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="Dest" Value="1.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="branch" ParameterId="Index"/>
+        </Connections>
+      </Parameter>
+    </Parameters>
+  </Node>
+</Network>
