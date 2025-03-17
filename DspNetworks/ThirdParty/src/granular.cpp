@@ -80,13 +80,13 @@ struct _granular final : public ::faust::dsp {
 	int iVec1[2];
 	float fRec10[2];
 	float fRec9[2];
-	int iRec11[2];
-	float fRec13[2];
 	float fRec12[2];
+	float fRec11[2];
+	int iRec13[2];
 	int iVec2[2];
-	int iRec14[2];
-	float fRec16[2];
 	float fRec15[2];
+	float fRec14[2];
+	int iRec16[2];
 	float fRec18[2];
 	float fRec17[2];
 	int iVec3[2];
@@ -128,7 +128,7 @@ struct _granular final : public ::faust::dsp {
 		m->declare("envelopes.lib/license", "LGPL with exception");
 		m->declare("envelopes.lib/name", "Faust Envelope Library");
 		m->declare("envelopes.lib/version", "1.3.0");
-		m->declare("fds.lib/author", "Romain Michon");
+		m->declare("fds.lib/author", "Riccardo Russo");
 		m->declare("fds.lib/name", "Faust Finite Difference Schemes Library");
 		m->declare("fds.lib/version", "1.1.0");
 		m->declare("filename", "granular.dsp");
@@ -144,7 +144,7 @@ struct _granular final : public ::faust::dsp {
 		m->declare("filters.lib/zero:author", "Julius O. Smith III");
 		m->declare("filters.lib/zero:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/zero:license", "MIT-style STK-4.3 license");
-		m->declare("hoa.lib/author", "Pierre Guillot");
+		m->declare("hoa.lib/author", "Eliott Paris");
 		m->declare("hoa.lib/copyright", "2012-2013 Guillot, Paris, Colafrancesco, CICM labex art H2H, U. Paris 8, 2019 Wargreen, 2022 Bonardi, Goutmann");
 		m->declare("hoa.lib/name", "High Order Ambisonics library");
 		m->declare("hoa.lib/version", "1.4.0");
@@ -155,7 +155,7 @@ struct _granular final : public ::faust::dsp {
 		m->declare("maths.lib/license", "LGPL with exception");
 		m->declare("maths.lib/name", "Faust Math Library");
 		m->declare("maths.lib/version", "2.8.0");
-		m->declare("mi.lib/author", "Romain Michon");
+		m->declare("mi.lib/author", "James Leonard");
 		m->declare("mi.lib/copyright", "2018-2020 GRAME / GIPSA-Lab");
 		m->declare("mi.lib/name", "Faust mass-interaction physical modelling library");
 		m->declare("mi.lib/version", "1.1.0");
@@ -276,25 +276,25 @@ struct _granular final : public ::faust::dsp {
 			fRec9[l10] = 0.0f;
 		}
 		for (int l11 = 0; l11 < 2; l11 = l11 + 1) {
-			iRec11[l11] = 0;
+			fRec12[l11] = 0.0f;
 		}
 		for (int l12 = 0; l12 < 2; l12 = l12 + 1) {
-			fRec13[l12] = 0.0f;
+			fRec11[l12] = 0.0f;
 		}
 		for (int l13 = 0; l13 < 2; l13 = l13 + 1) {
-			fRec12[l13] = 0.0f;
+			iRec13[l13] = 0;
 		}
 		for (int l14 = 0; l14 < 2; l14 = l14 + 1) {
 			iVec2[l14] = 0;
 		}
 		for (int l15 = 0; l15 < 2; l15 = l15 + 1) {
-			iRec14[l15] = 0;
+			fRec15[l15] = 0.0f;
 		}
 		for (int l16 = 0; l16 < 2; l16 = l16 + 1) {
-			fRec16[l16] = 0.0f;
+			fRec14[l16] = 0.0f;
 		}
 		for (int l17 = 0; l17 < 2; l17 = l17 + 1) {
-			fRec15[l17] = 0.0f;
+			iRec16[l17] = 0;
 		}
 		for (int l18 = 0; l18 < 2; l18 = l18 + 1) {
 			fRec18[l18] = 0.0f;
@@ -397,38 +397,38 @@ struct _granular final : public ::faust::dsp {
 			int iTemp1 = iTemp0 > iVec0[1];
 			fRec4[0] = ((iTemp1) ? fSlow3 : fRec4[1]);
 			float fTemp2 = fConst4 * fRec4[0];
-			fRec2[0] = std::max<float>(0.0f, ((iTemp1) ? float(fTemp2 < 0.0f) : fRec2[1] + fTemp2));
+			fRec2[0] = std::max<float>(0.0f, ((iTemp1) ? float(fTemp2 < 0.0f) : fTemp2 + fRec2[1]));
 			float fTemp3 = std::cos(6.2831855f * ((fRec2[0] > 1.0f) ? 0.0f : fRec2[0]) + 3.1415927f) + 1.0f;
 			iRec5[0] = (iRec5[1] + 1) % 44100;
-			ftbl0[iRec5[0]] = fSlow4 * fRec0[1] + float(input0[i0]);
+			ftbl0[iRec5[0]] = float(input0[i0]) + fSlow4 * fRec0[1];
 			fRec7[0] = ((iTemp1) ? fSlow6 : fRec7[1]);
 			fRec6[0] = std::max<float>(0.0f, ((iTemp1) ? float(fRec7[0] < 0.0f) : fRec7[0] + fRec6[1]));
 			iRec8[0] = ((iTemp1) ? iRec5[0] : iRec8[1]);
 			int iTemp4 = (iSlow5 + int(fRec6[0]) + iRec8[0]) % 44100;
-			int iTemp5 = ((iRec3[0] < 10) ? 1 : 0);
-			iVec1[0] = iTemp5;
-			int iTemp6 = iTemp5 > iVec1[1];
-			fRec10[0] = ((iTemp6) ? fSlow6 : fRec10[1]);
-			fRec9[0] = std::max<float>(0.0f, ((iTemp6) ? float(fRec10[0] < 0.0f) : fRec10[0] + fRec9[1]));
-			iRec11[0] = ((iTemp6) ? iRec5[0] : iRec11[1]);
-			int iTemp7 = (iSlow5 + int(fRec9[0]) + iRec11[0]) % 44100;
-			fRec13[0] = ((iTemp6) ? fSlow3 : fRec13[1]);
-			float fTemp8 = fConst4 * fRec13[0];
-			fRec12[0] = std::max<float>(0.0f, ((iTemp6) ? float(fTemp8 < 0.0f) : fRec12[1] + fTemp8));
-			float fTemp9 = std::cos(6.2831855f * ((fRec12[0] > 1.0f) ? 0.0f : fRec12[0]) + 3.1415927f) + 1.0f;
-			float fTemp10 = float(iRec3[0]);
-			int iTemp11 = ((fTemp10 < fSlow8) ? ((fTemp10 > fSlow7) ? 1 : 0) : 0);
+			float fTemp5 = float(iRec3[0]);
+			int iTemp6 = ((fTemp5 < fSlow8) ? ((fTemp5 > fSlow7) ? 1 : 0) : 0);
+			iVec1[0] = iTemp6;
+			int iTemp7 = iTemp6 > iVec1[1];
+			fRec10[0] = ((iTemp7) ? fSlow3 : fRec10[1]);
+			float fTemp8 = fConst4 * fRec10[0];
+			fRec9[0] = std::max<float>(0.0f, ((iTemp7) ? float(fTemp8 < 0.0f) : fRec9[1] + fTemp8));
+			float fTemp9 = std::cos(6.2831855f * ((fRec9[0] > 1.0f) ? 0.0f : fRec9[0]) + 3.1415927f) + 1.0f;
+			fRec12[0] = ((iTemp7) ? fSlow6 : fRec12[1]);
+			fRec11[0] = std::max<float>(0.0f, ((iTemp7) ? float(fRec12[0] < 0.0f) : fRec12[0] + fRec11[1]));
+			iRec13[0] = ((iTemp7) ? iRec5[0] : iRec13[1]);
+			int iTemp10 = (iSlow5 + int(fRec11[0]) + iRec13[0]) % 44100;
+			int iTemp11 = ((iRec3[0] < 10) ? 1 : 0);
 			iVec2[0] = iTemp11;
 			int iTemp12 = iTemp11 > iVec2[1];
-			iRec14[0] = ((iTemp12) ? iRec5[0] : iRec14[1]);
-			fRec16[0] = ((iTemp12) ? fSlow6 : fRec16[1]);
-			fRec15[0] = std::max<float>(0.0f, ((iTemp12) ? float(fRec16[0] < 0.0f) : fRec16[0] + fRec15[1]));
-			int iTemp13 = (iSlow5 + iRec14[0] + int(fRec15[0])) % 44100;
+			fRec15[0] = ((iTemp12) ? fSlow6 : fRec15[1]);
+			fRec14[0] = std::max<float>(0.0f, ((iTemp12) ? float(fRec15[0] < 0.0f) : fRec15[0] + fRec14[1]));
+			iRec16[0] = ((iTemp12) ? iRec5[0] : iRec16[1]);
+			int iTemp13 = (iSlow5 + int(fRec14[0]) + iRec16[0]) % 44100;
 			fRec18[0] = ((iTemp12) ? fSlow3 : fRec18[1]);
 			float fTemp14 = fConst4 * fRec18[0];
 			fRec17[0] = std::max<float>(0.0f, ((iTemp12) ? float(fTemp14 < 0.0f) : fRec17[1] + fTemp14));
 			float fTemp15 = std::cos(6.2831855f * ((fRec17[0] > 1.0f) ? 0.0f : fRec17[0]) + 3.1415927f) + 1.0f;
-			int iTemp16 = ((fTemp10 < fSlow10) ? ((fTemp10 > fSlow9) ? 1 : 0) : 0);
+			int iTemp16 = ((fTemp5 < fSlow10) ? ((fTemp5 > fSlow9) ? 1 : 0) : 0);
 			iVec3[0] = iTemp16;
 			int iTemp17 = iTemp16 > iVec3[1];
 			fRec20[0] = ((iTemp17) ? fSlow6 : fRec20[1]);
@@ -439,13 +439,13 @@ struct _granular final : public ::faust::dsp {
 			float fTemp19 = fConst4 * fRec23[0];
 			fRec22[0] = std::max<float>(0.0f, ((iTemp17) ? float(fTemp19 < 0.0f) : fRec22[1] + fTemp19));
 			float fTemp20 = std::cos(6.2831855f * ((fRec22[0] > 1.0f) ? 0.0f : fRec22[0]) + 3.1415927f) + 1.0f;
-			float fTemp21 = fTemp3 * ftbl0[iTemp4] + ftbl0[iTemp7] * fTemp9 + ftbl0[iTemp13] * fTemp15 + ftbl0[iTemp18] * fTemp20;
+			float fTemp21 = fTemp3 * ftbl0[iTemp4] + fTemp9 * ftbl0[iTemp10] + ftbl0[iTemp13] * fTemp15 + ftbl0[iTemp18] * fTemp20;
 			fVec4[0] = fTemp21;
 			fRec1[0] = fConst2 * (fConst3 * fRec1[1] + 0.1f * (fTemp21 - fVec4[1]));
 			fRec0[0] = fRec1[0];
 			output0[i0] = FAUSTFLOAT(fRec0[0]);
-			ftbl1[iRec5[0]] = fSlow4 * fRec24[1] + float(input1[i0]);
-			float fTemp22 = ftbl1[iTemp7] * fTemp9 + ftbl1[iTemp13] * fTemp15 + ftbl1[iTemp18] * fTemp20 + fTemp3 * ftbl1[iTemp4];
+			ftbl1[iRec5[0]] = float(input1[i0]) + fSlow4 * fRec24[1];
+			float fTemp22 = ftbl1[iTemp13] * fTemp15 + ftbl1[iTemp10] * fTemp9 + ftbl1[iTemp18] * fTemp20 + fTemp3 * ftbl1[iTemp4];
 			fVec5[0] = fTemp22;
 			fRec25[0] = fConst2 * (fConst3 * fRec25[1] + 0.1f * (fTemp22 - fVec5[1]));
 			fRec24[0] = fRec25[0];
@@ -461,13 +461,13 @@ struct _granular final : public ::faust::dsp {
 			iVec1[1] = iVec1[0];
 			fRec10[1] = fRec10[0];
 			fRec9[1] = fRec9[0];
-			iRec11[1] = iRec11[0];
-			fRec13[1] = fRec13[0];
 			fRec12[1] = fRec12[0];
+			fRec11[1] = fRec11[0];
+			iRec13[1] = iRec13[0];
 			iVec2[1] = iVec2[0];
-			iRec14[1] = iRec14[0];
-			fRec16[1] = fRec16[0];
 			fRec15[1] = fRec15[0];
+			fRec14[1] = fRec14[0];
+			iRec16[1] = iRec16[0];
 			fRec18[1] = fRec18[0];
 			fRec17[1] = fRec17[0];
 			iVec3[1] = iVec3[0];

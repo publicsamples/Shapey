@@ -1274,17 +1274,8 @@ using branch13_t = container::branch<parameter::empty,
                                      chain113_t<NV>>;
 
 template <int NV>
-using pma9_mod_1 = parameter::from0To1<wrap::no_process<core::gain<NV>>, 
-                                       0, 
-                                       pma3_modRange>;
-
-template <int NV> using pma9_mod_2 = pma9_mod_1<NV>;
-
-template <int NV>
 using pma9_mod = parameter::chain<ranges::Identity, 
                                   parameter::plain<math::mul<NV>, 0>, 
-                                  pma9_mod_1<NV>, 
-                                  pma9_mod_2<NV>, 
                                   parameter::plain<math::mul<NV>, 0>>;
 
 template <int NV>
@@ -1549,8 +1540,7 @@ using chain50_t = chain31_t;
 
 template <int NV>
 using chain53_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, wrap::no_process<core::gain<NV>>>, 
-                                   math::mul<NV>>;
+                                   wrap::fix<2, math::mul<NV>>>;
 
 template <int NV> using chain51_t = chain53_t<NV>;
 template <int NV>
@@ -2696,11 +2686,9 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		auto& branch16 = this->getT(6);                                                     // filtest_impl::branch16_t<NV>
 		auto& chain50 = this->getT(6).getT(0);                                              // filtest_impl::chain50_t
 		auto& chain53 = this->getT(6).getT(1);                                              // filtest_impl::chain53_t<NV>
-		auto& gain5 = this->getT(6).getT(1).getT(0);                                        // wrap::no_process<core::gain<NV>>
-		auto& mul = this->getT(6).getT(1).getT(1);                                          // math::mul<NV>
+		auto& mul = this->getT(6).getT(1).getT(0);                                          // math::mul<NV>
 		auto& chain51 = this->getT(6).getT(2);                                              // filtest_impl::chain51_t<NV>
-		auto& gain6 = this->getT(6).getT(2).getT(0);                                        // wrap::no_process<core::gain<NV>>
-		auto& mul2 = this->getT(6).getT(2).getT(1);                                         // math::mul<NV>
+		auto& mul2 = this->getT(6).getT(2).getT(0);                                         // math::mul<NV>
 		auto& oscilloscope = this->getT(7);                                                 // filtest_impl::oscilloscope_t
 		auto& soft_bypass = this->getT(8);                                                  // filtest_impl::soft_bypass_t<NV>
 		auto& chain7 = this->getT(8).getT(0);                                               // filtest_impl::chain7_t<NV>
@@ -3036,9 +3024,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		global_cable30.getWrappedObject().getParameter().connectT(0, add74);     // global_cable30 -> add74::Value
 		global_cable31.getWrappedObject().getParameter().connectT(0, add75);     // global_cable31 -> add75::Value
 		pma9.getWrappedObject().getParameter().connectT(0, mul);                 // pma9 -> mul::Value
-		pma9.getWrappedObject().getParameter().connectT(1, gain5);               // pma9 -> gain5::Gain
-		pma9.getWrappedObject().getParameter().connectT(2, gain6);               // pma9 -> gain6::Gain
-		pma9.getWrappedObject().getParameter().connectT(3, mul2);                // pma9 -> mul2::Value
+		pma9.getWrappedObject().getParameter().connectT(1, mul2);                // pma9 -> mul2::Value
 		peak9.getParameter().connectT(0, pma9);                                  // peak9 -> pma9::Value
 		global_cable32.getWrappedObject().getParameter().connectT(0, add86);     // global_cable32 -> add86::Value
 		global_cable33.getWrappedObject().getParameter().connectT(0, add87);     // global_cable33 -> add87::Value
@@ -3503,15 +3489,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		; // branch16::Index is automated
 		
-		;                              // gain5::Gain is automated
-		gain5.setParameterT(1, 16.6);  // core::gain::Smoothing
-		gain5.setParameterT(2, -100.); // core::gain::ResetValue
-		
 		; // mul::Value is automated
-		
-		;                              // gain6::Gain is automated
-		gain6.setParameterT(1, 16.6);  // core::gain::Smoothing
-		gain6.setParameterT(2, -100.); // core::gain::ResetValue
 		
 		; // mul2::Value is automated
 		

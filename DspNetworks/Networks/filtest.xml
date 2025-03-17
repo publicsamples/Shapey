@@ -1639,8 +1639,6 @@
                     </Parameters>
                     <ModulationTargets>
                       <Connection NodeId="mul" ParameterId="Value"/>
-                      <Connection NodeId="gain5" ParameterId="Gain"/>
-                      <Connection NodeId="gain6" ParameterId="Gain"/>
                       <Connection NodeId="mul2" ParameterId="Value"/>
                     </ModulationTargets>
                   </Node>
@@ -2230,18 +2228,6 @@
           </Node>
           <Node ID="chain53" FactoryPath="container.chain" Bypassed="0" Name="chain50">
             <Nodes>
-              <Node ID="gain5" FactoryPath="core.gain" Bypassed="1" Name="gain5">
-                <Parameters>
-                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="Gain" DefaultValue="0.0" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                             SkewFactor="0.3010300099849701" ID="Smoothing" Value="16.60000024735927"
-                             DefaultValue="20.0"/>
-                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="ResetValue" Value="-100.0"
-                             DefaultValue="0.0"/>
-                </Parameters>
-              </Node>
               <Node ID="mul" FactoryPath="math.mul" Bypassed="0" Name="mul">
                 <Parameters>
                   <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
@@ -2252,18 +2238,6 @@
           </Node>
           <Node ID="chain51" FactoryPath="container.chain" Bypassed="0" Name="chain50">
             <Nodes>
-              <Node ID="gain6" FactoryPath="core.gain" Bypassed="1" Name="gain5">
-                <Parameters>
-                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="Gain" DefaultValue="0.0" Automated="1"/>
-                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                             SkewFactor="0.3010300099849701" ID="Smoothing" Value="16.60000024735927"
-                             DefaultValue="20.0"/>
-                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                             SkewFactor="5.422270774841309" ID="ResetValue" Value="-100.0"
-                             DefaultValue="0.0"/>
-                </Parameters>
-              </Node>
               <Node ID="mul2" FactoryPath="math.mul" Bypassed="0" Name="mul">
                 <Parameters>
                   <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
