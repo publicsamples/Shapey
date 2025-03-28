@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="PanDetuneMulti" AllowPolyphonic="1" Version="0.0.0" AllowCompilation="1">
+  <Node FactoryPath="container.chain" ID="PanDetuneMulti" Bypassed="0"
+        Name="PanDetuneMulti" ShowParameters="1">
+    <Nodes>
+      <Node ID="no_midi" FactoryPath="container.no_midi" Bypassed="0" Name="no_midi">
+        <Nodes>
+          <Node ID="clone_cable" FactoryPath="control.clone_cable" Bypassed="0"
+                Name="clone_cable">
+            <Properties>
+              <Property ID="Mode" Value="Spread"/>
+            </Properties>
+            <ModulationTargets>
+              <Connection NodeId="faust" ParameterId="shift (semitones)"/>
+            </ModulationTargets>
+            <Parameters>
+              <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="NumClones"
+                         Value="16.0" DefaultValue="1.0"/>
+              <Parameter MinValue="-1.0" MaxValue="1.0" ID="Value" DefaultValue="0.0"
+                         Automated="1"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Gamma" Value="0.0"/>
+            </Parameters>
+          </Node>
+          <Node ID="clone_cable1" FactoryPath="control.clone_cable" Bypassed="0"
+                Name="clone_cable">
+            <Properties>
+              <Property ID="Mode" Value="Spread"/>
+            </Properties>
+            <ModulationTargets>
+              <Connection NodeId="jpanner" ParameterId="Pan"/>
+            </ModulationTargets>
+            <Parameters>
+              <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="NumClones"
+                         Value="16.0" DefaultValue="1.0"/>
+              <Parameter MinValue="-1.0" MaxValue="1.0" ID="Value" DefaultValue="0.0"
+                         Automated="1"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Gamma" Value="0.0"/>
+            </Parameters>
+          </Node>
+          <Node ID="clone_cable2" FactoryPath="control.clone_cable" Bypassed="0"
+                Name="clone_cable2">
+            <Properties>
+              <Property ID="Mode" Value="Fixed"/>
+            </Properties>
+            <ModulationTargets>
+              <Connection NodeId="faust" ParameterId="window (samples)"/>
+              <Connection NodeId="faust" ParameterId="xfade (samples)"/>
+            </ModulationTargets>
+            <Parameters>
+              <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="NumClones"
+                         Value="16.0" DefaultValue="1.0"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Gamma" Value="0.0"/>
+            </Parameters>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
+      <Node ID="clone" FactoryPath="container.clone" Bypassed="0" Name="clone"
+            ShowClones="0" ShowParameters="1">
+        <Properties>
+          <Property ID="IsVertical" Value="0"/>
+        </Properties>
+        <Nodes>
+          <Node ID="clone_child" FactoryPath="container.chain" Bypassed="0" Name="clone_child"
+                NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" DefaultValue="0.0" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="clone_child1" FactoryPath="container.chain" Bypassed="0"
+                Name="clone_child" NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust16" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner16" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="clone_child2" FactoryPath="container.chain" Bypassed="0"
+                Name="clone_child" NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust17" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner17" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="clone_child3" FactoryPath="container.chain" Bypassed="0"
+                Name="clone_child" NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust18" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner18" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="clone_child4" FactoryPath="container.chain" Bypassed="0"
+                Name="clone_child" NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust19" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner19" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="clone_child5" FactoryPath="container.chain" Bypassed="0"
+                Name="clone_child" NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust20" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner20" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="clone_child6" FactoryPath="container.chain" Bypassed="0"
+                Name="clone_child" NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust21" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner21" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="clone_child7" FactoryPath="container.chain" Bypassed="0"
+                Name="clone_child" NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust22" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner22" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="clone_child8" FactoryPath="container.chain" Bypassed="0"
+                Name="clone_child" NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust23" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner23" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="clone_child9" FactoryPath="container.chain" Bypassed="0"
+                Name="clone_child" NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust24" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner24" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="clone_child10" FactoryPath="container.chain" Bypassed="0"
+                Name="clone_child" NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust25" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner25" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="clone_child11" FactoryPath="container.chain" Bypassed="0"
+                Name="clone_child" NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust26" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner26" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="clone_child12" FactoryPath="container.chain" Bypassed="0"
+                Name="clone_child" NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust27" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner27" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="clone_child13" FactoryPath="container.chain" Bypassed="0"
+                Name="clone_child" NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust28" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner28" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="clone_child14" FactoryPath="container.chain" Bypassed="0"
+                Name="clone_child" NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust29" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner29" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="clone_child15" FactoryPath="container.chain" Bypassed="0"
+                Name="clone_child" NodeColour="4287927444">
+            <Nodes>
+              <Node ID="faust30" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                <Properties>
+                  <Property ID="ClassId" Value="shifty"/>
+                  <Property ID="NumParameters" Value="0"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.5" MaxValue="0.1999999910593037" StepSize="0.009999999776482582"
+                             ID="shift (semitones)" Automated="1"/>
+                  <Parameter MinValue="50.0" MaxValue="10000.0" StepSize="1.0" ID="window (samples)"
+                             DefaultValue="1000.0" Automated="1"/>
+                  <Parameter MinValue="1.0" MaxValue="10000.0" StepSize="1.0" ID="xfade (samples)"
+                             DefaultValue="10.0" Automated="1"/>
+                </Parameters>
+                <SwitchTargets/>
+              </Node>
+              <Node ID="jpanner30" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                <Parameters>
+                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+        </Nodes>
+        <Parameters>
+          <Parameter MinValue="1.0" MaxValue="16" StepSize="1.0" ID="NumClones" Value="16.0"
+                     DefaultValue="1.0"/>
+          <Parameter MinValue="0.0" MaxValue="2.0" StepSize="1.0" ID="SplitSignal"
+                     Value="2.0"/>
+        </Parameters>
+      </Node>
+    </Nodes>
+    <Parameters>
+      <Parameter ID="Detune" MinValue="0.0" MaxValue="1.0" Value="1.0">
+        <Connections>
+          <Connection NodeId="clone_cable" ParameterId="Value"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="Pan" MinValue="0.0" MaxValue="1.0" Value="1.0">
+        <Connections>
+          <Connection NodeId="clone_cable1" ParameterId="Value"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="win" Value="0.5081521739130435"
+                 DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="clone_cable2" ParameterId="Value"/>
+        </Connections>
+      </Parameter>
+    </Parameters>
+  </Node>
+</Network>

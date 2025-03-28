@@ -128,14 +128,14 @@ struct _granular final : public ::faust::dsp {
 		m->declare("envelopes.lib/license", "LGPL with exception");
 		m->declare("envelopes.lib/name", "Faust Envelope Library");
 		m->declare("envelopes.lib/version", "1.3.0");
-		m->declare("fds.lib/author", "Riccardo Russo");
+		m->declare("fds.lib/author", "Romain Michon");
 		m->declare("fds.lib/name", "Faust Finite Difference Schemes Library");
 		m->declare("fds.lib/version", "1.1.0");
 		m->declare("filename", "granular.dsp");
 		m->declare("filters.lib/dcblockerat:author", "Julius O. Smith III");
 		m->declare("filters.lib/dcblockerat:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/dcblockerat:license", "MIT-style STK-4.3 license");
-		m->declare("filters.lib/lowpass0_highpass1", "MIT-style STK-4.3 license");
+		m->declare("filters.lib/lowpass0_highpass1", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/name", "Faust Filters Library");
 		m->declare("filters.lib/pole:author", "Julius O. Smith III");
 		m->declare("filters.lib/pole:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
@@ -144,7 +144,7 @@ struct _granular final : public ::faust::dsp {
 		m->declare("filters.lib/zero:author", "Julius O. Smith III");
 		m->declare("filters.lib/zero:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/zero:license", "MIT-style STK-4.3 license");
-		m->declare("hoa.lib/author", "Eliott Paris");
+		m->declare("hoa.lib/author", "Pierre Guillot");
 		m->declare("hoa.lib/copyright", "2012-2013 Guillot, Paris, Colafrancesco, CICM labex art H2H, U. Paris 8, 2019 Wargreen, 2022 Bonardi, Goutmann");
 		m->declare("hoa.lib/name", "High Order Ambisonics library");
 		m->declare("hoa.lib/version", "1.4.0");
@@ -155,7 +155,7 @@ struct _granular final : public ::faust::dsp {
 		m->declare("maths.lib/license", "LGPL with exception");
 		m->declare("maths.lib/name", "Faust Math Library");
 		m->declare("maths.lib/version", "2.8.0");
-		m->declare("mi.lib/author", "James Leonard");
+		m->declare("mi.lib/author", "Romain Michon");
 		m->declare("mi.lib/copyright", "2018-2020 GRAME / GIPSA-Lab");
 		m->declare("mi.lib/name", "Faust mass-interaction physical modelling library");
 		m->declare("mi.lib/version", "1.1.0");
@@ -397,7 +397,7 @@ struct _granular final : public ::faust::dsp {
 			int iTemp1 = iTemp0 > iVec0[1];
 			fRec4[0] = ((iTemp1) ? fSlow3 : fRec4[1]);
 			float fTemp2 = fConst4 * fRec4[0];
-			fRec2[0] = std::max<float>(0.0f, ((iTemp1) ? float(fTemp2 < 0.0f) : fTemp2 + fRec2[1]));
+			fRec2[0] = std::max<float>(0.0f, ((iTemp1) ? float(fTemp2 < 0.0f) : fRec2[1] + fTemp2));
 			float fTemp3 = std::cos(6.2831855f * ((fRec2[0] > 1.0f) ? 0.0f : fRec2[0]) + 3.1415927f) + 1.0f;
 			iRec5[0] = (iRec5[1] + 1) % 44100;
 			ftbl0[iRec5[0]] = float(input0[i0]) + fSlow4 * fRec0[1];

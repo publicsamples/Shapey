@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="MacroLfoIn" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="MacroLfoIn" Bypassed="0" Name="MacroLfoIn"
+        ShowParameters="1">
+    <Nodes>
+      <Node ID="branch" FactoryPath="container.branch" Bypassed="0" Name="branch"
+            ShowParameters="1">
+        <Nodes>
+          <Node ID="chain" FactoryPath="container.chain" Bypassed="0" Name="chain">
+            <Nodes>
+              <Node ID="global_cable" FactoryPath="routing.global_cable" Bypassed="0"
+                    Name="global_cable" NodeColour="4282883250">
+                <Properties>
+                  <Property ID="Connection" Value="LFO1"/>
+                </Properties>
+                <ModulationTargets>
+                  <Connection NodeId="add1" ParameterId="Value"/>
+                </ModulationTargets>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="add1" FactoryPath="math.add" Bypassed="0" Name="add1">
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="chain2" FactoryPath="container.chain" Bypassed="0" Name="chain">
+            <Nodes>
+              <Node ID="global_cable2" FactoryPath="routing.global_cable" Bypassed="0"
+                    Name="global_cable" NodeColour="4282948786">
+                <Properties>
+                  <Property ID="Connection" Value="LFO2"/>
+                </Properties>
+                <ModulationTargets>
+                  <Connection NodeId="add3" ParameterId="Value"/>
+                </ModulationTargets>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="add3" FactoryPath="math.add" Bypassed="0" Name="add1">
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+        </Nodes>
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1" StepSize="1.0" ID="Index" Automated="1"/>
+        </Parameters>
+      </Node>
+      <Node ID="peak" FactoryPath="core.peak" Bypassed="0" Name="peak">
+        <ModulationTargets>
+          <Connection NodeId="pma" ParameterId="Value"/>
+        </ModulationTargets>
+        <ComplexData>
+          <DisplayBuffers>
+            <DisplayBuffer Index="-1"/>
+          </DisplayBuffers>
+        </ComplexData>
+        <Parameters/>
+      </Node>
+      <Node ID="clear" FactoryPath="math.clear" Bypassed="0" Name="clear">
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+        </Parameters>
+      </Node>
+      <Node ID="pma" FactoryPath="control.pma" Bypassed="0" Name="pma">
+        <ModulationTargets>
+          <Connection NodeId="add" ParameterId="Value"/>
+        </ModulationTargets>
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+          <Parameter MinValue="-1.0" MaxValue="1.0" ID="Multiply" DefaultValue="1.0"
+                     Automated="1"/>
+          <Parameter MinValue="5.551115123125783e-17" MaxValue="1.0" ID="Add" Automated="1"/>
+        </Parameters>
+      </Node>
+      <Node ID="add" FactoryPath="math.add" Bypassed="0" Name="add">
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+        </Parameters>
+      </Node>
+    </Nodes>
+    <Parameters>
+      <Parameter ID="pos" MinValue="0.0" MaxValue="1.0" Value="0.0" DefaultValue="1.0">
+        <Connections>
+          <Connection NodeId="pma" ParameterId="Add"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="mod" Value="1.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="pma" ParameterId="Multiply"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="ssrc" MinValue="1.0" MaxValue="4.0" StepSize="1" Value="1.0">
+        <Connections>
+          <Connection NodeId="branch" ParameterId="Index"/>
+        </Connections>
+      </Parameter>
+    </Parameters>
+  </Node>
+</Network>

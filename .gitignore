@@ -9,3 +9,5 @@ Samples/wavetables.hwm
 /DspNetworks/Binaries
 *.ch1
 /un
+/AudioFiles/Expanded
+/AudioFiles/sfz

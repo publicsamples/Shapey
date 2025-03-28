@@ -9,29 +9,26 @@
 
 // Include third party header files ----------------
 
+#include "Comb.h"
+#include "DODE.h"
 #include "g.h"
+#include "granul.h"
 #include "granular.h"
+#include "khp2.h"
+#include "klp.h"
+#include "moogLadder.h"
+#include "OBBPF.h"
+#include "OBHP.h"
+#include "OBLP.h"
+#include "salenBP.h"
+#include "salenHP.h"
+#include "salenLP.h"
+#include "shifty.h"
 
 // Include compiled network files ------------------
 
-#include "blank_networkdata.h"
-#include "BypassTest_networkdata.h"
-#include "cablein_networkdata.h"
-#include "env_networkdata.h"
-#include "file_networkdata.h"
-#include "filter_networkdata.h"
 #include "filtest.h"
-#include "gain_networkdata.h"
-#include "gtest_networkdata.h"
 #include "lfo.h"
-#include "modsource_networkdata.h"
-#include "osc_networkdata.h"
-#include "out_networkdata.h"
-#include "polymod2_networkdata.h"
-#include "polymod3_networkdata.h"
-#include "shaper_networkdata.h"
-#include "table.h"
-#include "track_networkdata.h"
 #include "verb.h"
 #include "_networkdata.h"
 

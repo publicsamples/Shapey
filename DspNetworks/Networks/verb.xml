@@ -14,7 +14,9 @@
             </Properties>
             <SwitchTargets>
               <SwitchTarget>
-                <Connections/>
+                <Connections>
+                  <Connection NodeId="dry_gain" ParameterId="Gain"/>
+                </Connections>
               </SwitchTarget>
               <SwitchTarget>
                 <Connections>
@@ -48,9 +50,6 @@
                 <Nodes>
                   <Node ID="tempo_sync1" FactoryPath="control.tempo_sync" Bypassed="0"
                         Name="tempo_sync1">
-                    <ModulationTargets>
-                      <Connection NodeId="convolution" ParameterId="Predelay"/>
-                    </ModulationTargets>
                     <Parameters>
                       <Parameter MinValue="0.0" MaxValue="18.0" StepSize="1.0" ID="Tempo" DefaultValue="0.0"
                                  Automated="1"/>
@@ -62,12 +61,58 @@
                                  ID="UnsyncedTime" Value="18.40000027418137" DefaultValue="200.0"/>
                     </Parameters>
                   </Node>
+                  <Node ID="faust" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                    <Properties>
+                      <Property ID="ClassId" Value="Comb"/>
+                      <Property ID="NumParameters" Value="0"/>
+                    </Properties>
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.009999999776482582"
+                                 ID="aN" Value="0.9299999792128801" DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="100.0" StepSize="0.009999999776482582"
+                                 ID="del" Value="61.70999862067401" DefaultValue="0.0"/>
+                    </Parameters>
+                    <SwitchTargets/>
+                  </Node>
+                  <Node ID="cable_table2" FactoryPath="control.cable_table" Bypassed="0"
+                        Name="cable_table2">
+                    <ComplexData>
+                      <Tables>
+                        <Table Index="-1"/>
+                      </Tables>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="cable_table3" FactoryPath="control.cable_table" Bypassed="0"
+                        Name="cable_table2">
+                    <ComplexData>
+                      <Tables>
+                        <Table Index="-1" EmbeddedData="24..........9C...vO...f+.........vO"/>
+                      </Tables>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="cable_table4" FactoryPath="control.cable_table" Bypassed="0"
+                        Name="cable_table2">
+                    <ComplexData>
+                      <Tables>
+                        <Table Index="-1" EmbeddedData="24......HqjU5C...vO...f+.6dc8C...vO"/>
+                      </Tables>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                    </Parameters>
+                  </Node>
                   <Node ID="convolution" FactoryPath="filters.convolution" Bypassed="0"
                         Name="convolution">
                     <ComplexData>
                       <AudioFiles>
                         <AudioFile Index="0" EmbeddedData="/Users/rick/Downloads/springreverb_ir/Classic/classic-tl1a.wav"
-                                   MinValue="0" MaxValue="27870"/>
+                                   MinValue="0" MaxValue="375627"/>
                       </AudioFiles>
                     </ComplexData>
                     <Parameters>
@@ -77,9 +122,23 @@
                       <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
                                  SkewFactor="5.422270774841309" ID="Damping" Value="0.0"/>
                       <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="1.0" SkewFactor="0.2299045622348785"
-                                 ID="HiCut" Value="20000.0"/>
+                                 ID="HiCut" Value="20.0" DefaultValue="20000.0"/>
                       <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Multithread"
                                  Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="cable_table" FactoryPath="control.cable_table" Bypassed="0"
+                        Name="cable_table">
+                    <ModulationTargets>
+                      <Connection NodeId="one_pole" ParameterId="Frequency"/>
+                    </ModulationTargets>
+                    <ComplexData>
+                      <Tables>
+                        <Table Index="-1" EmbeddedData="36...............vO..f+9....9C...vO...f+....9C...vO"/>
+                      </Tables>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
                     </Parameters>
                   </Node>
                   <Node ID="one_pole" FactoryPath="filters.one_pole" Bypassed="0" Name="one_pole">
@@ -98,6 +157,20 @@
                                  ID="Smoothing" Value="0.009999999776482582"/>
                       <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Mode" Value="0.0"/>
                       <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="cable_table1" FactoryPath="control.cable_table" Bypassed="0"
+                        Name="cable_table">
+                    <ModulationTargets>
+                      <Connection NodeId="one_pole1" ParameterId="Frequency"/>
+                    </ModulationTargets>
+                    <ComplexData>
+                      <Tables>
+                        <Table Index="-1" EmbeddedData="48...............vO..f99.........vO..3e+....9C...vO...f+....9C...vO"/>
+                      </Tables>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
                     </Parameters>
                   </Node>
                   <Node ID="one_pole1" FactoryPath="filters.one_pole" Bypassed="0" Name="one_pole1">
@@ -140,33 +213,24 @@
       </Node>
     </Nodes>
     <Parameters>
-      <Parameter ID="master" MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                 SkewFactor="5.422270774841309" Value="-21.79999883472921" DefaultValue="-7.799998626112952">
-        <Connections>
-          <Connection NodeId="dry_gain" ParameterId="Gain"/>
-        </Connections>
-      </Parameter>
       <Parameter ID="wet" MinValue="0.0" MaxValue="1.0" Value="0.0" DefaultValue="0.5837100830078126">
         <Connections>
           <Connection NodeId="dry_wet_mixer" ParameterId="Value"/>
         </Connections>
       </Parameter>
-      <Parameter ID="pro" MinValue="0.0" MaxValue="18.0" StepSize="1.0" Value="0.0"
+      <Parameter ID="delay" MinValue="0.0" MaxValue="1.0" StepSize="0" Value="1.0"
                  DefaultValue="676.0">
         <Connections>
           <Connection NodeId="tempo_sync1" ParameterId="Tempo"/>
+          <Connection NodeId="cable_table4" ParameterId="Value"/>
+          <Connection NodeId="convolution" ParameterId="Predelay"/>
         </Connections>
       </Parameter>
-      <Parameter ID="damp" MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                 Value="9798.0" DefaultValue="226.4230626496129">
+      <Parameter ID="filter" MinValue="0.0" MaxValue="1.0" Value="0.3640455163043478"
+                 DefaultValue="226.4230626496129">
         <Connections>
-          <Connection NodeId="one_pole" ParameterId="Frequency"/>
-        </Connections>
-      </Parameter>
-      <Parameter ID="hi" MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                 Value="213.0" DefaultValue="1359.592809624341">
-        <Connections>
-          <Connection NodeId="one_pole1" ParameterId="Frequency"/>
+          <Connection NodeId="cable_table1" ParameterId="Value"/>
+          <Connection NodeId="cable_table" ParameterId="Value"/>
         </Connections>
       </Parameter>
     </Parameters>

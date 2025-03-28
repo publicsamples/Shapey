@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="MultFade" AllowPolyphonic="1" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="MultFade" Bypassed="0" Name="MultFade">
+    <Nodes>
+      <Node ID="oscillator" FactoryPath="core.oscillator" Bypassed="1">
+        <Parameters/>
+      </Node>
+      <Node ID="split1" FactoryPath="container.split" Bypassed="0" Name="split1">
+        <Nodes>
+          <Node ID="chain" FactoryPath="container.chain" Bypassed="0" Name="chain">
+            <Nodes>
+              <Node ID="cable_table" FactoryPath="control.cable_table" Bypassed="0"
+                    Name="cable_table">
+                <ModulationTargets>
+                  <Connection NodeId="xfader" ParameterId="Value"/>
+                </ModulationTargets>
+                <ComplexData>
+                  <Tables>
+                    <Table Index="-1" EmbeddedData="48...............vO..Pf9....9C...vO..ff9.........vO...f+.........vO"/>
+                  </Tables>
+                </ComplexData>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.2540380859375"
+                             DefaultValue="0.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="xfader" FactoryPath="control.xfader" Bypassed="0" Name="xfader">
+                <Properties>
+                  <Property ID="NumParameters" Value="8"/>
+                  <Property ID="Mode" Value="RMS"/>
+                </Properties>
+                <SwitchTargets>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul7" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul6" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul5" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul4" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul3" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul2" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul1" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                </SwitchTargets>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                </Parameters>
+              </Node>
+              <Node ID="split" FactoryPath="container.split" Bypassed="0" Name="split">
+                <Nodes>
+                  <Node ID="mul" FactoryPath="math.mul" Bypassed="0" Name="1">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul7" FactoryPath="math.mul" Bypassed="0" Name="2">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul6" FactoryPath="math.mul" Bypassed="0" Name="3">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul5" FactoryPath="math.mul" Bypassed="0" Name="4">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul4" FactoryPath="math.mul" Bypassed="0" Name="5">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul3" FactoryPath="math.mul" Bypassed="0" Name="6">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul2" FactoryPath="math.mul" Bypassed="0" Name="7">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul1" FactoryPath="math.mul" Bypassed="0" Name="8">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="chain1" FactoryPath="container.chain" Bypassed="0" Name="chain">
+            <Nodes>
+              <Node ID="cable_table1" FactoryPath="control.cable_table" Bypassed="0"
+                    Name="cable_table">
+                <ModulationTargets>
+                  <Connection NodeId="xfader1" ParameterId="Value"/>
+                </ModulationTargets>
+                <ComplexData>
+                  <Tables>
+                    <Table Index="-1" EmbeddedData="60...............vO..Pf9.........vO....+....9C...vO..H.+.........vO...f+.........vO"/>
+                  </Tables>
+                </ComplexData>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.2540380859375"
+                             DefaultValue="0.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="xfader1" FactoryPath="control.xfader" Bypassed="0" Name="xfader">
+                <Properties>
+                  <Property ID="NumParameters" Value="8"/>
+                  <Property ID="Mode" Value="RMS"/>
+                </Properties>
+                <SwitchTargets>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul8" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul9" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul10" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul11" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul12" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul13" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul14" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul15" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                </SwitchTargets>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                </Parameters>
+              </Node>
+              <Node ID="split2" FactoryPath="container.split" Bypassed="0" Name="split">
+                <Nodes>
+                  <Node ID="mul8" FactoryPath="math.mul" Bypassed="0" Name="1">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul9" FactoryPath="math.mul" Bypassed="0" Name="2">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul10" FactoryPath="math.mul" Bypassed="0" Name="3">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul11" FactoryPath="math.mul" Bypassed="0" Name="4">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul12" FactoryPath="math.mul" Bypassed="0" Name="5">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul13" FactoryPath="math.mul" Bypassed="0" Name="6">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul14" FactoryPath="math.mul" Bypassed="0" Name="7">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul15" FactoryPath="math.mul" Bypassed="0" Name="8">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="chain2" FactoryPath="container.chain" Bypassed="0" Name="chain">
+            <Nodes>
+              <Node ID="cable_table2" FactoryPath="control.cable_table" Bypassed="0"
+                    Name="cable_table">
+                <ComplexData>
+                  <Tables>
+                    <Table Index="-1" EmbeddedData="72...............vO..Pf9.........vO..H.+.........vO..vO+....9C...vO...P+.........vO...f+.........vO"/>
+                  </Tables>
+                </ComplexData>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.2540380859375"
+                             DefaultValue="0.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="xfader2" FactoryPath="control.xfader" Bypassed="0" Name="xfader">
+                <Properties>
+                  <Property ID="NumParameters" Value="8"/>
+                  <Property ID="Mode" Value="RMS"/>
+                </Properties>
+                <SwitchTargets>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul16" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul17" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul18" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul19" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul20" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul21" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul22" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul23" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                </SwitchTargets>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.5166318359375001"
+                             DefaultValue="0.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="split3" FactoryPath="container.split" Bypassed="0" Name="split">
+                <Nodes>
+                  <Node ID="mul16" FactoryPath="math.mul" Bypassed="0" Name="1">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul17" FactoryPath="math.mul" Bypassed="0" Name="2">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul18" FactoryPath="math.mul" Bypassed="0" Name="3">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul19" FactoryPath="math.mul" Bypassed="0" Name="4">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul20" FactoryPath="math.mul" Bypassed="0" Name="5">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul21" FactoryPath="math.mul" Bypassed="0" Name="6">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul22" FactoryPath="math.mul" Bypassed="0" Name="7">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul23" FactoryPath="math.mul" Bypassed="0" Name="8">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="chain3" FactoryPath="container.chain" Bypassed="0" Name="chain">
+            <Nodes>
+              <Node ID="cable_table3" FactoryPath="control.cable_table" Bypassed="0"
+                    Name="cable_table">
+                <ModulationTargets>
+                  <Connection NodeId="xfader3" ParameterId="Value"/>
+                </ModulationTargets>
+                <ComplexData>
+                  <Tables>
+                    <Table Index="-1" EmbeddedData="60...............vO..Pf9.........vO..H.+.........vO...P+.........vO...f+....9C...vO"/>
+                  </Tables>
+                </ComplexData>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.2540380859375"
+                             DefaultValue="0.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="xfader3" FactoryPath="control.xfader" Bypassed="0" Name="xfader">
+                <Properties>
+                  <Property ID="NumParameters" Value="8"/>
+                  <Property ID="Mode" Value="RMS"/>
+                </Properties>
+                <SwitchTargets>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul24" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul25" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul26" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul27" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul28" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul29" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul30" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                  <SwitchTarget>
+                    <Connections>
+                      <Connection NodeId="mul31" ParameterId="Value"/>
+                    </Connections>
+                  </SwitchTarget>
+                </SwitchTargets>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                </Parameters>
+              </Node>
+              <Node ID="split4" FactoryPath="container.split" Bypassed="0" Name="split">
+                <Nodes>
+                  <Node ID="mul24" FactoryPath="math.mul" Bypassed="0" Name="1">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul25" FactoryPath="math.mul" Bypassed="0" Name="2">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul26" FactoryPath="math.mul" Bypassed="0" Name="3">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul27" FactoryPath="math.mul" Bypassed="0" Name="4">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul28" FactoryPath="math.mul" Bypassed="0" Name="5">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul29" FactoryPath="math.mul" Bypassed="0" Name="6">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul30" FactoryPath="math.mul" Bypassed="0" Name="7">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="mul31" FactoryPath="math.mul" Bypassed="0" Name="8">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
+      <Node ID="peak" FactoryPath="core.peak" Bypassed="0" Name="peak">
+        <ComplexData>
+          <DisplayBuffers>
+            <DisplayBuffer Index="-1"/>
+          </DisplayBuffers>
+        </ComplexData>
+        <Parameters/>
+      </Node>
+    </Nodes>
+    <Parameters/>
+  </Node>
+</Network>
