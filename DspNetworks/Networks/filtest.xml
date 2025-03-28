@@ -2366,24 +2366,8 @@
                         <ModulationTargets>
                           <Connection NodeId="faust" ParameterId="freq"/>
                           <Connection NodeId="faust1" ParameterId="freq"/>
-                          <Connection NodeId="faust5" ParameterId="freq"/>
-                          <Connection NodeId="faust6" ParameterId="freq"/>
-                          <Connection NodeId="faust7" ParameterId="freq"/>
-                          <Connection NodeId="faust8" ParameterId="freq"/>
-                          <Connection NodeId="faust9" ParameterId="freq"/>
-                          <Connection NodeId="faust10" ParameterId="freq"/>
-                          <Connection NodeId="faust11" ParameterId="freq"/>
-                          <Connection NodeId="faust12" ParameterId="freq"/>
                           <Connection NodeId="faust23" ParameterId="freq"/>
                           <Connection NodeId="faust24" ParameterId="freq"/>
-                          <Connection NodeId="faust25" ParameterId="freq"/>
-                          <Connection NodeId="faust26" ParameterId="freq"/>
-                          <Connection NodeId="faust27" ParameterId="freq"/>
-                          <Connection NodeId="faust28" ParameterId="freq"/>
-                          <Connection NodeId="faust29" ParameterId="freq"/>
-                          <Connection NodeId="faust30" ParameterId="freq"/>
-                          <Connection NodeId="faust31" ParameterId="freq"/>
-                          <Connection NodeId="faust32" ParameterId="freq"/>
                         </ModulationTargets>
                       </Node>
                       <Node ID="clear12" FactoryPath="math.clear" Bypassed="0" Name="clear1">
@@ -2552,22 +2536,6 @@
                         <ModulationTargets>
                           <Connection NodeId="faust13" ParameterId="freq"/>
                           <Connection NodeId="faust14" ParameterId="freq"/>
-                          <Connection NodeId="faust15" ParameterId="freq"/>
-                          <Connection NodeId="faust16" ParameterId="freq"/>
-                          <Connection NodeId="faust17" ParameterId="freq"/>
-                          <Connection NodeId="faust19" ParameterId="freq"/>
-                          <Connection NodeId="faust20" ParameterId="freq"/>
-                          <Connection NodeId="faust21" ParameterId="freq"/>
-                          <Connection NodeId="faust22" ParameterId="freq"/>
-                          <Connection NodeId="faust18" ParameterId="freq"/>
-                          <Connection NodeId="faust42" ParameterId="freq"/>
-                          <Connection NodeId="faust41" ParameterId="freq"/>
-                          <Connection NodeId="faust40" ParameterId="freq"/>
-                          <Connection NodeId="faust39" ParameterId="freq"/>
-                          <Connection NodeId="faust38" ParameterId="freq"/>
-                          <Connection NodeId="faust37" ParameterId="freq"/>
-                          <Connection NodeId="faust36" ParameterId="freq"/>
-                          <Connection NodeId="faust35" ParameterId="freq"/>
                           <Connection NodeId="faust34" ParameterId="freq"/>
                           <Connection NodeId="faust33" ParameterId="freq"/>
                         </ModulationTargets>
@@ -2681,14 +2649,14 @@
                           <Property ID="Mode" Value="NoteNumber"/>
                         </Properties>
                         <ModulationTargets>
-                          <Connection NodeId="smoothed_parameter4" ParameterId="Value"/>
+                          <Connection NodeId="converter1" ParameterId="Value"/>
                         </ModulationTargets>
                         <Parameters/>
                       </Node>
                       <Node ID="cable_table2" FactoryPath="control.cable_table" Bypassed="0"
                             Name="cable_table2">
                         <ModulationTargets>
-                          <Connection NodeId="smoothed_parameter4" ParameterId="Enabled"/>
+                          <Connection NodeId="smoothed_parameter_unscaled" ParameterId="Enabled"/>
                         </ModulationTargets>
                         <ComplexData>
                           <Tables>
@@ -2699,33 +2667,34 @@
                           <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
                         </Parameters>
                       </Node>
-                      <Node ID="smoothed_parameter4" FactoryPath="control.smoothed_parameter"
-                            Bypassed="0" Name="smoothed_parameter4">
-                        <Properties>
-                          <Property ID="Mode" Value="Linear Ramp"/>
-                        </Properties>
-                        <ModulationTargets>
-                          <Connection NodeId="converter1" ParameterId="Value"/>
-                        </ModulationTargets>
-                        <Parameters>
-                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
-                          <Parameter MinValue="0.1000000014901161" MaxValue="1000.0" StepSize="0.1000000014901161"
-                                     ID="SmoothingTime" DefaultValue="100.0" Automated="1"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" DefaultValue="1.0"
-                                     Automated="1"/>
-                        </Parameters>
-                      </Node>
                       <Node ID="converter1" FactoryPath="control.converter" Bypassed="0"
                             Name="converter1">
                         <Properties>
                           <Property ID="Mode" Value="Midi2Freq"/>
                         </Properties>
                         <ModulationTargets>
-                          <Connection NodeId="oscillator1" ParameterId="Frequency"/>
-                          <Connection NodeId="oscillator8" ParameterId="Frequency"/>
+                          <Connection NodeId="smoothed_parameter_unscaled" ParameterId="Value"/>
                         </ModulationTargets>
                         <Parameters>
                           <Parameter MinValue="0.0" MaxValue="127.0" StepSize="1.0" ID="Value" Automated="1"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="smoothed_parameter_unscaled" FactoryPath="control.smoothed_parameter_unscaled"
+                            Bypassed="0" Name="smoothed_parameter_unscaled">
+                        <Properties>
+                          <Property ID="Mode" Value="Linear Ramp"/>
+                        </Properties>
+                        <ModulationTargets>
+                          <Connection NodeId="oscillator8" ParameterId="Frequency"/>
+                          <Connection NodeId="oscillator1" ParameterId="Frequency"/>
+                        </ModulationTargets>
+                        <Parameters>
+                          <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045584686382"
+                                     ID="Value" Automated="1"/>
+                          <Parameter MinValue="0.1000000014901161" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                     ID="SmoothingTime" DefaultValue="100.0" Automated="1"/>
+                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" DefaultValue="1.0"
+                                     Automated="1"/>
                         </Parameters>
                       </Node>
                       <Node ID="split3" FactoryPath="container.split" Bypassed="0" Name="split3">
@@ -2767,6 +2736,7 @@
                                       <Node ID="pma5" FactoryPath="control.pma" Bypassed="0" Name="pma3">
                                         <ModulationTargets>
                                           <Connection NodeId="oscillator8" ParameterId="Gain"/>
+                                          <Connection NodeId="oscillator1" ParameterId="Gain"/>
                                         </ModulationTargets>
                                         <Parameters>
                                           <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
@@ -2821,7 +2791,7 @@
                                               <Node ID="minmax14" FactoryPath="control.minmax" Bypassed="0" Name="minmax6">
                                                 <Parameters>
                                                   <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="0.0" Automated="1"/>
-                                                  <Parameter MinValue="1.0" MaxValue="16.0" ID="Minimum" Value="1.0" StepSize="1.0"
+                                                  <Parameter MinValue="0.0" MaxValue="16.0" ID="Minimum" Value="1.0" StepSize="1.0"
                                                              DefaultValue="0.0"/>
                                                   <Parameter MinValue="1.0" MaxValue="16.0" ID="Maximum" Value="16.0" DefaultValue="1.0"
                                                              StepSize="1.0"/>
@@ -2901,15 +2871,16 @@
                                 </ModulationTargets>
                                 <Parameters>
                                   <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="" Value="0.0"/>
-                                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Multiply" Value="0.0" DefaultValue="1.0"/>
+                                  <Parameter MinValue="-1.0" MaxValue="1.0" ID="Multiply" Value="1.0"/>
                                   <Parameter MinValue="5.551115123125783e-17" MaxValue="1.0" ID="Add" Automated="1"/>
                                 </Parameters>
                               </Node>
                               <Node ID="minmax7" FactoryPath="control.minmax" Bypassed="0" Name="minmax6">
                                 <Parameters>
                                   <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="0.0" Automated="1"/>
-                                  <Parameter MinValue="0.0" MaxValue="16.0" ID="Minimum" Value="0.0" StepSize="0"/>
-                                  <Parameter MinValue="0.0" MaxValue="16.0" ID="Maximum" Value="15.0" DefaultValue="1.0"
+                                  <Parameter MinValue="0.0" MaxValue="16.0" ID="Minimum" Value="1.0" StepSize="1.0"
+                                             DefaultValue="0.0"/>
+                                  <Parameter MinValue="1.0" MaxValue="16.0" ID="Maximum" Value="16.0" DefaultValue="1.0"
                                              StepSize="1.0"/>
                                   <Parameter MinValue="0.1" MaxValue="10.0" SkewFactor="0.2890648245811462"
                                              ID="Skew" Value="1.0"/>
@@ -2937,8 +2908,7 @@
                                   <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
                                   <Parameter MinValue="0.0" MaxValue="1.0" ID="Phase" Value="0.0028193359375"
                                              DefaultValue="0.0"/>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Gain" Value="0.4970693359375"
-                                             DefaultValue="1.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Gain" DefaultValue="1.0" Automated="1"/>
                                 </Parameters>
                               </Node>
                               <Node ID="pi1" FactoryPath="math.pi" Bypassed="0" Name="pi1">
@@ -2955,6 +2925,17 @@
                               <Node ID="sub1" FactoryPath="math.sub" Bypassed="0" Name="sub">
                                 <Parameters>
                                   <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                </Parameters>
+                              </Node>
+                              <Node ID="gain" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                <Parameters>
+                                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                             SkewFactor="5.422270774841309" ID="Gain" Value="-11.99999868869781"
+                                             DefaultValue="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                             SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                             SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
                                 </Parameters>
                               </Node>
                               <Node ID="send5" FactoryPath="routing.send" Bypassed="0" Name="send5">
@@ -4321,113 +4302,9 @@
                                     </Parameters>
                                     <SwitchTargets/>
                                   </Node>
-                                  <Node ID="faust5" FactoryPath="core.faust" Bypassed="0" Name="faust5">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="salenLP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust6" FactoryPath="core.faust" Bypassed="0" Name="faust5">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="salenHP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust7" FactoryPath="core.faust" Bypassed="0" Name="faust5">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="salenBP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="0.4999999888241291" MaxValue="9.999999776482582" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust8" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="moogLadder"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="0.4999999888241291" MaxValue="9.999999776482582" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust9" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="OBLP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust10" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="OBHP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust11" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="OBBPF"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust12" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="DODE"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
                                 </Nodes>
                                 <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="9" StepSize="1.0" ID="Index" DefaultValue="0.0"
+                                  <Parameter MinValue="0.0" MaxValue="1" StepSize="1.0" ID="Index" DefaultValue="0.0"
                                              Automated="1"/>
                                 </Parameters>
                               </Node>
@@ -4437,7 +4314,7 @@
                           <Node ID="chain57" FactoryPath="container.chain" Bypassed="0" Name="chain51">
                             <Nodes>
                               <Node ID="branch22" FactoryPath="container.branch" Bypassed="0" Name="branch21"
-                                    ShowParameters="1" Folded="1">
+                                    ShowParameters="1">
                                 <Nodes>
                                   <Node ID="faust13" FactoryPath="core.faust" Bypassed="0" Name="faust">
                                     <Properties>
@@ -4445,10 +4322,10 @@
                                       <Property ID="NumParameters" Value="0"/>
                                     </Properties>
                                     <Parameters>
-                                      <Parameter MinValue="0.4999999888241291" MaxValue="9.999999776482582" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
+                                      <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
+                                                 ID="Q" Value="1.0"/>
                                       <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
+                                                 ID="freq" Value="0.5"/>
                                     </Parameters>
                                     <SwitchTargets/>
                                   </Node>
@@ -4458,120 +4335,16 @@
                                       <Property ID="NumParameters" Value="0"/>
                                     </Properties>
                                     <Parameters>
-                                      <Parameter MinValue="0.4999999888241291" MaxValue="9.999999776482582" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust15" FactoryPath="core.faust" Bypassed="0" Name="faust5">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="salenLP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
                                       <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
+                                                 ID="Q" Value="1.0"/>
                                       <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust16" FactoryPath="core.faust" Bypassed="0" Name="faust5">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="salenHP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust17" FactoryPath="core.faust" Bypassed="0" Name="faust5">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="salenBP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust18" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="moogLadder"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust19" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="OBLP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust20" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="OBHP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust21" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="OBBPF"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust22" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="DODE"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
+                                                 ID="freq" Value="0.5"/>
                                     </Parameters>
                                     <SwitchTargets/>
                                   </Node>
                                 </Nodes>
                                 <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="9" StepSize="1.0" ID="Index" DefaultValue="0.0"
+                                  <Parameter MinValue="0.0" MaxValue="1" StepSize="1.0" ID="Index" DefaultValue="0.0"
                                              Automated="1"/>
                                 </Parameters>
                               </Node>
@@ -4591,7 +4364,7 @@
                           <Node ID="chain51" FactoryPath="container.chain" Bypassed="0" Name="chain51">
                             <Nodes>
                               <Node ID="branch23" FactoryPath="container.branch" Bypassed="0" Name="branch21"
-                                    Folded="1" ShowParameters="1">
+                                    ShowParameters="1">
                                 <Nodes>
                                   <Node ID="faust23" FactoryPath="core.faust" Bypassed="0" Name="faust">
                                     <Properties>
@@ -4619,113 +4392,9 @@
                                     </Parameters>
                                     <SwitchTargets/>
                                   </Node>
-                                  <Node ID="faust25" FactoryPath="core.faust" Bypassed="0" Name="faust5">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="salenLP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust26" FactoryPath="core.faust" Bypassed="0" Name="faust5">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="salenHP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust27" FactoryPath="core.faust" Bypassed="0" Name="faust5">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="salenBP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust28" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="moogLadder"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust29" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="OBLP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust30" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="OBHP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust31" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="OBBPF"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust32" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="DODE"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
                                 </Nodes>
                                 <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="9" StepSize="1.0" ID="Index" DefaultValue="0.0"
+                                  <Parameter MinValue="0.0" MaxValue="1" StepSize="1.0" ID="Index" DefaultValue="0.0"
                                              Automated="1"/>
                                 </Parameters>
                               </Node>
@@ -4735,7 +4404,7 @@
                           <Node ID="chain58" FactoryPath="container.chain" Bypassed="0" Name="chain51">
                             <Nodes>
                               <Node ID="branch24" FactoryPath="container.branch" Bypassed="0" Name="branch21"
-                                    ShowParameters="1" Folded="1">
+                                    ShowParameters="1">
                                 <Nodes>
                                   <Node ID="faust33" FactoryPath="core.faust" Bypassed="0" Name="faust">
                                     <Properties>
@@ -4763,113 +4432,9 @@
                                     </Parameters>
                                     <SwitchTargets/>
                                   </Node>
-                                  <Node ID="faust35" FactoryPath="core.faust" Bypassed="0" Name="faust5">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="salenLP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust36" FactoryPath="core.faust" Bypassed="0" Name="faust5">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="salenHP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="0.4999999888241291" MaxValue="9.999999776482582" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust37" FactoryPath="core.faust" Bypassed="0" Name="faust5">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="salenBP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust38" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="moogLadder"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust39" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="OBLP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust40" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="OBHP"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust41" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="OBBPF"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
-                                  <Node ID="faust42" FactoryPath="core.faust" Bypassed="0" Name="faust8">
-                                    <Properties>
-                                      <Property ID="ClassId" Value="DODE"/>
-                                      <Property ID="NumParameters" Value="0"/>
-                                    </Properties>
-                                    <Parameters>
-                                      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="0.009999999776482582"
-                                                 ID="Q" DefaultValue="1.0" Automated="1"/>
-                                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                                 ID="freq" DefaultValue="0.5" Automated="1"/>
-                                    </Parameters>
-                                    <SwitchTargets/>
-                                  </Node>
                                 </Nodes>
                                 <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="9" StepSize="1.0" ID="Index" DefaultValue="0.0"
+                                  <Parameter MinValue="0.0" MaxValue="1" StepSize="1.0" ID="Index" DefaultValue="0.0"
                                              Automated="1"/>
                                 </Parameters>
                               </Node>
@@ -4930,7 +4495,7 @@
           <Connection NodeId="smoother11" ParameterId="SmoothingTime"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="MathSmooth" Value="0.9900000095367432"
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="MathSmooth" Value="0.8600000143051147"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="smoother" ParameterId="SmoothingTime"/>
@@ -4951,7 +4516,7 @@
           <Connection NodeId="sub3" ParameterId="Value"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Blimey" Value="0.239999994635582"
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="Blimey" Value="0.3600000143051147"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma" ParameterId="Add"/>
@@ -4969,8 +4534,7 @@
           <Connection NodeId="branch4" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Pitch" Value="0.02999999932944775"
-                 StepSize="0" DefaultValue="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="Pitch" Value="0.0" StepSize="0">
         <Connections>
           <Connection NodeId="pma1" ParameterId="Add"/>
         </Connections>
@@ -5025,12 +4589,14 @@
           <Connection NodeId="oscillator1" ParameterId="Mode"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="AdjustMix" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="AdjustMix" Value="0.5699999928474426"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma6" ParameterId="Add"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="-1.0" MaxValue="1.0" ID="AdjustMixMod" Value="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="AdjustMixMod" Value="0.4259765624999998"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma6" ParameterId="Multiply"/>
         </Connections>
@@ -5042,17 +4608,18 @@
         </Connections>
       </Parameter>
       <Parameter MinValue="1.0" MaxValue="12.0" StepSize="1.0" ID="AdjustMode"
-                 Value="8.0" DefaultValue="0.0">
+                 Value="6.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="branch3" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="5.551115123125783e-17" MaxValue="1.0" ID="Adj" Value="0.0">
+      <Parameter MinValue="5.551115123125783e-17" MaxValue="1.0" ID="Adj" Value="0.4699999988079071"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma7" ParameterId="Add"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="-1.0" MaxValue="1.0" ID="AdjMod" Value="0.1899999976158142"
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="AdjMod" Value="0.2899999916553497"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma7" ParameterId="Multiply"/>
@@ -5063,12 +4630,14 @@
           <Connection NodeId="branch11" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Position" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="Position" Value="0.4600000083446503"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma8" ParameterId="Add"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="-1.0" MaxValue="1.0" ID="PosMod" Value="1.0" DefaultValue="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="PosMod" Value="2.081668171172169e-17"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma8" ParameterId="Multiply"/>
         </Connections>
@@ -5086,7 +4655,7 @@
           <Connection NodeId="branch" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="5.551115123125783e-17" MaxValue="1.0" ID="Gain2" Value="0.6000000238418579"
+      <Parameter MinValue="5.551115123125783e-17" MaxValue="1.0" ID="Gain2" Value="0.7599999904632568"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma9" ParameterId="Add"/>
@@ -5181,24 +4750,8 @@
         <Connections>
           <Connection NodeId="faust" ParameterId="Q"/>
           <Connection NodeId="faust1" ParameterId="Q"/>
-          <Connection NodeId="faust5" ParameterId="Q"/>
-          <Connection NodeId="faust6" ParameterId="Q"/>
-          <Connection NodeId="faust7" ParameterId="Q"/>
-          <Connection NodeId="faust8" ParameterId="Q"/>
-          <Connection NodeId="faust9" ParameterId="Q"/>
-          <Connection NodeId="faust10" ParameterId="Q"/>
-          <Connection NodeId="faust11" ParameterId="Q"/>
-          <Connection NodeId="faust12" ParameterId="Q"/>
           <Connection NodeId="faust23" ParameterId="Q"/>
           <Connection NodeId="faust24" ParameterId="Q"/>
-          <Connection NodeId="faust25" ParameterId="Q"/>
-          <Connection NodeId="faust26" ParameterId="Q"/>
-          <Connection NodeId="faust27" ParameterId="Q"/>
-          <Connection NodeId="faust28" ParameterId="Q"/>
-          <Connection NodeId="faust29" ParameterId="Q"/>
-          <Connection NodeId="faust30" ParameterId="Q"/>
-          <Connection NodeId="faust31" ParameterId="Q"/>
-          <Connection NodeId="faust32" ParameterId="Q"/>
         </Connections>
       </Parameter>
       <Parameter MinValue="0.0" MaxValue="1.0" ID="FilterMode" Value="0.0">
@@ -5212,7 +4765,8 @@
           <Connection NodeId="pma11" ParameterId="Add"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="-1.0" MaxValue="1.0" ID="LpMod" Value="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="LpMod" Value="-0.3400000035762787"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma11" ParameterId="Multiply"/>
         </Connections>
@@ -5343,7 +4897,7 @@
           <Connection NodeId="ramp" ParameterId="LoopStart"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="18.0" StepSize="1.0" ID="A2Tempo" Value="10.0"
+      <Parameter MinValue="0.0" MaxValue="18.0" StepSize="1.0" ID="A2Tempo" Value="18.0"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="tempo_sync4" ParameterId="Tempo"/>
@@ -5355,7 +4909,7 @@
           <Connection NodeId="tempo_sync5" ParameterId="Tempo"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="18.0" StepSize="1.0" ID="D2Tempo" Value="10.0"
+      <Parameter MinValue="0.0" MaxValue="18.0" StepSize="1.0" ID="D2Tempo" Value="14.0"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="tempo_sync6" ParameterId="Tempo"/>
@@ -5387,24 +4941,8 @@
         <Connections>
           <Connection NodeId="faust13" ParameterId="Q"/>
           <Connection NodeId="faust14" ParameterId="Q"/>
-          <Connection NodeId="faust15" ParameterId="Q"/>
-          <Connection NodeId="faust16" ParameterId="Q"/>
-          <Connection NodeId="faust17" ParameterId="Q"/>
-          <Connection NodeId="faust18" ParameterId="Q"/>
-          <Connection NodeId="faust19" ParameterId="Q"/>
-          <Connection NodeId="faust20" ParameterId="Q"/>
-          <Connection NodeId="faust21" ParameterId="Q"/>
-          <Connection NodeId="faust22" ParameterId="Q"/>
           <Connection NodeId="faust33" ParameterId="Q"/>
           <Connection NodeId="faust34" ParameterId="Q"/>
-          <Connection NodeId="faust35" ParameterId="Q"/>
-          <Connection NodeId="faust36" ParameterId="Q"/>
-          <Connection NodeId="faust37" ParameterId="Q"/>
-          <Connection NodeId="faust38" ParameterId="Q"/>
-          <Connection NodeId="faust39" ParameterId="Q"/>
-          <Connection NodeId="faust40" ParameterId="Q"/>
-          <Connection NodeId="faust41" ParameterId="Q"/>
-          <Connection NodeId="faust42" ParameterId="Q"/>
         </Connections>
       </Parameter>
       <Parameter MinValue="1.0" MaxValue="10.0" StepSize="1.0" ID="Fmode1" Value="1.0"
@@ -5442,7 +4980,7 @@
           <Connection NodeId="gain15" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="CarinputMod" Value="0.9300000071525574"
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="CarinputMod" Value="0.550000011920929"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="gain24" ParameterId="Gain"/>
@@ -5453,7 +4991,7 @@
           <Connection NodeId="gain26" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="MasterCarrier" Value="1.0"
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="MasterCarrier" Value="0.949999988079071"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="gain22" ParameterId="Gain"/>
@@ -5479,19 +5017,18 @@
           <Connection NodeId="xfader2" ParameterId="Value"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="-1.0" MaxValue="1.0" ID="SubFm" Value="2.081668171172169e-17">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="SubFm" Value="0.05999999865889549"
+                 DefaultValue="2.081668171172169e-17">
         <Connections>
           <Connection NodeId="pma3" ParameterId="Multiply"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="-1.0" MaxValue="1.0" ID="SubAm" Value="2.081668171172169e-17"
-                 DefaultValue="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="SubAm" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma5" ParameterId="Multiply"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="detune" Value="0.4699999988079071"
-                 DefaultValue="2.081668171172169e-17">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="detune" Value="0.0" DefaultValue="2.081668171172169e-17">
         <Connections>
           <Connection NodeId="pma19" ParameterId="Add"/>
         </Connections>
@@ -5502,11 +5039,11 @@
           <Connection NodeId="branch5" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Glide" Value="0.3800951086956522"
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="Glide" Value="0.239999994635582"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="cable_table2" ParameterId="Value"/>
-          <Connection NodeId="smoothed_parameter4" ParameterId="SmoothingTime"/>
+          <Connection NodeId="smoothed_parameter_unscaled" ParameterId="SmoothingTime"/>
         </Connections>
       </Parameter>
     </Parameters>

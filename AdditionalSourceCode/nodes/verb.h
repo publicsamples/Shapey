@@ -38,15 +38,6 @@ template <int NV>
 using chain1_t = container::chain<parameter::empty, 
                                   wrap::fix<2, core::gain<NV>>>;
 
-DECLARE_PARAMETER_RANGE_SKEW(cable_table2_modRange, 
-                             0., 
-                             100., 
-                             0.30103);
-
-using cable_table2_mod = parameter::from0To1<jdsp::jchorus, 
-                                             3, 
-                                             cable_table2_modRange>;
-
 struct cable_table2_t_data
 {
 	span<float, 512> data =
@@ -140,7 +131,7 @@ struct cable_table2_t_data
 	};
 };
 
-using cable_table2_t = wrap::data<control::cable_table<cable_table2_mod>, 
+using cable_table2_t = wrap::data<control::cable_table<parameter::empty>, 
                                   data::embedded::table<cable_table2_t_data>>;
 
 struct cable_table3_t_data
@@ -239,14 +230,6 @@ struct cable_table3_t_data
 using cable_table3_t = wrap::data<control::cable_table<parameter::empty>, 
                                   data::embedded::table<cable_table3_t_data>>;
 
-DECLARE_PARAMETER_RANGE(cable_table4_modRange, 
-                        -1., 
-                        1.);
-
-using cable_table4_mod = parameter::from0To1<jdsp::jchorus, 
-                                             2, 
-                                             cable_table4_modRange>;
-
 struct cable_table4_t_data
 {
 	span<float, 512> data =
@@ -340,7 +323,7 @@ struct cable_table4_t_data
 	};
 };
 
-using cable_table4_t = wrap::data<control::cable_table<cable_table4_mod>, 
+using cable_table4_t = wrap::data<control::cable_table<parameter::empty>, 
                                   data::embedded::table<cable_table4_t_data>>;
 using convolution_t = wrap::data<filters::convolution, 
                                  data::external::audiofile<0>>;
@@ -559,7 +542,6 @@ using chain2_t = container::chain<parameter::empty,
                                   cable_table3_t, 
                                   cable_table4_t, 
                                   convolution_t, 
-                                  jdsp::jchorus, 
                                   cable_table_t<NV>, 
                                   filters::one_pole<NV>, 
                                   cable_table1_t<NV>, 
@@ -580,11 +562,6 @@ namespace verb_t_parameters
 {
 // Parameter list for verb_impl::verb_t ------------------------------------------------------------
 
-template <int NV>
-using wet = parameter::chain<ranges::Identity, 
-                             parameter::plain<verb_impl::dry_wet_mixer_t<NV>, 0>, 
-                             parameter::plain<jdsp::jchorus, 1>>;
-
 DECLARE_PARAMETER_RANGE_STEP(delay_0Range, 
                              0., 
                              18., 
@@ -595,12 +572,13 @@ using delay_0 = parameter::from0To1<control::tempo_sync<NV>,
                                     0, 
                                     delay_0Range>;
 
-DECLARE_PARAMETER_RANGE(delay_2Range, 
-                        0., 
-                        100.);
+DECLARE_PARAMETER_RANGE_STEP(delay_2Range, 
+                             0., 
+                             1000., 
+                             1.);
 
-using delay_2 = parameter::from0To1<jdsp::jchorus, 
-                                    0, 
+using delay_2 = parameter::from0To1<verb_impl::convolution_t, 
+                                    1, 
                                     delay_2Range>;
 
 template <int NV>
@@ -614,15 +592,13 @@ using filter = parameter::chain<ranges::Identity,
                                 parameter::plain<verb_impl::cable_table1_t<NV>, 0>, 
                                 parameter::plain<verb_impl::cable_table_t<NV>, 0>>;
 
-using depth = parameter::chain<ranges::Identity, 
-                               parameter::plain<verb_impl::cable_table2_t, 0>, 
-                               parameter::plain<verb_impl::cable_table3_t, 0>>;
-
+template <int NV>
+using wet = parameter::plain<verb_impl::dry_wet_mixer_t<NV>, 
+                             0>;
 template <int NV>
 using verb_t_plist = parameter::list<wet<NV>, 
                                      delay<NV>, 
-                                     filter<NV>, 
-                                     depth>;
+                                     filter<NV>>;
 }
 
 template <int NV>
@@ -644,16 +620,14 @@ template <int NV> struct instance: public verb_impl::verb_t_<NV>
 		
 		SNEX_METADATA_ID(verb);
 		SNEX_METADATA_NUM_CHANNELS(2);
-		SNEX_METADATA_ENCODED_PARAMETERS(62)
+		SNEX_METADATA_ENCODED_PARAMETERS(48)
 		{
 			0x005B, 0x0000, 0x7700, 0x7465, 0x0000, 0x0000, 0x0000, 0x8000, 
             0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0001, 
             0x0000, 0x6564, 0x616C, 0x0079, 0x0000, 0x0000, 0x0000, 0x3F80, 
-            0xC28F, 0x3D75, 0x0000, 0x3F80, 0x0000, 0x0000, 0x025B, 0x0000, 
+            0x5C29, 0x3F4F, 0x0000, 0x3F80, 0x0000, 0x0000, 0x025B, 0x0000, 
             0x6600, 0x6C69, 0x6574, 0x0072, 0x0000, 0x0000, 0x0000, 0x3F80, 
-            0x8105, 0x3E8C, 0x0000, 0x3F80, 0x0000, 0x0000, 0x035B, 0x0000, 
-            0x6400, 0x7065, 0x6874, 0x0000, 0x0000, 0x0000, 0x8000, 0x293F, 
-            0x8F5C, 0x003E, 0x8000, 0x003F, 0x0000, 0x0000
+            0x642D, 0x3EBA, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x0000
 		};
 	};
 	
@@ -673,39 +647,30 @@ template <int NV> struct instance: public verb_impl::verb_t_<NV>
 		auto& cable_table3 = this->getT(0).getT(1).getT(1).getT(3); // verb_impl::cable_table3_t
 		auto& cable_table4 = this->getT(0).getT(1).getT(1).getT(4); // verb_impl::cable_table4_t
 		auto& convolution = this->getT(0).getT(1).getT(1).getT(5);  // verb_impl::convolution_t
-		auto& jchorus = this->getT(0).getT(1).getT(1).getT(6);      // jdsp::jchorus
-		auto& cable_table = this->getT(0).getT(1).getT(1).getT(7);  // verb_impl::cable_table_t<NV>
-		auto& one_pole = this->getT(0).getT(1).getT(1).getT(8);     // filters::one_pole<NV>
-		auto& cable_table1 = this->getT(0).getT(1).getT(1).getT(9); // verb_impl::cable_table1_t<NV>
-		auto& one_pole1 = this->getT(0).getT(1).getT(1).getT(10);   // filters::one_pole<NV>
-		auto& wet_gain = this->getT(0).getT(1).getT(1).getT(11);    // core::gain<NV>
+		auto& cable_table = this->getT(0).getT(1).getT(1).getT(6);  // verb_impl::cable_table_t<NV>
+		auto& one_pole = this->getT(0).getT(1).getT(1).getT(7);     // filters::one_pole<NV>
+		auto& cable_table1 = this->getT(0).getT(1).getT(1).getT(8); // verb_impl::cable_table1_t<NV>
+		auto& one_pole1 = this->getT(0).getT(1).getT(1).getT(9);    // filters::one_pole<NV>
+		auto& wet_gain = this->getT(0).getT(1).getT(1).getT(10);    // core::gain<NV>
 		
 		// Parameter Connections -------------------------------------------------------------------
 		
-		auto& wet_p = this->getParameterT(0);
-		wet_p.connectT(0, dry_wet_mixer); // wet -> dry_wet_mixer::Value
-		wet_p.connectT(1, jchorus);       // wet -> jchorus::Depth
+		this->getParameterT(0).connectT(0, dry_wet_mixer); // wet -> dry_wet_mixer::Value
 		
 		auto& delay_p = this->getParameterT(1);
 		delay_p.connectT(0, tempo_sync1);  // delay -> tempo_sync1::Tempo
 		delay_p.connectT(1, cable_table4); // delay -> cable_table4::Value
-		delay_p.connectT(2, jchorus);      // delay -> jchorus::CentreDelay
+		delay_p.connectT(2, convolution);  // delay -> convolution::Predelay
 		
 		auto& filter_p = this->getParameterT(2);
 		filter_p.connectT(0, cable_table1); // filter -> cable_table1::Value
 		filter_p.connectT(1, cable_table);  // filter -> cable_table::Value
-		
-		auto& depth_p = this->getParameterT(3);
-		depth_p.connectT(0, cable_table2); // depth -> cable_table2::Value
-		depth_p.connectT(1, cable_table3); // depth -> cable_table3::Value
 		
 		// Modulation Connections ------------------------------------------------------------------
 		
 		auto& dry_wet_mixer_p = dry_wet_mixer.getWrappedObject().getParameter();
 		dry_wet_mixer_p.getParameterT(0).connectT(0, dry_gain);                // dry_wet_mixer -> dry_gain::Gain
 		dry_wet_mixer_p.getParameterT(1).connectT(0, wet_gain);                // dry_wet_mixer -> wet_gain::Gain
-		cable_table2.getWrappedObject().getParameter().connectT(0, jchorus);   // cable_table2 -> jchorus::Rate
-		cable_table4.getWrappedObject().getParameter().connectT(0, jchorus);   // cable_table4 -> jchorus::Feedback
 		cable_table.getWrappedObject().getParameter().connectT(0, one_pole);   // cable_table -> one_pole::Frequency
 		cable_table1.getWrappedObject().getParameter().connectT(0, one_pole1); // cable_table1 -> one_pole1::Frequency
 		
@@ -725,23 +690,17 @@ template <int NV> struct instance: public verb_impl::verb_t_<NV>
 		faust.setParameterT(0, 0.93);  // core::faust::aN
 		faust.setParameterT(1, 61.71); // core::faust::del
 		
-		; // cable_table2::Value is automated
+		cable_table2.setParameterT(0, 0.); // control::cable_table::Value
 		
-		; // cable_table3::Value is automated
+		cable_table3.setParameterT(0, 0.); // control::cable_table::Value
 		
 		; // cable_table4::Value is automated
 		
-		convolution.setParameterT(0, 1.);     // filters::convolution::Gate
-		convolution.setParameterT(1, 354.);   // filters::convolution::Predelay
-		convolution.setParameterT(2, -10.);   // filters::convolution::Damping
-		convolution.setParameterT(3, 20000.); // filters::convolution::HiCut
-		convolution.setParameterT(4, 1.);     // filters::convolution::Multithread
-		
-		;                             // jchorus::CentreDelay is automated
-		;                             // jchorus::Depth is automated
-		;                             // jchorus::Feedback is automated
-		;                             // jchorus::Rate is automated
-		jchorus.setParameterT(4, 1.); // jdsp::jchorus::Mix
+		convolution.setParameterT(0, 1.);  // filters::convolution::Gate
+		;                                  // convolution::Predelay is automated
+		convolution.setParameterT(2, 0.);  // filters::convolution::Damping
+		convolution.setParameterT(3, 20.); // filters::convolution::HiCut
+		convolution.setParameterT(4, 1.);  // filters::convolution::Multithread
 		
 		; // cable_table::Value is automated
 		
@@ -766,9 +725,8 @@ template <int NV> struct instance: public verb_impl::verb_t_<NV>
 		wet_gain.setParameterT(2, 0.);  // core::gain::ResetValue
 		
 		this->setParameterT(0, 0.);
-		this->setParameterT(1, 0.06);
-		this->setParameterT(2, 0.274422);
-		this->setParameterT(3, 0.28);
+		this->setParameterT(1, 0.81);
+		this->setParameterT(2, 0.364046);
 		this->setExternalData({}, -1);
 	}
 	~instance() override
@@ -794,8 +752,8 @@ template <int NV> struct instance: public verb_impl::verb_t_<NV>
 		this->getT(0).getT(1).getT(1).getT(3).setExternalData(b, index); // verb_impl::cable_table3_t
 		this->getT(0).getT(1).getT(1).getT(4).setExternalData(b, index); // verb_impl::cable_table4_t
 		this->getT(0).getT(1).getT(1).getT(5).setExternalData(b, index); // verb_impl::convolution_t
-		this->getT(0).getT(1).getT(1).getT(7).setExternalData(b, index); // verb_impl::cable_table_t<NV>
-		this->getT(0).getT(1).getT(1).getT(9).setExternalData(b, index); // verb_impl::cable_table1_t<NV>
+		this->getT(0).getT(1).getT(1).getT(6).setExternalData(b, index); // verb_impl::cable_table_t<NV>
+		this->getT(0).getT(1).getT(1).getT(8).setExternalData(b, index); // verb_impl::cable_table1_t<NV>
 	}
 };
 }

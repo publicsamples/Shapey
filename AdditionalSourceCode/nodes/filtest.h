@@ -57,12 +57,17 @@ template <int NV>
 using midi_t = wrap::mod<parameter::plain<pma17_t<NV>, 0>, 
                          control::midi<midi_logic::velocity<NV>>>;
 
+template <int NV>
+using minmax6_t = control::minmax<NV, 
+                                  parameter::plain<pma17_t<NV>, 1>>;
+
 // Create a signal between 0...1 here --------------------------------------------------------------
 
 template <int NV>
 using mod_signal_t = container::chain<parameter::empty, 
                                       wrap::fix<1, wrap::no_process<math::sig2mod<NV>>>, 
                                       intensity_t<NV>, 
+                                      minmax6_t<NV>, 
                                       pma17_t<NV>>;
 
 template <int NV>
@@ -147,18 +152,24 @@ template <int NV>
 using midi1_t = wrap::mod<parameter::plain<pma18_t<NV>, 0>, 
                           control::midi<midi_logic::velocity<NV>>>;
 
+template <int NV>
+using minmax_t = control::minmax<NV, 
+                                 parameter::plain<pma18_t<NV>, 1>>;
+
 // Create a signal between 0...1 here --------------------------------------------------------------
 
 template <int NV>
 using mod_signal1_t = container::chain<parameter::empty, 
                                        wrap::fix<1, wrap::no_process<math::sig2mod<NV>>>, 
                                        intensity1_t<NV>, 
+                                       minmax_t<NV>, 
                                        pma18_t<NV>>;
 
 template <int NV>
 using chain69_t = container::chain<parameter::empty, 
                                    wrap::fix<1, midi1_t<NV>>, 
                                    simple_ar_t<NV>, 
+                                   math::clear<NV>, 
                                    mod_signal1_t<NV>>;
 
 template <int NV>
@@ -188,6 +199,7 @@ template <int NV>
 using chain56_t = container::chain<parameter::empty, 
                                    wrap::fix<1, tempo_sync2_t<NV>>, 
                                    ramp_t<NV>, 
+                                   math::clear<NV>, 
                                    cable_table1_t<NV>>;
 
 template <int NV> using midi2_mod = minmax1_mod<NV>;
@@ -270,8 +282,15 @@ template <int NV>
 using oscillator8_t = wrap::data<core::oscillator<NV>, 
                                  data::external::displaybuffer<0>>;
 template <int NV>
-using pma5_t = control::pma<NV, 
-                            parameter::plain<oscillator8_t<NV>, 5>>;
+using oscillator1_t = wrap::no_data<core::oscillator<NV>>;
+
+template <int NV>
+using pma5_mod = parameter::chain<ranges::Identity, 
+                                  parameter::plain<oscillator8_t<NV>, 5>, 
+                                  parameter::plain<oscillator1_t<NV>, 5>>;
+
+template <int NV>
+using pma5_t = control::pma<NV, pma5_mod<NV>>;
 DECLARE_PARAMETER_RANGE(pma10_modRange, 
                         5.55112e-17, 
                         1.);
@@ -1218,24 +1237,8 @@ template <int NV>
 using pma11_mod = parameter::chain<ranges::Identity, 
                                    parameter::plain<project::klp<NV>, 1>, 
                                    parameter::plain<project::khp2<NV>, 1>, 
-                                   parameter::plain<project::salenLP<NV>, 1>, 
-                                   parameter::plain<project::salenHP<NV>, 1>, 
-                                   parameter::plain<project::salenBP<NV>, 1>, 
-                                   parameter::plain<project::moogLadder<NV>, 1>, 
-                                   parameter::plain<project::OBLP<NV>, 1>, 
-                                   parameter::plain<project::OBHP<NV>, 1>, 
-                                   parameter::plain<project::OBBPF<NV>, 1>, 
-                                   parameter::plain<project::DODE<NV>, 1>, 
                                    parameter::plain<project::klp<NV>, 1>, 
-                                   parameter::plain<project::khp2<NV>, 1>, 
-                                   parameter::plain<project::salenLP<NV>, 1>, 
-                                   parameter::plain<project::salenHP<NV>, 1>, 
-                                   parameter::plain<project::salenBP<NV>, 1>, 
-                                   parameter::plain<project::moogLadder<NV>, 1>, 
-                                   parameter::plain<project::OBLP<NV>, 1>, 
-                                   parameter::plain<project::OBHP<NV>, 1>, 
-                                   parameter::plain<project::OBBPF<NV>, 1>, 
-                                   parameter::plain<project::DODE<NV>, 1>>;
+                                   parameter::plain<project::khp2<NV>, 1>>;
 
 template <int NV>
 using pma11_t = control::pma<NV, pma11_mod<NV>>;
@@ -1302,22 +1305,6 @@ template <int NV>
 using pma12_mod = parameter::chain<ranges::Identity, 
                                    parameter::plain<project::klp<NV>, 1>, 
                                    parameter::plain<project::khp2<NV>, 1>, 
-                                   parameter::plain<project::salenLP<NV>, 1>, 
-                                   parameter::plain<project::salenHP<NV>, 1>, 
-                                   parameter::plain<project::salenBP<NV>, 1>, 
-                                   parameter::plain<project::OBLP<NV>, 1>, 
-                                   parameter::plain<project::OBHP<NV>, 1>, 
-                                   parameter::plain<project::OBBPF<NV>, 1>, 
-                                   parameter::plain<project::DODE<NV>, 1>, 
-                                   parameter::plain<project::moogLadder<NV>, 1>, 
-                                   parameter::plain<project::DODE<NV>, 1>, 
-                                   parameter::plain<project::OBBPF<NV>, 1>, 
-                                   parameter::plain<project::OBHP<NV>, 1>, 
-                                   parameter::plain<project::OBLP<NV>, 1>, 
-                                   parameter::plain<project::moogLadder<NV>, 1>, 
-                                   parameter::plain<project::salenBP<NV>, 1>, 
-                                   parameter::plain<project::salenHP<NV>, 1>, 
-                                   parameter::plain<project::salenLP<NV>, 1>, 
                                    parameter::plain<project::khp2<NV>, 1>, 
                                    parameter::plain<project::klp<NV>, 1>>;
 
@@ -1375,19 +1362,116 @@ template <int NV>
 using xfader2_t = control::xfader<xfader2_multimod<NV>, faders::linear>;
 
 template <int NV>
-using oscillator1_t = wrap::no_data<core::oscillator<NV>>;
+using smoothed_parameter_unscaled_mod = parameter::chain<ranges::Identity, 
+                                                         parameter::plain<oscillator8_t<NV>, 1>, 
+                                                         parameter::plain<oscillator1_t<NV>, 1>>;
 
 template <int NV>
-using converter1_mod = parameter::chain<ranges::Identity, 
-                                        parameter::plain<oscillator1_t<NV>, 1>, 
-                                        parameter::plain<oscillator8_t<NV>, 1>>;
-
+using smoothed_parameter_unscaled_t = wrap::mod<smoothed_parameter_unscaled_mod<NV>, 
+                                                control::smoothed_parameter_unscaled<NV, smoothers::linear_ramp<NV>>>;
 template <int NV>
-using converter1_t = control::converter<converter1_mod<NV>, 
+using converter1_t = control::converter<parameter::plain<smoothed_parameter_unscaled_t<NV>, 0>, 
                                         conversion_logic::midi2freq>;
 template <int NV>
 using midi5_t = wrap::mod<parameter::plain<converter1_t<NV>, 0>, 
                           control::midi<midi_logic::notenumber<NV>>>;
+
+struct cable_table2_t_data
+{
+	span<float, 512> data =
+	{
+		0.f, 0.125245f, 0.250489f, 0.375734f, 0.500978f, 0.626223f,
+		0.751468f, 0.876712f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+		1.f, 1.f
+	};
+};
+
+template <int NV>
+using cable_table2_t = wrap::data<control::cable_table<parameter::plain<smoothed_parameter_unscaled_t<NV>, 2>>, 
+                                  data::embedded::table<cable_table2_t_data>>;
 
 template <int NV>
 using split9_t = container::split<parameter::empty, 
@@ -1453,7 +1537,8 @@ using chain193_t = container::chain<parameter::empty,
                                     oscillator1_t<NV>, 
                                     math::pi<NV>, 
                                     math::sub<NV>, 
-                                    wrap::no_process<math::sub<NV>>, 
+                                    math::sub<NV>, 
+                                    core::gain<NV>, 
                                     routing::send<stereo_frame_cable>, 
                                     peak17_t<NV>, 
                                     core::gain<NV>>;
@@ -1466,7 +1551,9 @@ using split3_t = container::split<parameter::empty,
 template <int NV>
 using frame2_block1_t_ = container::chain<parameter::empty, 
                                           wrap::fix<2, midi5_t<NV>>, 
+                                          cable_table2_t<NV>, 
                                           converter1_t<NV>, 
+                                          smoothed_parameter_unscaled_t<NV>, 
                                           split3_t<NV>>;
 
 template <int NV>
@@ -1821,15 +1908,7 @@ using split17_t = container::split<parameter::empty,
 template <int NV>
 using branch21_t = container::branch<parameter::empty, 
                                      wrap::fix<2, project::klp<NV>>, 
-                                     project::khp2<NV>, 
-                                     project::salenLP<NV>, 
-                                     project::salenHP<NV>, 
-                                     project::salenBP<NV>, 
-                                     project::moogLadder<NV>, 
-                                     project::OBLP<NV>, 
-                                     project::OBHP<NV>, 
-                                     project::OBBPF<NV>, 
-                                     project::DODE<NV>>;
+                                     project::khp2<NV>>;
 
 template <int NV>
 using chain50_t = container::chain<parameter::empty, 
@@ -2165,9 +2244,9 @@ template <int NV>
 using Gain2Src = parameter::chain<Gain2Src_InputRange, Gain2Src_0<NV>>;
 
 template <int NV>
-using EnvMod1 = parameter::from0To1<filtest_impl::pma17_t<NV>, 
-                                    1, 
-                                    filtest_impl::intensity_modRange>;
+using EnvMod1 = parameter::chain<ranges::Identity, 
+                                 parameter::plain<filtest_impl::minmax_t<NV>, 0>, 
+                                 parameter::plain<filtest_impl::minmax6_t<NV>, 0>>;
 
 DECLARE_PARAMETER_RANGE(EnvDiv_InputRange, 
                         1., 
@@ -2218,104 +2297,16 @@ using q_1 = parameter::from0To1<project::khp2<NV>,
                                 0, 
                                 q_0Range>;
 
-DECLARE_PARAMETER_RANGE_STEP(q_2Range, 
-                             0.5, 
-                             10., 
-                             0.01);
+template <int NV> using q_2 = q_0<NV>;
 
-template <int NV>
-using q_2 = parameter::from0To1<project::salenLP<NV>, 
-                                0, 
-                                q_2Range>;
-
-template <int NV>
-using q_3 = parameter::from0To1<project::salenHP<NV>, 
-                                0, 
-                                q_2Range>;
-
-template <int NV>
-using q_4 = parameter::from0To1<project::salenBP<NV>, 
-                                0, 
-                                q_0Range>;
-
-template <int NV>
-using q_5 = parameter::from0To1<project::moogLadder<NV>, 
-                                0, 
-                                q_0Range>;
-
-DECLARE_PARAMETER_RANGE_STEP(q_6Range, 
-                             1., 
-                             10., 
-                             0.01);
-
-template <int NV>
-using q_6 = parameter::from0To1<project::OBLP<NV>, 
-                                0, 
-                                q_6Range>;
-
-template <int NV>
-using q_7 = parameter::from0To1<project::OBHP<NV>, 
-                                0, 
-                                q_6Range>;
-
-template <int NV>
-using q_8 = parameter::from0To1<project::OBBPF<NV>, 
-                                0, 
-                                q_6Range>;
-
-template <int NV>
-using q_9 = parameter::from0To1<project::DODE<NV>, 
-                                0, 
-                                q_6Range>;
-
-template <int NV> using q_10 = q_0<NV>;
-
-template <int NV> using q_11 = q_1<NV>;
-
-template <int NV> using q_12 = q_2<NV>;
-
-template <int NV> using q_13 = q_3<NV>;
-
-template <int NV>
-using q_14 = parameter::from0To1<project::salenBP<NV>, 
-                                 0, 
-                                 q_2Range>;
-
-template <int NV>
-using q_15 = parameter::from0To1<project::moogLadder<NV>, 
-                                 0, 
-                                 q_2Range>;
-
-template <int NV> using q_16 = q_6<NV>;
-
-template <int NV> using q_17 = q_7<NV>;
-
-template <int NV> using q_18 = q_8<NV>;
-
-template <int NV> using q_19 = q_9<NV>;
+template <int NV> using q_3 = q_1<NV>;
 
 template <int NV>
 using q = parameter::chain<q_InputRange, 
                            q_0<NV>, 
                            q_1<NV>, 
                            q_2<NV>, 
-                           q_3<NV>, 
-                           q_4<NV>, 
-                           q_5<NV>, 
-                           q_6<NV>, 
-                           q_7<NV>, 
-                           q_8<NV>, 
-                           q_9<NV>, 
-                           q_10<NV>, 
-                           q_11<NV>, 
-                           q_12<NV>, 
-                           q_13<NV>, 
-                           q_14<NV>, 
-                           q_15<NV>, 
-                           q_16<NV>, 
-                           q_17<NV>, 
-                           q_18<NV>, 
-                           q_19<NV>>;
+                           q_3<NV>>;
 
 template <int NV>
 using LP = parameter::from0To1<filtest_impl::pma11_t<NV>, 
@@ -2426,113 +2417,47 @@ template <int NV>
 using TableLoop = parameter::chain<TableLoop_InputRange, 
                                    parameter::plain<filtest_impl::ramp_t<NV>, 1>>;
 
-DECLARE_PARAMETER_RANGE_STEP(q2_InputRange, 
+DECLARE_PARAMETER_RANGE_STEP(q2_0Range, 
                              0.5, 
-                             1, 
+                             10., 
                              0.01);
-template <int NV> using q2_0 = q_0<NV>;
-
-template <int NV> using q2_1 = q_1<NV>;
-
-template <int NV> using q2_2 = q_2<NV>;
-
-template <int NV> using q2_3 = q_3<NV>;
-
-template <int NV> using q2_4 = q_14<NV>;
-
-template <int NV> using q2_5 = q_15<NV>;
-
-template <int NV> using q2_6 = q_6<NV>;
-
-template <int NV> using q2_7 = q_7<NV>;
-
-template <int NV> using q2_8 = q_8<NV>;
-
-template <int NV> using q2_9 = q_9<NV>;
-
-template <int NV> using q2_10 = q_0<NV>;
-
-template <int NV> using q2_11 = q_1<NV>;
-
-template <int NV> using q2_12 = q_2<NV>;
 
 template <int NV>
-using q2_13 = parameter::from0To1<project::salenHP<NV>, 
-                                  0, 
-                                  q_0Range>;
-
-template <int NV> using q2_14 = q_14<NV>;
-
-template <int NV> using q2_15 = q_15<NV>;
-
-template <int NV> using q2_16 = q_6<NV>;
-
-template <int NV> using q2_17 = q_7<NV>;
-
-template <int NV> using q2_18 = q_8<NV>;
-
-template <int NV> using q2_19 = q_9<NV>;
+using q2_0 = parameter::from0To1<project::klp<NV>, 
+                                 0, 
+                                 q2_0Range>;
 
 template <int NV>
-using q2 = parameter::chain<q2_InputRange, 
+using q2_1 = parameter::from0To1<project::khp2<NV>, 
+                                 0, 
+                                 q2_0Range>;
+
+template <int NV>
+using q2 = parameter::chain<ranges::Identity, 
                             q2_0<NV>, 
                             q2_1<NV>, 
-                            q2_2<NV>, 
-                            q2_3<NV>, 
-                            q2_4<NV>, 
-                            q2_5<NV>, 
-                            q2_6<NV>, 
-                            q2_7<NV>, 
-                            q2_8<NV>, 
-                            q2_9<NV>, 
-                            q2_10<NV>, 
-                            q2_11<NV>, 
-                            q2_12<NV>, 
-                            q2_13<NV>, 
-                            q2_14<NV>, 
-                            q2_15<NV>, 
-                            q2_16<NV>, 
-                            q2_17<NV>, 
-                            q2_18<NV>, 
-                            q2_19<NV>>;
+                            parameter::plain<project::klp<NV>, 0>, 
+                            parameter::plain<project::khp2<NV>, 0>>;
 
 DECLARE_PARAMETER_RANGE_STEP(Fmode1_InputRange, 
                              1., 
                              10., 
                              1.);
-template <int NV>
-using Fmode1_0 = parameter::from0To1<filtest_impl::branch21_t<NV>, 
-                                     0, 
-                                     BlimeyModSrc_0Range>;
-
-template <int NV>
-using Fmode1_1 = parameter::from0To1<filtest_impl::branch23_t<NV>, 
-                                     0, 
-                                     BlimeyModSrc_0Range>;
 
 template <int NV>
 using Fmode1 = parameter::chain<Fmode1_InputRange, 
-                                Fmode1_0<NV>, 
-                                Fmode1_1<NV>>;
+                                parameter::plain<filtest_impl::branch21_t<NV>, 0>, 
+                                parameter::plain<filtest_impl::branch23_t<NV>, 0>>;
 
 DECLARE_PARAMETER_RANGE_STEP(Fmode2_InputRange, 
                              1., 
                              10., 
                              1.);
-template <int NV>
-using Fmode2_0 = parameter::from0To1<filtest_impl::branch22_t<NV>, 
-                                     0, 
-                                     BlimeyModSrc_0Range>;
-
-template <int NV>
-using Fmode2_1 = parameter::from0To1<filtest_impl::branch24_t<NV>, 
-                                     0, 
-                                     BlimeyModSrc_0Range>;
 
 template <int NV>
 using Fmode2 = parameter::chain<Fmode2_InputRange, 
-                                Fmode2_0<NV>, 
-                                Fmode2_1<NV>>;
+                                parameter::plain<filtest_impl::branch22_t<NV>, 0>, 
+                                parameter::plain<filtest_impl::branch24_t<NV>, 0>>;
 
 template <int NV>
 using FXInputMod = parameter::from0To1<core::gain<NV>, 
@@ -2557,6 +2482,21 @@ template <int NV>
 using detune = parameter::from0To1<filtest_impl::pma19_t<NV>, 
                                    2, 
                                    filtest_impl::pma10_modRange>;
+
+DECLARE_PARAMETER_RANGE_STEP(Glide_1Range, 
+                             0.1, 
+                             1000., 
+                             0.1);
+
+template <int NV>
+using Glide_1 = parameter::from0To1<filtest_impl::smoothed_parameter_unscaled_t<NV>, 
+                                    1, 
+                                    Glide_1Range>;
+
+template <int NV>
+using Glide = parameter::chain<ranges::Identity, 
+                               parameter::plain<filtest_impl::cable_table2_t<NV>, 0>, 
+                               Glide_1<NV>>;
 
 template <int NV>
 using Tempo = parameter::plain<filtest_impl::tempo_sync_t<NV>, 
@@ -2663,9 +2603,7 @@ using Env2LoopTempo = parameter::plain<filtest_impl::tempo_sync3_t<NV>,
 template <int NV>
 using Env2LoopDiv = parameter::plain<filtest_impl::tempo_sync3_t<NV>, 
                                      1>;
-template <int NV>
-using env2mod = parameter::plain<filtest_impl::pma18_t<NV>, 
-                                 1>;
+using env2mod = Fine;
 using blocksize = Fine;
 using f1pan = Fine;
 using f2pan = Fine;
@@ -2756,7 +2694,7 @@ using filtest_t_plist = parameter::list<Tempo<NV>,
                                         Env2Loop<NV>, 
                                         Env2LoopTempo<NV>, 
                                         Env2LoopDiv<NV>, 
-                                        env2mod<NV>, 
+                                        env2mod, 
                                         q2<NV>, 
                                         Fmode1<NV>, 
                                         Fmode2<NV>, 
@@ -2775,7 +2713,8 @@ using filtest_t_plist = parameter::list<Tempo<NV>,
                                         SubFm<NV>, 
                                         SubAm<NV>, 
                                         detune<NV>, 
-                                        ModPostSwitch<NV>>;
+                                        ModPostSwitch<NV>, 
+                                        Glide<NV>>;
 }
 
 template <int NV>
@@ -2797,31 +2736,31 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		SNEX_METADATA_ID(filtest);
 		SNEX_METADATA_NUM_CHANNELS(2);
-		SNEX_METADATA_ENCODED_PARAMETERS(1576)
+		SNEX_METADATA_ENCODED_PARAMETERS(1590)
 		{
 			0x005B, 0x0000, 0x5400, 0x6D65, 0x6F70, 0x0000, 0x8000, 0x003F, 
-            0x0000, 0x0042, 0x0000, 0x0042, 0x8000, 0x003F, 0x8000, 0x5B3F, 
+            0x0000, 0x0042, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x5B3F, 
             0x0001, 0x0000, 0x6F50, 0x5373, 0x6F6D, 0x746F, 0x0068, 0x0000, 
-            0x0000, 0x0000, 0x44FA, 0xB333, 0x431B, 0xEE69, 0x3E6C, 0xCCCD, 
+            0x0000, 0x0000, 0x44FA, 0x0000, 0x0000, 0xEE69, 0x3E6C, 0xCCCD, 
             0x3DCC, 0x025B, 0x0000, 0x4D00, 0x7461, 0x5368, 0x6F6D, 0x746F, 
-            0x0068, 0x0000, 0x0000, 0x0000, 0x3F80, 0xAE14, 0x3F07, 0x0000, 
+            0x0068, 0x0000, 0x0000, 0x0000, 0x3F80, 0x28F6, 0x3F5C, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x035B, 0x0000, 0x4200, 0x696C, 0x656D, 
-            0x0079, 0x0000, 0x0000, 0x0000, 0x3F80, 0x851F, 0x3F6B, 0x0000, 
+            0x0079, 0x0000, 0x0000, 0x0000, 0x3F80, 0x51EC, 0x3EB8, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x045B, 0x0000, 0x4200, 0x696C, 0x656D, 
             0x4D79, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0xC000, 
             0x0023, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0005, 0x0000, 0x6C42, 
             0x6D69, 0x7965, 0x6F4D, 0x5364, 0x6372, 0x0000, 0x8000, 0x003F, 
             0x2000, 0x0041, 0x8000, 0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 
             0x0006, 0x0000, 0x6950, 0x6374, 0x0068, 0x0000, 0x0000, 0x0000, 
-            0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x075B, 
+            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x075B, 
             0x0000, 0x5000, 0x7469, 0x6863, 0x6F4D, 0x0064, 0x0000, 0xBF80, 
             0x0000, 0x3F80, 0x0000, 0x23C0, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x085B, 0x0000, 0x5000, 0x7469, 0x6863, 0x7253, 0x0063, 0x0000, 
             0x3F80, 0x0000, 0x4120, 0x0000, 0x4080, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x095B, 0x0000, 0x4400, 0x7669, 0x6469, 0x0065, 0x0000, 
-            0x3F80, 0x0000, 0x4190, 0x0000, 0x4190, 0x0000, 0x3F80, 0x0000, 
+            0x3F80, 0x0000, 0x4190, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0A5B, 0x0000, 0x4400, 0x7669, 0x6F4D, 0x0064, 0x0000, 
-            0xBF80, 0x0000, 0x3F80, 0x0000, 0xBF80, 0x0000, 0x3F80, 0x0000, 
+            0xBF80, 0x0000, 0x3F80, 0x0000, 0x23C0, 0x0000, 0x3F80, 0x0000, 
             0x0000, 0x0B5B, 0x0000, 0x4400, 0x7669, 0x7253, 0x0063, 0x0000, 
             0x3F80, 0x0000, 0x4120, 0x0000, 0x40A0, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0C5B, 0x0000, 0x5000, 0x7469, 0x6863, 0x7953, 0x636E, 
@@ -2833,35 +2772,35 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x3F80, 0x0000, 0x3F80, 0x0F5B, 0x0000, 0x4F00, 0x6373, 0x6F4D, 
             0x6564, 0x0000, 0x8000, 0x003F, 0xC000, 0x0040, 0x4000, 0x0040, 
             0x8000, 0x003F, 0x8000, 0x5B3F, 0x0010, 0x0000, 0x6441, 0x756A, 
-            0x7473, 0x694D, 0x0078, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
-            0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x115B, 0x0000, 0x4100, 
+            0x7473, 0x694D, 0x0078, 0x0000, 0x0000, 0x0000, 0x3F80, 0xEB85, 
+            0x3F11, 0x0000, 0x3F80, 0x0000, 0x0000, 0x115B, 0x0000, 0x4100, 
             0x6A64, 0x7375, 0x4D74, 0x7869, 0x6F4D, 0x0064, 0x0000, 0xBF80, 
-            0x0000, 0x3F80, 0x0000, 0x23C0, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x3F80, 0x199A, 0x3EDA, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x125B, 0x0000, 0x4100, 0x6A64, 0x7375, 0x4D74, 0x7869, 0x7253, 
-            0x0063, 0x0000, 0x3F80, 0x0000, 0x4120, 0x0000, 0x3F80, 0x0000, 
+            0x0063, 0x0000, 0x3F80, 0x0000, 0x4120, 0x0000, 0x4040, 0x0000, 
             0x3F80, 0x0000, 0x3F80, 0x135B, 0x0000, 0x4100, 0x6A64, 0x7375, 
             0x4D74, 0x646F, 0x0065, 0x0000, 0x3F80, 0x0000, 0x4140, 0x0000, 
-            0x4080, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x145B, 0x0000, 0x4100, 
-            0x6A64, 0x0000, 0x8000, 0x0024, 0x8000, 0xE13F, 0x547A, 0x003F, 
+            0x40C0, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x145B, 0x0000, 0x4100, 
+            0x6A64, 0x0000, 0x8000, 0x0024, 0x8000, 0xD73F, 0xF0A3, 0x003E, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0015, 0x0000, 0x6441, 0x4D6A, 
-            0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x293F, 0x8F5C, 0x003D, 
+            0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0xE13F, 0x947A, 0x003E, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0016, 0x0000, 0x6441, 0x536A, 
             0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 0x0041, 0xA000, 0x0040, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0017, 0x0000, 0x6F50, 0x6973, 
-            0x6974, 0x6E6F, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
-            0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0018, 0x0000, 0x6F50, 
+            0x6974, 0x6E6F, 0x0000, 0x0000, 0x0000, 0x8000, 0x1F3F, 0xEB85, 
+            0x003E, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0018, 0x0000, 0x6F50, 
             0x4D73, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0xC000, 
             0x0023, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0019, 0x0000, 0x6F50, 
-            0x5373, 0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 0x0041, 0x8000, 
+            0x5373, 0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 0x0041, 0x4000, 
             0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001A, 0x0000, 0x754F, 
             0x4D74, 0x646F, 0x0065, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x1B5B, 0x0000, 0x4700, 
-            0x6961, 0x326E, 0x0000, 0x8000, 0x0024, 0x8000, 0x003F, 0x8000, 
-            0x0024, 0x8000, 0x003F, 0x0000, 0x5B00, 0x001C, 0x0000, 0x6147, 
+            0x6961, 0x326E, 0x0000, 0x8000, 0x0024, 0x8000, 0x5C3F, 0x428F, 
+            0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x001C, 0x0000, 0x6147, 
             0x6E69, 0x4D32, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 
             0xC000, 0x0023, 0x8000, 0x003F, 0x0000, 0x5B00, 0x001D, 0x0000, 
             0x6147, 0x6E69, 0x5332, 0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 
-            0x0041, 0x8000, 0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001E, 
+            0x0041, 0x4000, 0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001E, 
             0x0000, 0x3161, 0x0000, 0x0000, 0x0000, 0xEA60, 0x0046, 0x96A8, 
             0x7245, 0x4A6A, 0xCD3E, 0xCCCC, 0x5B3D, 0x001F, 0x0000, 0x3168, 
             0x0000, 0x0000, 0x0000, 0x1C40, 0x0046, 0x0000, 0x7200, 0x4A6A, 
@@ -2873,13 +2812,13 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x7245, 0x4A6A, 0xCD3E, 0xCCCC, 0x5B3D, 0x0023, 0x0000, 0x6E45, 
             0x4D76, 0x646F, 0x0031, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
             0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x245B, 0x0000, 0x6100, 
-            0x0032, 0x0000, 0x0000, 0x0000, 0x447A, 0x0000, 0x42F4, 0x209B, 
+            0x0032, 0x0000, 0x0000, 0x0000, 0x447A, 0x0000, 0x4198, 0x209B, 
             0x3E9A, 0xCCCD, 0x3DCC, 0x255B, 0x0000, 0x6800, 0x0032, 0x0000, 
             0x0000, 0x0000, 0x447A, 0x0000, 0x428E, 0x0000, 0x3F80, 0xCCCD, 
             0x3DCC, 0x265B, 0x0000, 0x6400, 0x0032, 0x0000, 0x0000, 0x0000, 
-            0x447A, 0x0000, 0x447A, 0x209B, 0x3E9A, 0xCCCD, 0x3DCC, 0x275B, 
+            0x447A, 0x0000, 0x4080, 0x209B, 0x3E9A, 0xCCCD, 0x3DCC, 0x275B, 
             0x0000, 0x4500, 0x766E, 0x6944, 0x0076, 0x0000, 0x3F80, 0x0000, 
-            0x4200, 0x0000, 0x4100, 0x0000, 0x3F80, 0x0000, 0x0000, 0x285B, 
+            0x4200, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x285B, 
             0x0000, 0x4500, 0x766E, 0x5332, 0x6E79, 0x0063, 0x0000, 0x0000, 
             0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 
             0x295B, 0x0000, 0x7100, 0x9A00, 0x9999, 0x663E, 0x1E66, 0x0041, 
@@ -2888,15 +2827,15 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 
             0x002B, 0x0000, 0x504C, 0x0000, 0x0000, 0x0000, 0x8000, 0xA43F, 
             0x7D70, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x002C, 0x0000, 
-            0x704C, 0x6F4D, 0x0064, 0x0000, 0xBF80, 0x0000, 0x3F80, 0x0000, 
-            0x23C0, 0x0000, 0x3F80, 0x0000, 0x0000, 0x2D5B, 0x0000, 0x4C00, 
+            0x704C, 0x6F4D, 0x0064, 0x0000, 0xBF80, 0x0000, 0x3F80, 0x147B, 
+            0xBEAE, 0x0000, 0x3F80, 0x0000, 0x0000, 0x2D5B, 0x0000, 0x4C00, 
             0x5370, 0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 0x0041, 0xA000, 
             0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x002E, 0x0000, 0x5048, 
             0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 
             0x003F, 0x0000, 0x5B00, 0x002F, 0x0000, 0x7048, 0x6F4D, 0x0064, 
             0x0000, 0xBF80, 0x0000, 0x3F80, 0x0000, 0x23C0, 0x0000, 0x3F80, 
             0x0000, 0x0000, 0x305B, 0x0000, 0x4800, 0x5370, 0x6372, 0x0000, 
-            0x8000, 0x003F, 0x2000, 0x0041, 0x8000, 0x0040, 0x8000, 0x003F, 
+            0x8000, 0x003F, 0x2000, 0x0041, 0xA000, 0x0040, 0x8000, 0x003F, 
             0x0000, 0x5B00, 0x0031, 0x0000, 0x7473, 0x7065, 0x0000, 0x0000, 
             0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
             0x5B00, 0x0032, 0x0000, 0x6F50, 0x4D73, 0x646F, 0x0065, 0x0000, 
@@ -2906,24 +2845,24 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x5B00, 0x0034, 0x0000, 0x6566, 0x6465, 0x0032, 0x0000, 0x0000, 
             0x0000, 0x3F80, 0xCCCD, 0x3EB2, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x355B, 0x0000, 0x5000, 0x736F, 0x5174, 0x6175, 0x746E, 0x7369, 
-            0x0065, 0x0000, 0x3F80, 0x0000, 0x4100, 0x0000, 0x3F80, 0x0000, 
+            0x0065, 0x0000, 0x3F80, 0x0000, 0x4100, 0x0000, 0x4000, 0x0000, 
             0x3F80, 0x0000, 0x3F80, 0x365B, 0x0000, 0x5000, 0x736F, 0x7469, 
             0x6F69, 0x4F6E, 0x6353, 0x0031, 0x0000, 0x0000, 0x0000, 0x3F80, 
-            0x1EB8, 0x3E85, 0x0000, 0x3F80, 0x0000, 0x0000, 0x375B, 0x0000, 
+            0xCCCD, 0x3E4C, 0x0000, 0x3F80, 0x0000, 0x0000, 0x375B, 0x0000, 
             0x5000, 0x736F, 0x7469, 0x6F69, 0x4F6E, 0x6373, 0x4D31, 0x646F, 
             0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0xC000, 0x0023, 0x8000, 
             0x003F, 0x0000, 0x5B00, 0x0038, 0x0000, 0x6F50, 0x6973, 0x6974, 
             0x6E6F, 0x734F, 0x4D63, 0x646F, 0x7253, 0x0063, 0x0000, 0x3F80, 
-            0x0000, 0x4120, 0x0000, 0x40A0, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x4120, 0x0000, 0x4040, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x395B, 0x0000, 0x5000, 0x736F, 0x6974, 0x6E6F, 0x7453, 0x7065, 
             0x736F, 0x3163, 0x0000, 0x8000, 0x003F, 0x0000, 0x0041, 0xA000, 
             0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x003A, 0x0000, 0x6F50, 
             0x5373, 0x6F6D, 0x746F, 0x4F68, 0x6373, 0x0031, 0x0000, 0x0000, 
-            0x0000, 0x41C0, 0x6667, 0x4096, 0xEE69, 0x3E6C, 0xCCCD, 0x3DCC, 
+            0x0000, 0x41C0, 0x0000, 0x0000, 0xEE69, 0x3E6C, 0xCCCD, 0x3DCC, 
             0x3B5B, 0x0000, 0x4F00, 0x6373, 0x5232, 0x7461, 0x6F69, 0x0000, 
             0x0000, 0x0000, 0x8000, 0xD33F, 0x469B, 0x003D, 0x8000, 0x003F, 
             0x0000, 0x5B00, 0x003C, 0x0000, 0x6F4D, 0x5064, 0x6168, 0x6573, 
-            0x0000, 0x8000, 0x0024, 0x8000, 0x003F, 0x8000, 0x0024, 0x8000, 
+            0x0000, 0x8000, 0x0024, 0x8000, 0x713F, 0x0A3D, 0x003F, 0x8000, 
             0x003F, 0x0000, 0x5B00, 0x003D, 0x0000, 0x6850, 0x7361, 0x4D65, 
             0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0xC000, 0x0023, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x003E, 0x0000, 0x6850, 0x7361, 
@@ -2935,24 +2874,24 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x6F4D, 0x5364, 0x6372, 0x0000, 0x0000, 0x0000, 0x8000, 0x963F, 
             0x7F4A, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0041, 0x0000, 
             0x6154, 0x6C62, 0x5465, 0x6D65, 0x6F70, 0x0000, 0x0000, 0x0000, 
-            0x9000, 0x0041, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x5B3F, 
+            0x9000, 0x0041, 0x0000, 0x0000, 0x8000, 0x003F, 0x8000, 0x5B3F, 
             0x0042, 0x0000, 0x6154, 0x6C62, 0x4465, 0x7669, 0x0000, 0x8000, 
             0x003F, 0x8000, 0x0041, 0x8000, 0x0040, 0x8000, 0x003F, 0x8000, 
             0x5B3F, 0x0043, 0x0000, 0x6154, 0x6C62, 0x4C65, 0x6F6F, 0x0070, 
             0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 
             0x0000, 0x0000, 0x445B, 0x0000, 0x4100, 0x5432, 0x6D65, 0x6F70, 
-            0x0000, 0x0000, 0x0000, 0x9000, 0x0041, 0x0000, 0x0000, 0x8000, 
+            0x0000, 0x0000, 0x0000, 0x9000, 0x0041, 0x9000, 0x0041, 0x8000, 
             0x003F, 0x8000, 0x5B3F, 0x0045, 0x0000, 0x3248, 0x6554, 0x706D, 
             0x006F, 0x0000, 0x0000, 0x0000, 0x4190, 0x0000, 0x4160, 0x0000, 
             0x3F80, 0x0000, 0x3F80, 0x465B, 0x0000, 0x4400, 0x5432, 0x6D65, 
-            0x6F70, 0x0000, 0x0000, 0x0000, 0x9000, 0x0041, 0x0000, 0x0040, 
+            0x6F70, 0x0000, 0x0000, 0x0000, 0x9000, 0x0041, 0x6000, 0x0041, 
             0x8000, 0x003F, 0x8000, 0x5B3F, 0x0047, 0x0000, 0x6E45, 0x3276, 
-            0x6F4C, 0x706F, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x8000, 
-            0x003F, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x0048, 0x0000, 0x6E45, 
+            0x6F4C, 0x706F, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
+            0x0000, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x0048, 0x0000, 0x6E45, 
             0x3276, 0x6F4C, 0x706F, 0x6554, 0x706D, 0x006F, 0x0000, 0x0000, 
-            0x0000, 0x4190, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 
+            0x0000, 0x4190, 0x0000, 0x4110, 0x0000, 0x3F80, 0x0000, 0x3F80, 
             0x495B, 0x0000, 0x4500, 0x766E, 0x4C32, 0x6F6F, 0x4470, 0x7669, 
-            0x0000, 0x8000, 0x003F, 0x8000, 0x0041, 0xE000, 0x0040, 0x8000, 
+            0x0000, 0x8000, 0x003F, 0x8000, 0x0041, 0x8000, 0x003F, 0x8000, 
             0x003F, 0x8000, 0x5B3F, 0x004A, 0x0000, 0x6E65, 0x3276, 0x6F6D, 
             0x0064, 0x0000, 0xBF80, 0x0000, 0x3F80, 0x01BA, 0xBF41, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x4B5B, 0x0000, 0x7100, 0x0032, 0x0000, 
@@ -2973,12 +2912,12 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x7570, 0x4374, 0x7261, 0x6972, 0x7265, 0x0000, 0x0000, 0x0000, 
             0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 
             0x0053, 0x0000, 0x6143, 0x6972, 0x706E, 0x7475, 0x6F4D, 0x0064, 
-            0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 
+            0x0000, 0x0000, 0x0000, 0x3F80, 0xCCCD, 0x3F0C, 0x0000, 0x3F80, 
             0x0000, 0x0000, 0x545B, 0x0000, 0x4300, 0x7261, 0x6E49, 0x7570, 
             0x4674, 0x0078, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x0000, 0x3F80, 0x0000, 0x0000, 0x555B, 0x0000, 0x4D00, 0x7361, 
             0x6574, 0x4372, 0x7261, 0x6972, 0x7265, 0x0000, 0x0000, 0x0000, 
-            0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 
+            0x8000, 0x333F, 0x7333, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 
             0x0056, 0x0000, 0x614D, 0x7473, 0x7265, 0x7553, 0x0062, 0x0000, 
             0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
             0x0000, 0x575B, 0x0000, 0x4D00, 0x7361, 0x6574, 0x4D72, 0x646F, 
@@ -2986,16 +2925,18 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x003F, 0x0000, 0x5B00, 0x0058, 0x0000, 0x614D, 0x7473, 0x7265, 
             0x7846, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0059, 0x0000, 0x7553, 0x4D62, 
-            0x7869, 0x0000, 0x0000, 0x0000, 0x8000, 0x0A3F, 0xA3D7, 0x003C, 
+            0x7869, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x005A, 0x0000, 0x7553, 0x4662, 
-            0x006D, 0x0000, 0xBF80, 0x0000, 0x3F80, 0x0000, 0x23C0, 0x0000, 
+            0x006D, 0x0000, 0xBF80, 0x0000, 0x3F80, 0xC28F, 0x3D75, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x5B5B, 0x0000, 0x5300, 0x6275, 0x6D41, 
-            0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0xC000, 0x0023, 0x8000, 
+            0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 
             0x003F, 0x0000, 0x5B00, 0x005C, 0x0000, 0x6564, 0x7574, 0x656E, 
-            0x0000, 0x0000, 0x0000, 0x8000, 0x0A3F, 0xA3D7, 0x003D, 0x8000, 
+            0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 
             0x003F, 0x0000, 0x5B00, 0x005D, 0x0000, 0x6F4D, 0x5064, 0x736F, 
             0x5374, 0x6977, 0x6374, 0x0068, 0x0000, 0x0000, 0x0000, 0x4000, 
-            0x0000, 0x4000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000
+            0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x5E5B, 0x0000, 
+            0x4700, 0x696C, 0x6564, 0x0000, 0x0000, 0x0000, 0x8000, 0x8F3F, 
+            0x75C2, 0x003E, 0x8000, 0x003F, 0x0000, 0x0000
 		};
 	};
 	
@@ -3013,7 +2954,8 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		auto& mod_signal = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(1);                  // filtest_impl::mod_signal_t<NV>
 		auto& sig2mod1 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(1).getT(0);            // wrap::no_process<math::sig2mod<NV>>
 		auto& intensity = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(1).getT(1);           // filtest_impl::intensity_t<NV>
-		auto& pma17 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(1).getT(2);               // filtest_impl::pma17_t<NV>
+		auto& minmax6 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(1).getT(2);             // filtest_impl::minmax6_t<NV>
+		auto& pma17 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(1).getT(3);               // filtest_impl::pma17_t<NV>
 		auto& minmax1 = this->getT(0).getT(0).getT(0).getT(0).getT(2);                             // filtest_impl::minmax1_t<NV>
 		auto& chain34 = this->getT(0).getT(0).getT(0).getT(1);                                     // filtest_impl::chain34_t<NV>
 		auto& split15 = this->getT(0).getT(0).getT(0).getT(1).getT(0);                             // filtest_impl::split15_t<NV>
@@ -3034,15 +2976,18 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		auto& chain69 = this->getT(0).getT(0).getT(0).getT(1).getT(6);                             // filtest_impl::chain69_t<NV>
 		auto& midi1 = this->getT(0).getT(0).getT(0).getT(1).getT(6).getT(0);                       // filtest_impl::midi1_t<NV>
 		auto& simple_ar = this->getT(0).getT(0).getT(0).getT(1).getT(6).getT(1);                   // filtest_impl::simple_ar_t<NV>
-		auto& mod_signal1 = this->getT(0).getT(0).getT(0).getT(1).getT(6).getT(2);                 // filtest_impl::mod_signal1_t<NV>
-		auto& sig2mod3 = this->getT(0).getT(0).getT(0).getT(1).getT(6).getT(2).getT(0);            // wrap::no_process<math::sig2mod<NV>>
-		auto& intensity1 = this->getT(0).getT(0).getT(0).getT(1).getT(6).getT(2).getT(1);          // filtest_impl::intensity1_t<NV>
-		auto& pma18 = this->getT(0).getT(0).getT(0).getT(1).getT(6).getT(2).getT(2);               // filtest_impl::pma18_t<NV>
+		auto& clear16 = this->getT(0).getT(0).getT(0).getT(1).getT(6).getT(2);                     // math::clear<NV>
+		auto& mod_signal1 = this->getT(0).getT(0).getT(0).getT(1).getT(6).getT(3);                 // filtest_impl::mod_signal1_t<NV>
+		auto& sig2mod3 = this->getT(0).getT(0).getT(0).getT(1).getT(6).getT(3).getT(0);            // wrap::no_process<math::sig2mod<NV>>
+		auto& intensity1 = this->getT(0).getT(0).getT(0).getT(1).getT(6).getT(3).getT(1);          // filtest_impl::intensity1_t<NV>
+		auto& minmax = this->getT(0).getT(0).getT(0).getT(1).getT(6).getT(3).getT(2);              // filtest_impl::minmax_t<NV>
+		auto& pma18 = this->getT(0).getT(0).getT(0).getT(1).getT(6).getT(3).getT(3);               // filtest_impl::pma18_t<NV>
 		auto& minmax2 = this->getT(0).getT(0).getT(0).getT(1).getT(7);                             // filtest_impl::minmax2_t<NV>
 		auto& chain56 = this->getT(0).getT(0).getT(0).getT(2);                                     // filtest_impl::chain56_t<NV>
 		auto& tempo_sync2 = this->getT(0).getT(0).getT(0).getT(2).getT(0);                         // filtest_impl::tempo_sync2_t<NV>
 		auto& ramp = this->getT(0).getT(0).getT(0).getT(2).getT(1);                                // filtest_impl::ramp_t<NV>
-		auto& cable_table1 = this->getT(0).getT(0).getT(0).getT(2).getT(2);                        // filtest_impl::cable_table1_t<NV>
+		auto& clear4 = this->getT(0).getT(0).getT(0).getT(2).getT(2);                              // math::clear<NV>
+		auto& cable_table1 = this->getT(0).getT(0).getT(0).getT(2).getT(3);                        // filtest_impl::cable_table1_t<NV>
 		auto& midi2 = this->getT(0).getT(0).getT(0).getT(3);                                       // filtest_impl::midi2_t<NV>
 		auto& midi3 = this->getT(0).getT(0).getT(0).getT(4);                                       // filtest_impl::midi3_t<NV>
 		auto& midi_cc1 = this->getT(0).getT(0).getT(0).getT(5);                                    // filtest_impl::midi_cc1_t<NV>
@@ -3382,58 +3327,61 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		auto& xfader2 = this->getT(0).getT(1).getT(0).getT(2);                                     // filtest_impl::xfader2_t<NV>
 		auto& frame2_block1 = this->getT(0).getT(1).getT(0).getT(3);                               // filtest_impl::frame2_block1_t<NV>
 		auto& midi5 = this->getT(0).getT(1).getT(0).getT(3).getT(0);                               // filtest_impl::midi5_t<NV>
-		auto& converter1 = this->getT(0).getT(1).getT(0).getT(3).getT(1);                          // filtest_impl::converter1_t<NV>
-		auto& split3 = this->getT(0).getT(1).getT(0).getT(3).getT(2);                              // filtest_impl::split3_t<NV>
-		auto& chain192 = this->getT(0).getT(1).getT(0).getT(3).getT(2).getT(0);                    // filtest_impl::chain192_t<NV>
-		auto& chain48 = this->getT(0).getT(1).getT(0).getT(3).getT(2).getT(0).getT(0);             // filtest_impl::chain48_t<NV>
+		auto& cable_table2 = this->getT(0).getT(1).getT(0).getT(3).getT(1);                        // filtest_impl::cable_table2_t<NV>
+		auto& converter1 = this->getT(0).getT(1).getT(0).getT(3).getT(2);                          // filtest_impl::converter1_t<NV>
+		auto& smoothed_parameter_unscaled = this->getT(0).getT(1).getT(0).getT(3).getT(3);         // filtest_impl::smoothed_parameter_unscaled_t<NV>
+		auto& split3 = this->getT(0).getT(1).getT(0).getT(3).getT(4);                              // filtest_impl::split3_t<NV>
+		auto& chain192 = this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(0);                    // filtest_impl::chain192_t<NV>
+		auto& chain48 = this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(0).getT(0);             // filtest_impl::chain48_t<NV>
 		auto& split9 = this->getT(0).getT(1).getT(0).getT(3).                                      // filtest_impl::split9_t<NV>
-                       getT(2).getT(0).getT(0).getT(0);
+                       getT(4).getT(0).getT(0).getT(0);
 		auto& pma3 = this->getT(0).getT(1).getT(0).getT(3).                                        // filtest_impl::pma3_t<NV>
-                     getT(2).getT(0).getT(0).getT(0).
+                     getT(4).getT(0).getT(0).getT(0).
                      getT(0);
 		auto& pma4 = this->getT(0).getT(1).getT(0).getT(3).                                        // filtest_impl::pma4_t<NV>
-                     getT(2).getT(0).getT(0).getT(0).
+                     getT(4).getT(0).getT(0).getT(0).
                      getT(1);
 		auto& split19 = this->getT(0).getT(1).getT(0).getT(3).                                     // filtest_impl::split19_t<NV>
-                        getT(2).getT(0).getT(0).getT(1);
+                        getT(4).getT(0).getT(0).getT(1);
 		auto& pma5 = this->getT(0).getT(1).getT(0).getT(3).                                        // filtest_impl::pma5_t<NV>
-                     getT(2).getT(0).getT(0).getT(1).
+                     getT(4).getT(0).getT(0).getT(1).
                      getT(0);
 		auto& pma10 = this->getT(0).getT(1).getT(0).getT(3).                                       // filtest_impl::pma10_t<NV>
-                      getT(2).getT(0).getT(0).getT(1).
+                      getT(4).getT(0).getT(0).getT(1).
                       getT(1);
 		auto& chain196 = this->getT(0).getT(1).getT(0).getT(3).                                    // filtest_impl::chain196_t<NV>
-                         getT(2).getT(0).getT(0).getT(2);
+                         getT(4).getT(0).getT(0).getT(2);
 		auto& split1 = this->getT(0).getT(1).getT(0).getT(3).                                      // filtest_impl::split1_t<NV>
-                       getT(2).getT(0).getT(0).getT(2).
+                       getT(4).getT(0).getT(0).getT(2).
                        getT(0);
-		auto& chain13 = this->getT(0).getT(1).getT(0).getT(3).getT(2).                             // filtest_impl::chain13_t<NV>
+		auto& chain13 = this->getT(0).getT(1).getT(0).getT(3).getT(4).                             // filtest_impl::chain13_t<NV>
                         getT(0).getT(0).getT(2).getT(0).getT(0);
-		auto& minmax11 = this->getT(0).getT(1).getT(0).getT(3).getT(2).                            // filtest_impl::minmax11_t<NV>
+		auto& minmax11 = this->getT(0).getT(1).getT(0).getT(3).getT(4).                            // filtest_impl::minmax11_t<NV>
                          getT(0).getT(0).getT(2).getT(0).getT(0).
                          getT(0);
-		auto& chain15 = this->getT(0).getT(1).getT(0).getT(3).getT(2).                             // filtest_impl::chain15_t<NV>
+		auto& chain15 = this->getT(0).getT(1).getT(0).getT(3).getT(4).                             // filtest_impl::chain15_t<NV>
                         getT(0).getT(0).getT(2).getT(0).getT(1);
-		auto& minmax14 = this->getT(0).getT(1).getT(0).getT(3).getT(2).                            // filtest_impl::minmax14_t<NV>
+		auto& minmax14 = this->getT(0).getT(1).getT(0).getT(3).getT(4).                            // filtest_impl::minmax14_t<NV>
                          getT(0).getT(0).getT(2).getT(0).getT(1).
                          getT(0);
 		auto& input_toggle2 = this->getT(0).getT(1).getT(0).getT(3).                               // filtest_impl::input_toggle2_t<NV>
-                              getT(2).getT(0).getT(0).getT(2).
+                              getT(4).getT(0).getT(0).getT(2).
                               getT(1);
 		auto& oscillator8 = this->getT(0).getT(1).getT(0).getT(3).                                 // filtest_impl::oscillator8_t<NV>
-                            getT(2).getT(0).getT(0).getT(2).
+                            getT(4).getT(0).getT(0).getT(2).
                             getT(2);
-		auto& gain5 = this->getT(0).getT(1).getT(0).getT(3).getT(2).getT(0).getT(1);               // core::gain<NV>
-		auto& chain193 = this->getT(0).getT(1).getT(0).getT(3).getT(2).getT(1);                    // filtest_impl::chain193_t<NV>
-		auto& pma19 = this->getT(0).getT(1).getT(0).getT(3).getT(2).getT(1).getT(0);               // filtest_impl::pma19_t<NV>
-		auto& minmax7 = this->getT(0).getT(1).getT(0).getT(3).getT(2).getT(1).getT(1);             // filtest_impl::minmax7_t<NV>
-		auto& oscillator1 = this->getT(0).getT(1).getT(0).getT(3).getT(2).getT(1).getT(2);         // filtest_impl::oscillator1_t<NV>
-		auto& pi1 = this->getT(0).getT(1).getT(0).getT(3).getT(2).getT(1).getT(3);                 // math::pi<NV>
-		auto& sub = this->getT(0).getT(1).getT(0).getT(3).getT(2).getT(1).getT(4);                 // math::sub<NV>
-		auto& sub1 = this->getT(0).getT(1).getT(0).getT(3).getT(2).getT(1).getT(5);                // wrap::no_process<math::sub<NV>>
-		auto& send5 = this->getT(0).getT(1).getT(0).getT(3).getT(2).getT(1).getT(6);               // routing::send<stereo_frame_cable>
-		auto& peak17 = this->getT(0).getT(1).getT(0).getT(3).getT(2).getT(1).getT(7);              // filtest_impl::peak17_t<NV>
-		auto& gain6 = this->getT(0).getT(1).getT(0).getT(3).getT(2).getT(1).getT(8);               // core::gain<NV>
+		auto& gain5 = this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(0).getT(1);               // core::gain<NV>
+		auto& chain193 = this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(1);                    // filtest_impl::chain193_t<NV>
+		auto& pma19 = this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(1).getT(0);               // filtest_impl::pma19_t<NV>
+		auto& minmax7 = this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(1).getT(1);             // filtest_impl::minmax7_t<NV>
+		auto& oscillator1 = this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(1).getT(2);         // filtest_impl::oscillator1_t<NV>
+		auto& pi1 = this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(1).getT(3);                 // math::pi<NV>
+		auto& sub = this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(1).getT(4);                 // math::sub<NV>
+		auto& sub1 = this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(1).getT(5);                // math::sub<NV>
+		auto& gain = this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(1).getT(6);                // core::gain<NV>
+		auto& send5 = this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(1).getT(7);               // routing::send<stereo_frame_cable>
+		auto& peak17 = this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(1).getT(8);              // filtest_impl::peak17_t<NV>
+		auto& gain6 = this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(1).getT(9);               // core::gain<NV>
 		auto& branch5 = this->getT(0).getT(1).getT(0).getT(4);                                     // filtest_impl::branch5_t<NV>
 		auto& chain31 = this->getT(0).getT(1).getT(0).getT(4).getT(0);                             // filtest_impl::chain31_t
 		auto& chain33 = this->getT(0).getT(1).getT(0).getT(4).getT(1);                             // filtest_impl::chain33_t<NV>
@@ -3732,44 +3680,12 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
                       getT(0).getT(0).getT(0).getT(0);
 		auto& faust1 = this->getT(0).getT(5).getT(0).getT(0).                           // project::khp2<NV>
                        getT(0).getT(0).getT(0).getT(1);
-		auto& faust5 = this->getT(0).getT(5).getT(0).getT(0).                           // project::salenLP<NV>
-                       getT(0).getT(0).getT(0).getT(2);
-		auto& faust6 = this->getT(0).getT(5).getT(0).getT(0).                           // project::salenHP<NV>
-                       getT(0).getT(0).getT(0).getT(3);
-		auto& faust7 = this->getT(0).getT(5).getT(0).getT(0).                           // project::salenBP<NV>
-                       getT(0).getT(0).getT(0).getT(4);
-		auto& faust8 = this->getT(0).getT(5).getT(0).getT(0).                           // project::moogLadder<NV>
-                       getT(0).getT(0).getT(0).getT(5);
-		auto& faust9 = this->getT(0).getT(5).getT(0).getT(0).                           // project::OBLP<NV>
-                       getT(0).getT(0).getT(0).getT(6);
-		auto& faust10 = this->getT(0).getT(5).getT(0).getT(0).                          // project::OBHP<NV>
-                        getT(0).getT(0).getT(0).getT(7);
-		auto& faust11 = this->getT(0).getT(5).getT(0).getT(0).                          // project::OBBPF<NV>
-                        getT(0).getT(0).getT(0).getT(8);
-		auto& faust12 = this->getT(0).getT(5).getT(0).getT(0).                          // project::DODE<NV>
-                        getT(0).getT(0).getT(0).getT(9);
 		auto& chain57 = this->getT(0).getT(5).getT(0).getT(0).getT(0).getT(1);          // filtest_impl::chain57_t<NV>
 		auto& branch22 = this->getT(0).getT(5).getT(0).getT(0).getT(0).getT(1).getT(0); // filtest_impl::branch22_t<NV>
 		auto& faust13 = this->getT(0).getT(5).getT(0).getT(0).                          // project::klp<NV>
                         getT(0).getT(1).getT(0).getT(0);
 		auto& faust14 = this->getT(0).getT(5).getT(0).getT(0).                          // project::khp2<NV>
                         getT(0).getT(1).getT(0).getT(1);
-		auto& faust15 = this->getT(0).getT(5).getT(0).getT(0).                          // project::salenLP<NV>
-                        getT(0).getT(1).getT(0).getT(2);
-		auto& faust16 = this->getT(0).getT(5).getT(0).getT(0).                          // project::salenHP<NV>
-                        getT(0).getT(1).getT(0).getT(3);
-		auto& faust17 = this->getT(0).getT(5).getT(0).getT(0).                          // project::salenBP<NV>
-                        getT(0).getT(1).getT(0).getT(4);
-		auto& faust18 = this->getT(0).getT(5).getT(0).getT(0).                          // project::moogLadder<NV>
-                        getT(0).getT(1).getT(0).getT(5);
-		auto& faust19 = this->getT(0).getT(5).getT(0).getT(0).                          // project::OBLP<NV>
-                        getT(0).getT(1).getT(0).getT(6);
-		auto& faust20 = this->getT(0).getT(5).getT(0).getT(0).                          // project::OBHP<NV>
-                        getT(0).getT(1).getT(0).getT(7);
-		auto& faust21 = this->getT(0).getT(5).getT(0).getT(0).                          // project::OBBPF<NV>
-                        getT(0).getT(1).getT(0).getT(8);
-		auto& faust22 = this->getT(0).getT(5).getT(0).getT(0).                          // project::DODE<NV>
-                        getT(0).getT(1).getT(0).getT(9);
 		auto& chain186 = this->getT(0).getT(5).getT(0).getT(1);                         // filtest_impl::chain186_t<NV>
 		auto& split8 = this->getT(0).getT(5).getT(0).getT(1).getT(0);                   // filtest_impl::split8_t<NV>
 		auto& chain51 = this->getT(0).getT(5).getT(0).getT(1).getT(0).getT(0);          // filtest_impl::chain51_t<NV>
@@ -3778,44 +3694,12 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
                         getT(0).getT(0).getT(0).getT(0);
 		auto& faust24 = this->getT(0).getT(5).getT(0).getT(1).                          // project::khp2<NV>
                         getT(0).getT(0).getT(0).getT(1);
-		auto& faust25 = this->getT(0).getT(5).getT(0).getT(1).                          // project::salenLP<NV>
-                        getT(0).getT(0).getT(0).getT(2);
-		auto& faust26 = this->getT(0).getT(5).getT(0).getT(1).                          // project::salenHP<NV>
-                        getT(0).getT(0).getT(0).getT(3);
-		auto& faust27 = this->getT(0).getT(5).getT(0).getT(1).                          // project::salenBP<NV>
-                        getT(0).getT(0).getT(0).getT(4);
-		auto& faust28 = this->getT(0).getT(5).getT(0).getT(1).                          // project::moogLadder<NV>
-                        getT(0).getT(0).getT(0).getT(5);
-		auto& faust29 = this->getT(0).getT(5).getT(0).getT(1).                          // project::OBLP<NV>
-                        getT(0).getT(0).getT(0).getT(6);
-		auto& faust30 = this->getT(0).getT(5).getT(0).getT(1).                          // project::OBHP<NV>
-                        getT(0).getT(0).getT(0).getT(7);
-		auto& faust31 = this->getT(0).getT(5).getT(0).getT(1).                          // project::OBBPF<NV>
-                        getT(0).getT(0).getT(0).getT(8);
-		auto& faust32 = this->getT(0).getT(5).getT(0).getT(1).                          // project::DODE<NV>
-                        getT(0).getT(0).getT(0).getT(9);
 		auto& chain58 = this->getT(0).getT(5).getT(0).getT(1).getT(0).getT(1);          // filtest_impl::chain58_t<NV>
 		auto& branch24 = this->getT(0).getT(5).getT(0).getT(1).getT(0).getT(1).getT(0); // filtest_impl::branch24_t<NV>
 		auto& faust33 = this->getT(0).getT(5).getT(0).getT(1).                          // project::klp<NV>
                         getT(0).getT(1).getT(0).getT(0);
 		auto& faust34 = this->getT(0).getT(5).getT(0).getT(1).  // project::khp2<NV>
                         getT(0).getT(1).getT(0).getT(1);
-		auto& faust35 = this->getT(0).getT(5).getT(0).getT(1).  // project::salenLP<NV>
-                        getT(0).getT(1).getT(0).getT(2);
-		auto& faust36 = this->getT(0).getT(5).getT(0).getT(1).  // project::salenHP<NV>
-                        getT(0).getT(1).getT(0).getT(3);
-		auto& faust37 = this->getT(0).getT(5).getT(0).getT(1).  // project::salenBP<NV>
-                        getT(0).getT(1).getT(0).getT(4);
-		auto& faust38 = this->getT(0).getT(5).getT(0).getT(1).  // project::moogLadder<NV>
-                        getT(0).getT(1).getT(0).getT(5);
-		auto& faust39 = this->getT(0).getT(5).getT(0).getT(1).  // project::OBLP<NV>
-                        getT(0).getT(1).getT(0).getT(6);
-		auto& faust40 = this->getT(0).getT(5).getT(0).getT(1).  // project::OBHP<NV>
-                        getT(0).getT(1).getT(0).getT(7);
-		auto& faust41 = this->getT(0).getT(5).getT(0).getT(1).  // project::OBBPF<NV>
-                        getT(0).getT(1).getT(0).getT(8);
-		auto& faust42 = this->getT(0).getT(5).getT(0).getT(1).  // project::DODE<NV>
-                        getT(0).getT(1).getT(0).getT(9);
 		auto& peak13 = this->getT(0).getT(6); // filtest_impl::peak13_t<NV>
 		
 		// Parameter Connections -------------------------------------------------------------------
@@ -3910,7 +3794,9 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		this->getParameterT(34).connectT(0, ahdsr); // r1 -> ahdsr::Release
 		
-		this->getParameterT(35).connectT(0, pma17); // EnvMod1 -> pma17::Multiply
+		auto& EnvMod1_p = this->getParameterT(35);
+		EnvMod1_p.connectT(0, minmax);  // EnvMod1 -> minmax::Value
+		EnvMod1_p.connectT(1, minmax6); // EnvMod1 -> minmax6::Value
 		
 		this->getParameterT(36).connectT(0, tempo_sync4); // a2 -> tempo_sync4::UnsyncedTime
 		
@@ -3929,26 +3815,10 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		Env2Sync_p.connectT(2, tempo_sync4); // Env2Sync -> tempo_sync4::Enabled
 		
 		auto& q_p = this->getParameterT(41);
-		q_p.connectT(0, faust);    // q -> faust::Q
-		q_p.connectT(1, faust1);   // q -> faust1::Q
-		q_p.connectT(2, faust5);   // q -> faust5::Q
-		q_p.connectT(3, faust6);   // q -> faust6::Q
-		q_p.connectT(4, faust7);   // q -> faust7::Q
-		q_p.connectT(5, faust8);   // q -> faust8::Q
-		q_p.connectT(6, faust9);   // q -> faust9::Q
-		q_p.connectT(7, faust10);  // q -> faust10::Q
-		q_p.connectT(8, faust11);  // q -> faust11::Q
-		q_p.connectT(9, faust12);  // q -> faust12::Q
-		q_p.connectT(10, faust23); // q -> faust23::Q
-		q_p.connectT(11, faust24); // q -> faust24::Q
-		q_p.connectT(12, faust25); // q -> faust25::Q
-		q_p.connectT(13, faust26); // q -> faust26::Q
-		q_p.connectT(14, faust27); // q -> faust27::Q
-		q_p.connectT(15, faust28); // q -> faust28::Q
-		q_p.connectT(16, faust29); // q -> faust29::Q
-		q_p.connectT(17, faust30); // q -> faust30::Q
-		q_p.connectT(18, faust31); // q -> faust31::Q
-		q_p.connectT(19, faust32); // q -> faust32::Q
+		q_p.connectT(0, faust);   // q -> faust::Q
+		q_p.connectT(1, faust1);  // q -> faust1::Q
+		q_p.connectT(2, faust23); // q -> faust23::Q
+		q_p.connectT(3, faust24); // q -> faust24::Q
 		
 		this->getParameterT(42).connectT(0, branch20); // FilterMode -> branch20::Index
 		
@@ -4011,29 +3881,11 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		this->getParameterT(73).connectT(0, tempo_sync3); // Env2LoopDiv -> tempo_sync3::Multiplier
 		
-		this->getParameterT(74).connectT(0, pma18); // env2mod -> pma18::Multiply
-		
 		auto& q2_p = this->getParameterT(75);
-		q2_p.connectT(0, faust13);  // q2 -> faust13::Q
-		q2_p.connectT(1, faust14);  // q2 -> faust14::Q
-		q2_p.connectT(2, faust15);  // q2 -> faust15::Q
-		q2_p.connectT(3, faust16);  // q2 -> faust16::Q
-		q2_p.connectT(4, faust17);  // q2 -> faust17::Q
-		q2_p.connectT(5, faust18);  // q2 -> faust18::Q
-		q2_p.connectT(6, faust19);  // q2 -> faust19::Q
-		q2_p.connectT(7, faust20);  // q2 -> faust20::Q
-		q2_p.connectT(8, faust21);  // q2 -> faust21::Q
-		q2_p.connectT(9, faust22);  // q2 -> faust22::Q
-		q2_p.connectT(10, faust33); // q2 -> faust33::Q
-		q2_p.connectT(11, faust34); // q2 -> faust34::Q
-		q2_p.connectT(12, faust35); // q2 -> faust35::Q
-		q2_p.connectT(13, faust36); // q2 -> faust36::Q
-		q2_p.connectT(14, faust37); // q2 -> faust37::Q
-		q2_p.connectT(15, faust38); // q2 -> faust38::Q
-		q2_p.connectT(16, faust39); // q2 -> faust39::Q
-		q2_p.connectT(17, faust40); // q2 -> faust40::Q
-		q2_p.connectT(18, faust41); // q2 -> faust41::Q
-		q2_p.connectT(19, faust42); // q2 -> faust42::Q
+		q2_p.connectT(0, faust13); // q2 -> faust13::Q
+		q2_p.connectT(1, faust14); // q2 -> faust14::Q
+		q2_p.connectT(2, faust33); // q2 -> faust33::Q
+		q2_p.connectT(3, faust34); // q2 -> faust34::Q
 		
 		auto& Fmode1_p = this->getParameterT(76);
 		Fmode1_p.connectT(0, branch21); // Fmode1 -> branch21::Index
@@ -4069,6 +3921,10 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		this->getParameterT(93).connectT(0, branch5); // ModPostSwitch -> branch5::Index
 		
+		auto& Glide_p = this->getParameterT(94);
+		Glide_p.connectT(0, cable_table2);                // Glide -> cable_table2::Value
+		Glide_p.connectT(1, smoothed_parameter_unscaled); // Glide -> smoothed_parameter_unscaled::SmoothingTime
+		
 		// Modulation Connections ------------------------------------------------------------------
 		
 		minmax1.getWrappedObject().getParameter().connectT(0, add6);    // minmax1 -> add6::Value
@@ -4088,6 +3944,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		auto& ahdsr_p = ahdsr.getWrappedObject().getParameter();
 		ahdsr_p.getParameterT(0).connectT(0, intensity);                 // ahdsr -> intensity::Value
 		midi.getParameter().connectT(0, pma17);                          // midi -> pma17::Value
+		minmax6.getWrappedObject().getParameter().connectT(0, pma17);    // minmax6 -> pma17::Multiply
 		tempo_sync3.getParameter().connectT(0, ramp1);                   // tempo_sync3 -> ramp1::PeriodTime
 		minmax2.getWrappedObject().getParameter().connectT(0, add7);     // minmax2 -> add7::Value
 		minmax2.getWrappedObject().getParameter().connectT(1, add17);    // minmax2 -> add17::Value
@@ -4110,6 +3967,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		tempo_sync4.getParameter().connectT(0, simple_ar);                        // tempo_sync4 -> simple_ar::Attack
 		tempo_sync6.getParameter().connectT(0, simple_ar);                        // tempo_sync6 -> simple_ar::Release
 		midi1.getParameter().connectT(0, pma18);                                  // midi1 -> pma18::Value
+		minmax.getWrappedObject().getParameter().connectT(0, pma18);              // minmax -> pma18::Multiply
 		cable_table1.getWrappedObject().getParameter().connectT(0, add11);        // cable_table1 -> add11::Value
 		cable_table1.getWrappedObject().getParameter().connectT(1, add25);        // cable_table1 -> add25::Value
 		cable_table1.getWrappedObject().getParameter().connectT(2, add28);        // cable_table1 -> add28::Value
@@ -4163,6 +4021,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		global_cable.getWrappedObject().getParameter().connectT(0, add);          // global_cable -> add::Value
 		global_cable1.getWrappedObject().getParameter().connectT(0, add5);        // global_cable1 -> add5::Value
 		pma5.getWrappedObject().getParameter().connectT(0, oscillator8);          // pma5 -> oscillator8::Gain
+		pma5.getWrappedObject().getParameter().connectT(1, oscillator1);          // pma5 -> oscillator1::Gain
 		pma10.getWrappedObject().getParameter().connectT(0, pma5);                // pma10 -> pma5::Add
 		pma.getWrappedObject().getParameter().connectT(0, pma10);                 // pma -> pma10::Add
 		peak.getParameter().connectT(0, pma);                                     // peak -> pma::Value
@@ -4256,82 +4115,52 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		global_cable33.getWrappedObject().getParameter().connectT(0, add87);      // global_cable33 -> add87::Value
 		pma11.getWrappedObject().getParameter().connectT(0, faust);               // pma11 -> faust::freq
 		pma11.getWrappedObject().getParameter().connectT(1, faust1);              // pma11 -> faust1::freq
-		pma11.getWrappedObject().getParameter().connectT(2, faust5);              // pma11 -> faust5::freq
-		pma11.getWrappedObject().getParameter().connectT(3, faust6);              // pma11 -> faust6::freq
-		pma11.getWrappedObject().getParameter().connectT(4, faust7);              // pma11 -> faust7::freq
-		pma11.getWrappedObject().getParameter().connectT(5, faust8);              // pma11 -> faust8::freq
-		pma11.getWrappedObject().getParameter().connectT(6, faust9);              // pma11 -> faust9::freq
-		pma11.getWrappedObject().getParameter().connectT(7, faust10);             // pma11 -> faust10::freq
-		pma11.getWrappedObject().getParameter().connectT(8, faust11);             // pma11 -> faust11::freq
-		pma11.getWrappedObject().getParameter().connectT(9, faust12);             // pma11 -> faust12::freq
-		pma11.getWrappedObject().getParameter().connectT(10, faust23);            // pma11 -> faust23::freq
-		pma11.getWrappedObject().getParameter().connectT(11, faust24);            // pma11 -> faust24::freq
-		pma11.getWrappedObject().getParameter().connectT(12, faust25);            // pma11 -> faust25::freq
-		pma11.getWrappedObject().getParameter().connectT(13, faust26);            // pma11 -> faust26::freq
-		pma11.getWrappedObject().getParameter().connectT(14, faust27);            // pma11 -> faust27::freq
-		pma11.getWrappedObject().getParameter().connectT(15, faust28);            // pma11 -> faust28::freq
-		pma11.getWrappedObject().getParameter().connectT(16, faust29);            // pma11 -> faust29::freq
-		pma11.getWrappedObject().getParameter().connectT(17, faust30);            // pma11 -> faust30::freq
-		pma11.getWrappedObject().getParameter().connectT(18, faust31);            // pma11 -> faust31::freq
-		pma11.getWrappedObject().getParameter().connectT(19, faust32);            // pma11 -> faust32::freq
+		pma11.getWrappedObject().getParameter().connectT(2, faust23);             // pma11 -> faust23::freq
+		pma11.getWrappedObject().getParameter().connectT(3, faust24);             // pma11 -> faust24::freq
 		peak10.getParameter().connectT(0, pma11);                                 // peak10 -> pma11::Value
 		global_cable36.getWrappedObject().getParameter().connectT(0, add96);      // global_cable36 -> add96::Value
 		global_cable37.getWrappedObject().getParameter().connectT(0, add97);      // global_cable37 -> add97::Value
 		pma12.getWrappedObject().getParameter().connectT(0, faust13);             // pma12 -> faust13::freq
 		pma12.getWrappedObject().getParameter().connectT(1, faust14);             // pma12 -> faust14::freq
-		pma12.getWrappedObject().getParameter().connectT(2, faust15);             // pma12 -> faust15::freq
-		pma12.getWrappedObject().getParameter().connectT(3, faust16);             // pma12 -> faust16::freq
-		pma12.getWrappedObject().getParameter().connectT(4, faust17);             // pma12 -> faust17::freq
-		pma12.getWrappedObject().getParameter().connectT(5, faust19);             // pma12 -> faust19::freq
-		pma12.getWrappedObject().getParameter().connectT(6, faust20);             // pma12 -> faust20::freq
-		pma12.getWrappedObject().getParameter().connectT(7, faust21);             // pma12 -> faust21::freq
-		pma12.getWrappedObject().getParameter().connectT(8, faust22);             // pma12 -> faust22::freq
-		pma12.getWrappedObject().getParameter().connectT(9, faust18);             // pma12 -> faust18::freq
-		pma12.getWrappedObject().getParameter().connectT(10, faust42);            // pma12 -> faust42::freq
-		pma12.getWrappedObject().getParameter().connectT(11, faust41);            // pma12 -> faust41::freq
-		pma12.getWrappedObject().getParameter().connectT(12, faust40);            // pma12 -> faust40::freq
-		pma12.getWrappedObject().getParameter().connectT(13, faust39);            // pma12 -> faust39::freq
-		pma12.getWrappedObject().getParameter().connectT(14, faust38);            // pma12 -> faust38::freq
-		pma12.getWrappedObject().getParameter().connectT(15, faust37);            // pma12 -> faust37::freq
-		pma12.getWrappedObject().getParameter().connectT(16, faust36);            // pma12 -> faust36::freq
-		pma12.getWrappedObject().getParameter().connectT(17, faust35);            // pma12 -> faust35::freq
-		pma12.getWrappedObject().getParameter().connectT(18, faust34);            // pma12 -> faust34::freq
-		pma12.getWrappedObject().getParameter().connectT(19, faust33);            // pma12 -> faust33::freq
+		pma12.getWrappedObject().getParameter().connectT(2, faust34);             // pma12 -> faust34::freq
+		pma12.getWrappedObject().getParameter().connectT(3, faust33);             // pma12 -> faust33::freq
 		peak11.getParameter().connectT(0, pma12);                                 // peak11 -> pma12::Value
 		auto& xfader2_p = xfader2.getWrappedObject().getParameter();
-		xfader2_p.getParameterT(0).connectT(0, gain5);                         // xfader2 -> gain5::Gain
-		xfader2_p.getParameterT(1).connectT(0, gain6);                         // xfader2 -> gain6::Gain
-		converter1.getWrappedObject().getParameter().connectT(0, oscillator1); // converter1 -> oscillator1::Frequency
-		converter1.getWrappedObject().getParameter().connectT(1, oscillator8); // converter1 -> oscillator8::Frequency
-		midi5.getParameter().connectT(0, converter1);                          // midi5 -> converter1::Value
-		minmax7.getWrappedObject().getParameter().connectT(0, oscillator1);    // minmax7 -> oscillator1::FreqRatio
-		pma19.getWrappedObject().getParameter().connectT(0, minmax7);          // pma19 -> minmax7::Value
-		peak17.getParameter().connectT(0, pma3);                               // peak17 -> pma3::Value
-		peak17.getParameter().connectT(1, pma5);                               // peak17 -> pma5::Value
-		peak1.getParameter().connectT(0, add103);                              // peak1 -> add103::Value
-		peak1.getParameter().connectT(1, add107);                              // peak1 -> add107::Value
-		peak1.getParameter().connectT(2, add109);                              // peak1 -> add109::Value
-		peak1.getParameter().connectT(3, add111);                              // peak1 -> add111::Value
-		peak1.getParameter().connectT(4, add113);                              // peak1 -> add113::Value
-		peak1.getParameter().connectT(5, add115);                              // peak1 -> add115::Value
-		peak1.getParameter().connectT(6, add117);                              // peak1 -> add117::Value
-		peak1.getParameter().connectT(7, add27);                               // peak1 -> add27::Value
-		peak1.getParameter().connectT(8, add14);                               // peak1 -> add14::Value
-		peak1.getParameter().connectT(9, add121);                              // peak1 -> add121::Value
-		peak1.getParameter().connectT(10, add123);                             // peak1 -> add123::Value
-		peak1.getParameter().connectT(11, add118);                             // peak1 -> add118::Value
-		peak13.getParameter().connectT(0, add104);                             // peak13 -> add104::Value
-		peak13.getParameter().connectT(1, add106);                             // peak13 -> add106::Value
-		peak13.getParameter().connectT(2, add108);                             // peak13 -> add108::Value
-		peak13.getParameter().connectT(3, add110);                             // peak13 -> add110::Value
-		peak13.getParameter().connectT(4, add112);                             // peak13 -> add112::Value
-		peak13.getParameter().connectT(5, add114);                             // peak13 -> add114::Value
-		peak13.getParameter().connectT(6, add116);                             // peak13 -> add116::Value
-		peak13.getParameter().connectT(7, add26);                              // peak13 -> add26::Value
-		peak13.getParameter().connectT(8, add15);                              // peak13 -> add15::Value
-		peak13.getParameter().connectT(9, add122);                             // peak13 -> add122::Value
-		peak13.getParameter().connectT(10, add124);                            // peak13 -> add124::Value
-		peak13.getParameter().connectT(11, add119);                            // peak13 -> add119::Value
+		xfader2_p.getParameterT(0).connectT(0, gain5);                                           // xfader2 -> gain5::Gain
+		xfader2_p.getParameterT(1).connectT(0, gain6);                                           // xfader2 -> gain6::Gain
+		smoothed_parameter_unscaled.getParameter().connectT(0, oscillator8);                     // smoothed_parameter_unscaled -> oscillator8::Frequency
+		smoothed_parameter_unscaled.getParameter().connectT(1, oscillator1);                     // smoothed_parameter_unscaled -> oscillator1::Frequency
+		converter1.getWrappedObject().getParameter().connectT(0, smoothed_parameter_unscaled);   // converter1 -> smoothed_parameter_unscaled::Value
+		midi5.getParameter().connectT(0, converter1);                                            // midi5 -> converter1::Value
+		cable_table2.getWrappedObject().getParameter().connectT(0, smoothed_parameter_unscaled); // cable_table2 -> smoothed_parameter_unscaled::Enabled
+		minmax7.getWrappedObject().getParameter().connectT(0, oscillator1);                      // minmax7 -> oscillator1::FreqRatio
+		pma19.getWrappedObject().getParameter().connectT(0, minmax7);                            // pma19 -> minmax7::Value
+		peak17.getParameter().connectT(0, pma3);                                                 // peak17 -> pma3::Value
+		peak17.getParameter().connectT(1, pma5);                                                 // peak17 -> pma5::Value
+		peak1.getParameter().connectT(0, add103);                                                // peak1 -> add103::Value
+		peak1.getParameter().connectT(1, add107);                                                // peak1 -> add107::Value
+		peak1.getParameter().connectT(2, add109);                                                // peak1 -> add109::Value
+		peak1.getParameter().connectT(3, add111);                                                // peak1 -> add111::Value
+		peak1.getParameter().connectT(4, add113);                                                // peak1 -> add113::Value
+		peak1.getParameter().connectT(5, add115);                                                // peak1 -> add115::Value
+		peak1.getParameter().connectT(6, add117);                                                // peak1 -> add117::Value
+		peak1.getParameter().connectT(7, add27);                                                 // peak1 -> add27::Value
+		peak1.getParameter().connectT(8, add14);                                                 // peak1 -> add14::Value
+		peak1.getParameter().connectT(9, add121);                                                // peak1 -> add121::Value
+		peak1.getParameter().connectT(10, add123);                                               // peak1 -> add123::Value
+		peak1.getParameter().connectT(11, add118);                                               // peak1 -> add118::Value
+		peak13.getParameter().connectT(0, add104);                                               // peak13 -> add104::Value
+		peak13.getParameter().connectT(1, add106);                                               // peak13 -> add106::Value
+		peak13.getParameter().connectT(2, add108);                                               // peak13 -> add108::Value
+		peak13.getParameter().connectT(3, add110);                                               // peak13 -> add110::Value
+		peak13.getParameter().connectT(4, add112);                                               // peak13 -> add112::Value
+		peak13.getParameter().connectT(5, add114);                                               // peak13 -> add114::Value
+		peak13.getParameter().connectT(6, add116);                                               // peak13 -> add116::Value
+		peak13.getParameter().connectT(7, add26);                                                // peak13 -> add26::Value
+		peak13.getParameter().connectT(8, add15);                                                // peak13 -> add15::Value
+		peak13.getParameter().connectT(9, add122);                                               // peak13 -> add122::Value
+		peak13.getParameter().connectT(10, add124);                                              // peak13 -> add124::Value
+		peak13.getParameter().connectT(11, add119);                                              // peak13 -> add119::Value
 		
 		// Send Connections ------------------------------------------------------------------------
 		
@@ -4360,6 +4189,13 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		;                               // intensity::Value is automated
 		intensity.setParameterT(1, 1.); // control::intensity::Intensity
+		
+		;                              // minmax6::Value is automated
+		minmax6.setParameterT(1, -1.); // control::minmax::Minimum
+		minmax6.setParameterT(2, 1.);  // control::minmax::Maximum
+		minmax6.setParameterT(3, 1.);  // control::minmax::Skew
+		minmax6.setParameterT(4, 0.);  // control::minmax::Step
+		minmax6.setParameterT(5, 1.);  // control::minmax::Polarity
 		
 		; // pma17::Value is automated
 		; // pma17::Multiply is automated
@@ -4409,10 +4245,19 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		;                               // simple_ar::Gate is automated
 		simple_ar.setParameterT(3, 0.); // envelope::simple_ar::AttackCurve
 		
+		clear16.setParameterT(0, 0.); // math::clear::Value
+		
 		sig2mod3.setParameterT(0, 0.); // math::sig2mod::Value
 		
 		;                                // intensity1::Value is automated
 		intensity1.setParameterT(1, 1.); // control::intensity::Intensity
+		
+		;                             // minmax::Value is automated
+		minmax.setParameterT(1, -1.); // control::minmax::Minimum
+		minmax.setParameterT(2, 0.);  // control::minmax::Maximum
+		minmax.setParameterT(3, 1.);  // control::minmax::Skew
+		minmax.setParameterT(4, 0.);  // control::minmax::Step
+		minmax.setParameterT(5, 1.);  // control::minmax::Polarity
 		
 		; // pma18::Value is automated
 		; // pma18::Multiply is automated
@@ -4433,6 +4278,8 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		;                          // ramp::PeriodTime is automated
 		;                          // ramp::LoopStart is automated
 		ramp.setParameterT(2, 1.); // core::ramp::Gate
+		
+		clear4.setParameterT(0, 0.); // math::clear::Value
 		
 		; // cable_table1::Value is automated
 		
@@ -4838,12 +4685,18 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		; // input_toggle::Value2 is automated
 		
 		;                                            // smoothed_parameter3::Value is automated
-		smoothed_parameter3.setParameterT(1, 334.5); // control::smoothed_parameter::SmoothingTime
+		smoothed_parameter3.setParameterT(1, 160.9); // control::smoothed_parameter::SmoothingTime
 		smoothed_parameter3.setParameterT(2, 1.);    // control::smoothed_parameter::Enabled
 		
 		; // xfader2::Value is automated
 		
+		; // cable_table2::Value is automated
+		
 		; // converter1::Value is automated
+		
+		; // smoothed_parameter_unscaled::Value is automated
+		; // smoothed_parameter_unscaled::SmoothingTime is automated
+		; // smoothed_parameter_unscaled::Enabled is automated
 		
 		; // pma3::Value is automated
 		; // pma3::Multiply is automated
@@ -4875,7 +4728,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		;                               // minmax14::Step is automated
 		minmax14.setParameterT(5, 0.);  // control::minmax::Polarity
 		
-		input_toggle2.setParameterT(0, 0.); // control::input_toggle::Input
+		input_toggle2.setParameterT(0, 1.); // control::input_toggle::Input
 		;                                   // input_toggle2::Value1 is automated
 		;                                   // input_toggle2::Value2 is automated
 		
@@ -4891,12 +4744,12 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		gain5.setParameterT(2, -100.); // core::gain::ResetValue
 		
 		pma19.setParameterT(0, 0.); // control::pma::Value
-		pma19.setParameterT(1, 0.); // control::pma::Multiply
+		pma19.setParameterT(1, 1.); // control::pma::Multiply
 		;                           // pma19::Add is automated
 		
 		;                              // minmax7::Value is automated
-		minmax7.setParameterT(1, 0.);  // control::minmax::Minimum
-		minmax7.setParameterT(2, 15.); // control::minmax::Maximum
+		minmax7.setParameterT(1, 1.);  // control::minmax::Minimum
+		minmax7.setParameterT(2, 16.); // control::minmax::Maximum
 		minmax7.setParameterT(3, 1.);  // control::minmax::Skew
 		;                              // minmax7::Step is automated
 		minmax7.setParameterT(5, 0.);  // control::minmax::Polarity
@@ -4906,13 +4759,17 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		;                                         // oscillator1::FreqRatio is automated
 		oscillator1.setParameterT(3, 1.);         // core::oscillator::Gate
 		oscillator1.setParameterT(4, 0.00281934); // core::oscillator::Phase
-		oscillator1.setParameterT(5, 1.);         // core::oscillator::Gain
+		;                                         // oscillator1::Gain is automated
 		
 		pi1.setParameterT(0, 1.); // math::pi::Value
 		
 		sub.setParameterT(0, 0.983239); // math::sub::Value
 		
 		sub1.setParameterT(0, 1.); // math::sub::Value
+		
+		gain.setParameterT(0, -11.); // core::gain::Gain
+		gain.setParameterT(1, 20.);  // core::gain::Smoothing
+		gain.setParameterT(2, 0.);   // core::gain::ResetValue
 		
 		;                              // gain6::Gain is automated
 		gain6.setParameterT(1, 10.8);  // core::gain::Smoothing
@@ -5249,30 +5106,6 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		; // faust1::Q is automated
 		; // faust1::freq is automated
 		
-		; // faust5::Q is automated
-		; // faust5::freq is automated
-		
-		; // faust6::Q is automated
-		; // faust6::freq is automated
-		
-		; // faust7::Q is automated
-		; // faust7::freq is automated
-		
-		; // faust8::Q is automated
-		; // faust8::freq is automated
-		
-		; // faust9::Q is automated
-		; // faust9::freq is automated
-		
-		; // faust10::Q is automated
-		; // faust10::freq is automated
-		
-		; // faust11::Q is automated
-		; // faust11::freq is automated
-		
-		; // faust12::Q is automated
-		; // faust12::freq is automated
-		
 		; // branch22::Index is automated
 		
 		; // faust13::Q is automated
@@ -5280,30 +5113,6 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		; // faust14::Q is automated
 		; // faust14::freq is automated
-		
-		; // faust15::Q is automated
-		; // faust15::freq is automated
-		
-		; // faust16::Q is automated
-		; // faust16::freq is automated
-		
-		; // faust17::Q is automated
-		; // faust17::freq is automated
-		
-		; // faust18::Q is automated
-		; // faust18::freq is automated
-		
-		; // faust19::Q is automated
-		; // faust19::freq is automated
-		
-		; // faust20::Q is automated
-		; // faust20::freq is automated
-		
-		; // faust21::Q is automated
-		; // faust21::freq is automated
-		
-		; // faust22::Q is automated
-		; // faust22::freq is automated
 		
 		; // branch23::Index is automated
 		
@@ -5313,30 +5122,6 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		; // faust24::Q is automated
 		; // faust24::freq is automated
 		
-		; // faust25::Q is automated
-		; // faust25::freq is automated
-		
-		; // faust26::Q is automated
-		; // faust26::freq is automated
-		
-		; // faust27::Q is automated
-		; // faust27::freq is automated
-		
-		; // faust28::Q is automated
-		; // faust28::freq is automated
-		
-		; // faust29::Q is automated
-		; // faust29::freq is automated
-		
-		; // faust30::Q is automated
-		; // faust30::freq is automated
-		
-		; // faust31::Q is automated
-		; // faust31::freq is automated
-		
-		; // faust32::Q is automated
-		; // faust32::freq is automated
-		
 		; // branch24::Index is automated
 		
 		; // faust33::Q is automated
@@ -5345,104 +5130,80 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		; // faust34::Q is automated
 		; // faust34::freq is automated
 		
-		; // faust35::Q is automated
-		; // faust35::freq is automated
-		
-		; // faust36::Q is automated
-		; // faust36::freq is automated
-		
-		; // faust37::Q is automated
-		; // faust37::freq is automated
-		
-		; // faust38::Q is automated
-		; // faust38::freq is automated
-		
-		; // faust39::Q is automated
-		; // faust39::freq is automated
-		
-		; // faust40::Q is automated
-		; // faust40::freq is automated
-		
-		; // faust41::Q is automated
-		; // faust41::freq is automated
-		
-		; // faust42::Q is automated
-		; // faust42::freq is automated
-		
-		this->setParameterT(0, 32.);
-		this->setParameterT(1, 155.7);
-		this->setParameterT(2, 0.53);
-		this->setParameterT(3, 0.92);
+		this->setParameterT(0, 1.);
+		this->setParameterT(1, 0.);
+		this->setParameterT(2, 0.86);
+		this->setParameterT(3, 0.36);
 		this->setParameterT(4, 2.08167e-17);
 		this->setParameterT(5, 4.);
-		this->setParameterT(6, 1.);
+		this->setParameterT(6, 0.);
 		this->setParameterT(7, 2.08167e-17);
 		this->setParameterT(8, 4.);
-		this->setParameterT(9, 18.);
-		this->setParameterT(10, -1.);
+		this->setParameterT(9, 1.);
+		this->setParameterT(10, 2.08167e-17);
 		this->setParameterT(11, 5.);
 		this->setParameterT(12, 0.);
 		this->setParameterT(13, -1.);
 		this->setParameterT(14, 1.);
 		this->setParameterT(15, 3.);
-		this->setParameterT(16, 0.);
-		this->setParameterT(17, 2.08167e-17);
-		this->setParameterT(18, 1.);
-		this->setParameterT(19, 4.);
-		this->setParameterT(20, 0.83);
-		this->setParameterT(21, 0.07);
+		this->setParameterT(16, 0.57);
+		this->setParameterT(17, 0.425977);
+		this->setParameterT(18, 3.);
+		this->setParameterT(19, 6.);
+		this->setParameterT(20, 0.47);
+		this->setParameterT(21, 0.29);
 		this->setParameterT(22, 5.);
-		this->setParameterT(23, 0.);
+		this->setParameterT(23, 0.46);
 		this->setParameterT(24, 2.08167e-17);
-		this->setParameterT(25, 4.);
+		this->setParameterT(25, 3.);
 		this->setParameterT(26, 1.);
-		this->setParameterT(27, 5.55112e-17);
+		this->setParameterT(27, 0.76);
 		this->setParameterT(28, 2.08167e-17);
-		this->setParameterT(29, 4.);
+		this->setParameterT(29, 3.);
 		this->setParameterT(30, 4821.);
 		this->setParameterT(31, 0.);
 		this->setParameterT(32, 10000.);
 		this->setParameterT(33, 0.5);
 		this->setParameterT(34, 7254.);
 		this->setParameterT(35, 0.);
-		this->setParameterT(36, 122.);
+		this->setParameterT(36, 19.);
 		this->setParameterT(37, 71.);
-		this->setParameterT(38, 1000.);
-		this->setParameterT(39, 8.);
+		this->setParameterT(38, 4);
+		this->setParameterT(39, 1.);
 		this->setParameterT(40, 1.);
 		this->setParameterT(41, 0.5);
 		this->setParameterT(42, 0.);
 		this->setParameterT(43, 0.99);
-		this->setParameterT(44, 2.08167e-17);
+		this->setParameterT(44, -0.34);
 		this->setParameterT(45, 5.);
 		this->setParameterT(46, 0.);
 		this->setParameterT(47, 2.08167e-17);
-		this->setParameterT(48, 4.);
+		this->setParameterT(48, 5.);
 		this->setParameterT(49, 0.);
 		this->setParameterT(50, 0.226758);
 		this->setParameterT(51, 0.);
 		this->setParameterT(52, 0.349219);
-		this->setParameterT(53, 1.);
-		this->setParameterT(54, 0.26);
+		this->setParameterT(53, 2.);
+		this->setParameterT(54, 0.2);
 		this->setParameterT(55, 2.08167e-17);
-		this->setParameterT(56, 5.);
+		this->setParameterT(56, 3.);
 		this->setParameterT(57, 5.);
-		this->setParameterT(58, 4.7);
+		this->setParameterT(58, 0.);
 		this->setParameterT(59, 0.0484885);
-		this->setParameterT(60, 5.55112e-17);
+		this->setParameterT(60, 0.54);
 		this->setParameterT(61, 2.08167e-17);
 		this->setParameterT(62, 5.);
 		this->setParameterT(63, 0.65574);
 		this->setParameterT(64, 0.997232);
-		this->setParameterT(65, 1.);
+		this->setParameterT(65, 0.);
 		this->setParameterT(66, 4.);
 		this->setParameterT(67, 1.);
-		this->setParameterT(68, 0.);
+		this->setParameterT(68, 18.);
 		this->setParameterT(69, 14.);
-		this->setParameterT(70, 2.);
-		this->setParameterT(71, 1.);
-		this->setParameterT(72, 0.);
-		this->setParameterT(73, 7.);
+		this->setParameterT(70, 14.);
+		this->setParameterT(71, 0.);
+		this->setParameterT(72, 9.);
+		this->setParameterT(73, 1.);
 		this->setParameterT(74, -0.753933);
 		this->setParameterT(75, 0.5);
 		this->setParameterT(76, 1.);
@@ -5452,17 +5213,18 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		this->setParameterT(80, -1.);
 		this->setParameterT(81, 0.);
 		this->setParameterT(82, 0.);
-		this->setParameterT(83, 0.);
+		this->setParameterT(83, 0.55);
 		this->setParameterT(84, 0.);
-		this->setParameterT(85, 0.);
+		this->setParameterT(85, 0.95);
 		this->setParameterT(86, 0.);
 		this->setParameterT(87, 0.);
 		this->setParameterT(88, 0.);
-		this->setParameterT(89, 0.02);
-		this->setParameterT(90, 2.08167e-17);
-		this->setParameterT(91, 2.08167e-17);
-		this->setParameterT(92, 0.08);
-		this->setParameterT(93, 2.);
+		this->setParameterT(89, 0.);
+		this->setParameterT(90, 0.06);
+		this->setParameterT(91, 1.);
+		this->setParameterT(92, 0.);
+		this->setParameterT(93, 1.);
+		this->setParameterT(94, 0.24);
 		this->setExternalData({}, -1);
 	}
 	~instance() override
@@ -5519,7 +5281,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		this->getT(0).getT(0).getT(0).getT(1).getT(3).setExternalData(b, index);                 // filtest_impl::peak2_t<NV>
 		this->getT(0).getT(0).getT(0).getT(1).getT(6).getT(1).setExternalData(b, index);         // filtest_impl::simple_ar_t<NV>
 		this->getT(0).getT(0).getT(0).getT(2).getT(1).setExternalData(b, index);                 // filtest_impl::ramp_t<NV>
-		this->getT(0).getT(0).getT(0).getT(2).getT(2).setExternalData(b, index);                 // filtest_impl::cable_table1_t<NV>
+		this->getT(0).getT(0).getT(0).getT(2).getT(3).setExternalData(b, index);                 // filtest_impl::cable_table1_t<NV>
 		this->getT(0).getT(0).getT(2).getT(0).getT(1).setExternalData(b, index);                 // filtest_impl::peak_t<NV>
 		this->getT(0).getT(0).getT(2).getT(1).getT(1).setExternalData(b, index);                 // filtest_impl::peak3_t<NV>
 		this->getT(0).getT(0).getT(2).getT(2).getT(1).setExternalData(b, index);                 // filtest_impl::peak16_t<NV>
@@ -5532,11 +5294,12 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		this->getT(0).getT(0).getT(2).getT(9).getT(1).setExternalData(b, index);                 // filtest_impl::peak14_t<NV>
 		this->getT(0).getT(0).getT(2).getT(10).getT(1).setExternalData(b, index);                // filtest_impl::peak10_t<NV>
 		this->getT(0).getT(0).getT(2).getT(11).getT(1).setExternalData(b, index);                // filtest_impl::peak11_t<NV>
+		this->getT(0).getT(1).getT(0).getT(3).getT(1).setExternalData(b, index);                 // filtest_impl::cable_table2_t<NV>
 		this->getT(0).getT(1).getT(0).getT(3).                                                   // filtest_impl::oscillator8_t<NV>
-        getT(2).getT(0).getT(0).getT(2).
+        getT(4).getT(0).getT(0).getT(2).
         getT(2).setExternalData(b, index);
-		this->getT(0).getT(1).getT(0).getT(3).getT(2).getT(1).getT(2).setExternalData(b, index); // filtest_impl::oscillator1_t<NV>
-		this->getT(0).getT(1).getT(0).getT(3).getT(2).getT(1).getT(7).setExternalData(b, index); // filtest_impl::peak17_t<NV>
+		this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(1).getT(2).setExternalData(b, index); // filtest_impl::oscillator1_t<NV>
+		this->getT(0).getT(1).getT(0).getT(3).getT(4).getT(1).getT(8).setExternalData(b, index); // filtest_impl::peak17_t<NV>
 		this->getT(0).getT(1).getT(0).getT(4).getT(2).getT(0).getT(3).setExternalData(b, index); // filtest_impl::file_player6_t<NV>
 		this->getT(0).getT(1).getT(1).getT(1).getT(0).                                           // filtest_impl::cable_table_t<NV>
         getT(1).getT(1).getT(1).getT(5).getT(0).setExternalData(b, index);

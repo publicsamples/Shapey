@@ -10,19 +10,11 @@
 // Include third party header files ----------------
 
 #include "Comb.h"
-#include "DODE.h"
 #include "g.h"
 #include "granul.h"
 #include "granular.h"
 #include "khp2.h"
 #include "klp.h"
-#include "moogLadder.h"
-#include "OBBPF.h"
-#include "OBHP.h"
-#include "OBLP.h"
-#include "salenBP.h"
-#include "salenHP.h"
-#include "salenLP.h"
 #include "shifty.h"
 
 // Include compiled network files ------------------

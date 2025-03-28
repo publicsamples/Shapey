@@ -41,10 +41,10 @@ struct _OBLP final : public ::faust::dsp {
 	float fConst0;
 	FAUSTFLOAT fHslider0;
 	FAUSTFLOAT fHslider1;
+	float fRec0[2];
 	float fRec1[2];
-	float fRec2[2];
+	float fRec3[2];
 	float fRec4[2];
-	float fRec5[2];
 	
 	_OBLP() {
 	}
@@ -100,16 +100,16 @@ struct _OBLP final : public ::faust::dsp {
 	
 	void instanceClear() {
 		for (int l0 = 0; l0 < 2; l0 = l0 + 1) {
-			fRec1[l0] = 0.0f;
+			fRec0[l0] = 0.0f;
 		}
 		for (int l1 = 0; l1 < 2; l1 = l1 + 1) {
-			fRec2[l1] = 0.0f;
+			fRec1[l1] = 0.0f;
 		}
 		for (int l2 = 0; l2 < 2; l2 = l2 + 1) {
-			fRec4[l2] = 0.0f;
+			fRec3[l2] = 0.0f;
 		}
 		for (int l3 = 0; l3 < 2; l3 = l3 + 1) {
-			fRec5[l3] = 0.0f;
+			fRec4[l3] = 0.0f;
 		}
 	}
 	
@@ -145,33 +145,33 @@ struct _OBLP final : public ::faust::dsp {
 		FAUSTFLOAT* output0 = outputs[0];
 		FAUSTFLOAT* output1 = outputs[1];
 		float fSlow0 = std::tan(fConst0 * std::pow(1e+01f, 3.0f * std::max<float>(0.0f, std::min<float>(1.0f, float(fHslider0))) + 1.0f));
-		float fSlow1 = 1.0f / std::max<float>(1.0f, std::min<float>(1e+01f, float(fHslider1))) + fSlow0;
-		float fSlow2 = fSlow0 * fSlow1 + 1.0f;
-		float fSlow3 = fSlow0 / fSlow2;
-		float fSlow4 = 2.0f * fSlow0;
+		float fSlow1 = 2.0f * fSlow0;
+		float fSlow2 = 1.0f / std::max<float>(1.0f, std::min<float>(1e+01f, float(fHslider1))) + fSlow0;
+		float fSlow3 = fSlow0 * fSlow2 + 1.0f;
+		float fSlow4 = fSlow0 / fSlow3;
 		for (int i0 = 0; i0 < count; i0 = i0 + 1) {
-			float fTemp0 = float(input0[i0]) - (fRec1[1] + fSlow1 * fRec2[1]);
-			float fTemp1 = fSlow3 * fTemp0;
-			float fTemp2 = std::max<float>(-1.0f, std::min<float>(1.0f, fRec2[1] + fTemp1));
+			float fTemp0 = float(input0[i0]) - (fRec0[1] + fSlow2 * fRec1[1]);
+			float fTemp1 = fSlow4 * fTemp0;
+			float fTemp2 = std::max<float>(-1.0f, std::min<float>(1.0f, fRec1[1] + fTemp1));
 			float fTemp3 = fTemp2 * (1.0f - 0.33333334f * _OBLP_faustpower2_f(fTemp2));
+			fRec0[0] = fRec0[1] + fSlow1 * fTemp3;
+			fRec1[0] = fTemp1 + fTemp3;
 			float fTemp4 = fSlow0 * fTemp3;
-			float fRec0 = fRec1[1] + fTemp4;
-			fRec1[0] = fRec1[1] + fSlow4 * fTemp3;
-			fRec2[0] = fTemp1 + fTemp3;
-			output0[i0] = FAUSTFLOAT(fRec0);
-			float fTemp5 = float(input1[i0]) - (fRec4[1] + fSlow1 * fRec5[1]);
-			float fTemp6 = fSlow3 * fTemp5;
-			float fTemp7 = std::max<float>(-1.0f, std::min<float>(1.0f, fRec5[1] + fTemp6));
-			float fTemp8 = fTemp7 * (1.0f - 0.33333334f * _OBLP_faustpower2_f(fTemp7));
+			float fRec2 = fRec0[1] + fTemp4;
+			output0[i0] = FAUSTFLOAT(fRec2);
+			float fTemp5 = float(input1[i0]) - (fRec3[1] + fSlow2 * fRec4[1]);
+			float fTemp6 = fSlow4 * fTemp5;
+			float fTemp7 = std::max<float>(-1.0f, std::min<float>(1.0f, fRec4[1] + fTemp6));
+			float fTemp8 = (1.0f - 0.33333334f * _OBLP_faustpower2_f(fTemp7)) * fTemp7;
+			fRec3[0] = fRec3[1] + fSlow1 * fTemp8;
+			fRec4[0] = fTemp8 + fTemp6;
 			float fTemp9 = fSlow0 * fTemp8;
-			float fRec3 = fRec4[1] + fTemp9;
-			fRec4[0] = fRec4[1] + fSlow4 * fTemp8;
-			fRec5[0] = fTemp6 + fTemp8;
-			output1[i0] = FAUSTFLOAT(fRec3);
+			float fRec5 = fRec3[1] + fTemp9;
+			output1[i0] = FAUSTFLOAT(fRec5);
+			fRec0[1] = fRec0[0];
 			fRec1[1] = fRec1[0];
-			fRec2[1] = fRec2[0];
+			fRec3[1] = fRec3[0];
 			fRec4[1] = fRec4[0];
-			fRec5[1] = fRec5[0];
 		}
 	}
 
