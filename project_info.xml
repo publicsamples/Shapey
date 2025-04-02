@@ -2,13 +2,13 @@
 
 <ProjectSettings>
   <Name value="Shapey"/>
-  <Version value="0.0.3"/>
+  <Version value="0.4.1"/>
   <Description value=""/>
   <BundleIdentifier value="com.modularsamples.product"/>
   <PluginCode value="Shpy"/>
-  <EmbedAudioFiles value="1"/>
+  <EmbedAudioFiles value="0"/>
   <EmbedImageFiles value="Yes"/>
-  <SupportFullDynamicsHLAC value="No"/>
+  <SupportFullDynamicsHLAC value="1"/>
   <AdditionalDspLibraries value=""/>
   <OSXStaticLibs value=""/>
   <WindowsStaticLibFolder value=""/>
@@ -32,14 +32,15 @@
   <ReadOnlyFactoryPresets value="No"/>
   <ForceStereoOutput value="No"/>
   <AdminPermissions value="No"/>
-  <EmbedUserPresets value="0"/>
+  <EmbedUserPresets value="1"/>
   <OverwriteOldUserPresets value="No"/>
   <EnableGlobalPreprocessor value="No"/>
   <UseGlobalAppDataFolderWindows value="1"/>
-  <UseGlobalAppDataFolderMacOS value="1"/>
-  <DefaultUserPreset value=""/>
+  <UseGlobalAppDataFolderMacOS value="0"/>
+  <DefaultUserPreset value="init"/>
   <CompileWithPerfetto value="No"/>
   <CompileWithDebugSymbols value="No"/>
   <ExtraDefinitionsNetworkDll value=""/>
   <IncludeLorisInFrontend value="No"/>
+  <ProjectType value="Instrument"/>
 </ProjectSettings>

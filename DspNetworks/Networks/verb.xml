@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Network ID="verb" Version="0.0.0" AllowCompilation="1">
+<Network ID="verb" Version="0.0.0">
   <Node FactoryPath="container.chain" ID="verb" Bypassed="0" ShowParameters="1"
         Name="verb">
     <Nodes>
@@ -122,7 +122,7 @@
                       <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
                                  SkewFactor="5.422270774841309" ID="Damping" Value="0.0"/>
                       <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="1.0" SkewFactor="0.2299045622348785"
-                                 ID="HiCut" Value="20.0" DefaultValue="20000.0"/>
+                                 ID="HiCut" Value="20000.0"/>
                       <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Multithread"
                                  Value="1.0"/>
                     </Parameters>
@@ -213,12 +213,13 @@
       </Node>
     </Nodes>
     <Parameters>
-      <Parameter ID="wet" MinValue="0.0" MaxValue="1.0" Value="0.0" DefaultValue="0.5837100830078126">
+      <Parameter ID="wet" MinValue="0.0" MaxValue="1.0" Value="0.5600000023841858"
+                 DefaultValue="0.5837100830078126">
         <Connections>
           <Connection NodeId="dry_wet_mixer" ParameterId="Value"/>
         </Connections>
       </Parameter>
-      <Parameter ID="delay" MinValue="0.0" MaxValue="1.0" StepSize="0" Value="0.8100000023841858"
+      <Parameter ID="delay" MinValue="0.0" MaxValue="1.0" StepSize="0" Value="0.7400000095367432"
                  DefaultValue="676.0">
         <Connections>
           <Connection NodeId="tempo_sync1" ParameterId="Tempo"/>
@@ -226,7 +227,7 @@
           <Connection NodeId="convolution" ParameterId="Predelay"/>
         </Connections>
       </Parameter>
-      <Parameter ID="filter" MinValue="0.0" MaxValue="1.0" Value="0.3640455305576324"
+      <Parameter ID="filter" MinValue="0.0" MaxValue="1.0" Value="0.4199999868869781"
                  DefaultValue="226.4230626496129">
         <Connections>
           <Connection NodeId="cable_table1" ParameterId="Value"/>

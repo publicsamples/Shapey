@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="DspNetwork" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="DspNetwork" Bypassed="0" Name="DspNetwork">
+    <Nodes>
+      <Node ID="chain" FactoryPath="container.chain" Bypassed="0" Name="chain">
+        <Nodes>
+          <Node ID="global_cable" FactoryPath="routing.global_cable" Bypassed="0"
+                Name="global_cable" NodeColour="4282883250">
+            <Properties>
+              <Property ID="Connection" Value="LFO1"/>
+            </Properties>
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0"/>
+            </Parameters>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
+      <Node ID="global_cable1" FactoryPath="routing.global_cable" Bypassed="0"
+            Name="global_cable" NodeColour="4282948786">
+        <Properties>
+          <Property ID="Connection" Value="LFO2"/>
+        </Properties>
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0"/>
+        </Parameters>
+      </Node>
+    </Nodes>
+    <Parameters/>
+  </Node>
+</Network>

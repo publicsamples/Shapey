@@ -10,18 +10,19 @@
 // Include third party header files ----------------
 
 #include "Comb.h"
-#include "g.h"
-#include "granul.h"
-#include "granular.h"
+#include "khp.h"
 #include "khp2.h"
 #include "klp.h"
-#include "shifty.h"
+#include "klp2.h"
 
 // Include compiled network files ------------------
 
+#include "DspNetwork_networkdata.h"
 #include "filtest.h"
 #include "lfo.h"
-#include "verb.h"
+#include "MDel_networkdata.h"
+#include "osctests_networkdata.h"
+#include "verb_networkdata.h"
 #include "_networkdata.h"
 
 #if (defined (_WIN32) || defined (_WIN64))

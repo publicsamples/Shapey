@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Network ID="lfo" Version="0.0.0" AllowCompilation="1" CompileChannelAmount="1">
+<Network ID="lfo" Version="0.0.0" CompileChannelAmount="1" AllowCompilation="1">
   <Node FactoryPath="container.chain" ID="lfo" Bypassed="0" ShowParameters="1"
         Name="lfo">
     <Nodes>
@@ -194,13 +194,13 @@
       </Node>
     </Nodes>
     <Parameters>
-      <Parameter ID="tempo" MinValue="0.0" MaxValue="18.0" StepSize="1.0" Value="7.0"
+      <Parameter ID="tempo" MinValue="0.0" MaxValue="18.0" StepSize="1.0" Value="8.0"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="tempo_sync" ParameterId="Tempo"/>
         </Connections>
       </Parameter>
-      <Parameter ID="div" MinValue="1.0" MaxValue="16.0" StepSize="1.0" Value="6.0"
+      <Parameter ID="div" MinValue="1.0" MaxValue="16.0" StepSize="1.0" Value="12.0"
                  DefaultValue="1.0">
         <Connections>
           <Connection NodeId="tempo_sync" ParameterId="Multiplier"/>
@@ -213,19 +213,20 @@
           <Connection NodeId="oscillator1" ParameterId="Mode"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Dest" Value="0.0" StepSize="1.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="Dest" Value="1.0" StepSize="1.0"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="branch" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Adjst" Value="0.34384375" DefaultValue="0.0"
-                 StepSize="0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="Adjst" Value="0.5" StepSize="0"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="tempo_sync2" ParameterId="Tempo"/>
           <Connection NodeId="minmax" ParameterId="Step"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="1.0" MaxValue="3.0" StepSize="1.0" ID="AjustMode" Value="1.0"
+      <Parameter MinValue="1.0" MaxValue="3.0" StepSize="1.0" ID="AjustMode" Value="3.0"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="branch1" ParameterId="Index"/>
