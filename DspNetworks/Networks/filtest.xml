@@ -8,7 +8,7 @@
             Name="fix8_block">
         <Nodes>
           <Node ID="modchain1" FactoryPath="container.modchain" Bypassed="0"
-                Name="modchain1" Folded="1">
+                Name="modchain1">
             <Nodes>
               <Node ID="split5" FactoryPath="container.split" Bypassed="0" Name="split5"
                     Folded="1">
@@ -2558,7 +2558,7 @@
             <Parameters/>
           </Node>
           <Node ID="chain53" FactoryPath="container.chain" Bypassed="0" Name="Modulator"
-                NodeColour="4279124566">
+                NodeColour="4279124566" Folded="1">
             <Nodes>
               <Node ID="chain158" FactoryPath="container.chain" Bypassed="0" Name="chain158">
                 <Nodes>
@@ -2814,11 +2814,12 @@
                           <Node ID="minmax7" FactoryPath="control.minmax" Bypassed="0" Name="minmax6">
                             <Parameters>
                               <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="0.0" Automated="1"/>
-                              <Parameter MinValue="0.0" MaxValue="16.0" ID="Minimum" Value="0.0" StepSize="1.0"/>
-                              <Parameter MinValue="1.0" MaxValue="16.0" ID="Maximum" Value="16.0" DefaultValue="1.0"
-                                         StepSize="1.0"/>
+                              <Parameter MinValue="0.5" MaxValue="2.0" ID="Minimum" Value="0.5" DefaultValue="0.0"
+                                         SkewFactor="0.6309297535714574"/>
+                              <Parameter MinValue="0.5" MaxValue="2.0" ID="Maximum" Value="2.0" DefaultValue="1.0"
+                                         SkewFactor="0.6309297535714574"/>
                               <Parameter MinValue="0.1" MaxValue="10.0" SkewFactor="0.2890648245811462"
-                                         ID="Skew" Value="1.0"/>
+                                         ID="Skew" Value="0.6309297535714574" DefaultValue="1.0"/>
                               <Parameter MinValue="0.0" MaxValue="1.0" ID="Step" DefaultValue="0.0" Automated="1"/>
                               <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Polarity" Value="0.0"/>
                             </Parameters>
@@ -2851,6 +2852,18 @@
                             </Nodes>
                             <Parameters/>
                           </Node>
+                          <Node ID="peak17" FactoryPath="core.peak" Bypassed="0" Name="peak17">
+                            <ModulationTargets>
+                              <Connection NodeId="pma3" ParameterId="Value"/>
+                              <Connection NodeId="pma5" ParameterId="Value"/>
+                            </ModulationTargets>
+                            <ComplexData>
+                              <DisplayBuffers>
+                                <DisplayBuffer Index="-1"/>
+                              </DisplayBuffers>
+                            </ComplexData>
+                            <Parameters/>
+                          </Node>
                           <Node ID="pi1" FactoryPath="math.pi" Bypassed="0" Name="pi1">
                             <Parameters>
                               <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="2.0"/>
@@ -2877,18 +2890,6 @@
                               <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
                                          SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
                             </Parameters>
-                          </Node>
-                          <Node ID="peak17" FactoryPath="core.peak" Bypassed="0" Name="peak17">
-                            <ModulationTargets>
-                              <Connection NodeId="pma3" ParameterId="Value"/>
-                              <Connection NodeId="pma5" ParameterId="Value"/>
-                            </ModulationTargets>
-                            <ComplexData>
-                              <DisplayBuffers>
-                                <DisplayBuffer Index="-1"/>
-                              </DisplayBuffers>
-                            </ComplexData>
-                            <Parameters/>
                           </Node>
                           <Node ID="gain6" FactoryPath="core.gain" Bypassed="0" Name="gain5">
                             <Parameters>
@@ -3106,7 +3107,7 @@
             <Parameters/>
           </Node>
           <Node ID="chain20" FactoryPath="container.chain" Bypassed="0" Name="chain20"
-                NodeColour="4284066226" Folded="1">
+                NodeColour="4284066226" Folded="1" ShowParameters="0">
             <Nodes>
               <Node ID="soft_bypass" FactoryPath="container.soft_bypass" Bypassed="0"
                     Name="transform" NodeColour="4284066226">
@@ -3353,9 +3354,9 @@
                                         </Properties>
                                         <Parameters>
                                           <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.009999999776482582"
-                                                     ID="aN" Automated="1" DefaultValue="0.0"/>
+                                                     ID="aN" Value="0.0"/>
                                           <Parameter MinValue="0.0" MaxValue="100.0" StepSize="0.009999999776482582"
-                                                     ID="del" Automated="1" DefaultValue="0.0"/>
+                                                     ID="del" Value="0.0"/>
                                         </Parameters>
                                         <SwitchTargets/>
                                       </Node>
@@ -3949,31 +3950,22 @@
             </Nodes>
             <Parameters/>
           </Node>
-          <Node ID="split12" FactoryPath="container.split" Bypassed="0" Name="split1">
+          <Node ID="chain10" FactoryPath="container.chain" Bypassed="0" Name="chain4">
             <Nodes>
-              <Node ID="chain9" FactoryPath="container.chain" Bypassed="0" Name="chain4">
-                <Nodes/>
-                <Parameters/>
+              <Node ID="receive" FactoryPath="routing.receive" Bypassed="0" Name="receive">
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="1.0" DefaultValue="0.0"/>
+                </Parameters>
               </Node>
-              <Node ID="chain10" FactoryPath="container.chain" Bypassed="0" Name="chain4">
-                <Nodes>
-                  <Node ID="receive" FactoryPath="routing.receive" Bypassed="0" Name="receive">
-                    <Parameters>
-                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="1.0" DefaultValue="0.0"/>
-                    </Parameters>
-                  </Node>
-                  <Node ID="gain4" FactoryPath="core.gain" Bypassed="0" Name="gain4">
-                    <Parameters>
-                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                                 SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
-                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
-                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
-                    </Parameters>
-                  </Node>
-                </Nodes>
-                <Parameters/>
+              <Node ID="gain4" FactoryPath="core.gain" Bypassed="0" Name="gain4">
+                <Parameters>
+                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                             SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
+                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                             SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                             SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                </Parameters>
               </Node>
             </Nodes>
             <Parameters/>
@@ -3995,9 +3987,9 @@
                             </Properties>
                             <Parameters>
                               <Parameter MinValue="0.4999999888241291" MaxValue="9.999999776482582" StepSize="0.009999999776482582"
-                                         ID="Q" DefaultValue="1.0" Automated="1"/>
+                                         ID="Q" Value="1.0"/>
                               <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                         ID="freq" DefaultValue="0.5" Automated="1"/>
+                                         ID="freq" Value="0.5"/>
                             </Parameters>
                             <SwitchTargets/>
                           </Node>
@@ -4007,10 +3999,10 @@
                               <Property ID="NumParameters" Value="0"/>
                             </Properties>
                             <Parameters>
-                              <Parameter MinValue="0.4999999888241291" MaxValue="9.999999776482582" StepSize="0.009999999776482582"
-                                         ID="Q" DefaultValue="1.0" Automated="1"/>
+                              <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
+                                         ID="Q" Value="1.0"/>
                               <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                         ID="freq" DefaultValue="0.5" Automated="1"/>
+                                         ID="freq" Value="0.5"/>
                             </Parameters>
                             <SwitchTargets/>
                           </Node>
@@ -4030,10 +4022,10 @@
                               <Property ID="NumParameters" Value="0"/>
                             </Properties>
                             <Parameters>
-                              <Parameter MinValue="0.4999999888241291" MaxValue="9.999999776482582" StepSize="0.009999999776482582"
-                                         ID="Q" DefaultValue="1.0" Automated="1"/>
+                              <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
+                                         ID="Q" Value="1.0"/>
                               <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                         ID="freq" DefaultValue="0.5" Automated="1"/>
+                                         ID="freq" Value="0.5"/>
                             </Parameters>
                             <SwitchTargets/>
                           </Node>
@@ -4044,9 +4036,9 @@
                             </Properties>
                             <Parameters>
                               <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                         ID="Q" DefaultValue="1.0" Automated="1"/>
+                                         ID="Q" Value="1.0"/>
                               <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                         ID="freq" DefaultValue="0.5" Automated="1"/>
+                                         ID="freq" Value="0.5"/>
                             </Parameters>
                             <SwitchTargets/>
                           </Node>

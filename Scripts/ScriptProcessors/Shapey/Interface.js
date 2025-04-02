@@ -1,4 +1,4 @@
-Content.makeFrontInterface(820, 600);
+Content.makeFrontInterface(770, 545);
 
 include("laf.js");
 include("Scopes.js");
@@ -6,25 +6,6 @@ include("Loading.js");
 
 //Impulse panel
 
-
-const var Imp = Content.getComponent("Imp");
-
-
-inline function onIrControl(component, value)
-{
-	if(value == 0)
-	{	 	    
-		 Imp.showControl(0);
-
-	}	
-if(value == 1)
-	{	 	    
-		 Imp.showControl(1);
-	
-	}	
-};
-
-Content.getComponent("Ir").setControlCallback(onIrControl);
 
 const var ModA = Content.getComponent("ModA");
 const var ModTempo = Content.getComponent("ModTempo");
@@ -78,6 +59,24 @@ for(s in SyncOn)
 
 };
 
+
+inline function onOscShapeControl(component, value)
+{
+		Shaper.setAttribute(Shaper.OscMode, value);
+	
+	if(value == 5)
+	{
+
+	
+		Shaper.setAttribute(Shaper.InputMode, 2);       	       
+	       	
+	}	
+		
+};
+
+Content.getComponent("OscShape").setControlCallback(onOscShapeControl);
+
+
 Content.getComponent("PitchSync").setControlCallback(onPitchSyncControl);
 
 //carrier menu
@@ -86,17 +85,18 @@ const var ModMultiSample = [Content.getComponent("OscVisual")];
 
 
 
-const var OsShape = Content.getComponent("Os Shape");
+const var OsShape = Content.getComponent("OscVisual");
 const var ModWaveLoad = [Content.getComponent("ModPos"),
                    Content.getComponent("FolderSelect1"),
                    Content.getComponent("ModLoadWave1"), 
+                   Content.getComponent("PitchModuation1"), 
                    Content.getComponent("ScriptAudioWaveform1"),                 
                    Content.getComponent("SelFolderLabel")];
 
 
 inline function onModulatorModeControl(component, value)
 {
-	Shaper.setAttribute(Shaper.InputMode, value);
+
 
 	if(value == 0)
 	{
@@ -108,7 +108,7 @@ inline function onModulatorModeControl(component, value)
 		for(s in ModWaveLoad)
 	 s.showControl(0);	
 	
-
+Shaper.setAttribute(Shaper.ModPostSwitch, 1);
 	 
    
 	}	  
@@ -118,10 +118,12 @@ inline function onModulatorModeControl(component, value)
 	for(s in ModMultiSample)
 		       s.showControl(0);
 		      
-	OsShape.showControl(1);
+	OsShape.showControl(0);
 		       
 		for(s in ModWaveLoad)
-		       	 s.showControl(1);	   
+		       	 s.showControl(1);	  
+
+	Shaper.setAttribute(Shaper.ModPostSwitch, 3);	       	  
 		       
 	}
 		    
@@ -129,7 +131,6 @@ inline function onModulatorModeControl(component, value)
 };
 
 Content.getComponent("ModulatorMode").setControlCallback(onModulatorModeControl);
-
 
 
 
@@ -143,53 +144,15 @@ inline function onBankADisplayControl(component, value)
 };
 
 
-const var CarMultis = [Content.getComponent("BankB"),
-                       
-                       Content.getComponent("Categories2")];
 
-const var CarWav = [Content.getComponent("FolderSelect"),
-                    Content.getComponent("LpLoad2")];
 
 const var Panel3 = Content.getComponent("Panel3");
 
 
-inline function onCarModeControl(component, value)
-{
-	
-	Shaper.setAttribute(Shaper.OutMode, value);	       
-
-	if(value == 0)
-	{
-	Panel3.showControl(1); 
-	for(s in CarMultis)
-		       s.showControl(0);       
-		       
-	for(s in CarWav)
-		       s.showControl(1);   
-	
-
-    	       
-	      } 
-	if(value == 1)
-	{
-	
-	for(s in CarMultis)
-		       s.showControl(0);       
-		       
-	for(s in CarWav)
-		       s.showControl(1);   
-	
-	Panel3.showControl(0);    
-	}
-};
-
-Content.getComponent("CarMode").setControlCallback(onCarModeControl);
-
 const var MODEnv1 = Content.getComponent("MOD Env1");
 const var MODEnv2 = Content.getComponent("MOD Env2");
 
-const var LFO12 = [Content.getComponent("LFO1"),
-                   Content.getComponent("LFO2")];
+const var LFO12 = [Content.getComponent("LFO1")];
 
 const var Table = Content.getComponent("Table");
 
@@ -424,6 +387,70 @@ inline function onEnSyncControl(component, value)
 };
 
 Content.getComponent("EnSync").setControlCallback(onEnSyncControl);
+
+
+const var Mix = Content.getComponent("Mix");
+const var AMPEnv = Content.getComponent("AMP Env");
+
+inline function onRoutingControl(component, value)
+{
+
+	  		  	  if(value == 0)
+	  		  	  	 {
+	  		 Mix.showControl(0);
+	  		 AMPEnv.showControl(1);
+	  		 }	  
+	  		 
+	  		 if(value == 1)
+	  		 		  	  	 {
+	  		 Mix.showControl(1);
+	  		 AMPEnv.showControl(0);
+	  		 		 }	  
+};
+
+Content.getComponent("Routing").setControlCallback(onRoutingControl);
+
+
+inline function onOscShapeControl(component, value)
+{
+	Shaper.setAttribute(Shaper.ModPostSwitch, value);
+		  		  	 
+		  		  	  if(value == 5)
+		  		  	  	 {
+	Shaper.setAttribute(Shaper.ModPostSwitch, 2);
+		  		 }	  
+
+
+};
+
+Content.getComponent("OscShape").setControlCallback(onOscShapeControl);
+
+const var ModoscExtra = Content.getComponent("ModoscExtra");
+
+
+inline function onSubPageControl(component, value)
+{
+	ModoscExtra.showControl(value);
+};
+
+Content.getComponent("SubPage").setControlCallback(onSubPageControl);
+
+const var ExpLink = Content.getComponent("ExpLink");
+
+ExpLink.setMouseCallback(function(event)
+{
+  if (event.clicked)
+  {
+    Engine.openWebsite("https://modularsamples.gumroad.com/l/lgzxw");
+  } 
+  else 
+  {
+ //   link_hover = event.hover;
+    this.repaint();
+  }
+});
+
+
 
 
 

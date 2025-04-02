@@ -1460,11 +1460,11 @@ using chain193_t = container::chain<parameter::empty,
                                     wrap::fix<2, pma19_t<NV>>, 
                                     minmax7_t<NV>, 
                                     no_midi3_t<NV>, 
+                                    peak17_t<NV>, 
                                     math::pi<NV>, 
                                     math::sub<NV>, 
                                     math::sub<NV>, 
                                     wrap::no_process<core::gain<NV>>, 
-                                    peak17_t<NV>, 
                                     core::gain<NV>, 
                                     routing::send<stereo_frame_cable>>;
 
@@ -1760,17 +1760,10 @@ template <int NV>
 using fix8_block1_t = container::chain<parameter::empty, 
                                        wrap::fix<2, frame2_block2_t<NV>>>;
 
-using chain9_t = chain31_t;
-
 template <int NV>
 using chain10_t = container::chain<parameter::empty, 
                                    wrap::fix<2, routing::receive<stereo_cable>>, 
                                    core::gain<NV>>;
-
-template <int NV>
-using split12_t = container::split<parameter::empty, 
-                                   wrap::fix<2, chain9_t>, 
-                                   chain10_t<NV>>;
 
 template <int NV>
 using no_midi1_t_ = container::chain<parameter::empty, 
@@ -1808,7 +1801,7 @@ using fix8_block_t_ = container::chain<parameter::empty,
                                        split1_t<NV>, 
                                        chain20_t<NV>, 
                                        fix8_block1_t<NV>, 
-                                       split12_t<NV>, 
+                                       chain10_t<NV>, 
                                        softbypass_switch5_t<NV>>;
 
 template <int NV>
@@ -2135,7 +2128,7 @@ DECLARE_PARAMETER_RANGE(q_InputRange,
                         1);
 DECLARE_PARAMETER_RANGE_STEP(q_0Range, 
                              0.5, 
-                             1, 
+                             10., 
                              0.01);
 
 template <int NV>
@@ -2143,22 +2136,22 @@ using q_0 = parameter::from0To1<project::khp<NV>,
                                 0, 
                                 q_0Range>;
 
-template <int NV>
-using q_1 = parameter::from0To1<project::klp<NV>, 
-                                0, 
-                                q_0Range>;
-
-template <int NV> using q_2 = q_1<NV>;
-
-DECLARE_PARAMETER_RANGE_STEP(q_3Range, 
+DECLARE_PARAMETER_RANGE_STEP(q_1Range, 
                              0.5, 
-                             10., 
+                             1, 
                              0.01);
 
 template <int NV>
-using q_3 = parameter::from0To1<project::khp<NV>, 
+using q_1 = parameter::from0To1<project::klp<NV>, 
                                 0, 
-                                q_3Range>;
+                                q_1Range>;
+
+template <int NV>
+using q_2 = parameter::from0To1<project::klp<NV>, 
+                                0, 
+                                q_0Range>;
+
+template <int NV> using q_3 = q_0<NV>;
 
 template <int NV>
 using q = parameter::chain<q_InputRange, 
@@ -3160,11 +3153,11 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		auto& minmax7 = this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(1);                     // filtest_impl::minmax7_t<NV>
 		auto& no_midi3 = this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(2);                    // filtest_impl::no_midi3_t<NV>
 		auto& oscillator1 = this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(2).getT(0);         // filtest_impl::oscillator1_t<NV>
-		auto& pi1 = this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(3);                         // math::pi<NV>
-		auto& sub = this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(4);                         // math::sub<NV>
-		auto& sub1 = this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(5);                        // math::sub<NV>
-		auto& gain = this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(6);                        // wrap::no_process<core::gain<NV>>
-		auto& peak17 = this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(7);                      // filtest_impl::peak17_t<NV>
+		auto& peak17 = this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(3);                      // filtest_impl::peak17_t<NV>
+		auto& pi1 = this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(4);                         // math::pi<NV>
+		auto& sub = this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(5);                         // math::sub<NV>
+		auto& sub1 = this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(6);                        // math::sub<NV>
+		auto& gain = this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(7);                        // wrap::no_process<core::gain<NV>>
 		auto& gain6 = this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(8);                       // core::gain<NV>
 		auto& send5 = this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(9);                       // routing::send<stereo_frame_cable>
 		auto& branch5 = this->getT(0).getT(1).getT(4);                                             // filtest_impl::branch5_t<NV>
@@ -3408,11 +3401,9 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
                      getT(1).getT(2).getT(0).getT(7).getT(2);
 		auto& mono2stereo1 = this->getT(0).getT(4).getT(0).getT(0).getT(0).getT(2); // wrap::no_process<core::mono2stereo>
 		auto& file_player4 = this->getT(0).getT(4).getT(0).getT(0).getT(0).getT(3); // filtest_impl::file_player4_t<NV>
-		auto& split12 = this->getT(0).getT(5);                                      // filtest_impl::split12_t<NV>
-		auto& chain9 = this->getT(0).getT(5).getT(0);                               // filtest_impl::chain9_t
-		auto& chain10 = this->getT(0).getT(5).getT(1);                              // filtest_impl::chain10_t<NV>
-		auto& receive = this->getT(0).getT(5).getT(1).getT(0);                      // routing::receive<stereo_cable>
-		auto& gain4 = this->getT(0).getT(5).getT(1).getT(1);                        // core::gain<NV>
+		auto& chain10 = this->getT(0).getT(5);                                      // filtest_impl::chain10_t<NV>
+		auto& receive = this->getT(0).getT(5).getT(0);                              // routing::receive<stereo_cable>
+		auto& gain4 = this->getT(0).getT(5).getT(1);                                // core::gain<NV>
 		auto& softbypass_switch5 = this->getT(0).getT(6);                           // filtest_impl::softbypass_switch5_t<NV>
 		auto& branch20 = this->getT(0).getT(6).getT(0);                             // filtest_impl::branch20_t<NV>
 		auto& chain164 = this->getT(0).getT(6).getT(0).getT(0);                     // filtest_impl::chain164_t<NV>
@@ -4395,12 +4386,12 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		pma19.setParameterT(1, 1.); // control::pma::Multiply
 		;                           // pma19::Add is automated
 		
-		;                              // minmax7::Value is automated
-		minmax7.setParameterT(1, 0.);  // control::minmax::Minimum
-		minmax7.setParameterT(2, 16.); // control::minmax::Maximum
-		minmax7.setParameterT(3, 1.);  // control::minmax::Skew
-		;                              // minmax7::Step is automated
-		minmax7.setParameterT(5, 0.);  // control::minmax::Polarity
+		;                                  // minmax7::Value is automated
+		minmax7.setParameterT(1, 0.5);     // control::minmax::Minimum
+		minmax7.setParameterT(2, 2.);      // control::minmax::Maximum
+		minmax7.setParameterT(3, 0.63093); // control::minmax::Skew
+		;                                  // minmax7::Step is automated
+		minmax7.setParameterT(5, 0.);      // control::minmax::Polarity
 		
 		;                                         // oscillator1::Mode is automated
 		;                                         // oscillator1::Frequency is automated
@@ -4878,7 +4869,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		this->getT(0).getT(1).getT(3).getT(3).                                                   // filtest_impl::oscillator8_t<NV>
         getT(0).getT(0).getT(3).getT(0).setExternalData(b, index);
 		this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(2).getT(0).setExternalData(b, index); // filtest_impl::oscillator1_t<NV>
-		this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(7).setExternalData(b, index);         // filtest_impl::peak17_t<NV>
+		this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(3).setExternalData(b, index);         // filtest_impl::peak17_t<NV>
 		this->getT(0).getT(1).getT(4).getT(2).getT(0).getT(3).setExternalData(b, index);         // filtest_impl::file_player6_t<NV>
 		this->getT(0).getT(3).getT(0).getT(0).                                                   // filtest_impl::cable_table_t<NV>
         getT(1).getT(1).getT(1).getT(5).
