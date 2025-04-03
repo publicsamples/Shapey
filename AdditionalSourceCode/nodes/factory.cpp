@@ -28,13 +28,14 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		// Node registrations -----------------------------------------------------------------
 		
 		registerPolyNode<project::klp2<1>, scriptnode::wrap::illegal_poly<project::klp2<1>>>();
-		registerPolyNode<project::klp<1>, project::klp<NUM_POLYPHONIC_VOICES>>();
+		registerPolyNode<project::klp<1>, scriptnode::wrap::illegal_poly<project::klp<1>>>();
 		registerPolyNode<project::khp2<1>, scriptnode::wrap::illegal_poly<project::khp2<1>>>();
-		registerPolyNode<project::khp<1>, project::khp<NUM_POLYPHONIC_VOICES>>();
+		registerPolyNode<project::khp<1>, scriptnode::wrap::illegal_poly<project::khp<1>>>();
 		registerPolyNode<project::Comb<1>, project::Comb<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::filtest<1>, project::filtest<NUM_POLYPHONIC_VOICES>>();
-		registerPolyNode<project::lfo<1>, wrap::illegal_poly<project::lfo<1>>>();
+		registerDataNode<project::cab_networkdata>();
 		registerDataNode<project::DspNetwork_networkdata>();
+		registerDataNode<project::lfo_networkdata>();
 		registerDataNode<project::MDel_networkdata>();
 		registerDataNode<project::osctests_networkdata>();
 		registerDataNode<project::verb_networkdata>();

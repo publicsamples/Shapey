@@ -1264,9 +1264,16 @@ using branch14_t = container::branch<parameter::empty,
                                      chain141_t<NV>>;
 
 template <int NV>
+using pma11_mod_0 = parameter::from0To1<filters::svf<NV>, 
+                                        0, 
+                                        smoothed_parameter1_mod_1Range>;
+
+template <int NV> using pma11_mod_1 = pma11_mod_0<NV>;
+
+template <int NV>
 using pma11_mod = parameter::chain<ranges::Identity, 
-                                   parameter::plain<project::klp<NV>, 1>, 
-                                   parameter::plain<project::klp<NV>, 1>>;
+                                   pma11_mod_0<NV>, 
+                                   pma11_mod_1<NV>>;
 
 template <int NV>
 using pma11_t = control::pma<NV, pma11_mod<NV>>;
@@ -1329,10 +1336,14 @@ using branch15_t = container::branch<parameter::empty,
                                      chain144_t<NV>, 
                                      chain143_t<NV>>;
 
+template <int NV> using pma12_mod_0 = pma11_mod_0<NV>;
+
+template <int NV> using pma12_mod_1 = pma11_mod_0<NV>;
+
 template <int NV>
 using pma12_mod = parameter::chain<ranges::Identity, 
-                                   parameter::plain<project::khp<NV>, 1>, 
-                                   parameter::plain<project::khp<NV>, 1>>;
+                                   pma12_mod_0<NV>, 
+                                   pma12_mod_1<NV>>;
 
 template <int NV>
 using pma12_t = control::pma<NV, pma12_mod<NV>>;
@@ -1761,14 +1772,9 @@ using fix8_block1_t = container::chain<parameter::empty,
                                        wrap::fix<2, frame2_block2_t<NV>>>;
 
 template <int NV>
-using chain10_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, routing::receive<stereo_cable>>, 
-                                   core::gain<NV>>;
-
-template <int NV>
 using no_midi1_t_ = container::chain<parameter::empty, 
-                                     wrap::fix<2, project::klp<NV>>, 
-                                     project::khp<NV>>;
+                                     wrap::fix<2, filters::svf<NV>>, 
+                                     filters::svf<NV>>;
 
 template <int NV>
 using no_midi1_t = wrap::no_midi<no_midi1_t_<NV>>;
@@ -1779,8 +1785,8 @@ using chain164_t = container::chain<parameter::empty,
 
 template <int NV>
 using split8_t = container::split<parameter::empty, 
-                                  wrap::fix<2, project::klp<NV>>, 
-                                  project::khp<NV>>;
+                                  wrap::fix<2, filters::svf<NV>>, 
+                                  filters::svf<NV>>;
 
 template <int NV>
 using chain186_t = container::chain<parameter::empty, 
@@ -1801,7 +1807,7 @@ using fix8_block_t_ = container::chain<parameter::empty,
                                        split1_t<NV>, 
                                        chain20_t<NV>, 
                                        fix8_block1_t<NV>, 
-                                       chain10_t<NV>, 
+                                       routing::receive<stereo_cable>, 
                                        softbypass_switch5_t<NV>>;
 
 template <int NV>
@@ -2126,32 +2132,24 @@ using Env2Sync = parameter::chain<ranges::Identity,
 DECLARE_PARAMETER_RANGE(q_InputRange, 
                         0., 
                         1);
-DECLARE_PARAMETER_RANGE_STEP(q_0Range, 
-                             0.5, 
-                             10., 
-                             0.01);
+DECLARE_PARAMETER_RANGE_SKEW(q_0Range, 
+                             0.3, 
+                             9.9, 
+                             0.264718);
 
 template <int NV>
-using q_0 = parameter::from0To1<project::khp<NV>, 
-                                0, 
+using q_0 = parameter::from0To1<filters::svf<NV>, 
+                                1, 
                                 q_0Range>;
 
-DECLARE_PARAMETER_RANGE_STEP(q_1Range, 
-                             0.5, 
-                             1, 
-                             0.01);
-
 template <int NV>
-using q_1 = parameter::from0To1<project::klp<NV>, 
-                                0, 
-                                q_1Range>;
+using q_1 = parameter::from0To1<filters::svf<NV>, 
+                                1, 
+                                MathSmooth_2Range>;
 
-template <int NV>
-using q_2 = parameter::from0To1<project::klp<NV>, 
-                                0, 
-                                q_0Range>;
+template <int NV> using q_2 = q_1<NV>;
 
-template <int NV> using q_3 = q_0<NV>;
+template <int NV> using q_3 = q_1<NV>;
 
 template <int NV>
 using q = parameter::chain<q_InputRange, 
@@ -2284,11 +2282,6 @@ using Glide = parameter::from0To1<filtest_impl::smoothed_parameter_unscaled_t<NV
                                   GlideRange>;
 
 template <int NV>
-using inPutGain = parameter::from0To1<core::gain<NV>, 
-                                      0, 
-                                      filtest_impl::xfader_c0Range>;
-
-template <int NV>
 using Tempo = parameter::plain<filtest_impl::tempo_sync_t<NV>, 
                                1>;
 template <int NV>
@@ -2418,6 +2411,8 @@ template <int NV>
 using SubAm = parameter::plain<filtest_impl::pma5_t<NV>, 
                                1>;
 using ModPostSwitch = Fine;
+using inPutGain = parameter::plain<routing::receive<stereo_cable>, 
+                                   0>;
 template <int NV>
 using filtest_t_plist = parameter::list<Tempo<NV>, 
                                         PosSmooth<NV>, 
@@ -2514,7 +2509,7 @@ using filtest_t_plist = parameter::list<Tempo<NV>,
                                         detune<NV>, 
                                         ModPostSwitch, 
                                         Glide<NV>, 
-                                        inPutGain<NV>>;
+                                        inPutGain>;
 }
 
 template <int NV>
@@ -2539,30 +2534,30 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		SNEX_METADATA_ENCODED_PARAMETERS(1608)
 		{
 			0x005B, 0x0000, 0x5400, 0x6D65, 0x6F70, 0x0000, 0x8000, 0x003F, 
-            0x0000, 0x0042, 0x5000, 0x0041, 0x8000, 0x003F, 0x8000, 0x5B3F, 
+            0x0000, 0x0042, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x5B3F, 
             0x0001, 0x0000, 0x6F50, 0x5373, 0x6F6D, 0x746F, 0x0068, 0x0000, 
             0x0000, 0x0000, 0x44FA, 0x0000, 0x0000, 0xEE69, 0x3E6C, 0xCCCD, 
             0x3DCC, 0x025B, 0x0000, 0x4D00, 0x7461, 0x5368, 0x6F6D, 0x746F, 
             0x0068, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x035B, 0x0000, 0x4200, 0x696C, 0x656D, 
-            0x0079, 0x0000, 0x0000, 0x0000, 0x3F80, 0xD70A, 0x3E23, 0x0000, 
+            0x0079, 0x0000, 0x0000, 0x0000, 0x3F80, 0xF5C3, 0x3EA8, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x045B, 0x0000, 0x4200, 0x696C, 0x656D, 
-            0x4D79, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0xC000, 
-            0x0023, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0005, 0x0000, 0x6C42, 
+            0x4D79, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x8F3F, 0xF5C2, 
+            0x00BC, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0005, 0x0000, 0x6C42, 
             0x6D69, 0x7965, 0x6F4D, 0x5364, 0x6372, 0x0000, 0x8000, 0x003F, 
-            0x2000, 0x0041, 0xA000, 0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 
+            0x2000, 0x0041, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x5B3F, 
             0x0006, 0x0000, 0x6950, 0x6374, 0x0068, 0x0000, 0x0000, 0x0000, 
-            0x3F80, 0xAE14, 0x3F07, 0x0000, 0x3F80, 0x0000, 0x0000, 0x075B, 
+            0x3F80, 0x0000, 0x3F00, 0x0000, 0x3F80, 0x0000, 0x0000, 0x075B, 
             0x0000, 0x5000, 0x7469, 0x6863, 0x6F4D, 0x0064, 0x0000, 0xBF80, 
-            0x0000, 0x3F80, 0x0000, 0x23C0, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x085B, 0x0000, 0x5000, 0x7469, 0x6863, 0x7253, 0x0063, 0x0000, 
-            0x3F80, 0x0000, 0x4120, 0x0000, 0x4080, 0x0000, 0x3F80, 0x0000, 
+            0x3F80, 0x0000, 0x4120, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x095B, 0x0000, 0x4400, 0x7669, 0x6469, 0x0065, 0x0000, 
-            0x3F80, 0x0000, 0x4190, 0x0000, 0x4120, 0x0000, 0x3F80, 0x0000, 
+            0x3F80, 0x0000, 0x4190, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0A5B, 0x0000, 0x4400, 0x7669, 0x6F4D, 0x0064, 0x0000, 
             0xBF80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
             0x0000, 0x0B5B, 0x0000, 0x4400, 0x7669, 0x7253, 0x0063, 0x0000, 
-            0x3F80, 0x0000, 0x4120, 0x0000, 0x40A0, 0x0000, 0x3F80, 0x0000, 
+            0x3F80, 0x0000, 0x4120, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0C5B, 0x0000, 0x5000, 0x7469, 0x6863, 0x7953, 0x636E, 
             0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 
             0x003F, 0x8000, 0x5B3F, 0x000D, 0x0000, 0x6946, 0x656E, 0x0000, 
@@ -2573,43 +2568,43 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x6564, 0x0000, 0x8000, 0x003F, 0xA000, 0x0040, 0x0000, 0x0040, 
             0x8000, 0x003F, 0x8000, 0x5B3F, 0x0010, 0x0000, 0x6441, 0x756A, 
             0x7473, 0x694D, 0x0078, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
-            0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x115B, 0x0000, 0x4100, 
+            0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x115B, 0x0000, 0x4100, 
             0x6A64, 0x7375, 0x4D74, 0x7869, 0x6F4D, 0x0064, 0x0000, 0xBF80, 
             0x0000, 0x3F80, 0x0000, 0x23C0, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x125B, 0x0000, 0x4100, 0x6A64, 0x7375, 0x4D74, 0x7869, 0x7253, 
             0x0063, 0x0000, 0x3F80, 0x0000, 0x4120, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0000, 0x3F80, 0x135B, 0x0000, 0x4100, 0x6A64, 0x7375, 
             0x4D74, 0x646F, 0x0065, 0x0000, 0x3F80, 0x0000, 0x4140, 0x0000, 
-            0x40E0, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x145B, 0x0000, 0x4100, 
-            0x6A64, 0x0000, 0x8000, 0x0024, 0x8000, 0xC33F, 0xA8F5, 0x003E, 
+            0x4080, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x145B, 0x0000, 0x4100, 
+            0x6A64, 0x0000, 0x8000, 0x0024, 0x8000, 0x143F, 0xC7AE, 0x003E, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0015, 0x0000, 0x6441, 0x4D6A, 
-            0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0xC000, 0x0023, 
+            0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0x0000, 0x0000, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0016, 0x0000, 0x6441, 0x536A, 
-            0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 0x0041, 0xA000, 0x0040, 
+            0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 0x9A41, 0x4E41, 0x0040, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0017, 0x0000, 0x6F50, 0x6973, 
-            0x6974, 0x6E6F, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
-            0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0018, 0x0000, 0x6F50, 
-            0x4D73, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0x8000, 
+            0x6974, 0x6E6F, 0x0000, 0x0000, 0x0000, 0x8000, 0x0A3F, 0xA3D7, 
+            0x003D, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0018, 0x0000, 0x6F50, 
+            0x4D73, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0x4000, 
             0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0019, 0x0000, 0x6F50, 
-            0x5373, 0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 0x0041, 0xA000, 
+            0x5373, 0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 0x0041, 0x4000, 
             0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001A, 0x0000, 0x754F, 
             0x4D74, 0x646F, 0x0065, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x1B5B, 0x0000, 0x4700, 
-            0x6961, 0x326E, 0x0000, 0x8000, 0x0024, 0x8000, 0x8F3F, 0x75C2, 
-            0x003D, 0x8000, 0x003F, 0x0000, 0x5B00, 0x001C, 0x0000, 0x6147, 
+            0x6961, 0x326E, 0x0000, 0x8000, 0x0024, 0x8000, 0x8F3F, 0xF5C2, 
+            0x003E, 0x8000, 0x003F, 0x0000, 0x5B00, 0x001C, 0x0000, 0x6147, 
             0x6E69, 0x4D32, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 
             0xC000, 0x0023, 0x8000, 0x003F, 0x0000, 0x5B00, 0x001D, 0x0000, 
             0x6147, 0x6E69, 0x5332, 0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 
             0x0041, 0x4000, 0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001E, 
-            0x0000, 0x3161, 0x0000, 0x0000, 0x0000, 0xEA60, 0x0046, 0x0000, 
-            0x7200, 0x4A6A, 0xCD3E, 0xCCCC, 0x5B3D, 0x001F, 0x0000, 0x3168, 
+            0x0000, 0x3161, 0x0000, 0x0000, 0x0000, 0xEA60, 0x0046, 0x4800, 
+            0x7244, 0x4A6A, 0xCD3E, 0xCCCC, 0x5B3D, 0x001F, 0x0000, 0x3168, 
             0x0000, 0x0000, 0x0000, 0x1C40, 0x0046, 0x0000, 0x7200, 0x4A6A, 
             0xCD3E, 0xCCCC, 0x5B3D, 0x0020, 0x0000, 0x3164, 0x0000, 0x0000, 
-            0x0000, 0x1C40, 0x0046, 0xAE58, 0x7245, 0x4A6A, 0xCD3E, 0xCCCC, 
+            0x0000, 0x1C40, 0x0046, 0x1C40, 0x7246, 0x4A6A, 0xCD3E, 0xCCCC, 
             0x5B3D, 0x0021, 0x0000, 0x3173, 0x0000, 0x0000, 0x0000, 0x8000, 
-            0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0022, 
-            0x0000, 0x3172, 0x0000, 0x0000, 0x0000, 0xEA60, 0x0046, 0x0000, 
-            0x7200, 0x4A6A, 0xCD3E, 0xCCCC, 0x5B3D, 0x0023, 0x0000, 0x6E45, 
+            0x003F, 0x8000, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0022, 
+            0x0000, 0x3172, 0x0000, 0x0000, 0x0000, 0xEA60, 0x0046, 0x8940, 
+            0x7244, 0x4A6A, 0xCD3E, 0xCCCC, 0x5B3D, 0x0023, 0x0000, 0x6E45, 
             0x4D76, 0x646F, 0x0031, 0x0000, 0x0000, 0x0000, 0x3F80, 0x851F, 
             0x3F2B, 0x0000, 0x3F80, 0x0000, 0x0000, 0x245B, 0x0000, 0x6100, 
             0x0032, 0x0000, 0x0000, 0x0000, 0x447A, 0x0000, 0x0000, 0x209B, 
@@ -2622,22 +2617,22 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x0000, 0x4500, 0x766E, 0x5332, 0x6E79, 0x0063, 0x0000, 0x0000, 
             0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 
             0x295B, 0x0000, 0x7100, 0x0000, 0x0000, 0x0000, 0x2000, 0x0041, 
-            0x0000, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x002A, 0x0000, 
+            0x2000, 0x0041, 0x8000, 0x003F, 0x0000, 0x5B00, 0x002A, 0x0000, 
             0x6946, 0x746C, 0x7265, 0x6F4D, 0x6564, 0x0000, 0x0000, 0x0000, 
             0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x8000, 0x5B3F, 
-            0x002B, 0x0000, 0x504C, 0x0000, 0x0000, 0x0000, 0x8000, 0xA43F, 
-            0x7D70, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x002C, 0x0000, 
+            0x002B, 0x0000, 0x504C, 0x0000, 0x0000, 0x0000, 0x8000, 0x913F, 
+            0x3805, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x002C, 0x0000, 
             0x704C, 0x6F4D, 0x0064, 0x0000, 0xBF80, 0x0000, 0x3F80, 0x0000, 
             0x23C0, 0x0000, 0x3F80, 0x0000, 0x0000, 0x2D5B, 0x0000, 0x4C00, 
             0x5370, 0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 0x0041, 0x8000, 
             0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x002E, 0x0000, 0x5048, 
             0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 
             0x003F, 0x0000, 0x5B00, 0x002F, 0x0000, 0x7048, 0x6F4D, 0x0064, 
-            0x0000, 0xBF80, 0x0000, 0x3F80, 0x0000, 0x23C0, 0x0000, 0x3F80, 
+            0x0000, 0xBF80, 0x0000, 0x3F80, 0xD70A, 0xBC23, 0x0000, 0x3F80, 
             0x0000, 0x0000, 0x305B, 0x0000, 0x4800, 0x5370, 0x6372, 0x0000, 
             0x8000, 0x003F, 0x2000, 0x0041, 0x8000, 0x0040, 0x8000, 0x003F, 
             0x0000, 0x5B00, 0x0031, 0x0000, 0x7473, 0x7065, 0x0000, 0x0000, 
-            0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
+            0x0000, 0x8000, 0x003F, 0x0000, 0x003F, 0x8000, 0x003F, 0x0000, 
             0x5B00, 0x0032, 0x0000, 0x6F50, 0x4D73, 0x646F, 0x0065, 0x0000, 
             0x0000, 0x0000, 0x3F80, 0x3333, 0x3E68, 0x0000, 0x3F80, 0x0000, 
             0x0000, 0x335B, 0x0000, 0x6600, 0x6565, 0x3164, 0x0000, 0x0000, 
@@ -2645,15 +2640,15 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x5B00, 0x0034, 0x0000, 0x6566, 0x6465, 0x0032, 0x0000, 0x0000, 
             0x0000, 0x3F80, 0xCCCD, 0x3EB2, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x355B, 0x0000, 0x5000, 0x736F, 0x5174, 0x6175, 0x746E, 0x7369, 
-            0x0065, 0x0000, 0x3F80, 0x0000, 0x4100, 0x0000, 0x40E0, 0x0000, 
+            0x0065, 0x0000, 0x3F80, 0x0000, 0x4100, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0000, 0x3F80, 0x365B, 0x0000, 0x5000, 0x736F, 0x7469, 
             0x6F69, 0x4F6E, 0x6353, 0x0031, 0x0000, 0x0000, 0x0000, 0x3F80, 
-            0x6666, 0x3F26, 0x0000, 0x3F80, 0x0000, 0x0000, 0x375B, 0x0000, 
+            0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x375B, 0x0000, 
             0x5000, 0x736F, 0x7469, 0x6F69, 0x4F6E, 0x6373, 0x4D31, 0x646F, 
-            0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0xC000, 0x0023, 0x8000, 
+            0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 
             0x003F, 0x0000, 0x5B00, 0x0038, 0x0000, 0x6F50, 0x6973, 0x6974, 
             0x6E6F, 0x734F, 0x4D63, 0x646F, 0x7253, 0x0063, 0x0000, 0x3F80, 
-            0x0000, 0x4120, 0x0000, 0x40A0, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x4120, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x395B, 0x0000, 0x5000, 0x736F, 0x6974, 0x6E6F, 0x7453, 0x7065, 
             0x736F, 0x3163, 0x0000, 0x8000, 0x003F, 0x0000, 0x0041, 0xA000, 
             0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x003A, 0x0000, 0x6F50, 
@@ -2662,7 +2657,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x3B5B, 0x0000, 0x4F00, 0x6373, 0x5232, 0x7461, 0x6F69, 0x0000, 
             0x0000, 0x0000, 0x8000, 0xD33F, 0x469B, 0x003D, 0x8000, 0x003F, 
             0x0000, 0x5B00, 0x003C, 0x0000, 0x6F4D, 0x5064, 0x6168, 0x6573, 
-            0x0000, 0x8000, 0x0024, 0x8000, 0x663F, 0xE666, 0x003E, 0x8000, 
+            0x0000, 0x8000, 0x0024, 0x8000, 0x003F, 0x0000, 0x003F, 0x8000, 
             0x003F, 0x0000, 0x5B00, 0x003D, 0x0000, 0x6850, 0x7361, 0x4D65, 
             0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0xC000, 0x0023, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x003E, 0x0000, 0x6850, 0x7361, 
@@ -2674,9 +2669,9 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x6F4D, 0x5364, 0x6372, 0x0000, 0x0000, 0x0000, 0x8000, 0x963F, 
             0x7F4A, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0041, 0x0000, 
             0x6154, 0x6C62, 0x5465, 0x6D65, 0x6F70, 0x0000, 0x0000, 0x0000, 
-            0x9000, 0x0041, 0x0000, 0x0000, 0x8000, 0x003F, 0x8000, 0x5B3F, 
+            0x9000, 0x0041, 0x0000, 0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 
             0x0042, 0x0000, 0x6154, 0x6C62, 0x4465, 0x7669, 0x0000, 0x8000, 
-            0x003F, 0x8000, 0x0041, 0x8000, 0x0041, 0x8000, 0x003F, 0x8000, 
+            0x003F, 0x8000, 0x0041, 0x8000, 0x0040, 0x8000, 0x003F, 0x8000, 
             0x5B3F, 0x0043, 0x0000, 0x6154, 0x6C62, 0x4C65, 0x6F6F, 0x0070, 
             0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 
             0x0000, 0x0000, 0x445B, 0x0000, 0x4100, 0x5432, 0x6D65, 0x6F70, 
@@ -2738,7 +2733,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x4700, 0x696C, 0x6564, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 
             0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x005F, 0x0000, 
             0x6E69, 0x7550, 0x4774, 0x6961, 0x006E, 0x0000, 0x0000, 0x0000, 
-            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000
+            0x3F80, 0x851F, 0x3F6B, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000
 		};
 	};
 	
@@ -3401,19 +3396,17 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
                      getT(1).getT(2).getT(0).getT(7).getT(2);
 		auto& mono2stereo1 = this->getT(0).getT(4).getT(0).getT(0).getT(0).getT(2); // wrap::no_process<core::mono2stereo>
 		auto& file_player4 = this->getT(0).getT(4).getT(0).getT(0).getT(0).getT(3); // filtest_impl::file_player4_t<NV>
-		auto& chain10 = this->getT(0).getT(5);                                      // filtest_impl::chain10_t<NV>
-		auto& receive = this->getT(0).getT(5).getT(0);                              // routing::receive<stereo_cable>
-		auto& gain4 = this->getT(0).getT(5).getT(1);                                // core::gain<NV>
+		auto& receive = this->getT(0).getT(5);                                      // routing::receive<stereo_cable>
 		auto& softbypass_switch5 = this->getT(0).getT(6);                           // filtest_impl::softbypass_switch5_t<NV>
 		auto& branch20 = this->getT(0).getT(6).getT(0);                             // filtest_impl::branch20_t<NV>
 		auto& chain164 = this->getT(0).getT(6).getT(0).getT(0);                     // filtest_impl::chain164_t<NV>
 		auto& no_midi1 = this->getT(0).getT(6).getT(0).getT(0).getT(0);             // filtest_impl::no_midi1_t<NV>
-		auto& faust3 = this->getT(0).getT(6).getT(0).getT(0).getT(0).getT(0);       // project::klp<NV>
-		auto& faust25 = this->getT(0).getT(6).getT(0).getT(0).getT(0).getT(1);      // project::khp<NV>
+		auto& svf2 = this->getT(0).getT(6).getT(0).getT(0).getT(0).getT(0);         // filters::svf<NV>
+		auto& svf3 = this->getT(0).getT(6).getT(0).getT(0).getT(0).getT(1);         // filters::svf<NV>
 		auto& chain186 = this->getT(0).getT(6).getT(0).getT(1);                     // filtest_impl::chain186_t<NV>
 		auto& split8 = this->getT(0).getT(6).getT(0).getT(1).getT(0);               // filtest_impl::split8_t<NV>
-		auto& faust10 = this->getT(0).getT(6).getT(0).getT(1).getT(0).getT(0);      // project::klp<NV>
-		auto& faust17 = this->getT(0).getT(6).getT(0).getT(1).getT(0).getT(1);      // project::khp<NV>
+		auto& svf = this->getT(0).getT(6).getT(0).getT(1).getT(0).getT(0);          // filters::svf<NV>
+		auto& svf1 = this->getT(0).getT(6).getT(0).getT(1).getT(0).getT(1);         // filters::svf<NV>
 		
 		// Parameter Connections -------------------------------------------------------------------
 		
@@ -3526,10 +3519,10 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		Env2Sync_p.connectT(2, tempo_sync4); // Env2Sync -> tempo_sync4::Enabled
 		
 		auto& q_p = this->getParameterT(41);
-		q_p.connectT(0, faust25); // q -> faust25::Q
-		q_p.connectT(1, faust3);  // q -> faust3::Q
-		q_p.connectT(2, faust10); // q -> faust10::Q
-		q_p.connectT(3, faust17); // q -> faust17::Q
+		q_p.connectT(0, svf2); // q -> svf2::Q
+		q_p.connectT(1, svf3); // q -> svf3::Q
+		q_p.connectT(2, svf);  // q -> svf::Q
+		q_p.connectT(3, svf1); // q -> svf1::Q
 		
 		this->getParameterT(42).connectT(0, branch20); // FilterMode -> branch20::Index
 		
@@ -3601,7 +3594,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		this->getParameterT(94).connectT(0, smoothed_parameter_unscaled); // Glide -> smoothed_parameter_unscaled::SmoothingTime
 		
-		this->getParameterT(95).connectT(0, gain4); // inPutGain -> gain4::Gain
+		this->getParameterT(95).connectT(0, receive); // inPutGain -> receive::Feedback
 		
 		// Modulation Connections ------------------------------------------------------------------
 		
@@ -3801,13 +3794,13 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		peak14.getParameter().connectT(0, pma13);                                 // peak14 -> pma13::Value
 		global_cable32.getWrappedObject().getParameter().connectT(0, add86);      // global_cable32 -> add86::Value
 		global_cable33.getWrappedObject().getParameter().connectT(0, add87);      // global_cable33 -> add87::Value
-		pma11.getWrappedObject().getParameter().connectT(0, faust3);              // pma11 -> faust3::freq
-		pma11.getWrappedObject().getParameter().connectT(1, faust10);             // pma11 -> faust10::freq
+		pma11.getWrappedObject().getParameter().connectT(0, svf2);                // pma11 -> svf2::Frequency
+		pma11.getWrappedObject().getParameter().connectT(1, svf);                 // pma11 -> svf::Frequency
 		peak10.getParameter().connectT(0, pma11);                                 // peak10 -> pma11::Value
 		global_cable36.getWrappedObject().getParameter().connectT(0, add96);      // global_cable36 -> add96::Value
 		global_cable37.getWrappedObject().getParameter().connectT(0, add97);      // global_cable37 -> add97::Value
-		pma12.getWrappedObject().getParameter().connectT(0, faust17);             // pma12 -> faust17::freq
-		pma12.getWrappedObject().getParameter().connectT(1, faust25);             // pma12 -> faust25::freq
+		pma12.getWrappedObject().getParameter().connectT(0, svf1);                // pma12 -> svf1::Frequency
+		pma12.getWrappedObject().getParameter().connectT(1, svf3);                // pma12 -> svf3::Frequency
 		peak11.getParameter().connectT(0, pma12);                                 // peak11 -> pma12::Value
 		auto& xfader2_p = xfader2.getWrappedObject().getParameter();
 		xfader2_p.getParameterT(0).connectT(0, gain5);                                         // xfader2 -> gain5::Gain
@@ -4681,93 +4674,105 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		file_player4.setParameterT(2, 790.031); // core::file_player::RootFrequency
 		file_player4.setParameterT(3, 1.28);    // core::file_player::FreqRatio
 		
-		receive.setParameterT(0, 1.); // routing::receive::Feedback
-		
-		;                            // gain4::Gain is automated
-		gain4.setParameterT(1, 20.); // core::gain::Smoothing
-		gain4.setParameterT(2, 0.);  // core::gain::ResetValue
+		; // receive::Feedback is automated
 		
 		; // branch20::Index is automated
 		
-		; // faust3::Q is automated
-		; // faust3::freq is automated
+		;                            // svf2::Frequency is automated
+		;                            // svf2::Q is automated
+		svf2.setParameterT(2, 0.);   // filters::svf::Gain
+		svf2.setParameterT(3, 0.01); // filters::svf::Smoothing
+		svf2.setParameterT(4, 0.);   // filters::svf::Mode
+		svf2.setParameterT(5, 1.);   // filters::svf::Enabled
 		
-		; // faust25::Q is automated
-		; // faust25::freq is automated
+		;                            // svf3::Frequency is automated
+		;                            // svf3::Q is automated
+		svf3.setParameterT(2, 0.);   // filters::svf::Gain
+		svf3.setParameterT(3, 0.01); // filters::svf::Smoothing
+		svf3.setParameterT(4, 1.);   // filters::svf::Mode
+		svf3.setParameterT(5, 1.);   // filters::svf::Enabled
 		
-		; // faust10::Q is automated
-		; // faust10::freq is automated
+		;                           // svf::Frequency is automated
+		;                           // svf::Q is automated
+		svf.setParameterT(2, 0.);   // filters::svf::Gain
+		svf.setParameterT(3, 0.01); // filters::svf::Smoothing
+		svf.setParameterT(4, 0.);   // filters::svf::Mode
+		svf.setParameterT(5, 1.);   // filters::svf::Enabled
 		
-		; // faust17::Q is automated
-		; // faust17::freq is automated
+		;                            // svf1::Frequency is automated
+		;                            // svf1::Q is automated
+		svf1.setParameterT(2, 0.);   // filters::svf::Gain
+		svf1.setParameterT(3, 0.01); // filters::svf::Smoothing
+		svf1.setParameterT(4, 1.);   // filters::svf::Mode
+		svf1.setParameterT(5, 1.);   // filters::svf::Enabled
 		
-		this->setParameterT(0, 13.);
+		this->setParameterT(0, 1.);
 		this->setParameterT(1, 0.);
 		this->setParameterT(2, 1.);
-		this->setParameterT(3, 0.16);
-		this->setParameterT(4, 2.08167e-17);
-		this->setParameterT(5, 5.);
-		this->setParameterT(6, 0.53);
-		this->setParameterT(7, 2.08167e-17);
-		this->setParameterT(8, 4.);
-		this->setParameterT(9, 10.);
+		this->setParameterT(3, 0.33);
+		this->setParameterT(4, -0.03);
+		this->setParameterT(5, 1.);
+		this->setParameterT(6, 0.5);
+		this->setParameterT(7, 0.);
+		this->setParameterT(8, 1.);
+		this->setParameterT(9, 1.);
 		this->setParameterT(10, 0.);
-		this->setParameterT(11, 5.);
+		this->setParameterT(11, 1.);
 		this->setParameterT(12, 0.);
 		this->setParameterT(13, -1.);
 		this->setParameterT(14, 1.);
 		this->setParameterT(15, 2.);
-		this->setParameterT(16, 0.);
+		this->setParameterT(16, 1.);
 		this->setParameterT(17, 2.08167e-17);
 		this->setParameterT(18, 1.);
-		this->setParameterT(19, 7.);
-		this->setParameterT(20, 0.33);
-		this->setParameterT(21, 2.08167e-17);
-		this->setParameterT(22, 5.);
-		this->setParameterT(23, 0.);
-		this->setParameterT(24, 1.);
-		this->setParameterT(25, 5.);
+		this->setParameterT(19, 4.);
+		this->setParameterT(20, 0.39);
+		this->setParameterT(21, 0.);
+		this->setParameterT(22, 3.22275);
+		this->setParameterT(23, 0.08);
+		this->setParameterT(24, 0.75);
+		this->setParameterT(25, 3.);
 		this->setParameterT(26, 1.);
-		this->setParameterT(27, 0.06);
+		this->setParameterT(27, 0.48);
 		this->setParameterT(28, 2.08167e-17);
 		this->setParameterT(29, 3.);
-		this->setParameterT(30, 0.);
+		this->setParameterT(30, 800.);
 		this->setParameterT(31, 0.);
-		this->setParameterT(32, 5579.);
-		this->setParameterT(33, 0.);
-		this->setParameterT(34, 0.);
+		this->setParameterT(32, 10000.);
+		this->setParameterT(33, 1.);
+		this->setParameterT(34, 1098.);
 		this->setParameterT(35, 0.67);
 		this->setParameterT(36, 0.);
 		this->setParameterT(37, 71.);
 		this->setParameterT(38, 500.);
 		this->setParameterT(39, 1.);
 		this->setParameterT(40, 0.);
-		this->setParameterT(41, 0.5);
+		this->setParameterT(41, 1);
 		this->setParameterT(42, 0.);
-		this->setParameterT(43, 0.99);
+		this->setParameterT(43, 0.718835);
 		this->setParameterT(44, 2.08167e-17);
 		this->setParameterT(45, 4.);
 		this->setParameterT(46, 0.);
-		this->setParameterT(47, 2.08167e-17);
+		this->setParameterT(47, -0.01);
 		this->setParameterT(48, 4.);
-		this->setParameterT(49, 0.);
+		this->setParameterT(49, 0.5);
 		this->setParameterT(50, 0.226758);
 		this->setParameterT(51, 0.);
 		this->setParameterT(52, 0.349219);
-		this->setParameterT(53, 7.);
-		this->setParameterT(54, 0.65);
-		this->setParameterT(55, 2.08167e-17);
-		this->setParameterT(56, 5.);
+		this->setParameterT(53, 1.);
+		this->setParameterT(54, 0.);
+		this->setParameterT(55, 0.);
+		this->setParameterT(56, 1.);
 		this->setParameterT(57, 5.);
 		this->setParameterT(58, 0.);
 		this->setParameterT(59, 0.0484885);
-		this->setParameterT(60, 0.45);
+		this->setParameterT(60, 0.5);
 		this->setParameterT(61, 2.08167e-17);
 		this->setParameterT(62, 5.);
 		this->setParameterT(63, 0.65574);
 		this->setParameterT(64, 0.997232);
-		this->setParameterT(65, 0.);
-		this->setParameterT(66, 16.);
+		this->setParameterT(65, 2.);
+		this->setParameterT(66, 4.);
 		this->setParameterT(67, 1.);
 		this->setParameterT(68, 0.);
 		this->setParameterT(69, 0.);
@@ -4796,7 +4801,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		this->setParameterT(92, 0.12);
 		this->setParameterT(93, 1.);
 		this->setParameterT(94, 0.);
-		this->setParameterT(95, 0.);
+		this->setParameterT(95, 0.92);
 		this->setExternalData({}, -1);
 	}
 	~instance() override

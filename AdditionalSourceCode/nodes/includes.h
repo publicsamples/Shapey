@@ -17,9 +17,10 @@
 
 // Include compiled network files ------------------
 
+#include "cab_networkdata.h"
 #include "DspNetwork_networkdata.h"
 #include "filtest.h"
-#include "lfo.h"
+#include "lfo_networkdata.h"
 #include "MDel_networkdata.h"
 #include "osctests_networkdata.h"
 #include "verb_networkdata.h"

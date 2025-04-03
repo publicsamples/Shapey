@@ -147,12 +147,12 @@ struct _Comb final : public ::faust::dsp {
 		float fSlow0 = std::max<float>(0.0f, std::min<float>(1e+02f, float(fHslider0)));
 		float fSlow1 = fSlow0 + -1.0f;
 		float fSlow2 = std::floor(fSlow1);
-		float fSlow3 = fSlow0 + (-1.0f - fSlow2);
+		float fSlow3 = fSlow2 + (2.0f - fSlow0);
 		float fSlow4 = std::max<float>(0.0f, std::min<float>(1.0f, float(fHslider1)));
 		int iSlow5 = int(fSlow1);
-		int iSlow6 = std::min<int>(129, std::max<int>(0, iSlow5 + 1));
-		float fSlow7 = fSlow2 + (2.0f - fSlow0);
-		int iSlow8 = std::min<int>(129, std::max<int>(0, iSlow5));
+		int iSlow6 = std::min<int>(129, std::max<int>(0, iSlow5));
+		float fSlow7 = fSlow0 + (-1.0f - fSlow2);
+		int iSlow8 = std::min<int>(129, std::max<int>(0, iSlow5 + 1));
 		for (int i0 = 0; i0 < count; i0 = i0 + 1) {
 			float fTemp0 = float(input0[i0]) - fSlow4 * fRec0[1];
 			fVec0[IOTA0 & 127] = fTemp0;
@@ -161,7 +161,7 @@ struct _Comb final : public ::faust::dsp {
 			output0[i0] = FAUSTFLOAT(fRec1[1]);
 			float fTemp1 = float(input1[i0]) - fSlow4 * fRec2[1];
 			fVec1[IOTA0 & 127] = fTemp1;
-			fRec2[0] = fSlow7 * fVec1[(IOTA0 - iSlow8) & 127] + fSlow3 * fVec1[(IOTA0 - iSlow6) & 127];
+			fRec2[0] = fSlow3 * fVec1[(IOTA0 - iSlow6) & 127] + fSlow7 * fVec1[(IOTA0 - iSlow8) & 127];
 			fRec3[0] = fTemp1;
 			output1[i0] = FAUSTFLOAT(fRec3[1]);
 			IOTA0 = IOTA0 + 1;
