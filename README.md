@@ -4,7 +4,7 @@
 ![Shapey](https://raw.githubusercontent.com/publicsamples/Shapey/main/Shapey.png)
 
 
-Shapey! is an open source, experimental synthesiser with a unusal approach to wavetable synthesis. Its primary sound generator is a single "complex" wavetable oscillator with three sections. While it borrows terminology from FM synthesis, its architecture is quite different. The modulator controls the pitch and timing of a sample player (carrier), enabling several distinct synthesis techniques depending on their configuration. 
+Shapey! is an open source, experimental synthesiser with a unusal approach to wavetable synthesis. Its primary sound generator is a single "complex" wavetable oscillator with three sections. While it borrows terminology from FM synthesis, its architecture is quite different. The modulator controls the pitch and, to a certain extent, timing of a sample player (carrier), enabling several distinct synthesis techniques depending on their configuration. 
 
 An additional collection of sounds and presets is available for purchase [here](https://modularsamples.gumroad.com/l/lgzxw?_gl=1*1t25l91*_ga*MTYxMjA0MTcwNy4xNzQyOTQ4MDQz*_ga_6LJN6D94N6*MTc0MzY5NDY5Mi4xMS4xLjE3NDM2OTQ5NTcuMC4wLjA.). Not only does this expand Shapey!'s sonic capabilities, but it also helps support its future development—and me, the person who made it.  
 
