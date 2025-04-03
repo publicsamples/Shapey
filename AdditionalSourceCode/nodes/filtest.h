@@ -1563,6 +1563,133 @@ using split1_t = container::split<parameter::empty,
                                   chain5_t<NV>>;
 
 template <int NV>
+using multi_t = container::multi<parameter::empty, 
+                                 wrap::fix<1, core::smoother<NV>>, 
+                                 wrap::fix<1, core::smoother<NV>>>;
+
+template <int NV>
+using chain6_t = container::chain<parameter::empty, 
+                                  wrap::fix<2, minmax3_t<NV>>, 
+                                  wrap::no_process<math::map>, 
+                                  math::add<NV>>;
+
+template <int NV>
+using chain89_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, minmax12_t<NV>>, 
+                                   math::add<NV>, 
+                                   wrap::no_process<math::map>>;
+
+template <int NV>
+using chain83_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, minmax10_t<NV>>, 
+                                   math::add<NV>, 
+                                   wrap::no_process<math::map>>;
+
+template <int NV>
+using chain79_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, minmax9_t<NV>>, 
+                                   math::add<NV>, 
+                                   wrap::no_process<math::map>>;
+
+template <int NV>
+using chain78_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, minmax8_t<NV>>, 
+                                   wrap::no_process<math::map>, 
+                                   math::add<NV>>;
+
+template <int NV>
+using chain43_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, minmax4_t<NV>>, 
+                                   math::add<NV>, 
+                                   wrap::no_process<math::add<NV>>>;
+
+template <int NV>
+using chain90_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, minmax13_t<NV>>, 
+                                   wrap::no_process<math::map>, 
+                                   math::add<NV>>;
+template <int NV>
+using branch8_t = container::branch<parameter::empty, 
+                                    wrap::fix<2, math::add<NV>>, 
+                                    chain6_t<NV>, 
+                                    chain89_t<NV>, 
+                                    chain83_t<NV>, 
+                                    chain79_t<NV>, 
+                                    chain78_t<NV>, 
+                                    chain43_t<NV>, 
+                                    chain90_t<NV>>;
+
+template <int NV>
+using chain8_t = container::chain<parameter::empty, 
+                                  wrap::fix<2, branch8_t<NV>>>;
+
+template <int NV>
+using chain21_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, smoothed_parameter_t<NV>>, 
+                                   multi_t<NV>, 
+                                   chain8_t<NV>>;
+template <int NV>
+using file_player4_t = wrap::data<core::file_player<NV>, 
+                                  data::external::audiofile<1>>;
+
+template <int NV>
+using chain11_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, core::gain<NV>>, 
+                                   chain21_t<NV>, 
+                                   wrap::no_process<core::mono2stereo>, 
+                                   file_player4_t<NV>>;
+
+template <int NV>
+using chain68_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, chain11_t<NV>>>;
+
+template <int NV>
+using frame2_block2_t = container::chain<parameter::empty, 
+                                         wrap::fix<2, chain68_t<NV>>>;
+
+template <int NV>
+using fix8_block1_t = container::chain<parameter::empty, 
+                                       wrap::fix<2, frame2_block2_t<NV>>>;
+
+DECLARE_PARAMETER_RANGE_STEP(midi4_modRange, 
+                             -64., 
+                             64., 
+                             0.1);
+
+template <int NV>
+using midi4_mod = parameter::from0To1<project::shfiter<NV>, 
+                                      0, 
+                                      midi4_modRange>;
+
+template <int NV>
+using midi4_t = wrap::mod<midi4_mod<NV>, 
+                          control::midi<midi_logic::notenumber<NV>>>;
+
+using chain9_t = chain31_t;
+
+template <int NV>
+using converter4_mod = parameter::chain<ranges::Identity, 
+                                        parameter::plain<project::shfiter<NV>, 1>, 
+                                        parameter::plain<project::shfiter<NV>, 2>>;
+
+template <int NV>
+using converter4_t = control::converter<converter4_mod<NV>, 
+                                        conversion_logic::ms2samples>;
+template <int NV>
+using tempo_sync7_t = wrap::mod<parameter::plain<converter4_t<NV>, 0>, 
+                                control::tempo_sync<NV>>;
+
+template <int NV>
+using chain10_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, tempo_sync7_t<NV>>, 
+                                   converter4_t<NV>, 
+                                   project::shfiter<NV>>;
+template <int NV>
+using branch_t = container::branch<parameter::empty, 
+                                   wrap::fix<2, chain9_t>, 
+                                   chain10_t<NV>>;
+
+template <int NV>
 using chain_t = container::chain<parameter::empty, 
                                  wrap::fix<2, core::gain<NV>>>;
 
@@ -1683,95 +1810,6 @@ using chain20_t = container::chain<parameter::empty,
                                    wrap::fix<2, soft_bypass_t<NV>>>;
 
 template <int NV>
-using multi_t = container::multi<parameter::empty, 
-                                 wrap::fix<1, core::smoother<NV>>, 
-                                 wrap::fix<1, core::smoother<NV>>>;
-
-template <int NV>
-using chain6_t = container::chain<parameter::empty, 
-                                  wrap::fix<2, minmax3_t<NV>>, 
-                                  wrap::no_process<math::map>, 
-                                  math::add<NV>>;
-
-template <int NV>
-using chain89_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, minmax12_t<NV>>, 
-                                   math::add<NV>, 
-                                   wrap::no_process<math::map>>;
-
-template <int NV>
-using chain83_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, minmax10_t<NV>>, 
-                                   math::add<NV>, 
-                                   wrap::no_process<math::map>>;
-
-template <int NV>
-using chain79_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, minmax9_t<NV>>, 
-                                   math::add<NV>, 
-                                   wrap::no_process<math::map>>;
-
-template <int NV>
-using chain78_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, minmax8_t<NV>>, 
-                                   wrap::no_process<math::map>, 
-                                   math::add<NV>>;
-
-template <int NV>
-using chain43_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, minmax4_t<NV>>, 
-                                   math::add<NV>, 
-                                   wrap::no_process<math::add<NV>>>;
-
-template <int NV>
-using chain90_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, minmax13_t<NV>>, 
-                                   wrap::no_process<math::map>, 
-                                   math::add<NV>>;
-template <int NV>
-using branch8_t = container::branch<parameter::empty, 
-                                    wrap::fix<2, math::add<NV>>, 
-                                    chain6_t<NV>, 
-                                    chain89_t<NV>, 
-                                    chain83_t<NV>, 
-                                    chain79_t<NV>, 
-                                    chain78_t<NV>, 
-                                    chain43_t<NV>, 
-                                    chain90_t<NV>>;
-
-template <int NV>
-using chain8_t = container::chain<parameter::empty, 
-                                  wrap::fix<2, branch8_t<NV>>>;
-
-template <int NV>
-using chain21_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, smoothed_parameter_t<NV>>, 
-                                   multi_t<NV>, 
-                                   chain8_t<NV>>;
-template <int NV>
-using file_player4_t = wrap::data<core::file_player<NV>, 
-                                  data::external::audiofile<1>>;
-
-template <int NV>
-using chain11_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, core::gain<NV>>, 
-                                   chain21_t<NV>, 
-                                   wrap::no_process<core::mono2stereo>, 
-                                   file_player4_t<NV>>;
-
-template <int NV>
-using chain68_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, chain11_t<NV>>>;
-
-template <int NV>
-using frame2_block2_t = container::chain<parameter::empty, 
-                                         wrap::fix<2, chain68_t<NV>>>;
-
-template <int NV>
-using fix8_block1_t = container::chain<parameter::empty, 
-                                       wrap::fix<2, frame2_block2_t<NV>>>;
-
-template <int NV>
 using no_midi1_t_ = container::chain<parameter::empty, 
                                      wrap::fix<2, filters::svf<NV>>, 
                                      filters::svf<NV>>;
@@ -1805,8 +1843,10 @@ using fix8_block_t_ = container::chain<parameter::empty,
                                        wrap::fix<2, modchain1_t<NV>>, 
                                        chain53_t<NV>, 
                                        split1_t<NV>, 
-                                       chain20_t<NV>, 
                                        fix8_block1_t<NV>, 
+                                       midi4_t<NV>, 
+                                       branch_t<NV>, 
+                                       chain20_t<NV>, 
                                        routing::receive<stereo_cable>, 
                                        softbypass_switch5_t<NV>>;
 
@@ -2282,6 +2322,16 @@ using Glide = parameter::from0To1<filtest_impl::smoothed_parameter_unscaled_t<NV
                                   GlideRange>;
 
 template <int NV>
+using PsXfTempo = parameter::from0To1<filtest_impl::tempo_sync7_t<NV>, 
+                                      0, 
+                                      filtest_impl::pma2_modRange>;
+
+template <int NV>
+using PsXfDivc = parameter::from0To1<filtest_impl::tempo_sync7_t<NV>, 
+                                     1, 
+                                     MathSmooth_5Range>;
+
+template <int NV>
 using Tempo = parameter::plain<filtest_impl::tempo_sync_t<NV>, 
                                1>;
 template <int NV>
@@ -2414,6 +2464,9 @@ using ModPostSwitch = Fine;
 using inPutGain = parameter::plain<routing::receive<stereo_cable>, 
                                    0>;
 template <int NV>
+using PsOnOff = parameter::plain<filtest_impl::branch_t<NV>, 
+                                 0>;
+template <int NV>
 using filtest_t_plist = parameter::list<Tempo<NV>, 
                                         PosSmooth<NV>, 
                                         MathSmooth<NV>, 
@@ -2509,7 +2562,10 @@ using filtest_t_plist = parameter::list<Tempo<NV>,
                                         detune<NV>, 
                                         ModPostSwitch, 
                                         Glide<NV>, 
-                                        inPutGain>;
+                                        inPutGain, 
+                                        PsOnOff<NV>, 
+                                        PsXfTempo<NV>, 
+                                        PsXfDivc<NV>>;
 }
 
 template <int NV>
@@ -2531,19 +2587,19 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		SNEX_METADATA_ID(filtest);
 		SNEX_METADATA_NUM_CHANNELS(2);
-		SNEX_METADATA_ENCODED_PARAMETERS(1608)
+		SNEX_METADATA_ENCODED_PARAMETERS(1660)
 		{
 			0x005B, 0x0000, 0x5400, 0x6D65, 0x6F70, 0x0000, 0x8000, 0x003F, 
-            0x0000, 0x0042, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x5B3F, 
+            0x0000, 0x0042, 0x3000, 0x0041, 0x8000, 0x003F, 0x8000, 0x5B3F, 
             0x0001, 0x0000, 0x6F50, 0x5373, 0x6F6D, 0x746F, 0x0068, 0x0000, 
             0x0000, 0x0000, 0x44FA, 0x0000, 0x0000, 0xEE69, 0x3E6C, 0xCCCD, 
             0x3DCC, 0x025B, 0x0000, 0x4D00, 0x7461, 0x5368, 0x6F6D, 0x746F, 
-            0x0068, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
+            0x0068, 0x0000, 0x0000, 0x0000, 0x3F80, 0xD70A, 0x3C23, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x035B, 0x0000, 0x4200, 0x696C, 0x656D, 
-            0x0079, 0x0000, 0x0000, 0x0000, 0x3F80, 0xF5C3, 0x3EA8, 0x0000, 
+            0x0079, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x045B, 0x0000, 0x4200, 0x696C, 0x656D, 
-            0x4D79, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x8F3F, 0xF5C2, 
-            0x00BC, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0005, 0x0000, 0x6C42, 
+            0x4D79, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0xC000, 
+            0x0023, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0005, 0x0000, 0x6C42, 
             0x6D69, 0x7965, 0x6F4D, 0x5364, 0x6372, 0x0000, 0x8000, 0x003F, 
             0x2000, 0x0041, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x5B3F, 
             0x0006, 0x0000, 0x6950, 0x6374, 0x0068, 0x0000, 0x0000, 0x0000, 
@@ -2553,13 +2609,13 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x085B, 0x0000, 0x5000, 0x7469, 0x6863, 0x7253, 0x0063, 0x0000, 
             0x3F80, 0x0000, 0x4120, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x095B, 0x0000, 0x4400, 0x7669, 0x6469, 0x0065, 0x0000, 
-            0x3F80, 0x0000, 0x4190, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
+            0x3F80, 0x0000, 0x4190, 0x0000, 0x4110, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0A5B, 0x0000, 0x4400, 0x7669, 0x6F4D, 0x0064, 0x0000, 
-            0xBF80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
+            0xBF80, 0x0000, 0x3F80, 0x0000, 0x23C0, 0x0000, 0x3F80, 0x0000, 
             0x0000, 0x0B5B, 0x0000, 0x4400, 0x7669, 0x7253, 0x0063, 0x0000, 
-            0x3F80, 0x0000, 0x4120, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
+            0x3F80, 0x0000, 0x4120, 0x0000, 0x40A0, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0C5B, 0x0000, 0x5000, 0x7469, 0x6863, 0x7953, 0x636E, 
-            0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 
+            0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 
             0x003F, 0x8000, 0x5B3F, 0x000D, 0x0000, 0x6946, 0x656E, 0x0000, 
             0x8000, 0x00BF, 0x8000, 0x003F, 0x8000, 0x00BF, 0x8000, 0x003F, 
             0x0000, 0x5B00, 0x000E, 0x0000, 0x6E49, 0x7570, 0x4D74, 0x646F, 
@@ -2568,60 +2624,60 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x6564, 0x0000, 0x8000, 0x003F, 0xA000, 0x0040, 0x0000, 0x0040, 
             0x8000, 0x003F, 0x8000, 0x5B3F, 0x0010, 0x0000, 0x6441, 0x756A, 
             0x7473, 0x694D, 0x0078, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
-            0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x115B, 0x0000, 0x4100, 
+            0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x115B, 0x0000, 0x4100, 
             0x6A64, 0x7375, 0x4D74, 0x7869, 0x6F4D, 0x0064, 0x0000, 0xBF80, 
             0x0000, 0x3F80, 0x0000, 0x23C0, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x125B, 0x0000, 0x4100, 0x6A64, 0x7375, 0x4D74, 0x7869, 0x7253, 
             0x0063, 0x0000, 0x3F80, 0x0000, 0x4120, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0000, 0x3F80, 0x135B, 0x0000, 0x4100, 0x6A64, 0x7375, 
             0x4D74, 0x646F, 0x0065, 0x0000, 0x3F80, 0x0000, 0x4140, 0x0000, 
-            0x4080, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x145B, 0x0000, 0x4100, 
-            0x6A64, 0x0000, 0x8000, 0x0024, 0x8000, 0x143F, 0xC7AE, 0x003E, 
+            0x40E0, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x145B, 0x0000, 0x4100, 
+            0x6A64, 0x0000, 0x8000, 0x0024, 0x8000, 0x0A3F, 0x23D7, 0x003C, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0015, 0x0000, 0x6441, 0x4D6A, 
             0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0x0000, 0x0000, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0016, 0x0000, 0x6441, 0x536A, 
-            0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 0x9A41, 0x4E41, 0x0040, 
+            0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 0x0041, 0x8000, 0x003F, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0017, 0x0000, 0x6F50, 0x6973, 
-            0x6974, 0x6E6F, 0x0000, 0x0000, 0x0000, 0x8000, 0x0A3F, 0xA3D7, 
-            0x003D, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0018, 0x0000, 0x6F50, 
-            0x4D73, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0x4000, 
+            0x6974, 0x6E6F, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
+            0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0018, 0x0000, 0x6F50, 
+            0x4D73, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0x8000, 
             0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0019, 0x0000, 0x6F50, 
             0x5373, 0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 0x0041, 0x4000, 
             0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001A, 0x0000, 0x754F, 
             0x4D74, 0x646F, 0x0065, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x1B5B, 0x0000, 0x4700, 
-            0x6961, 0x326E, 0x0000, 0x8000, 0x0024, 0x8000, 0x8F3F, 0xF5C2, 
-            0x003E, 0x8000, 0x003F, 0x0000, 0x5B00, 0x001C, 0x0000, 0x6147, 
+            0x6961, 0x326E, 0x0000, 0x8000, 0x0024, 0x8000, 0x003F, 0x0000, 
+            0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x001C, 0x0000, 0x6147, 
             0x6E69, 0x4D32, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 
             0xC000, 0x0023, 0x8000, 0x003F, 0x0000, 0x5B00, 0x001D, 0x0000, 
             0x6147, 0x6E69, 0x5332, 0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 
-            0x0041, 0x4000, 0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001E, 
-            0x0000, 0x3161, 0x0000, 0x0000, 0x0000, 0xEA60, 0x0046, 0x4800, 
-            0x7244, 0x4A6A, 0xCD3E, 0xCCCC, 0x5B3D, 0x001F, 0x0000, 0x3168, 
-            0x0000, 0x0000, 0x0000, 0x1C40, 0x0046, 0x0000, 0x7200, 0x4A6A, 
+            0x0041, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001E, 
+            0x0000, 0x3161, 0x0000, 0x0000, 0x0000, 0xEA60, 0x0046, 0x79C0, 
+            0x7245, 0x4A6A, 0xCD3E, 0xCCCC, 0x5B3D, 0x001F, 0x0000, 0x3168, 
+            0x0000, 0x0000, 0x0000, 0x1C40, 0x0046, 0x1C40, 0x7246, 0x4A6A, 
             0xCD3E, 0xCCCC, 0x5B3D, 0x0020, 0x0000, 0x3164, 0x0000, 0x0000, 
             0x0000, 0x1C40, 0x0046, 0x1C40, 0x7246, 0x4A6A, 0xCD3E, 0xCCCC, 
             0x5B3D, 0x0021, 0x0000, 0x3173, 0x0000, 0x0000, 0x0000, 0x8000, 
-            0x003F, 0x8000, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0022, 
-            0x0000, 0x3172, 0x0000, 0x0000, 0x0000, 0xEA60, 0x0046, 0x8940, 
-            0x7244, 0x4A6A, 0xCD3E, 0xCCCC, 0x5B3D, 0x0023, 0x0000, 0x6E45, 
-            0x4D76, 0x646F, 0x0031, 0x0000, 0x0000, 0x0000, 0x3F80, 0x851F, 
-            0x3F2B, 0x0000, 0x3F80, 0x0000, 0x0000, 0x245B, 0x0000, 0x6100, 
-            0x0032, 0x0000, 0x0000, 0x0000, 0x447A, 0x0000, 0x0000, 0x209B, 
+            0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0022, 
+            0x0000, 0x3172, 0x0000, 0x0000, 0x0000, 0xEA60, 0x0046, 0x4B30, 
+            0x7245, 0x4A6A, 0xCD3E, 0xCCCC, 0x5B3D, 0x0023, 0x0000, 0x6E45, 
+            0x4D76, 0x646F, 0x0031, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
+            0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x245B, 0x0000, 0x6100, 
+            0x0032, 0x0000, 0x0000, 0x0000, 0x447A, 0x0000, 0x441E, 0x209B, 
             0x3E9A, 0xCCCD, 0x3DCC, 0x255B, 0x0000, 0x6800, 0x0032, 0x0000, 
             0x0000, 0x0000, 0x447A, 0x0000, 0x428E, 0x0000, 0x3F80, 0xCCCD, 
             0x3DCC, 0x265B, 0x0000, 0x6400, 0x0032, 0x0000, 0x0000, 0x0000, 
-            0x447A, 0x0000, 0x43FA, 0x209B, 0x3E9A, 0xCCCD, 0x3DCC, 0x275B, 
+            0x447A, 0x0000, 0x447A, 0x209B, 0x3E9A, 0xCCCD, 0x3DCC, 0x275B, 
             0x0000, 0x4500, 0x766E, 0x6944, 0x0076, 0x0000, 0x3F80, 0x0000, 
-            0x4200, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x285B, 
+            0x4200, 0x0000, 0x4120, 0x0000, 0x3F80, 0x0000, 0x0000, 0x285B, 
             0x0000, 0x4500, 0x766E, 0x5332, 0x6E79, 0x0063, 0x0000, 0x0000, 
-            0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 
+            0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 
             0x295B, 0x0000, 0x7100, 0x0000, 0x0000, 0x0000, 0x2000, 0x0041, 
-            0x2000, 0x0041, 0x8000, 0x003F, 0x0000, 0x5B00, 0x002A, 0x0000, 
+            0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x002A, 0x0000, 
             0x6946, 0x746C, 0x7265, 0x6F4D, 0x6564, 0x0000, 0x0000, 0x0000, 
             0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x8000, 0x5B3F, 
-            0x002B, 0x0000, 0x504C, 0x0000, 0x0000, 0x0000, 0x8000, 0x913F, 
-            0x3805, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x002C, 0x0000, 
+            0x002B, 0x0000, 0x504C, 0x0000, 0x0000, 0x0000, 0x8000, 0xA43F, 
+            0x7D70, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x002C, 0x0000, 
             0x704C, 0x6F4D, 0x0064, 0x0000, 0xBF80, 0x0000, 0x3F80, 0x0000, 
             0x23C0, 0x0000, 0x3F80, 0x0000, 0x0000, 0x2D5B, 0x0000, 0x4C00, 
             0x5370, 0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 0x0041, 0x8000, 
@@ -2632,7 +2688,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x0000, 0x0000, 0x305B, 0x0000, 0x4800, 0x5370, 0x6372, 0x0000, 
             0x8000, 0x003F, 0x2000, 0x0041, 0x8000, 0x0040, 0x8000, 0x003F, 
             0x0000, 0x5B00, 0x0031, 0x0000, 0x7473, 0x7065, 0x0000, 0x0000, 
-            0x0000, 0x8000, 0x003F, 0x0000, 0x003F, 0x8000, 0x003F, 0x0000, 
+            0x0000, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x003F, 0x0000, 
             0x5B00, 0x0032, 0x0000, 0x6F50, 0x4D73, 0x646F, 0x0065, 0x0000, 
             0x0000, 0x0000, 0x3F80, 0x3333, 0x3E68, 0x0000, 0x3F80, 0x0000, 
             0x0000, 0x335B, 0x0000, 0x6600, 0x6565, 0x3164, 0x0000, 0x0000, 
@@ -2640,10 +2696,10 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x5B00, 0x0034, 0x0000, 0x6566, 0x6465, 0x0032, 0x0000, 0x0000, 
             0x0000, 0x3F80, 0xCCCD, 0x3EB2, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x355B, 0x0000, 0x5000, 0x736F, 0x5174, 0x6175, 0x746E, 0x7369, 
-            0x0065, 0x0000, 0x3F80, 0x0000, 0x4100, 0x0000, 0x3F80, 0x0000, 
+            0x0065, 0x0000, 0x3F80, 0x0000, 0x4100, 0x0000, 0x4000, 0x0000, 
             0x3F80, 0x0000, 0x3F80, 0x365B, 0x0000, 0x5000, 0x736F, 0x7469, 
             0x6F69, 0x4F6E, 0x6353, 0x0031, 0x0000, 0x0000, 0x0000, 0x3F80, 
-            0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x375B, 0x0000, 
+            0x5C29, 0x3E8F, 0x0000, 0x3F80, 0x0000, 0x0000, 0x375B, 0x0000, 
             0x5000, 0x736F, 0x7469, 0x6F69, 0x4F6E, 0x6373, 0x4D31, 0x646F, 
             0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 
             0x003F, 0x0000, 0x5B00, 0x0038, 0x0000, 0x6F50, 0x6973, 0x6974, 
@@ -2657,7 +2713,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x3B5B, 0x0000, 0x4F00, 0x6373, 0x5232, 0x7461, 0x6F69, 0x0000, 
             0x0000, 0x0000, 0x8000, 0xD33F, 0x469B, 0x003D, 0x8000, 0x003F, 
             0x0000, 0x5B00, 0x003C, 0x0000, 0x6F4D, 0x5064, 0x6168, 0x6573, 
-            0x0000, 0x8000, 0x0024, 0x8000, 0x003F, 0x0000, 0x003F, 0x8000, 
+            0x0000, 0x8000, 0x0024, 0x8000, 0x293F, 0x8F5C, 0x003D, 0x8000, 
             0x003F, 0x0000, 0x5B00, 0x003D, 0x0000, 0x6850, 0x7361, 0x4D65, 
             0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0xC000, 0x0023, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x003E, 0x0000, 0x6850, 0x7361, 
@@ -2669,9 +2725,9 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x6F4D, 0x5364, 0x6372, 0x0000, 0x0000, 0x0000, 0x8000, 0x963F, 
             0x7F4A, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0041, 0x0000, 
             0x6154, 0x6C62, 0x5465, 0x6D65, 0x6F70, 0x0000, 0x0000, 0x0000, 
-            0x9000, 0x0041, 0x0000, 0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 
+            0x9000, 0x0041, 0x0000, 0x0000, 0x8000, 0x003F, 0x8000, 0x5B3F, 
             0x0042, 0x0000, 0x6154, 0x6C62, 0x4465, 0x7669, 0x0000, 0x8000, 
-            0x003F, 0x8000, 0x0041, 0x8000, 0x0040, 0x8000, 0x003F, 0x8000, 
+            0x003F, 0x8000, 0x0041, 0x8000, 0x0041, 0x8000, 0x003F, 0x8000, 
             0x5B3F, 0x0043, 0x0000, 0x6154, 0x6C62, 0x4C65, 0x6F6F, 0x0070, 
             0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 
             0x0000, 0x0000, 0x445B, 0x0000, 0x4100, 0x5432, 0x6D65, 0x6F70, 
@@ -2679,12 +2735,12 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x003F, 0x8000, 0x5B3F, 0x0045, 0x0000, 0x3248, 0x6554, 0x706D, 
             0x006F, 0x0000, 0x0000, 0x0000, 0x4190, 0x0000, 0x0000, 0x0000, 
             0x3F80, 0x0000, 0x3F80, 0x465B, 0x0000, 0x4400, 0x5432, 0x6D65, 
-            0x6F70, 0x0000, 0x0000, 0x0000, 0x9000, 0x0041, 0x9000, 0x0041, 
+            0x6F70, 0x0000, 0x0000, 0x0000, 0x9000, 0x0041, 0x0000, 0x0040, 
             0x8000, 0x003F, 0x8000, 0x5B3F, 0x0047, 0x0000, 0x6E45, 0x3276, 
             0x6F4C, 0x706F, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
             0x0000, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x0048, 0x0000, 0x6E45, 
             0x3276, 0x6F4C, 0x706F, 0x6554, 0x706D, 0x006F, 0x0000, 0x0000, 
-            0x0000, 0x4190, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 
+            0x0000, 0x4190, 0x0000, 0x4130, 0x0000, 0x3F80, 0x0000, 0x3F80, 
             0x495B, 0x0000, 0x4500, 0x766E, 0x4C32, 0x6F6F, 0x4470, 0x7669, 
             0x0000, 0x8000, 0x003F, 0x8000, 0x0041, 0x8000, 0x003F, 0x8000, 
             0x003F, 0x8000, 0x5B3F, 0x004A, 0x0000, 0x6E65, 0x3276, 0x6F6D, 
@@ -2722,7 +2778,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0059, 0x0000, 0x7553, 0x4D62, 
             0x7869, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x005A, 0x0000, 0x7553, 0x4662, 
-            0x006D, 0x0000, 0xBF80, 0x0000, 0x3F80, 0x0000, 0x23C0, 0x0000, 
+            0x006D, 0x0000, 0xBF80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x5B5B, 0x0000, 0x5300, 0x6275, 0x6D41, 
             0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 
             0x003F, 0x0000, 0x5B00, 0x005C, 0x0000, 0x6564, 0x7574, 0x656E, 
@@ -2733,7 +2789,14 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x4700, 0x696C, 0x6564, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 
             0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x005F, 0x0000, 
             0x6E69, 0x7550, 0x4774, 0x6961, 0x006E, 0x0000, 0x0000, 0x0000, 
-            0x3F80, 0x851F, 0x3F6B, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000
+            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x605B, 
+            0x0000, 0x5000, 0x4F73, 0x4F6E, 0x6666, 0x0000, 0x0000, 0x0000, 
+            0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 
+            0x0061, 0x0000, 0x7350, 0x6658, 0x6554, 0x706D, 0x006F, 0x0000, 
+            0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
+            0x0000, 0x625B, 0x0000, 0x5000, 0x5873, 0x4466, 0x7669, 0x0063, 
+            0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 
+            0x0000, 0x0000, 0x0000, 0x0000
 		};
 	};
 	
@@ -3182,231 +3245,238 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		auto& chain5 = this->getT(0).getT(2).getT(1);                                              // filtest_impl::chain5_t<NV>
 		auto& send = this->getT(0).getT(2).getT(1).getT(0);                                        // routing::send<stereo_cable>
 		auto& clear3 = this->getT(0).getT(2).getT(1).getT(1);                                      // math::clear<NV>
-		auto& chain20 = this->getT(0).getT(3);                                                     // filtest_impl::chain20_t<NV>
-		auto& soft_bypass = this->getT(0).getT(3).getT(0);                                         // filtest_impl::soft_bypass_t<NV>
-		auto& chain7 = this->getT(0).getT(3).getT(0).getT(0);                                      // filtest_impl::chain7_t<NV>
-		auto& xfader = this->getT(0).getT(3).getT(0).getT(0).getT(0);                              // filtest_impl::xfader_t<NV>
-		auto& split = this->getT(0).getT(3).getT(0).getT(0).getT(1);                               // filtest_impl::split_t<NV>
-		auto& chain = this->getT(0).getT(3).getT(0).getT(0).getT(1).getT(0);                       // filtest_impl::chain_t<NV>
-		auto& gain1 = this->getT(0).getT(3).getT(0).getT(0).getT(1).getT(0).getT(0);               // core::gain<NV>
-		auto& chain1 = this->getT(0).getT(3).getT(0).getT(0).getT(1).getT(1);                      // filtest_impl::chain1_t<NV>
-		auto& smoothed_parameter1 = this->getT(0).getT(3).getT(0).getT(0).getT(1).getT(1).getT(0); // filtest_impl::smoothed_parameter1_t<NV>
-		auto& branch3 = this->getT(0).getT(3).getT(0).getT(0).getT(1).getT(1).getT(1);             // filtest_impl::branch3_t<NV>
-		auto& chain12 = this->getT(0).getT(3).getT(0).getT(0).                                     // filtest_impl::chain12_t<NV>
-                        getT(1).getT(1).getT(1).getT(0);
-		auto& expr = this->getT(0).getT(3).getT(0).getT(0).                                       // math::expr<NV, custom::expr>
-                     getT(1).getT(1).getT(1).getT(0).
-                     getT(0);
-		auto& split2 = this->getT(0).getT(3).getT(0).getT(0).                                     // filtest_impl::split2_t<NV>
-                       getT(1).getT(1).getT(1).getT(0).
-                       getT(1);
-		auto& smoother = this->getT(0).getT(3).getT(0).getT(0).getT(1).                           // core::smoother<NV>
-                         getT(1).getT(1).getT(0).getT(1).getT(0);
-		auto& smoother3 = this->getT(0).getT(3).getT(0).getT(0).getT(1).                          // core::smoother<NV>
-                          getT(1).getT(1).getT(0).getT(1).getT(1);
-		auto& chain197 = this->getT(0).getT(3).getT(0).getT(0).                                   // filtest_impl::chain197_t<NV>
-                         getT(1).getT(1).getT(1).getT(1);
-		auto& mul6 = this->getT(0).getT(3).getT(0).getT(0).                                       // math::mul<NV>
-                     getT(1).getT(1).getT(1).getT(1).
-                     getT(0);
-		auto& pi = this->getT(0).getT(3).getT(0).getT(0).                                         // math::pi<NV>
-                   getT(1).getT(1).getT(1).getT(1).
-                   getT(1);
-		auto& split4 = this->getT(0).getT(3).getT(0).getT(0).                                     // filtest_impl::split4_t<NV>
-                       getT(1).getT(1).getT(1).getT(1).
-                       getT(2);
-		auto& smoother1 = this->getT(0).getT(3).getT(0).getT(0).getT(1).                          // core::smoother<NV>
-                          getT(1).getT(1).getT(1).getT(2).getT(0);
-		auto& smoother4 = this->getT(0).getT(3).getT(0).getT(0).getT(1).                          // core::smoother<NV>
-                          getT(1).getT(1).getT(1).getT(2).getT(1);
-		auto& chain199 = this->getT(0).getT(3).getT(0).getT(0).                                   // filtest_impl::chain199_t<NV>
-                         getT(1).getT(1).getT(1).getT(2);
-		auto& pi2 = this->getT(0).getT(3).getT(0).getT(0).                                        // math::pi<NV>
-                    getT(1).getT(1).getT(1).getT(2).
-                    getT(0);
-		auto& sub2 = this->getT(0).getT(3).getT(0).getT(0).                                       // math::sub<NV>
-                     getT(1).getT(1).getT(1).getT(2).
-                     getT(1);
-		auto& fmod = this->getT(0).getT(3).getT(0).getT(0).                                       // wrap::no_process<math::fmod<NV>>
-                     getT(1).getT(1).getT(1).getT(2).
-                     getT(2);
-		auto& chain200 = this->getT(0).getT(3).getT(0).getT(0).                                   // filtest_impl::chain200_t<NV>
-                         getT(1).getT(1).getT(1).getT(3);
-		auto& pi3 = this->getT(0).getT(3).getT(0).getT(0).                                        // math::pi<NV>
-                    getT(1).getT(1).getT(1).getT(3).
-                    getT(0);
-		auto& sub3 = this->getT(0).getT(3).getT(0).getT(0).                                       // math::sub<NV>
-                     getT(1).getT(1).getT(1).getT(3).
-                     getT(1);
-		auto& fmod1 = this->getT(0).getT(3).getT(0).getT(0).                                      // math::fmod<NV>
-                      getT(1).getT(1).getT(1).getT(3).
-                      getT(2);
-		auto& chain17 = this->getT(0).getT(3).getT(0).getT(0).                                    // filtest_impl::chain17_t<NV>
-                        getT(1).getT(1).getT(1).getT(4);
-		auto& no_midi = this->getT(0).getT(3).getT(0).getT(0).                                    // filtest_impl::no_midi_t<NV>
-                        getT(1).getT(1).getT(1).getT(4).
-                        getT(0);
-		auto& ring_mod2 = this->getT(0).getT(3).getT(0).getT(0).getT(1).                          // filters::ring_mod<NV>
-                          getT(1).getT(1).getT(4).getT(0).getT(0);
-		auto& chain14 = this->getT(0).getT(3).getT(0).getT(0).                                    // filtest_impl::chain14_t<NV>
-                        getT(1).getT(1).getT(1).getT(5);
-		auto& cable_table = this->getT(0).getT(3).getT(0).getT(0).                                // filtest_impl::cable_table_t<NV>
-                            getT(1).getT(1).getT(1).getT(5).
-                            getT(0);
-		auto& faust2 = this->getT(0).getT(3).getT(0).getT(0).                                     // project::Comb<NV>
-                       getT(1).getT(1).getT(1).getT(5).
-                       getT(1);
-		auto& chain27 = this->getT(0).getT(3).getT(0).getT(0).                                    // filtest_impl::chain27_t<NV>
-                        getT(1).getT(1).getT(1).getT(6);
-		auto& svf_eq = this->getT(0).getT(3).getT(0).getT(0).                                     // filters::svf_eq<NV>
-                       getT(1).getT(1).getT(1).getT(6).
-                       getT(0);
-		auto& chain155 = this->getT(0).getT(3).getT(0).getT(0).                                   // filtest_impl::chain155_t<NV>
-                         getT(1).getT(1).getT(1).getT(7);
-		auto& svf_eq3 = this->getT(0).getT(3).getT(0).getT(0).                                    // filters::svf_eq<NV>
-                        getT(1).getT(1).getT(1).getT(7).
-                        getT(0);
-		auto& chain16 = this->getT(0).getT(3).getT(0).getT(0).                                    // filtest_impl::chain16_t<NV>
-                        getT(1).getT(1).getT(1).getT(8);
-		auto& div2 = this->getT(0).getT(3).getT(0).getT(0).                                       // math::div<NV>
-                     getT(1).getT(1).getT(1).getT(8).
-                     getT(0);
-		auto& split10 = this->getT(0).getT(3).getT(0).getT(0).                                    // filtest_impl::split10_t<NV>
-                        getT(1).getT(1).getT(1).getT(8).
-                        getT(1);
-		auto& smoother6 = this->getT(0).getT(3).getT(0).getT(0).getT(1).                          // core::smoother<NV>
-                          getT(1).getT(1).getT(8).getT(1).getT(0);
-		auto& smoother7 = this->getT(0).getT(3).getT(0).getT(0).getT(1).                          // core::smoother<NV>
-                          getT(1).getT(1).getT(8).getT(1).getT(1);
-		auto& chain52 = this->getT(0).getT(3).getT(0).getT(0).                                    // filtest_impl::chain52_t<NV>
-                        getT(1).getT(1).getT(1).getT(9);
-		auto& phasor_fm = this->getT(0).getT(3).getT(0).getT(0).                                  // wrap::no_process<core::phasor_fm<NV>>
-                          getT(1).getT(1).getT(1).getT(9).
-                          getT(0);
-		auto& fm = this->getT(0).getT(3).getT(0).getT(0).                                         // core::fm
-                   getT(1).getT(1).getT(1).getT(9).
-                   getT(1);
-		auto& mono2stereo = this->getT(0).getT(3).getT(0).getT(0).                                // core::mono2stereo
-                            getT(1).getT(1).getT(1).getT(9).
-                            getT(2);
-		auto& tanh1 = this->getT(0).getT(3).getT(0).getT(0).                                      // math::tanh<NV>
-                      getT(1).getT(1).getT(1).getT(9).
-                      getT(3);
-		auto& chain54 = this->getT(0).getT(3).getT(0).getT(0).                                    // filtest_impl::chain54_t<NV>
-                        getT(1).getT(1).getT(1).getT(10);
-		auto& tempo_sync1 = this->getT(0).getT(3).getT(0).getT(0).                                // filtest_impl::tempo_sync1_t<NV>
-                            getT(1).getT(1).getT(1).getT(10).
-                            getT(0);
-		auto& sampleandhold1 = this->getT(0).getT(3).getT(0).getT(0).                             // fx::sampleandhold<NV>
-                               getT(1).getT(1).getT(1).getT(10).
-                               getT(1);
-		auto& chain55 = this->getT(0).getT(3).getT(0).getT(0).                                    // filtest_impl::chain55_t<NV>
-                        getT(1).getT(1).getT(1).getT(11);
-		auto& bitcrush = this->getT(0).getT(3).getT(0).getT(0).                                   // fx::bitcrush<NV>
-                         getT(1).getT(1).getT(1).getT(11).
-                         getT(0);
-		auto& split11 = this->getT(0).getT(3).getT(0).getT(0).                                    // filtest_impl::split11_t<NV>
-                        getT(1).getT(1).getT(1).getT(11).
-                        getT(1);
-		auto& smoother8 = this->getT(0).getT(3).getT(0).getT(0).getT(1).                          // core::smoother<NV>
-                          getT(1).getT(1).getT(11).getT(1).getT(0);
-		auto& smoother9 = this->getT(0).getT(3).getT(0).getT(0).getT(1).                          // core::smoother<NV>
-                          getT(1).getT(1).getT(11).getT(1).getT(1);
-		auto& gain2 = this->getT(0).getT(3).getT(0).getT(0).getT(1).getT(1).getT(2);              // core::gain<NV>
-		auto& fix8_block1 = this->getT(0).getT(4);                                                // filtest_impl::fix8_block1_t<NV>
-		auto& frame2_block2 = this->getT(0).getT(4).getT(0);                                      // filtest_impl::frame2_block2_t<NV>
-		auto& chain68 = this->getT(0).getT(4).getT(0).getT(0);                                    // filtest_impl::chain68_t<NV>
-		auto& chain11 = this->getT(0).getT(4).getT(0).getT(0).getT(0);                            // filtest_impl::chain11_t<NV>
-		auto& gain3 = this->getT(0).getT(4).getT(0).getT(0).getT(0).getT(0);                      // core::gain<NV>
-		auto& chain21 = this->getT(0).getT(4).getT(0).getT(0).getT(0).getT(1);                    // filtest_impl::chain21_t<NV>
-		auto& smoothed_parameter = this->getT(0).getT(4).getT(0).getT(0).getT(0).getT(1).getT(0); // filtest_impl::smoothed_parameter_t<NV>
-		auto& multi = this->getT(0).getT(4).getT(0).getT(0).getT(0).getT(1).getT(1);              // filtest_impl::multi_t<NV>
-		auto& smoother10 = this->getT(0).getT(4).getT(0).getT(0).                                 // core::smoother<NV>
+		auto& fix8_block1 = this->getT(0).getT(3);                                                 // filtest_impl::fix8_block1_t<NV>
+		auto& frame2_block2 = this->getT(0).getT(3).getT(0);                                       // filtest_impl::frame2_block2_t<NV>
+		auto& chain68 = this->getT(0).getT(3).getT(0).getT(0);                                     // filtest_impl::chain68_t<NV>
+		auto& chain11 = this->getT(0).getT(3).getT(0).getT(0).getT(0);                             // filtest_impl::chain11_t<NV>
+		auto& gain3 = this->getT(0).getT(3).getT(0).getT(0).getT(0).getT(0);                       // core::gain<NV>
+		auto& chain21 = this->getT(0).getT(3).getT(0).getT(0).getT(0).getT(1);                     // filtest_impl::chain21_t<NV>
+		auto& smoothed_parameter = this->getT(0).getT(3).getT(0).getT(0).getT(0).getT(1).getT(0);  // filtest_impl::smoothed_parameter_t<NV>
+		auto& multi = this->getT(0).getT(3).getT(0).getT(0).getT(0).getT(1).getT(1);               // filtest_impl::multi_t<NV>
+		auto& smoother10 = this->getT(0).getT(3).getT(0).getT(0).                                  // core::smoother<NV>
                            getT(0).getT(1).getT(1).getT(0);
-		auto& smoother11 = this->getT(0).getT(4).getT(0).getT(0).                     // core::smoother<NV>
+		auto& smoother11 = this->getT(0).getT(3).getT(0).getT(0).                                  // core::smoother<NV>
                            getT(0).getT(1).getT(1).getT(1);
-		auto& chain8 = this->getT(0).getT(4).getT(0).getT(0).getT(0).getT(1).getT(2); // filtest_impl::chain8_t<NV>
-		auto& branch8 = this->getT(0).getT(4).getT(0).getT(0).                        // filtest_impl::branch8_t<NV>
+		auto& chain8 = this->getT(0).getT(3).getT(0).getT(0).getT(0).getT(1).getT(2);              // filtest_impl::chain8_t<NV>
+		auto& branch8 = this->getT(0).getT(3).getT(0).getT(0).                                     // filtest_impl::branch8_t<NV>
                         getT(0).getT(1).getT(2).getT(0);
-		auto& add1 = this->getT(0).getT(4).getT(0).getT(0).                         // math::add<NV>
+		auto& add1 = this->getT(0).getT(3).getT(0).getT(0).                                        // math::add<NV>
                      getT(0).getT(1).getT(2).getT(0).
                      getT(0);
-		auto& chain6 = this->getT(0).getT(4).getT(0).getT(0).                       // filtest_impl::chain6_t<NV>
+		auto& chain6 = this->getT(0).getT(3).getT(0).getT(0).                                      // filtest_impl::chain6_t<NV>
                        getT(0).getT(1).getT(2).getT(0).
                        getT(1);
-		auto& minmax3 = this->getT(0).getT(4).getT(0).getT(0).getT(0).              // filtest_impl::minmax3_t<NV>
+		auto& minmax3 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                             // filtest_impl::minmax3_t<NV>
                         getT(1).getT(2).getT(0).getT(1).getT(0);
-		auto& map6 = this->getT(0).getT(4).getT(0).getT(0).getT(0).                 // wrap::no_process<math::map>
+		auto& map6 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                                // wrap::no_process<math::map>
                      getT(1).getT(2).getT(0).getT(1).getT(1);
-		auto& add125 = this->getT(0).getT(4).getT(0).getT(0).getT(0).               // math::add<NV>
+		auto& add125 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                              // math::add<NV>
                        getT(1).getT(2).getT(0).getT(1).getT(2);
-		auto& chain89 = this->getT(0).getT(4).getT(0).getT(0).                      // filtest_impl::chain89_t<NV>
+		auto& chain89 = this->getT(0).getT(3).getT(0).getT(0).                                     // filtest_impl::chain89_t<NV>
                         getT(0).getT(1).getT(2).getT(0).
                         getT(2);
-		auto& minmax12 = this->getT(0).getT(4).getT(0).getT(0).getT(0).             // filtest_impl::minmax12_t<NV>
+		auto& minmax12 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                            // filtest_impl::minmax12_t<NV>
                          getT(1).getT(2).getT(0).getT(2).getT(0);
-		auto& add126 = this->getT(0).getT(4).getT(0).getT(0).getT(0).               // math::add<NV>
+		auto& add126 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                              // math::add<NV>
                        getT(1).getT(2).getT(0).getT(2).getT(1);
-		auto& map5 = this->getT(0).getT(4).getT(0).getT(0).getT(0).                 // wrap::no_process<math::map>
+		auto& map5 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                                // wrap::no_process<math::map>
                      getT(1).getT(2).getT(0).getT(2).getT(2);
-		auto& chain83 = this->getT(0).getT(4).getT(0).getT(0).                      // filtest_impl::chain83_t<NV>
+		auto& chain83 = this->getT(0).getT(3).getT(0).getT(0).                                     // filtest_impl::chain83_t<NV>
                         getT(0).getT(1).getT(2).getT(0).
                         getT(3);
-		auto& minmax10 = this->getT(0).getT(4).getT(0).getT(0).getT(0).             // filtest_impl::minmax10_t<NV>
+		auto& minmax10 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                            // filtest_impl::minmax10_t<NV>
                          getT(1).getT(2).getT(0).getT(3).getT(0);
-		auto& add127 = this->getT(0).getT(4).getT(0).getT(0).getT(0).               // math::add<NV>
+		auto& add127 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                              // math::add<NV>
                        getT(1).getT(2).getT(0).getT(3).getT(1);
-		auto& map4 = this->getT(0).getT(4).getT(0).getT(0).getT(0).                 // wrap::no_process<math::map>
+		auto& map4 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                                // wrap::no_process<math::map>
                      getT(1).getT(2).getT(0).getT(3).getT(2);
-		auto& chain79 = this->getT(0).getT(4).getT(0).getT(0).                      // filtest_impl::chain79_t<NV>
+		auto& chain79 = this->getT(0).getT(3).getT(0).getT(0).                                     // filtest_impl::chain79_t<NV>
                         getT(0).getT(1).getT(2).getT(0).
                         getT(4);
-		auto& minmax9 = this->getT(0).getT(4).getT(0).getT(0).getT(0).              // filtest_impl::minmax9_t<NV>
+		auto& minmax9 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                             // filtest_impl::minmax9_t<NV>
                         getT(1).getT(2).getT(0).getT(4).getT(0);
-		auto& add128 = this->getT(0).getT(4).getT(0).getT(0).getT(0).               // math::add<NV>
+		auto& add128 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                              // math::add<NV>
                        getT(1).getT(2).getT(0).getT(4).getT(1);
-		auto& map3 = this->getT(0).getT(4).getT(0).getT(0).getT(0).                 // wrap::no_process<math::map>
+		auto& map3 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                                // wrap::no_process<math::map>
                      getT(1).getT(2).getT(0).getT(4).getT(2);
-		auto& chain78 = this->getT(0).getT(4).getT(0).getT(0).                      // filtest_impl::chain78_t<NV>
+		auto& chain78 = this->getT(0).getT(3).getT(0).getT(0).                                     // filtest_impl::chain78_t<NV>
                         getT(0).getT(1).getT(2).getT(0).
                         getT(5);
-		auto& minmax8 = this->getT(0).getT(4).getT(0).getT(0).getT(0).              // filtest_impl::minmax8_t<NV>
+		auto& minmax8 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                             // filtest_impl::minmax8_t<NV>
                         getT(1).getT(2).getT(0).getT(5).getT(0);
-		auto& map2 = this->getT(0).getT(4).getT(0).getT(0).getT(0).                 // wrap::no_process<math::map>
+		auto& map2 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                                // wrap::no_process<math::map>
                      getT(1).getT(2).getT(0).getT(5).getT(1);
-		auto& add129 = this->getT(0).getT(4).getT(0).getT(0).getT(0).               // math::add<NV>
+		auto& add129 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                              // math::add<NV>
                        getT(1).getT(2).getT(0).getT(5).getT(2);
-		auto& chain43 = this->getT(0).getT(4).getT(0).getT(0).                      // filtest_impl::chain43_t<NV>
+		auto& chain43 = this->getT(0).getT(3).getT(0).getT(0).                                     // filtest_impl::chain43_t<NV>
                         getT(0).getT(1).getT(2).getT(0).
                         getT(6);
-		auto& minmax4 = this->getT(0).getT(4).getT(0).getT(0).getT(0).              // filtest_impl::minmax4_t<NV>
+		auto& minmax4 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                             // filtest_impl::minmax4_t<NV>
                         getT(1).getT(2).getT(0).getT(6).getT(0);
-		auto& add2 = this->getT(0).getT(4).getT(0).getT(0).getT(0).                 // math::add<NV>
+		auto& add2 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                                // math::add<NV>
                      getT(1).getT(2).getT(0).getT(6).getT(1);
-		auto& add130 = this->getT(0).getT(4).getT(0).getT(0).getT(0).               // wrap::no_process<math::add<NV>>
+		auto& add130 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                              // wrap::no_process<math::add<NV>>
                        getT(1).getT(2).getT(0).getT(6).getT(2);
-		auto& chain90 = this->getT(0).getT(4).getT(0).getT(0).                      // filtest_impl::chain90_t<NV>
+		auto& chain90 = this->getT(0).getT(3).getT(0).getT(0).                                     // filtest_impl::chain90_t<NV>
                         getT(0).getT(1).getT(2).getT(0).
                         getT(7);
-		auto& minmax13 = this->getT(0).getT(4).getT(0).getT(0).getT(0).             // filtest_impl::minmax13_t<NV>
+		auto& minmax13 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                            // filtest_impl::minmax13_t<NV>
                          getT(1).getT(2).getT(0).getT(7).getT(0);
-		auto& map1 = this->getT(0).getT(4).getT(0).getT(0).getT(0).                 // wrap::no_process<math::map>
+		auto& map1 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                                // wrap::no_process<math::map>
                      getT(1).getT(2).getT(0).getT(7).getT(1);
-		auto& add3 = this->getT(0).getT(4).getT(0).getT(0).getT(0).                 // math::add<NV>
+		auto& add3 = this->getT(0).getT(3).getT(0).getT(0).getT(0).                                // math::add<NV>
                      getT(1).getT(2).getT(0).getT(7).getT(2);
-		auto& mono2stereo1 = this->getT(0).getT(4).getT(0).getT(0).getT(0).getT(2); // wrap::no_process<core::mono2stereo>
-		auto& file_player4 = this->getT(0).getT(4).getT(0).getT(0).getT(0).getT(3); // filtest_impl::file_player4_t<NV>
-		auto& receive = this->getT(0).getT(5);                                      // routing::receive<stereo_cable>
-		auto& softbypass_switch5 = this->getT(0).getT(6);                           // filtest_impl::softbypass_switch5_t<NV>
-		auto& branch20 = this->getT(0).getT(6).getT(0);                             // filtest_impl::branch20_t<NV>
-		auto& chain164 = this->getT(0).getT(6).getT(0).getT(0);                     // filtest_impl::chain164_t<NV>
-		auto& no_midi1 = this->getT(0).getT(6).getT(0).getT(0).getT(0);             // filtest_impl::no_midi1_t<NV>
-		auto& svf2 = this->getT(0).getT(6).getT(0).getT(0).getT(0).getT(0);         // filters::svf<NV>
-		auto& svf3 = this->getT(0).getT(6).getT(0).getT(0).getT(0).getT(1);         // filters::svf<NV>
-		auto& chain186 = this->getT(0).getT(6).getT(0).getT(1);                     // filtest_impl::chain186_t<NV>
-		auto& split8 = this->getT(0).getT(6).getT(0).getT(1).getT(0);               // filtest_impl::split8_t<NV>
-		auto& svf = this->getT(0).getT(6).getT(0).getT(1).getT(0).getT(0);          // filters::svf<NV>
-		auto& svf1 = this->getT(0).getT(6).getT(0).getT(1).getT(0).getT(1);         // filters::svf<NV>
+		auto& mono2stereo1 = this->getT(0).getT(3).getT(0).getT(0).getT(0).getT(2);                // wrap::no_process<core::mono2stereo>
+		auto& file_player4 = this->getT(0).getT(3).getT(0).getT(0).getT(0).getT(3);                // filtest_impl::file_player4_t<NV>
+		auto& midi4 = this->getT(0).getT(4);                                                       // filtest_impl::midi4_t<NV>
+		auto& branch = this->getT(0).getT(5);                                                      // filtest_impl::branch_t<NV>
+		auto& chain9 = this->getT(0).getT(5).getT(0);                                              // filtest_impl::chain9_t
+		auto& chain10 = this->getT(0).getT(5).getT(1);                                             // filtest_impl::chain10_t<NV>
+		auto& tempo_sync7 = this->getT(0).getT(5).getT(1).getT(0);                                 // filtest_impl::tempo_sync7_t<NV>
+		auto& converter4 = this->getT(0).getT(5).getT(1).getT(1);                                  // filtest_impl::converter4_t<NV>
+		auto& faust = this->getT(0).getT(5).getT(1).getT(2);                                       // project::shfiter<NV>
+		auto& chain20 = this->getT(0).getT(6);                                                     // filtest_impl::chain20_t<NV>
+		auto& soft_bypass = this->getT(0).getT(6).getT(0);                                         // filtest_impl::soft_bypass_t<NV>
+		auto& chain7 = this->getT(0).getT(6).getT(0).getT(0);                                      // filtest_impl::chain7_t<NV>
+		auto& xfader = this->getT(0).getT(6).getT(0).getT(0).getT(0);                              // filtest_impl::xfader_t<NV>
+		auto& split = this->getT(0).getT(6).getT(0).getT(0).getT(1);                               // filtest_impl::split_t<NV>
+		auto& chain = this->getT(0).getT(6).getT(0).getT(0).getT(1).getT(0);                       // filtest_impl::chain_t<NV>
+		auto& gain1 = this->getT(0).getT(6).getT(0).getT(0).getT(1).getT(0).getT(0);               // core::gain<NV>
+		auto& chain1 = this->getT(0).getT(6).getT(0).getT(0).getT(1).getT(1);                      // filtest_impl::chain1_t<NV>
+		auto& smoothed_parameter1 = this->getT(0).getT(6).getT(0).getT(0).getT(1).getT(1).getT(0); // filtest_impl::smoothed_parameter1_t<NV>
+		auto& branch3 = this->getT(0).getT(6).getT(0).getT(0).getT(1).getT(1).getT(1);             // filtest_impl::branch3_t<NV>
+		auto& chain12 = this->getT(0).getT(6).getT(0).getT(0).                                     // filtest_impl::chain12_t<NV>
+                        getT(1).getT(1).getT(1).getT(0);
+		auto& expr = this->getT(0).getT(6).getT(0).getT(0).                          // math::expr<NV, custom::expr>
+                     getT(1).getT(1).getT(1).getT(0).
+                     getT(0);
+		auto& split2 = this->getT(0).getT(6).getT(0).getT(0).                        // filtest_impl::split2_t<NV>
+                       getT(1).getT(1).getT(1).getT(0).
+                       getT(1);
+		auto& smoother = this->getT(0).getT(6).getT(0).getT(0).getT(1).              // core::smoother<NV>
+                         getT(1).getT(1).getT(0).getT(1).getT(0);
+		auto& smoother3 = this->getT(0).getT(6).getT(0).getT(0).getT(1).             // core::smoother<NV>
+                          getT(1).getT(1).getT(0).getT(1).getT(1);
+		auto& chain197 = this->getT(0).getT(6).getT(0).getT(0).                      // filtest_impl::chain197_t<NV>
+                         getT(1).getT(1).getT(1).getT(1);
+		auto& mul6 = this->getT(0).getT(6).getT(0).getT(0).                          // math::mul<NV>
+                     getT(1).getT(1).getT(1).getT(1).
+                     getT(0);
+		auto& pi = this->getT(0).getT(6).getT(0).getT(0).                            // math::pi<NV>
+                   getT(1).getT(1).getT(1).getT(1).
+                   getT(1);
+		auto& split4 = this->getT(0).getT(6).getT(0).getT(0).                        // filtest_impl::split4_t<NV>
+                       getT(1).getT(1).getT(1).getT(1).
+                       getT(2);
+		auto& smoother1 = this->getT(0).getT(6).getT(0).getT(0).getT(1).             // core::smoother<NV>
+                          getT(1).getT(1).getT(1).getT(2).getT(0);
+		auto& smoother4 = this->getT(0).getT(6).getT(0).getT(0).getT(1).             // core::smoother<NV>
+                          getT(1).getT(1).getT(1).getT(2).getT(1);
+		auto& chain199 = this->getT(0).getT(6).getT(0).getT(0).                      // filtest_impl::chain199_t<NV>
+                         getT(1).getT(1).getT(1).getT(2);
+		auto& pi2 = this->getT(0).getT(6).getT(0).getT(0).                           // math::pi<NV>
+                    getT(1).getT(1).getT(1).getT(2).
+                    getT(0);
+		auto& sub2 = this->getT(0).getT(6).getT(0).getT(0).                          // math::sub<NV>
+                     getT(1).getT(1).getT(1).getT(2).
+                     getT(1);
+		auto& fmod = this->getT(0).getT(6).getT(0).getT(0).                          // wrap::no_process<math::fmod<NV>>
+                     getT(1).getT(1).getT(1).getT(2).
+                     getT(2);
+		auto& chain200 = this->getT(0).getT(6).getT(0).getT(0).                      // filtest_impl::chain200_t<NV>
+                         getT(1).getT(1).getT(1).getT(3);
+		auto& pi3 = this->getT(0).getT(6).getT(0).getT(0).                           // math::pi<NV>
+                    getT(1).getT(1).getT(1).getT(3).
+                    getT(0);
+		auto& sub3 = this->getT(0).getT(6).getT(0).getT(0).                          // math::sub<NV>
+                     getT(1).getT(1).getT(1).getT(3).
+                     getT(1);
+		auto& fmod1 = this->getT(0).getT(6).getT(0).getT(0).                         // math::fmod<NV>
+                      getT(1).getT(1).getT(1).getT(3).
+                      getT(2);
+		auto& chain17 = this->getT(0).getT(6).getT(0).getT(0).                       // filtest_impl::chain17_t<NV>
+                        getT(1).getT(1).getT(1).getT(4);
+		auto& no_midi = this->getT(0).getT(6).getT(0).getT(0).                       // filtest_impl::no_midi_t<NV>
+                        getT(1).getT(1).getT(1).getT(4).
+                        getT(0);
+		auto& ring_mod2 = this->getT(0).getT(6).getT(0).getT(0).getT(1).             // filters::ring_mod<NV>
+                          getT(1).getT(1).getT(4).getT(0).getT(0);
+		auto& chain14 = this->getT(0).getT(6).getT(0).getT(0).                       // filtest_impl::chain14_t<NV>
+                        getT(1).getT(1).getT(1).getT(5);
+		auto& cable_table = this->getT(0).getT(6).getT(0).getT(0).                   // filtest_impl::cable_table_t<NV>
+                            getT(1).getT(1).getT(1).getT(5).
+                            getT(0);
+		auto& faust2 = this->getT(0).getT(6).getT(0).getT(0).                        // project::Comb<NV>
+                       getT(1).getT(1).getT(1).getT(5).
+                       getT(1);
+		auto& chain27 = this->getT(0).getT(6).getT(0).getT(0).                       // filtest_impl::chain27_t<NV>
+                        getT(1).getT(1).getT(1).getT(6);
+		auto& svf_eq = this->getT(0).getT(6).getT(0).getT(0).                        // filters::svf_eq<NV>
+                       getT(1).getT(1).getT(1).getT(6).
+                       getT(0);
+		auto& chain155 = this->getT(0).getT(6).getT(0).getT(0).                      // filtest_impl::chain155_t<NV>
+                         getT(1).getT(1).getT(1).getT(7);
+		auto& svf_eq3 = this->getT(0).getT(6).getT(0).getT(0).                       // filters::svf_eq<NV>
+                        getT(1).getT(1).getT(1).getT(7).
+                        getT(0);
+		auto& chain16 = this->getT(0).getT(6).getT(0).getT(0).                       // filtest_impl::chain16_t<NV>
+                        getT(1).getT(1).getT(1).getT(8);
+		auto& div2 = this->getT(0).getT(6).getT(0).getT(0).                          // math::div<NV>
+                     getT(1).getT(1).getT(1).getT(8).
+                     getT(0);
+		auto& split10 = this->getT(0).getT(6).getT(0).getT(0).                       // filtest_impl::split10_t<NV>
+                        getT(1).getT(1).getT(1).getT(8).
+                        getT(1);
+		auto& smoother6 = this->getT(0).getT(6).getT(0).getT(0).getT(1).             // core::smoother<NV>
+                          getT(1).getT(1).getT(8).getT(1).getT(0);
+		auto& smoother7 = this->getT(0).getT(6).getT(0).getT(0).getT(1).             // core::smoother<NV>
+                          getT(1).getT(1).getT(8).getT(1).getT(1);
+		auto& chain52 = this->getT(0).getT(6).getT(0).getT(0).                       // filtest_impl::chain52_t<NV>
+                        getT(1).getT(1).getT(1).getT(9);
+		auto& phasor_fm = this->getT(0).getT(6).getT(0).getT(0).                     // wrap::no_process<core::phasor_fm<NV>>
+                          getT(1).getT(1).getT(1).getT(9).
+                          getT(0);
+		auto& fm = this->getT(0).getT(6).getT(0).getT(0).                            // core::fm
+                   getT(1).getT(1).getT(1).getT(9).
+                   getT(1);
+		auto& mono2stereo = this->getT(0).getT(6).getT(0).getT(0).                   // core::mono2stereo
+                            getT(1).getT(1).getT(1).getT(9).
+                            getT(2);
+		auto& tanh1 = this->getT(0).getT(6).getT(0).getT(0).                         // math::tanh<NV>
+                      getT(1).getT(1).getT(1).getT(9).
+                      getT(3);
+		auto& chain54 = this->getT(0).getT(6).getT(0).getT(0).                       // filtest_impl::chain54_t<NV>
+                        getT(1).getT(1).getT(1).getT(10);
+		auto& tempo_sync1 = this->getT(0).getT(6).getT(0).getT(0).                   // filtest_impl::tempo_sync1_t<NV>
+                            getT(1).getT(1).getT(1).getT(10).
+                            getT(0);
+		auto& sampleandhold1 = this->getT(0).getT(6).getT(0).getT(0).                // fx::sampleandhold<NV>
+                               getT(1).getT(1).getT(1).getT(10).
+                               getT(1);
+		auto& chain55 = this->getT(0).getT(6).getT(0).getT(0).                       // filtest_impl::chain55_t<NV>
+                        getT(1).getT(1).getT(1).getT(11);
+		auto& bitcrush = this->getT(0).getT(6).getT(0).getT(0).                      // fx::bitcrush<NV>
+                         getT(1).getT(1).getT(1).getT(11).
+                         getT(0);
+		auto& split11 = this->getT(0).getT(6).getT(0).getT(0).                       // filtest_impl::split11_t<NV>
+                        getT(1).getT(1).getT(1).getT(11).
+                        getT(1);
+		auto& smoother8 = this->getT(0).getT(6).getT(0).getT(0).getT(1).             // core::smoother<NV>
+                          getT(1).getT(1).getT(11).getT(1).getT(0);
+		auto& smoother9 = this->getT(0).getT(6).getT(0).getT(0).getT(1).             // core::smoother<NV>
+                          getT(1).getT(1).getT(11).getT(1).getT(1);
+		auto& gain2 = this->getT(0).getT(6).getT(0).getT(0).getT(1).getT(1).getT(2); // core::gain<NV>
+		auto& receive = this->getT(0).getT(7);                                       // routing::receive<stereo_cable>
+		auto& softbypass_switch5 = this->getT(0).getT(8);                            // filtest_impl::softbypass_switch5_t<NV>
+		auto& branch20 = this->getT(0).getT(8).getT(0);                              // filtest_impl::branch20_t<NV>
+		auto& chain164 = this->getT(0).getT(8).getT(0).getT(0);                      // filtest_impl::chain164_t<NV>
+		auto& no_midi1 = this->getT(0).getT(8).getT(0).getT(0).getT(0);              // filtest_impl::no_midi1_t<NV>
+		auto& svf2 = this->getT(0).getT(8).getT(0).getT(0).getT(0).getT(0);          // filters::svf<NV>
+		auto& svf3 = this->getT(0).getT(8).getT(0).getT(0).getT(0).getT(1);          // filters::svf<NV>
+		auto& chain186 = this->getT(0).getT(8).getT(0).getT(1);                      // filtest_impl::chain186_t<NV>
+		auto& split8 = this->getT(0).getT(8).getT(0).getT(1).getT(0);                // filtest_impl::split8_t<NV>
+		auto& svf = this->getT(0).getT(8).getT(0).getT(1).getT(0).getT(0);           // filters::svf<NV>
+		auto& svf1 = this->getT(0).getT(8).getT(0).getT(1).getT(0).getT(1);          // filters::svf<NV>
 		
 		// Parameter Connections -------------------------------------------------------------------
 		
@@ -3595,6 +3665,12 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		this->getParameterT(94).connectT(0, smoothed_parameter_unscaled); // Glide -> smoothed_parameter_unscaled::SmoothingTime
 		
 		this->getParameterT(95).connectT(0, receive); // inPutGain -> receive::Feedback
+		
+		this->getParameterT(96).connectT(0, branch); // PsOnOff -> branch::Index
+		
+		this->getParameterT(97).connectT(0, tempo_sync7); // PsXfTempo -> tempo_sync7::Tempo
+		
+		this->getParameterT(98).connectT(0, tempo_sync7); // PsXfDivc -> tempo_sync7::Multiplier
 		
 		// Modulation Connections ------------------------------------------------------------------
 		
@@ -3813,6 +3889,10 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		pma19.getWrappedObject().getParameter().connectT(0, minmax7);                          // pma19 -> minmax7::Value
 		peak17.getParameter().connectT(0, pma3);                                               // peak17 -> pma3::Value
 		peak17.getParameter().connectT(1, pma5);                                               // peak17 -> pma5::Value
+		midi4.getParameter().connectT(0, faust);                                               // midi4 -> faust::shiftsemitones
+		converter4.getWrappedObject().getParameter().connectT(0, faust);                       // converter4 -> faust::windowsamples
+		converter4.getWrappedObject().getParameter().connectT(1, faust);                       // converter4 -> faust::xfadesamples
+		tempo_sync7.getParameter().connectT(0, converter4);                                    // tempo_sync7 -> converter4::Value
 		
 		// Send Connections ------------------------------------------------------------------------
 		
@@ -4448,114 +4528,6 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		clear3.setParameterT(0, 0.); // math::clear::Value
 		
-		; // xfader::Value is automated
-		
-		;                              // gain1::Gain is automated
-		gain1.setParameterT(1, 0.);    // core::gain::Smoothing
-		gain1.setParameterT(2, -100.); // core::gain::ResetValue
-		
-		;                                          // smoothed_parameter1::Value is automated
-		smoothed_parameter1.setParameterT(1, 0.1); // control::smoothed_parameter::SmoothingTime
-		smoothed_parameter1.setParameterT(2, 1.);  // control::smoothed_parameter::Enabled
-		
-		; // branch3::Index is automated
-		
-		; // expr::Value is automated
-		
-		;                              // smoother::SmoothingTime is automated
-		smoother.setParameterT(1, 0.); // core::smoother::DefaultValue
-		
-		;                               // smoother3::SmoothingTime is automated
-		smoother3.setParameterT(1, 0.); // core::smoother::DefaultValue
-		
-		; // mul6::Value is automated
-		
-		pi.setParameterT(0, 1.); // math::pi::Value
-		
-		;                               // smoother1::SmoothingTime is automated
-		smoother1.setParameterT(1, 0.); // core::smoother::DefaultValue
-		
-		;                               // smoother4::SmoothingTime is automated
-		smoother4.setParameterT(1, 0.); // core::smoother::DefaultValue
-		
-		; // pi2::Value is automated
-		
-		; // sub2::Value is automated
-		
-		fmod.setParameterT(0, 0.314201); // math::fmod::Value
-		
-		; // pi3::Value is automated
-		
-		; // sub3::Value is automated
-		
-		fmod1.setParameterT(0, 0.455914); // math::fmod::Value
-		
-		;                                     // ring_mod2::Frequency is automated
-		;                                     // ring_mod2::Q is automated
-		ring_mod2.setParameterT(2, -3.98306); // filters::ring_mod::Gain
-		ring_mod2.setParameterT(3, 0.01);     // filters::ring_mod::Smoothing
-		ring_mod2.setParameterT(4, 0.);       // filters::ring_mod::Mode
-		ring_mod2.setParameterT(5, 1.);       // filters::ring_mod::Enabled
-		
-		; // cable_table::Value is automated
-		
-		; // faust2::aN is automated
-		; // faust2::del is automated
-		
-		;                                   // svf_eq::Frequency is automated
-		;                                   // svf_eq::Q is automated
-		svf_eq.setParameterT(2, 0.);        // filters::svf_eq::Gain
-		svf_eq.setParameterT(3, 0.0104336); // filters::svf_eq::Smoothing
-		svf_eq.setParameterT(4, 0.);        // filters::svf_eq::Mode
-		svf_eq.setParameterT(5, 1.);        // filters::svf_eq::Enabled
-		
-		;                               // svf_eq3::Frequency is automated
-		;                               // svf_eq3::Q is automated
-		svf_eq3.setParameterT(2, 0.);   // filters::svf_eq::Gain
-		svf_eq3.setParameterT(3, 0.01); // filters::svf_eq::Smoothing
-		svf_eq3.setParameterT(4, 1.);   // filters::svf_eq::Mode
-		svf_eq3.setParameterT(5, 1.);   // filters::svf_eq::Enabled
-		
-		; // div2::Value is automated
-		
-		;                               // smoother6::SmoothingTime is automated
-		smoother6.setParameterT(1, 0.); // core::smoother::DefaultValue
-		
-		;                               // smoother7::SmoothingTime is automated
-		smoother7.setParameterT(1, 0.); // core::smoother::DefaultValue
-		
-		phasor_fm.setParameterT(0, 1.);       // core::phasor_fm::Gate
-		phasor_fm.setParameterT(1, 20.);      // core::phasor_fm::Frequency
-		phasor_fm.setParameterT(2, 1.);       // core::phasor_fm::FreqRatio
-		phasor_fm.setParameterT(3, 0.936525); // core::phasor_fm::Phase
-		
-		;                        // fm::Frequency is automated
-		fm.setParameterT(1, 0.); // core::fm::Modulator
-		;                        // fm::FreqMultiplier is automated
-		fm.setParameterT(3, 1.); // core::fm::Gate
-		
-		tanh1.setParameterT(0, 0.0245996); // math::tanh::Value
-		
-		;                                   // tempo_sync1::Tempo is automated
-		;                                   // tempo_sync1::Multiplier is automated
-		tempo_sync1.setParameterT(2, 1.);   // control::tempo_sync::Enabled
-		tempo_sync1.setParameterT(3, 200.); // control::tempo_sync::UnsyncedTime
-		
-		; // sampleandhold1::Counter is automated
-		
-		;                              // bitcrush::BitDepth is automated
-		bitcrush.setParameterT(1, 1.); // fx::bitcrush::Mode
-		
-		;                               // smoother8::SmoothingTime is automated
-		smoother8.setParameterT(1, 1.); // core::smoother::DefaultValue
-		
-		;                               // smoother9::SmoothingTime is automated
-		smoother9.setParameterT(1, 1.); // core::smoother::DefaultValue
-		
-		;                              // gain2::Gain is automated
-		gain2.setParameterT(1, 0.);    // core::gain::Smoothing
-		gain2.setParameterT(2, -100.); // core::gain::ResetValue
-		
 		;                              // gain3::Gain is automated
 		gain3.setParameterT(1, 12.);   // core::gain::Smoothing
 		gain3.setParameterT(2, -100.); // core::gain::ResetValue
@@ -4674,6 +4646,127 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		file_player4.setParameterT(2, 790.031); // core::file_player::RootFrequency
 		file_player4.setParameterT(3, 1.28);    // core::file_player::FreqRatio
 		
+		; // branch::Index is automated
+		
+		;                                   // tempo_sync7::Tempo is automated
+		;                                   // tempo_sync7::Multiplier is automated
+		tempo_sync7.setParameterT(2, 1.);   // control::tempo_sync::Enabled
+		tempo_sync7.setParameterT(3, 200.); // control::tempo_sync::UnsyncedTime
+		
+		; // converter4::Value is automated
+		
+		; // faust::shiftsemitones is automated
+		; // faust::windowsamples is automated
+		; // faust::xfadesamples is automated
+		
+		; // xfader::Value is automated
+		
+		;                              // gain1::Gain is automated
+		gain1.setParameterT(1, 0.);    // core::gain::Smoothing
+		gain1.setParameterT(2, -100.); // core::gain::ResetValue
+		
+		;                                          // smoothed_parameter1::Value is automated
+		smoothed_parameter1.setParameterT(1, 0.1); // control::smoothed_parameter::SmoothingTime
+		smoothed_parameter1.setParameterT(2, 1.);  // control::smoothed_parameter::Enabled
+		
+		; // branch3::Index is automated
+		
+		; // expr::Value is automated
+		
+		;                              // smoother::SmoothingTime is automated
+		smoother.setParameterT(1, 0.); // core::smoother::DefaultValue
+		
+		;                               // smoother3::SmoothingTime is automated
+		smoother3.setParameterT(1, 0.); // core::smoother::DefaultValue
+		
+		; // mul6::Value is automated
+		
+		pi.setParameterT(0, 1.); // math::pi::Value
+		
+		;                               // smoother1::SmoothingTime is automated
+		smoother1.setParameterT(1, 0.); // core::smoother::DefaultValue
+		
+		;                               // smoother4::SmoothingTime is automated
+		smoother4.setParameterT(1, 0.); // core::smoother::DefaultValue
+		
+		; // pi2::Value is automated
+		
+		; // sub2::Value is automated
+		
+		fmod.setParameterT(0, 0.314201); // math::fmod::Value
+		
+		; // pi3::Value is automated
+		
+		; // sub3::Value is automated
+		
+		fmod1.setParameterT(0, 0.455914); // math::fmod::Value
+		
+		;                                     // ring_mod2::Frequency is automated
+		;                                     // ring_mod2::Q is automated
+		ring_mod2.setParameterT(2, -3.98306); // filters::ring_mod::Gain
+		ring_mod2.setParameterT(3, 0.01);     // filters::ring_mod::Smoothing
+		ring_mod2.setParameterT(4, 0.);       // filters::ring_mod::Mode
+		ring_mod2.setParameterT(5, 1.);       // filters::ring_mod::Enabled
+		
+		; // cable_table::Value is automated
+		
+		; // faust2::aN is automated
+		; // faust2::del is automated
+		
+		;                                   // svf_eq::Frequency is automated
+		;                                   // svf_eq::Q is automated
+		svf_eq.setParameterT(2, 0.);        // filters::svf_eq::Gain
+		svf_eq.setParameterT(3, 0.0104336); // filters::svf_eq::Smoothing
+		svf_eq.setParameterT(4, 0.);        // filters::svf_eq::Mode
+		svf_eq.setParameterT(5, 1.);        // filters::svf_eq::Enabled
+		
+		;                               // svf_eq3::Frequency is automated
+		;                               // svf_eq3::Q is automated
+		svf_eq3.setParameterT(2, 0.);   // filters::svf_eq::Gain
+		svf_eq3.setParameterT(3, 0.01); // filters::svf_eq::Smoothing
+		svf_eq3.setParameterT(4, 1.);   // filters::svf_eq::Mode
+		svf_eq3.setParameterT(5, 1.);   // filters::svf_eq::Enabled
+		
+		; // div2::Value is automated
+		
+		;                               // smoother6::SmoothingTime is automated
+		smoother6.setParameterT(1, 0.); // core::smoother::DefaultValue
+		
+		;                               // smoother7::SmoothingTime is automated
+		smoother7.setParameterT(1, 0.); // core::smoother::DefaultValue
+		
+		phasor_fm.setParameterT(0, 1.);       // core::phasor_fm::Gate
+		phasor_fm.setParameterT(1, 20.);      // core::phasor_fm::Frequency
+		phasor_fm.setParameterT(2, 1.);       // core::phasor_fm::FreqRatio
+		phasor_fm.setParameterT(3, 0.936525); // core::phasor_fm::Phase
+		
+		;                        // fm::Frequency is automated
+		fm.setParameterT(1, 0.); // core::fm::Modulator
+		;                        // fm::FreqMultiplier is automated
+		fm.setParameterT(3, 1.); // core::fm::Gate
+		
+		tanh1.setParameterT(0, 0.0245996); // math::tanh::Value
+		
+		;                                   // tempo_sync1::Tempo is automated
+		;                                   // tempo_sync1::Multiplier is automated
+		tempo_sync1.setParameterT(2, 1.);   // control::tempo_sync::Enabled
+		tempo_sync1.setParameterT(3, 200.); // control::tempo_sync::UnsyncedTime
+		
+		; // sampleandhold1::Counter is automated
+		
+		;                              // bitcrush::BitDepth is automated
+		bitcrush.setParameterT(1, 1.); // fx::bitcrush::Mode
+		
+		;                               // smoother8::SmoothingTime is automated
+		smoother8.setParameterT(1, 1.); // core::smoother::DefaultValue
+		
+		;                               // smoother9::SmoothingTime is automated
+		smoother9.setParameterT(1, 1.); // core::smoother::DefaultValue
+		
+		;                              // gain2::Gain is automated
+		gain2.setParameterT(1, 0.);    // core::gain::Smoothing
+		gain2.setParameterT(2, -100.); // core::gain::ResetValue
+		
 		; // receive::Feedback is automated
 		
 		; // branch20::Index is automated
@@ -4706,79 +4799,79 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		svf1.setParameterT(4, 1.);   // filters::svf::Mode
 		svf1.setParameterT(5, 1.);   // filters::svf::Enabled
 		
-		this->setParameterT(0, 1.);
+		this->setParameterT(0, 11.);
 		this->setParameterT(1, 0.);
-		this->setParameterT(2, 1.);
-		this->setParameterT(3, 0.33);
-		this->setParameterT(4, -0.03);
+		this->setParameterT(2, 0.01);
+		this->setParameterT(3, 0.);
+		this->setParameterT(4, 2.08167e-17);
 		this->setParameterT(5, 1.);
 		this->setParameterT(6, 0.5);
 		this->setParameterT(7, 0.);
 		this->setParameterT(8, 1.);
-		this->setParameterT(9, 1.);
-		this->setParameterT(10, 0.);
-		this->setParameterT(11, 1.);
-		this->setParameterT(12, 0.);
+		this->setParameterT(9, 9.);
+		this->setParameterT(10, 2.08167e-17);
+		this->setParameterT(11, 5.);
+		this->setParameterT(12, 1.);
 		this->setParameterT(13, -1.);
 		this->setParameterT(14, 1.);
 		this->setParameterT(15, 2.);
-		this->setParameterT(16, 1.);
+		this->setParameterT(16, 0.);
 		this->setParameterT(17, 2.08167e-17);
 		this->setParameterT(18, 1.);
-		this->setParameterT(19, 4.);
-		this->setParameterT(20, 0.39);
+		this->setParameterT(19, 7.);
+		this->setParameterT(20, 0.01);
 		this->setParameterT(21, 0.);
-		this->setParameterT(22, 3.22275);
-		this->setParameterT(23, 0.08);
-		this->setParameterT(24, 0.75);
+		this->setParameterT(22, 1.);
+		this->setParameterT(23, 0.);
+		this->setParameterT(24, 1.);
 		this->setParameterT(25, 3.);
 		this->setParameterT(26, 1.);
-		this->setParameterT(27, 0.48);
+		this->setParameterT(27, 0.);
 		this->setParameterT(28, 2.08167e-17);
-		this->setParameterT(29, 3.);
-		this->setParameterT(30, 800.);
-		this->setParameterT(31, 0.);
+		this->setParameterT(29, 1.);
+		this->setParameterT(30, 3996.);
+		this->setParameterT(31, 10000.);
 		this->setParameterT(32, 10000.);
-		this->setParameterT(33, 1.);
-		this->setParameterT(34, 1098.);
-		this->setParameterT(35, 0.67);
-		this->setParameterT(36, 0.);
+		this->setParameterT(33, 0.);
+		this->setParameterT(34, 3251.);
+		this->setParameterT(35, 1.);
+		this->setParameterT(36, 632.);
 		this->setParameterT(37, 71.);
-		this->setParameterT(38, 500.);
-		this->setParameterT(39, 1.);
-		this->setParameterT(40, 0.);
-		this->setParameterT(41, 1);
+		this->setParameterT(38, 1000.);
+		this->setParameterT(39, 10.);
+		this->setParameterT(40, 1.);
+		this->setParameterT(41, 0.);
 		this->setParameterT(42, 0.);
-		this->setParameterT(43, 0.718835);
+		this->setParameterT(43, 0.99);
 		this->setParameterT(44, 2.08167e-17);
 		this->setParameterT(45, 4.);
 		this->setParameterT(46, 0.);
 		this->setParameterT(47, -0.01);
 		this->setParameterT(48, 4.);
-		this->setParameterT(49, 0.5);
+		this->setParameterT(49, 1.);
 		this->setParameterT(50, 0.226758);
 		this->setParameterT(51, 0.);
 		this->setParameterT(52, 0.349219);
-		this->setParameterT(53, 1.);
-		this->setParameterT(54, 0.);
+		this->setParameterT(53, 2.);
+		this->setParameterT(54, 0.28);
 		this->setParameterT(55, 0.);
 		this->setParameterT(56, 1.);
 		this->setParameterT(57, 5.);
 		this->setParameterT(58, 0.);
 		this->setParameterT(59, 0.0484885);
-		this->setParameterT(60, 0.5);
+		this->setParameterT(60, 0.07);
 		this->setParameterT(61, 2.08167e-17);
 		this->setParameterT(62, 5.);
 		this->setParameterT(63, 0.65574);
 		this->setParameterT(64, 0.997232);
-		this->setParameterT(65, 2.);
-		this->setParameterT(66, 4.);
+		this->setParameterT(65, 0.);
+		this->setParameterT(66, 16.);
 		this->setParameterT(67, 1.);
 		this->setParameterT(68, 0.);
 		this->setParameterT(69, 0.);
-		this->setParameterT(70, 18.);
+		this->setParameterT(70, 2.);
 		this->setParameterT(71, 0.);
-		this->setParameterT(72, 0.);
+		this->setParameterT(72, 11.);
 		this->setParameterT(73, 1.);
 		this->setParameterT(74, -0.753933);
 		this->setParameterT(75, 7.26);
@@ -4796,12 +4889,15 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		this->setParameterT(87, 0.);
 		this->setParameterT(88, 0.);
 		this->setParameterT(89, 0.);
-		this->setParameterT(90, 2.08167e-17);
+		this->setParameterT(90, 1.);
 		this->setParameterT(91, 0.);
 		this->setParameterT(92, 0.12);
 		this->setParameterT(93, 1.);
 		this->setParameterT(94, 0.);
-		this->setParameterT(95, 0.92);
+		this->setParameterT(95, 0.);
+		this->setParameterT(96, 0.);
+		this->setParameterT(97, 0.);
+		this->setParameterT(98, 0.);
 		this->setExternalData({}, -1);
 	}
 	~instance() override
@@ -4876,10 +4972,10 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(2).getT(0).setExternalData(b, index); // filtest_impl::oscillator1_t<NV>
 		this->getT(0).getT(1).getT(3).getT(3).getT(1).getT(3).setExternalData(b, index);         // filtest_impl::peak17_t<NV>
 		this->getT(0).getT(1).getT(4).getT(2).getT(0).getT(3).setExternalData(b, index);         // filtest_impl::file_player6_t<NV>
-		this->getT(0).getT(3).getT(0).getT(0).                                                   // filtest_impl::cable_table_t<NV>
+		this->getT(0).getT(3).getT(0).getT(0).getT(0).getT(3).setExternalData(b, index);         // filtest_impl::file_player4_t<NV>
+		this->getT(0).getT(6).getT(0).getT(0).                                                   // filtest_impl::cable_table_t<NV>
         getT(1).getT(1).getT(1).getT(5).
         getT(0).setExternalData(b, index);
-		this->getT(0).getT(4).getT(0).getT(0).getT(0).getT(3).setExternalData(b, index); // filtest_impl::file_player4_t<NV>
 	}
 };
 }

@@ -14,6 +14,7 @@
 #include "khp2.h"
 #include "klp.h"
 #include "klp2.h"
+#include "shfiter.h"
 
 // Include compiled network files ------------------
 
