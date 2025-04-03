@@ -31,17 +31,15 @@ The transformer sits between the modulator and carrier, providing various wavesh
 ### Carrier  
 The carrier is a versatile sample player with controls for position, input gain, smoothing, quantization, and pitch shifting.  
 
-## The Filter  
-The filter is a dual low-pass/high-pass design, similar to the Korg MS-20, capable of operating in serial or parallel. Additionally, the "modulator in" control allows the signal from the modulator to be routed directly into the filter.  
-
-## The Amp  
-Shapey! features a simple AHDSR-controlled VCA.  
+## The Filter and "VCA"
+The filter is a dual low-pass/high-pass design, similar to the Korg MS-20, capable of operating in serial or parallel. Additionally, the "modulator in" control allows the signal from the modulator to be routed directly into the filter, finally there is a simple AHDSR envelope at the end of the chain.
+ 
 
 ## The Modulators  
 The modulation section includes an AHDSR envelope, a looping AR envelope with tempo-synced attack and release stages, a loopable table envelope, and two master LFOs with multiple wave shapes and quantization options.  
 
 ## The Arpeggiator  
-A flexible arpeggiator and step sequencer rounds out the feature set, allowing for intricate rhythmic pattern creation.  
+A flexible arpeggiator/step sequencer rounds out the feature set.
 
 ---  
 
