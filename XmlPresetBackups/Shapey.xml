@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Processor Type="SynthChain" ID="Shapey" Bypassed="0" Gain="1.0" Balance="0.0"
-           VoiceLimit="8.0" KillFadeTime="20.0" IconColour="0" packageName=""
-           BuildVersion="650">
+<Processor Type="SynthChain" ID="Shapey" Bypassed="0" Gain="0.2511886358261108"
+           Balance="0.0" VoiceLimit="8.0" KillFadeTime="20.0" IconColour="0"
+           packageName="" BuildVersion="650">
   <ChildProcessors>
     <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
       <ChildProcessors>
@@ -10,14 +10,14 @@
           <ChildProcessors/>
           <Content>
             <Control type="ScriptButton" id="Presets1" value="0.0"/>
-            <Control type="ScriptSlider" id="Gain1" value="0.2000000029802322"/>
+            <Control type="ScriptSlider" id="Gain1" value="0.4300000071525574"/>
             <Control type="ScriptSlider" id="ScriptSlider17" value="0.0"/>
-            <Control type="ScriptSlider" id="Pitch" value="0.5"/>
-            <Control type="ScriptSlider" id="PitchMod" value="0.0"/>
+            <Control type="ScriptSlider" id="Pitch" value="0.3600000143051147"/>
+            <Control type="ScriptSlider" id="PitchMod" value="2.081668171172169e-17"/>
             <Control type="ScriptComboBox" id="PitchModSrc" value="1.0"/>
             <Control type="ScriptComboBox" id="OscShape" value="2.0"/>
             <Control type="ScriptComboBox" id="Gain1Modsrc" value="1.0"/>
-            <Control type="ScriptSlider" id="Gain1Mod" value="0.0"/>
+            <Control type="ScriptSlider" id="Gain1Mod" value="-0.02999999932944775"/>
             <Control type="ScriptSlider" id="ScriptSlider58" value="1.0"/>
             <Control type="ScriptSlider" id="Divide" value="0.0"/>
             <Control type="ScriptSlider" id="ScriptSlider59" value="0.0"/>
@@ -25,7 +25,7 @@
             <Control type="ScriptComboBox" id="BankA" value="1.0"/>
             <Control type="ScriptComboBox" id="ModLoadWave" value="1.0"/>
             <Control type="ScriptSlider" id="ScriptSlider62" value="0.0"/>
-            <Control type="ScriptSlider" id="Gain2" value="0.0"/>
+            <Control type="ScriptSlider" id="Gain2" value="0.4600000083446503"/>
             <Control type="ScriptSlider" id="PosC" value="0.0"/>
             <Control type="ScriptComboBox" id="PosCModsrc" value="1.0"/>
             <Control type="ScriptSlider" id="PosMocC" value="0.0"/>
@@ -40,19 +40,19 @@
             <Control type="ScriptButton" id="PitchSync" value="0.0"/>
             <Control type="ScriptComboBox" id="BankB" value="1.0"/>
             <Control type="ScriptComboBox" id="Categories2" value="1.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider23" value="1.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider23" value="0.3199999928474426"/>
             <Control type="ScriptSlider" id="ScriptSlider24" value="0.0"/>
             <Control type="ScriptComboBox" id="ShapeModSource13" value="3.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider54" value="0.01999999955296516"/>
-            <Control type="ScriptSlider" id="ScriptSlider55" value="0.1099999994039536"/>
+            <Control type="ScriptSlider" id="ScriptSlider54" value="0.2700000107288361"/>
+            <Control type="ScriptSlider" id="ScriptSlider55" value="2.081668171172169e-17"/>
             <Control type="ScriptComboBox" id="ShapeModSource15" value="3.0"/>
             <Control type="ScriptSlider" id="ScriptSlider57" value="2.081668171172169e-17"/>
             <Control type="ScriptAudioWaveform" id="OscVisual2" value="0.0" data="{PROJECT_FOLDER}Factory/Single Cycle 2/AD-Draw1.wav"
                      rangeStart="0" rangeEnd="437"/>
-            <Control type="ScriptComboBox" id="LpLoad1" value="1.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider56" value="1432.400024414062"/>
-            <Control type="ScriptComboBox" id="LpLoad2" value="1.0"/>
-            <Control type="ScriptComboBox" id="CarPostqant" value="6.0"/>
+            <Control type="ScriptComboBox" id="LpLoad1" value="6.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider56" value="506.7099914550781"/>
+            <Control type="ScriptComboBox" id="LpLoad2" value="6.0"/>
+            <Control type="ScriptComboBox" id="CarPostqant" value="1.0"/>
             <Control type="ScriptSliderPack" id="ScriptSliderPack1" value="-1.0" data="4....f+."/>
             <Control type="ScriptSliderPack" id="ScriptSliderPack2" value="-1.0" data="4....f+."/>
             <Control type="ScriptSliderPack" id="ScriptSliderPack3" value="-1.0" data="4....f+."/>
@@ -67,11 +67,11 @@
             <Control type="ScriptComboBox" id="ShapeModSource8" value="1.0"/>
             <Control type="ScriptSlider" id="ScriptSlider49" value="0.0"/>
             <Control type="ScriptSlider" id="ScriptSlider50" value="2.081668171172169e-17"/>
-            <Control type="ScriptSlider" id="ScriptSlider52" value="0.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider52" value="1.0"/>
             <Control type="ScriptSlider" id="ScriptSlider51" value="0.0"/>
             <Control type="ScriptComboBox" id="ShapeModSource9" value="1.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider53" value="0.0"/>
-            <Control type="ScriptComboBox" id="ShapeModSource12" value="1.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider53" value="0.09000000357627869"/>
+            <Control type="ScriptComboBox" id="ShapeModSource12" value="4.0"/>
             <Control type="ScriptSlider" id="ModTempo" value="0.6700000166893005"/>
             <Control type="ScriptSlider" id="ModA" value="800.0"/>
             <Control type="ScriptSlider" id="ModH" value="0.0"/>
@@ -100,16 +100,16 @@
             <Control type="ScriptSlider" id="LpH1" value="0.0"/>
             <Control type="ScriptSlider" id="LpD1" value="18.0"/>
             <Control type="ScriptButton" id="ScriptButton3" value="1.0"/>
-            <Control type="ScriptSlider" id="ModTempo8" value="2.0"/>
-            <Control type="ScriptSlider" id="ModTempo9" value="4.0"/>
-            <Control type="ScriptTable" id="ScriptTable1" value="0.0" data="36...............vOZlYB+....9C........f+.....fbtOyO"/>
+            <Control type="ScriptSlider" id="ModTempo8" value="10.0"/>
+            <Control type="ScriptSlider" id="ModTempo9" value="1.0"/>
+            <Control type="ScriptTable" id="ScriptTable1" value="0.0" data="36...............vOZlYB+....9SBWOhO...f+.....fbtOyO"/>
             <Control type="ScriptComboBox" id="ModPage" value="3.0"/>
             <Control type="ScriptSlider" id="ScriptSlider9" value="6.0"/>
             <Control type="ScriptSlider" id="ScriptSlider10" value="0.0"/>
             <Control type="ScriptSlider" id="ScriptSlider11" value="19598.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider12" value="-0.09999851137399673"/>
+            <Control type="ScriptSlider" id="ScriptSlider12" value="0.0"/>
             <Control type="ScriptSlider" id="ScriptSlider13" value="763.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider4" value="-13.79999828338623"/>
+            <Control type="ScriptSlider" id="ScriptSlider4" value="1.490116119384766e-6"/>
             <Control type="ScriptSlider" id="ScriptSlider41" value="0.02999999932944775"/>
             <Control type="ScriptSlider" id="Knob7" value="1.0"/>
             <Control type="ScriptSlider" id="Knob8" value="0.0"/>
@@ -122,15 +122,17 @@
             <Control type="ScriptButton" id="Routing" value="0.0"/>
             <Control type="ScriptButton" id="ScriptButton1" value="0.0"/>
             <Control type="ScriptComboBox" id="ShapeModSource7" value="4.0"/>
-            <Control type="ScriptSlider" id="ScriptSlider32" value="0.2899999916553497"/>
+            <Control type="ScriptSlider" id="ScriptSlider32" value="0.0"/>
             <Control type="ScriptSlider" id="ScriptSlider35" value="-0.009999999776482582"/>
-            <Control type="ScriptSlider" id="ScriptSlider33" value="8.069999694824219"/>
+            <Control type="ScriptSlider" id="ScriptSlider33" value="0.2899999916553497"/>
             <Control type="ScriptComboBox" id="ShapeModSource6" value="4.0"/>
             <Control type="ScriptSlider" id="ScriptSlider30" value="0.9900000095367432"/>
             <Control type="ScriptSlider" id="ScriptSlider31" value="2.081668171172169e-17"/>
-            <Control type="ScriptSlider" id="ScriptSlider34" value="0.5199999809265137"/>
+            <Control type="ScriptSlider" id="ScriptSlider34" value="0.0"/>
             <Control type="ScriptAudioWaveform" id="AudioWaveform1" value="0.0" data="/Users/rick/Documents/GitHub/Shapey/AudioFiles Expanded/Factory/Single Cycle 1/202-1.wav"
                      rangeStart="0" rangeEnd="256"/>
+            <Control type="ScriptSlider" id="Knob1" value="0.0"/>
+            <Control type="ScriptSlider" id="Knob2" value="1.0"/>
           </Content>
           <UIData Source="ShapeyUIData"/>
         </Processor>
@@ -173,7 +175,7 @@
     </Processor>
     <Processor Type="EffectChain" ID="FX" Bypassed="0">
       <ChildProcessors>
-        <Processor Type="SimpleGain" ID="Simple Gain1" Bypassed="0" Gain="-13.79999923706055"
+        <Processor Type="SimpleGain" ID="Simple Gain1" Bypassed="0" Gain="1.0354386859035e-6"
                    Delay="0.0" Width="100.0" Balance="0.0" InvertPolarity="0.0">
           <ChildProcessors>
             <Processor Type="ModulatorChain" ID="Gain Modulation" Bypassed="0" Intensity="1.0">
@@ -230,15 +232,27 @@
         </Processor>
         <Processor Type="ModulatorChain" ID="Global Modulators" Bypassed="0" Intensity="1.0">
           <ChildProcessors>
-            <Processor Type="Hardcoded Timevariant Modulator" ID="Gmod1" Bypassed="0"
-                       Intensity="1.0" Bipolar="0" Network="lfo" tempo="9.0" div="1.0"
-                       mode="2.0" Dest="1.0" Adjst="0.05000000074505806" AjustMode="1.0">
+            <Processor Type="ScriptTimeVariantModulator" ID="Gmod1" Bypassed="0" Intensity="1.0"
+                       Bipolar="0">
               <ChildProcessors/>
+              <Content/>
+              <Networks>
+                <Network ID="lfo" Version="0.0.0" CompileChannelAmount="1"/>
+              </Networks>
+              <UIData>
+                <ContentProperties DeviceType="Desktop"/>
+              </UIData>
             </Processor>
-            <Processor Type="Hardcoded Timevariant Modulator" ID="Gmod2" Bypassed="0"
-                       Intensity="1.0" Bipolar="0" Network="lfo" tempo="8.0" div="12.0"
-                       mode="1.0" Dest="1.0" Adjst="0.5" AjustMode="3.0">
+            <Processor Type="ScriptTimeVariantModulator" ID="Gmod2" Bypassed="0" Intensity="1.0"
+                       Bipolar="0">
               <ChildProcessors/>
+              <Content/>
+              <Networks>
+                <Network ID="lfo" Version="0.0.0" CompileChannelAmount="1"/>
+              </Networks>
+              <UIData>
+                <ContentProperties DeviceType="Desktop"/>
+              </UIData>
             </Processor>
           </ChildProcessors>
         </Processor>
@@ -267,7 +281,7 @@
             </Processor>
             <Processor Type="AHDSR" ID="AHDSR Envelope1" Bypassed="0" Monophonic="0.0"
                        Retrigger="1.0" Intensity="1.0" AttackCurve="0.0" DecayCurve="0.0"
-                       Attack="6.0" AttackLevel="0.0" Hold="0.0" Decay="19598.0" Sustain="-0.09999832510948181"
+                       Attack="6.0" AttackLevel="0.0" Hold="0.0" Decay="19598.0" Sustain="0.0"
                        Release="763.0" EcoMode="1.0">
               <ChildProcessors>
                 <Processor Type="ModulatorChain" ID="Attack Time" Bypassed="0" Intensity="1.0">
@@ -316,35 +330,36 @@
             <Processor Type="EffectChain" ID="FX" Bypassed="0">
               <ChildProcessors>
                 <Processor Type="HardcodedPolyphonicFX" ID="Shaper" Bypassed="0" Network="filtest"
-                           Tempo="1.0" PosSmooth="1432.400024414062" MathSmooth="0.0" Blimey="0.2000000029802322"
-                           BlimeyMod="0.0" BlimeyModSrc="1.0" Pitch="0.5" PitchMod="0.0"
-                           PitchSrc="1.0" Divide="0.0" DivMod="0.0" DivSrc="1.0" PitchSync="0.0"
-                           Fine="-1.0" InputMode="1.0" OscMode="2.0" AdjustMix="0.0" AdjustMixMod="2.081668171172169e-17"
-                           AdjustMixSrc="1.0" AdjustMode="1.0" Adj="0.0" AdjMod="0.0" AdjSrc="1.0"
-                           Position="0.01999999955296516" PosMod="0.1099999994039536" PosSrc="3.0"
-                           OutMode="1.0" Gain2="1.0" Gain2Mod="2.081668171172169e-17" Gain2Src="3.0"
-                           a1="800.0" h1="0.0" d1="16066.0" s1="1.0" r1="1098.0" EnvMod1="0.6700000166893005"
-                           a2="0.0" h2="71.0" d2="500.0" EnvDiv="0.0" Env2Sync="0.0" q="8.069999694824219"
-                           FilterMode="0.0" LP="0.9900000095367432" LpMod="2.081668171172169e-17"
-                           LpSrc="4.0" HP="0.2899999916553497" HpMod="-0.009999999776482582"
+                           Tempo="1.0" PosSmooth="506.7099914550781" MathSmooth="1.0" Blimey="0.4300000071525574"
+                           BlimeyMod="-0.02999999932944775" BlimeyModSrc="1.0" Pitch="0.3600000143051147"
+                           PitchMod="2.081668171172169e-17" PitchSrc="1.0" Divide="0.0"
+                           DivMod="0.0" DivSrc="1.0" PitchSync="0.0" Fine="-1.0" InputMode="1.0"
+                           OscMode="2.0" AdjustMix="0.0" AdjustMixMod="2.081668171172169e-17"
+                           AdjustMixSrc="1.0" AdjustMode="4.0" Adj="0.09000000357627869"
+                           AdjMod="0.0" AdjSrc="1.0" Position="0.2700000107288361" PosMod="2.081668171172169e-17"
+                           PosSrc="3.0" OutMode="1.0" Gain2="0.3199999928474426" Gain2Mod="2.081668171172169e-17"
+                           Gain2Src="3.0" a1="800.0" h1="0.0" d1="16066.0" s1="1.0" r1="1098.0"
+                           EnvMod1="0.6700000166893005" a2="0.0" h2="71.0" d2="500.0" EnvDiv="0.0"
+                           Env2Sync="0.0" q="0.2899999916553497" FilterMode="0.0" LP="0.9900000095367432"
+                           LpMod="2.081668171172169e-17" LpSrc="4.0" HP="0.0" HpMod="-0.009999999776482582"
                            HpSrc="4.0" step="0.0" PosMode="0.2267578095197678" feed1="0.0"
-                           feed2="0.3492187559604645" PostQuantise="6.0" PositionOSc1="0.0"
+                           feed2="0.3492187559604645" PostQuantise="1.0" PositionOSc1="0.0"
                            PositionOsc1Mod="0.0" PositionOscModSrc="1.0" PostionSteposc1="5.0"
-                           PosSmoothOsc1="0.0" Osc2Ratio="0.04848844930529594" ModPhase="0.0"
+                           PosSmoothOsc1="0.0" Osc2Ratio="0.04848844930529594" ModPhase="0.4600000083446503"
                            PhaseMod="2.081668171172169e-17" PhaseModSrc="5.0" Osc2PitchMod="0.65574049949646"
-                           Osc2PitchModSrc="0.9972318410873413" TableTempo="2.0" TableDiv="4.0"
+                           Osc2PitchModSrc="0.9972318410873413" TableTempo="10.0" TableDiv="1.0"
                            TableLoop="1.0" A2Tempo="0.0" H2Tempo="0.0" D2Tempo="18.0" Env2Loop="0.0"
                            Env2LoopTempo="0.0" Env2LoopDiv="0.0" env2mod="-0.7539325952529907"
                            q2="7.259999752044678" Fmode1="1.0" Fmode2="1.0" blocksize="8.0"
                            f1pan="0.9532948136329651" f2pan="-1.0" FXInputMod="0.5899999737739563"
                            FXInputCarrier="0.0" CarinputMod="0.5699999928474426" CarInputFx="1.0"
                            MasterCarrier="1.0" MasterSub="0.0" MasterMod="0.0" MasterFx="0.0"
-                           SubMix="0.0" SubFm="2.081668171172169e-17" SubAm="2.081668171172169e-17"
-                           detune="0.2099999934434891" ModPostSwitch="1.0" Glide="0.0" inPutGain="0.5199999809265137">
+                           SubMix="0.4300000071525574" SubFm="-0.05000000074505806" SubAm="0.8700000047683716"
+                           detune="0.300000011920929" ModPostSwitch="1.0" Glide="0.0" inPutGain="0.0">
                   <ChildProcessors/>
                   <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
                   <Tables>
-                    <Table EmbeddedData="36...............vOZlYB+....9C........f+.....fbtOyO"/>
+                    <Table EmbeddedData="36...............vOZlYB+....9SBWOhO...f+.....fbtOyO"/>
                   </Tables>
                   <AudioFiles>
                     <AudioFile EmbeddedData="/Users/rick/Documents/GitHub/Shapey/AudioFiles Expanded/Factory/Single Cycle 1/202-1.wav"
