@@ -2558,7 +2558,7 @@
             <Parameters/>
           </Node>
           <Node ID="chain53" FactoryPath="container.chain" Bypassed="0" Name="Modulator"
-                NodeColour="4279124566" Folded="1">
+                NodeColour="4279124566">
             <Nodes>
               <Node ID="chain158" FactoryPath="container.chain" Bypassed="0" Name="chain158">
                 <Nodes>
@@ -4569,7 +4569,7 @@
           <Connection NodeId="xfader2" ParameterId="Value"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="-1.0" MaxValue="1.0" ID="SubFm" Value="2.081668171172169e-17">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="SubFm" Value="1.0" DefaultValue="2.081668171172169e-17">
         <Connections>
           <Connection NodeId="pma3" ParameterId="Multiply"/>
         </Connections>

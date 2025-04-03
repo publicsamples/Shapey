@@ -143,10 +143,9 @@
         </Parameters>
       </Node>
       <Node ID="branch" FactoryPath="container.branch" Bypassed="0" Name="branch"
-            ShowParameters="1" Folded="1">
+            ShowParameters="1">
         <Nodes>
-          <Node ID="chain" FactoryPath="container.chain" Bypassed="0" Name="chain"
-                Folded="1">
+          <Node ID="chain" FactoryPath="container.chain" Bypassed="0" Name="chain">
             <Nodes>
               <Node ID="peak1" FactoryPath="core.peak" Bypassed="0" Name="peak1"
                     Folded="1">
@@ -161,7 +160,7 @@
                 <Parameters/>
               </Node>
               <Node ID="global_cable" FactoryPath="routing.global_cable" Bypassed="0"
-                    Name="global_cable" NodeColour="4282883250" Folded="1">
+                    Name="global_cable" NodeColour="4282883250">
                 <Properties>
                   <Property ID="Connection" Value="LFO1"/>
                 </Properties>
@@ -172,8 +171,7 @@
             </Nodes>
             <Parameters/>
           </Node>
-          <Node ID="chain1" FactoryPath="container.chain" Bypassed="0" Name="chain"
-                Folded="1">
+          <Node ID="chain1" FactoryPath="container.chain" Bypassed="0" Name="chain">
             <Nodes>
               <Node ID="peak2" FactoryPath="core.peak" Bypassed="0" Name="peak1"
                     Folded="1">
@@ -188,7 +186,7 @@
                 <Parameters/>
               </Node>
               <Node ID="global_cable1" FactoryPath="routing.global_cable" Bypassed="0"
-                    Name="global_cable" NodeColour="4282948786" Folded="1">
+                    Name="global_cable" NodeColour="4282948786">
                 <Properties>
                   <Property ID="Connection" Value="LFO2"/>
                 </Properties>
