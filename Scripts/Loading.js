@@ -16,6 +16,7 @@ const var BankB1 = Content.getComponent("BankB1");
 
 const var FolderLabel = Content.getComponent("FolderLabel");
 
+
 // Choose a folder to load samples from. 
 
 inline function onFolderSelectControl(component, value) {
@@ -29,12 +30,12 @@ if (value == 1)
          
          //find files in selected folder
          
-            var folderArray = FileSystem.findFiles(folder, "*.wav, *.aif, *.sfz", false);
+            var folderArray = FileSystem.findFiles(folder, "*.wav, *.aif", false);
 
             for (file in folderArray) {
                 file = file.toString(0);
                 
-                var folderArray2 = FileSystem.findFiles(folder, "*.wav, *.aif, *.sfz", false);
+                var folderArray2 = FileSystem.findFiles(folder, "*.wav, *.aif", false);
                             
                             for (file1 in folderArray2) {
                                         file1 = file1.toString(1);        
@@ -151,9 +152,6 @@ inline function onLpLoad1Control(component, value)
 };
 
 Content.getComponent("LpLoad1").setControlCallback(onLpLoad1Control);
-
-
-
 
 inline function onLpLoad2Control(component, value)
 {

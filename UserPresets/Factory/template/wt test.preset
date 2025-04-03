@@ -16,18 +16,18 @@
     <Control type="ScriptSlider" id="ScriptSlider59" value="2.081668171172169e-17"/>
     <Control type="ScriptComboBox" id="ShapeModSource16" value="5.0"/>
     <Control type="ScriptComboBox" id="BankA" value="1.0"/>
-    <Control type="ScriptComboBox" id="ModLoadWave" value="11.0"/>
+    <Control type="ScriptComboBox" id="ModLoadWave" value="1.0"/>
     <Control type="ScriptSlider" id="ScriptSlider62" value="1.0"/>
     <Control type="ScriptSlider" id="Gain2" value="0.07000000029802322"/>
     <Control type="ScriptSlider" id="PosC" value="0.2800000011920929"/>
     <Control type="ScriptComboBox" id="PosCModsrc" value="1.0"/>
     <Control type="ScriptSlider" id="PosMocC" value="0.0"/>
     <Control type="ScriptSlider" id="ScriptSlider65" value="0.0"/>
-    <Control type="ScriptComboBox" id="ModLoadWave1" value="11.0"/>
+    <Control type="ScriptComboBox" id="ModLoadWave1" value="1.0"/>
     <Control type="ScriptAudioWaveform" id="ScriptAudioWaveform1" value="0.0"
-             data="/Users/rick/Documents/GitHub/Shapey/AudioFiles Expanded/Factory/Single Cycle 1/202-6.wav"
+             data="/Users/rick/Documents/GitHub/Shapey/AudioFiles Expanded/Factory/Single Cycle 1/202-1.wav"
              rangeStart="0" rangeEnd="256"/>
-    <Control type="ScriptButton" id="ModulatorMode" value="0.0"/>
+    <Control type="ScriptButton" id="ModulatorMode" value="1.0"/>
     <Control type="ScriptSlider" id="Gain3" value="0.0"/>
     <Control type="ScriptButton" id="SubPage" value="0.0"/>
     <Control type="ScriptButton" id="PitchSync" value="1.0"/>
@@ -40,12 +40,13 @@
     <Control type="ScriptSlider" id="ScriptSlider55" value="1.0"/>
     <Control type="ScriptComboBox" id="ShapeModSource15" value="1.0"/>
     <Control type="ScriptSlider" id="ScriptSlider57" value="2.081668171172169e-17"/>
-    <Control type="ScriptAudioWaveform" id="OscVisual2" value="0.0" data="/Users/rick/Library/Application Support/modularsamples/Shapey/AudioFiles/Factory/Wavetables1/GLASSY.WAV"
-             rangeStart="0" rangeEnd="262144"/>
-    <Control type="ScriptComboBox" id="LpLoad1" value="4.0"/>
+    <Control type="ScriptAudioWaveform" id="OscVisual2" value="0.0" data="{PROJECT_FOLDER}Factory/Single Cycle 1/202-8.wav"
+             rangeStart="0" rangeEnd="256"/>
+    <Control type="ScriptLabel" id="FolderLabel" value="/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1"/>
     <Control type="ScriptSlider" id="ScriptSlider56" value="0.0"/>
-    <Control type="ScriptComboBox" id="LpLoad2" value="4.0"/>
     <Control type="ScriptComboBox" id="CarPostqant" value="2.0"/>
+    <Control type="ScriptSlider" id="PsTmp" value="0.0"/>
+    <Control type="ScriptSlider" id="PsDiv" value="1.0"/>
     <Control type="ScriptSliderPack" id="ScriptSliderPack1" value="-1.0" data="44....f+......................................................"/>
     <Control type="ScriptSliderPack" id="ScriptSliderPack2" value="-1.0" data="44....f+...9KD..3uP..f+BA..9KD..3uP..f+BA..9KD..3uP..f+BA..9KD"/>
     <Control type="ScriptSliderPack" id="ScriptSliderPack3" value="-1.0" data="44....f+...VJD..XoP..fkBA..VJD..XoP..fkBA..VJD..XoP..fkBA..VJD"/>
@@ -122,7 +123,7 @@
     <Control type="ScriptSlider" id="ScriptSlider30" value="0.9900000095367432"/>
     <Control type="ScriptSlider" id="ScriptSlider31" value="2.081668171172169e-17"/>
     <Control type="ScriptSlider" id="ScriptSlider34" value="0.0"/>
-    <Control type="ScriptAudioWaveform" id="AudioWaveform1" value="0.0" data="/Users/rick/Documents/GitHub/Shapey/AudioFiles Expanded/Factory/Single Cycle 1/202-6.wav"
+    <Control type="ScriptAudioWaveform" id="AudioWaveform1" value="0.0" data="/Users/rick/Documents/GitHub/Shapey/AudioFiles Expanded/Factory/Single Cycle 1/202-1.wav"
              rangeStart="0" rangeEnd="256"/>
     <Control type="ScriptSlider" id="Knob1" value="0.0"/>
     <Control type="ScriptSlider" id="Knob2" value="1.0"/>
