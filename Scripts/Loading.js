@@ -43,7 +43,7 @@ if (value == 1)
          //Populate the Folder Label
               
               	
-                FolderLabel.set("text", folder.toString(0));
+              
                 FolderPath.push(folder);
               
             };
@@ -144,7 +144,7 @@ inline function onLpLoad1Control(component, value)
 
 
 		this.setBypassed(false);
-		
+	
 		slot2.loadFile(LpLoad1.get("items").split("\n")[v]);
 		}, this);
 
@@ -157,6 +157,7 @@ inline function onLpLoad2Control(component, value)
 {
 	LpLoad1.setValue(value);
 	LpLoad1.changed();
+	FolderLabel.set("text", LpLoad2.getItemText());
 };
 
 Content.getComponent("LpLoad2").setControlCallback(onLpLoad2Control);
