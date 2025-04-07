@@ -24,7 +24,11 @@
             <Control type="ScriptComboBox" id="ShapeModSource16" value="5.0"/>
             <Control type="ScriptComboBox" id="BankA" value="1.0"/>
             <Control type="ScriptSlider" id="ScriptSlider62" value="0.07999999821186066"/>
+            <Control type="ScriptSlider" id="ScriptSlider39" value="0.5"/>
+            <Control type="ScriptSlider" id="ScriptSlider46" value="0.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider40" value="0.0"/>
             <Control type="ScriptSlider" id="Gain2" value="0.07000000029802322"/>
+            <Control type="ScriptSlider" id="ScriptSlider45" value="0.0"/>
             <Control type="ScriptComboBox" id="PosCModsrc2" value="1.0"/>
             <Control type="ScriptSlider" id="PosMocC1" value="0.0"/>
             <Control type="ScriptSlider" id="PosC" value="0.2800000011920929"/>
@@ -35,6 +39,7 @@
             <Control type="ScriptButton" id="ModulatorMode" value="0.0"/>
             <Control type="ScriptSlider" id="Gain3" value="0.0"/>
             <Control type="ScriptButton" id="PitchSync" value="0.0"/>
+            <Control type="ScriptSlider" id="ScriptSlider63" value="0.0"/>
             <Control type="ScriptComboBox" id="BankB" value="1.0"/>
             <Control type="ScriptComboBox" id="Categories2" value="1.0"/>
             <Control type="ScriptSlider" id="ScriptSlider23" value="0.3300000131130219"/>
@@ -376,12 +381,11 @@
                            TableDiv2="8.0" TableLoop2="0.0" TableSus2="0.0" TableRel2="1156.0"
                            TableMod2="7.259999752044678" Fmode1="1.0" Fmode2="1.0" blocksize="8.0"
                            MasterCarrier="0.0" MasterFilter="1.0" MasterMod="0.0" MasterFx="0.0"
-                           SubMix="0.0" SubFm="2.081668171172169e-17" SubAm="2.081668171172169e-17"
-                           detune="9.100000381469727" ModPostSwitch="1.0" Glide="0.0" PsOnOff="0.0"
-                           PsXfTempo="50.0" PsXfDivc="1.0" TranformCarIN="0.0" TranformModIN="1.0"
-                           TransformFitlerIn="0.0" CarModIN="0.0" CarTransIN="1.0" CarFilterIn="0.0"
-                           FilterModin="0.0" FilterTrasnIn="0.0" FilterCarIn="1.0" PreQuant="1.0"
-                           XfoffOn="0.0" xf="0.0" xfmod="0.0" xfsrc="1.0">
+                           SubMix="0.0" SubFm="0.0" SubAm="0.0" detune="0.5" ModPostSwitch="1.0"
+                           Glide="0.0" PsOnOff="0.0" PsXfTempo="50.0" PsXfDivc="1.0" TranformCarIN="0.0"
+                           TranformModIN="1.0" TransformFitlerIn="0.0" CarModIN="0.0" CarTransIN="1.0"
+                           CarFilterIn="0.0" FilterModin="0.0" FilterTrasnIn="0.0" FilterCarIn="1.0"
+                           PreQuant="1.0" XfoffOn="0.0" xf="0.0" xfmod="0.0" xfsrc="1.0">
                   <ChildProcessors/>
                   <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
                   <Tables>
