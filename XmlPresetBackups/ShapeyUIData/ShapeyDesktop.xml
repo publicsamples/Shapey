@@ -21,7 +21,8 @@
                  height="75.0" parentComponent="Osc1" processorId="Shaper" parameterId="Blimey"
                  text="Table Index" bgColour="4294967295" itemColour="4278215568"
                  filmstripImage="{PROJECT_FOLDER}bip1.png" numStrips="100.0" showValuePopup="Below"
-                 middlePosition="0.5" showTextBox="0" scaleFactor="0.75"/>
+                 middlePosition="0.5" showTextBox="0" scaleFactor="0.75" isPluginParameter="1"
+                 pluginParameterName="Modulator - "/>
       <Component type="ScriptSlider" id="ScriptSlider17" x="520.0" y="78.0" width="30.0"
                  height="30.0" parentComponent="Osc1" processorId="Shaper" parameterId="shapermod"
                  min="-1.0" middlePosition="0.0" text="Index Mod" filmstripImage="{PROJECT_FOLDER}k10.png"
@@ -31,7 +32,7 @@
                  text="Table Index" bgColour="4294967295" itemColour="4278215568"
                  filmstripImage="{PROJECT_FOLDER}bip1.png" numStrips="100.0" showValuePopup="Below"
                  middlePosition="8.0" showTextBox="0" scaleFactor="0.75" defaultValue="1.0"
-                 max="16.0"/>
+                 max="16.0" isPluginParameter="1" pluginParameterName="Modulator - Pitch"/>
       <Component type="ScriptLabel" id="ScriptLabel70" x="37.0" y="159.0" width="40.0"
                  height="20.0" parentComponent="Osc1" text="PITCH" editable="0"
                  fontName="Montserrat" visible="0"/>
@@ -127,28 +128,25 @@
                  text="Table Index" bgColour="4294967295" itemColour="4278215568"
                  filmstripImage="{PROJECT_FOLDER}bip13.png" numStrips="100.0"
                  scaleFactor="0.300000011920929" showValuePopup="Below" middlePosition="0.5"
-                 showTextBox="0"/>
+                 showTextBox="0" isPluginParameter="1" pluginParameterName="Modulator - Step"/>
       <Component type="ScriptSlider" id="ScriptSlider39" x="236.0" y="1.0" width="30.0"
                  height="30.0" parentComponent="Osc1" processorId="Shaper" parameterId="detune"
                  text="Table Index" bgColour="4294967295" itemColour="4278215568"
                  filmstripImage="{PROJECT_FOLDER}bip13.png" numStrips="100.0"
-                 scaleFactor="0.300000011920929" showTextBox="0" saveInPreset="0"
-                 middlePosition="8.0" defaultValue="0.5" max="16.0"/>
-      <Component type="ScriptLabel" id="ScriptLabel93" x="246.0" y="63.0" width="30.0"
-                 height="30.0" parentComponent="Osc1" text="fm" editable="0" fontName="Montserrat"
-                 textColour="4281349430" fontSize="12.0" enabled="0"/>
+                 scaleFactor="0.300000011920929" showTextBox="0" middlePosition="8.0"
+                 defaultValue="0.5" max="16.0" isPluginParameter="1" pluginParameterName="Modulator - Sub Tune"/>
       <Component type="ScriptSlider" id="ScriptSlider46" x="231.0" y="32.0" width="30.0"
                  height="30.0" parentComponent="Osc1" processorId="Shaper" parameterId="SubAm"
                  text="Table Index" bgColour="4294967295" itemColour="4278215568"
                  filmstripImage="{PROJECT_FOLDER}bip13.png" numStrips="100.0"
-                 scaleFactor="0.300000011920929" showTextBox="0" saveInPreset="0"
-                 middlePosition="0.0" textColour="4292202920" min="-1.0"/>
+                 scaleFactor="0.300000011920929" showTextBox="0" middlePosition="0.0"
+                 textColour="4292202920" min="-1.0" isPluginParameter="1" pluginParameterName="Modulator - AM"/>
       <Component type="ScriptSlider" id="ScriptSlider40" x="139.0" y="2.0" width="30.0"
                  height="30.0" parentComponent="Osc1" processorId="Shaper" parameterId="ModPhase"
                  text="Table Index" bgColour="4294967295" itemColour="4278215568"
                  filmstripImage="{PROJECT_FOLDER}bip13.png" numStrips="100.0"
-                 scaleFactor="0.300000011920929" showTextBox="0" saveInPreset="0"
-                 middlePosition="0.5" textColour="4292202920"/>
+                 scaleFactor="0.300000011920929" showTextBox="0" middlePosition="0.5"
+                 textColour="4292202920" isPluginParameter="1" pluginParameterName="Modulator - Sub Mix"/>
       <Component type="ScriptSlider" id="Gain2" x="112.0" y="30.0" width="30.0"
                  height="30.0" parentComponent="Osc1" processorId="Shaper" parameterId="ModPhase"
                  text="Table Index" bgColour="4294967295" itemColour="4278215568"
@@ -165,8 +163,8 @@
                  height="30.0" parentComponent="Osc1" processorId="Shaper" parameterId="SubFm"
                  text="Table Index" bgColour="4294967295" itemColour="4278215568"
                  filmstripImage="{PROJECT_FOLDER}bip13.png" numStrips="100.0"
-                 scaleFactor="0.300000011920929" showTextBox="0" min="-1.0" saveInPreset="0"
-                 middlePosition="0.0"/>
+                 scaleFactor="0.300000011920929" showTextBox="0" min="-1.0" middlePosition="0.0"
+                 isPluginParameter="1" pluginParameterName="Modulator - FM"/>
       <Component type="ScriptLabel" id="ScriptLabel94" x="259.0" y="32.0" width="30.0"
                  height="30.0" parentComponent="Osc1" text="am" editable="0" fontName="Montserrat"
                  textColour="4281349430" fontSize="12.0"/>
@@ -192,7 +190,7 @@
                  height="20.0" parentComponent="Osc1" processorId="Shaper" parameterId="PhaseMod"
                  middlePosition="0.0" min="-1.0" text="Env 2 Mod" filmstripImage="{PROJECT_FOLDER}k10.png"
                  numStrips="128.0" isVertical="0" showValuePopup="Below" showTextBox="0"
-                 scaleFactor="0.699999988079071"/>
+                 scaleFactor="0.699999988079071" isPluginParameter="1" pluginParameterName="Modulator - "/>
       <Component type="ScriptPanel" id="ModPos" x="153.0" y="145.0" width="130.0"
                  height="80.0" parentComponent="Osc1" textColour="4281221465"
                  itemColour="4281221465" itemColour2="4281221465" bgColour="4281221465"
@@ -269,7 +267,8 @@
                  height="30.0" parentComponent="Osc1" processorId="Shaper" parameterId="Glide"
                  text="Table Index" bgColour="4294967295" itemColour="4278215568"
                  filmstripImage="{PROJECT_FOLDER}bip13.png" numStrips="100.0"
-                 showValuePopup="Below" middlePosition="0.5" showTextBox="0" scaleFactor="0.300000011920929"/>
+                 showValuePopup="Below" middlePosition="0.5" showTextBox="0" scaleFactor="0.300000011920929"
+                 isPluginParameter="1" pluginParameterName="Modulator - Glide"/>
       <Component type="ScriptLabel" id="PitchModuation5" x="10.0" y="211.0" width="60.0"
                  height="15.0" parentComponent="Osc1" text="sync" fontName="Montserrat"
                  bgColour="4283470472" itemColour2="4287449402" itemColour="4281349430"
@@ -287,8 +286,8 @@
                parameterId="TransposeAmount" text="Table Index" bgColour="4294967295"
                itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip13.png"
                numStrips="100.0" scaleFactor="0.300000011920929" showTextBox="0"
-               saveInPreset="0" middlePosition="0.0" textColour="4292202920"
-               min="-24.0" max="24.0" stepSize="1.0"/>
+               middlePosition="0.0" textColour="4292202920" min="-24.0" max="24.0"
+               stepSize="1.0" showValuePopup="Below"/>
     <Component type="ScriptPanel" id="Osc2" x="461.0" y="48.0" width="290.0"
                height="270.0" textColour="5525584" bgColour="16777215" itemColour="4292202920"
                itemColour2="4292202920" parentComponent="Oscs">
@@ -308,7 +307,8 @@
                  height="75.0" parentComponent="Osc2" processorId="Shaper" parameterId="Gain2"
                  text="Table Index" bgColour="4294967295" itemColour="4278215568"
                  filmstripImage="{PROJECT_FOLDER}bip1.png" numStrips="100.0" showValuePopup="Below"
-                 middlePosition="0.5" showTextBox="0" scaleFactor="0.75"/>
+                 middlePosition="0.5" showTextBox="0" scaleFactor="0.75" isPluginParameter="1"
+                 pluginParameterName="Carrier - Input"/>
       <Component type="ScriptSlider" id="ScriptSlider24" x="520.0" y="78.0" width="30.0"
                  height="30.0" parentComponent="Osc2" processorId="Shaper" parameterId="shapermod"
                  min="-1.0" middlePosition="0.0" text="Index Mod" filmstripImage="{PROJECT_FOLDER}k10.png"
@@ -323,7 +323,7 @@
                  text="Table Index" bgColour="4294967295" itemColour="4291539577"
                  filmstripImage="{PROJECT_FOLDER}bip1.png" numStrips="100.0" showValuePopup="Below"
                  middlePosition="0.5" showTextBox="0" scaleFactor="0.75" macroControl="No MacroControl"
-                 itemColour2="4291539577"/>
+                 itemColour2="4291539577" isPluginParameter="1" pluginParameterName="Carrier - Position"/>
       <Component type="ScriptSlider" id="ScriptSlider55" x="135.0" y="67.0" width="30.0"
                  height="30.0" parentComponent="Osc2" processorId="Shaper" parameterId="PosMod"
                  middlePosition="0.0" min="-1.0" text="Env 2 Mod" filmstripImage="{PROJECT_FOLDER}k10.png"
@@ -383,7 +383,8 @@
                  text="Table Index" bgColour="4294967295" itemColour="4278215568"
                  filmstripImage="{PROJECT_FOLDER}bip13.png" numStrips="100.0"
                  showValuePopup="Below" middlePosition="1000.0" showTextBox="0"
-                 scaleFactor="0.3499999940395355" max="2000.0"/>
+                 scaleFactor="0.3499999940395355" max="2000.0" isPluginParameter="1"
+                 pluginParameterName="Carrier - Smooth"/>
       <Component type="ScriptLabel" id="ScriptLabel85" x="78.0" y="111.0" width="50.0"
                  height="30.0" parentComponent="Osc2" text="smth" editable="0"
                  fontName="Montserrat" textColour="4281349430" fontSize="14.0"/>
@@ -463,7 +464,8 @@
                    parameterId="xf" text="Table Index" bgColour="4294967295" itemColour="4291539577"
                    filmstripImage="{PROJECT_FOLDER}bip1.png" numStrips="100.0" showValuePopup="Below"
                    middlePosition="0.5" showTextBox="0" scaleFactor="0.4000000059604645"
-                   macroControl="No MacroControl" itemColour2="4291539577"/>
+                   macroControl="No MacroControl" itemColour2="4291539577" isPluginParameter="1"
+                   pluginParameterName="Carrier - Xfade"/>
         <Component type="ScriptLabel" id="ScriptLabel88" x="204.0" y="43.0" width="60.0"
                    height="20.0" parentComponent="FourFiles" text="xfade" editable="0"
                    fontName="Montserrat" textColour="4281349430" fontSize="14.0"/>
@@ -679,7 +681,7 @@
                  parameterId="AdjustMix" text="Table Index" bgColour="4294967295"
                  itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
                  numStrips="100.0" scaleFactor="0.550000011920929" showValuePopup="Below"
-                 showTextBox="0" middlePosition="0.5"/>
+                 showTextBox="0" middlePosition="0.5" pluginParameterName="Transform - Mix"/>
       <Component type="ScriptSlider" id="ScriptSlider50" x="95.0" y="48.0" width="30.0"
                  height="30.0" parentComponent="Transform" processorId="Shaper"
                  parameterId="AdjustMixMod" min="-1.0" middlePosition="0.0" text="Index Mod"
@@ -693,7 +695,7 @@
                  parameterId="MathSmooth" text="Table Index" bgColour="4294967295"
                  itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
                  numStrips="100.0" scaleFactor="0.550000011920929" showTextBox="0"
-                 middlePosition="0.5"/>
+                 middlePosition="0.5" pluginParameterName="Transform - Meta B"/>
       <Component type="ScriptLabel" id="TransformLabel2" x="75.0" y="230.0" width="60.0"
                  height="20.0" parentComponent="Transform" text="resonance" editable="0"
                  fontName="Montserrat" textColour="4281349430" fontSize="14.0"/>
@@ -714,7 +716,7 @@
                  height="55.0" parentComponent="Transform" processorId="Shaper"
                  parameterId="Adj" text="Table Index" bgColour="4294967295" itemColour="4278215568"
                  filmstripImage="{PROJECT_FOLDER}bip1.png" numStrips="100.0" scaleFactor="0.550000011920929"
-                 showValuePopup="Below" showTextBox="0" middlePosition="0.5"/>
+                 showValuePopup="Below" showTextBox="0" middlePosition="0.5" pluginParameterName="Transform - Meta A"/>
       <Component type="ScriptComboBox" id="ShapeModSource12" x="104.0" y="15.0"
                  max="12" width="40.0" height="20.0" items="fold&#10;Multi&#10;Sub1&#10;Sub2&#10;Ring&#10;Comb&#10;Low pass&#10;High pass&#10;Divide&#10;Comb2&#10;S&amp;H&#10;Bit"
                  parentComponent="Transform" itemColour="4281349430" itemColour2="4281349430"
@@ -1251,7 +1253,8 @@
                  height="75.0" parentComponent="Filter1" processorId="Shaper"
                  parameterId="HP" max="0.9900000095367432" text="Table Index"
                  bgColour="4294967295" itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
-                 numStrips="100.0" scaleFactor="0.75" showValuePopup="Below" showTextBox="0"/>
+                 numStrips="100.0" scaleFactor="0.75" showValuePopup="Below" showTextBox="0"
+                 isPluginParameter="1" pluginParameterName="Filter - High"/>
       <Component type="ScriptSlider" id="ScriptSlider35" x="246.0" y="87.0" width="30.0"
                  height="30.0" parentComponent="Filter1" processorId="Shaper"
                  parameterId="HpMod" min="-1.0" middlePosition="0.0" text="Index Mod"
@@ -1268,7 +1271,8 @@
                  height="50.0" parentComponent="Filter1" processorId="Shaper"
                  parameterId="q" text="Table Index" bgColour="4294967295" itemColour="4278215568"
                  filmstripImage="{PROJECT_FOLDER}bip1.png" numStrips="100.0" scaleFactor="0.5"
-                 showValuePopup="Below" middlePosition="0.5" showTextBox="0"/>
+                 showValuePopup="Below" middlePosition="0.5" showTextBox="0" isPluginParameter="1"
+                 pluginParameterName="Filter - Q"/>
       <Component type="ScriptComboBox" id="ShapeModSource6" x="101.0" y="128.0"
                  max="8" width="40.0" height="20.0" items="AHDSR&#10;Table 1&#10;Table 2&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch"
                  processorId="Shaper" parameterId="LpSrc" parentComponent="Filter1"
@@ -1278,7 +1282,8 @@
                  height="75.0" parentComponent="Filter1" processorId="Shaper"
                  parameterId="LP" max="0.9900000095367432" text="Table Index"
                  bgColour="4294967295" itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
-                 numStrips="100.0" scaleFactor="0.75" showValuePopup="Below" showTextBox="0"/>
+                 numStrips="100.0" scaleFactor="0.75" showValuePopup="Below" showTextBox="0"
+                 isPluginParameter="1" pluginParameterName="Filter - Low"/>
       <Component type="ScriptSlider" id="ScriptSlider31" x="109.0" y="88.0" width="30.0"
                  height="30.0" parentComponent="Filter1" processorId="Shaper"
                  parameterId="LpMod" min="-1.0" middlePosition="0.0" text="Index Mod"
@@ -1317,10 +1322,10 @@
              bgColour="4281221465" itemColour="4281221465" itemColour2="4281221465"
              alignment="left"/>
   <Component type="ScriptButton" id="Button1" x="582.0" y="10.0" processorId="Legato with Retrigger1"
-             parameterId="Enabled" width="20" height="20" bgColour="16777156"
+             parameterId="Enabled" width="20.0" height="20.0" bgColour="16777156"
              itemColour="3355443" itemColour2="1118481" textColour="16777215"/>
   <Component type="ScriptLabel" id="Label13" x="527.0" y="33.0" fontName="Montserrat"
-             width="75.0" height="15" editable="0" text="transpose" textColour="4293719295"
+             width="75.0" height="15.0" editable="0" text="transpose" textColour="4293719295"
              bgColour="4281221465" itemColour="4281221465" itemColour2="4281221465"
              alignment="left"/>
 </ContentProperties>
