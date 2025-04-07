@@ -43,7 +43,7 @@
                  middlePosition="0.0" min="-1.0" text="Env 2 Mod" filmstripImage="{PROJECT_FOLDER}k10.png"
                  numStrips="128.0" isVertical="0" showValuePopup="Below" showTextBox="0"/>
       <Component type="ScriptComboBox" id="PitchModSrc" x="115.0" y="103.0" max="8"
-                 width="45.0" height="15.0" items="AHDSR&#10;Loop AHD&#10;Table&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch&#10;"
+                 width="45.0" height="15.0" items="AHDSR&#10;Table 1&#10;Table 2&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch"
                  processorId="Shaper" parameterId="PitchSrc" parentComponent="Osc1"
                  itemColour="4281349430" itemColour2="4281349430" textColour="4281349430"
                  bgColour="4281349430"/>
@@ -63,8 +63,8 @@
                  height="10.0" parentComponent="Osc1" text="mod" editable="0"
                  fontName="Montserrat" bgColour="4280697684" textColour="4291539577"
                  itemColour="4280697684" itemColour2="4280697684"/>
-      <Component type="ScriptComboBox" id="Gain1Modsrc" x="232.0" y="103.0" max="10"
-                 width="40.0" height="15.0" items="AHDSR&#10;Loop AHD&#10;Table&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch&#10;Mod signal&#10;Carrier signal"
+      <Component type="ScriptComboBox" id="Gain1Modsrc" x="232.0" y="103.0" max="8"
+                 width="40.0" height="15.0" items="AHDSR&#10;Table 1&#10;Table 2&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch"
                  processorId="Shaper" parameterId="BlimeyModSrc" parentComponent="Osc1"
                  itemColour="4280697684" itemColour2="4280697684" textColour="4280697684"
                  bgColour="4280697684"/>
@@ -148,7 +148,7 @@
                  text="Table Index" bgColour="4294967295" itemColour="4278215568"
                  filmstripImage="{PROJECT_FOLDER}bip13.png" numStrips="100.0"
                  scaleFactor="0.300000011920929" showTextBox="0" saveInPreset="0"
-                 middlePosition="0.5" defaultValue="0.5" textColour="4292202920"/>
+                 middlePosition="0.5" textColour="4292202920"/>
       <Component type="ScriptSlider" id="Gain2" x="112.0" y="30.0" width="30.0"
                  height="30.0" parentComponent="Osc1" processorId="Shaper" parameterId="ModPhase"
                  text="Table Index" bgColour="4294967295" itemColour="4278215568"
@@ -184,7 +184,7 @@
                  height="110.0" parentComponent="Osc1" text="/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Wavetables1"
                  visible="0"/>
       <Component type="ScriptComboBox" id="PosCModsrc2" x="191.0" y="6.0" max="8"
-                 width="20.0" height="20.0" items="AHDSR&#10;Loop AHD&#10;Table&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch&#10;"
+                 width="20.0" height="20.0" items="AHDSR&#10;Table 1&#10;Table 2&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch&#10;"
                  processorId="Shaper" parameterId="PhaseModSrc" parentComponent="Osc1"
                  itemColour="4281349430" itemColour2="4281349430" textColour="4281349430"
                  bgColour="4281349430"/>
@@ -206,7 +206,7 @@
                    height="20.0" parentComponent="ModPos" text="position" editable="0"
                    fontName="Montserrat"/>
         <Component type="ScriptComboBox" id="PosCModsrc" x="53.0" y="56.0" max="8"
-                   width="20.0" height="20.0" items="AHDSR&#10;Loop AHD&#10;Table&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch&#10;"
+                   width="20.0" height="20.0" items="AHDSR&#10;Table 1&#10;Table 2&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch&#10;"
                    processorId="Shaper" parameterId="PositionOscModSrc" parentComponent="ModPos"
                    itemColour="4292202920" itemColour2="4292202920" textColour="4292202920"
                    bgColour="4292202920"/>
@@ -282,6 +282,13 @@
                  height="30.0" parentComponent="Osc1" text="sub tune" editable="0"
                  fontName="Montserrat" textColour="4281349430" fontSize="12.0"/>
     </Component>
+    <Component type="ScriptSlider" id="ScriptSlider63" x="491.0" y="21.0" width="30.0"
+               height="30.0" parentComponent="Oscs" processorId="Transposer1"
+               parameterId="TransposeAmount" text="Table Index" bgColour="4294967295"
+               itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip13.png"
+               numStrips="100.0" scaleFactor="0.300000011920929" showTextBox="0"
+               saveInPreset="0" middlePosition="0.0" textColour="4292202920"
+               min="-24.0" max="24.0" stepSize="1.0"/>
     <Component type="ScriptPanel" id="Osc2" x="461.0" y="48.0" width="290.0"
                height="270.0" textColour="5525584" bgColour="16777215" itemColour="4292202920"
                itemColour2="4292202920" parentComponent="Oscs">
@@ -307,7 +314,7 @@
                  min="-1.0" middlePosition="0.0" text="Index Mod" filmstripImage="{PROJECT_FOLDER}k10.png"
                  numStrips="128.0" isVertical="0" showValuePopup="Below" showTextBox="0"/>
       <Component type="ScriptComboBox" id="ShapeModSource13" x="130.0" y="109.0"
-                 max="8" width="40.0" height="20.0" items="AHDSR&#10;Loop AHD&#10;Table&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch&#10;"
+                 max="8" width="40.0" height="20.0" items="AHDSR&#10;Table 1&#10;Table 2&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch"
                  processorId="Shaper" parameterId="PosSrc" parentComponent="Osc2"
                  itemColour="4281349430" itemColour2="4281349430" textColour="4281349430"
                  bgColour="4281349430"/>
@@ -317,7 +324,7 @@
                  filmstripImage="{PROJECT_FOLDER}bip1.png" numStrips="100.0" showValuePopup="Below"
                  middlePosition="0.5" showTextBox="0" scaleFactor="0.75" macroControl="No MacroControl"
                  itemColour2="4291539577"/>
-      <Component type="ScriptSlider" id="ScriptSlider55" x="134.0" y="70.0" width="30.0"
+      <Component type="ScriptSlider" id="ScriptSlider55" x="135.0" y="67.0" width="30.0"
                  height="30.0" parentComponent="Osc2" processorId="Shaper" parameterId="PosMod"
                  middlePosition="0.0" min="-1.0" text="Env 2 Mod" filmstripImage="{PROJECT_FOLDER}k10.png"
                  numStrips="128.0" isVertical="0" showValuePopup="Below" showTextBox="0"/>
@@ -333,7 +340,7 @@
                  fontName="Montserrat" bgColour="4290634735" textColour="4279506723"
                  itemColour="4290634735" itemColour2="4290634735" visible="0"/>
       <Component type="ScriptButton" id="FolderSelect" x="144.0" y="236.0" width="20.0"
-                 height="30.0" parentComponent="Osc2" saveInPreset="0" isMomentary="1"
+                 height="23.0" parentComponent="Osc2" saveInPreset="0" isMomentary="1"
                  bgColour="16777215" itemColour="3355443" itemColour2="1118481"
                  textColour="16777215"/>
       <Component type="ScriptLabel" id="ScriptLabel82" x="23.0" y="265.0" width="80.0"
@@ -344,7 +351,7 @@
                  height="20.0" parentComponent="Osc2" text="INPUT" editable="0"
                  fontName="Montserrat" textColour="4281349430" fontSize="14.0"/>
       <Component type="ScriptComboBox" id="ShapeModSource15" x="242.0" y="109.0"
-                 max="8" width="40.0" height="20.0" items="AHDSR&#10;Loop AHD&#10;Table&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch&#10;"
+                 max="8" width="40.0" height="20.0" items="AHDSR&#10;Table 1&#10;Table 2&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch"
                  processorId="Shaper" parameterId="Gain2Src" parentComponent="Osc2"
                  itemColour="4281349430" itemColour2="4281349430" textColour="4281349430"
                  bgColour="4281349430"/>
@@ -352,7 +359,7 @@
                  height="10.0" parentComponent="Osc2" text="mod" editable="0"
                  fontName="Montserrat" bgColour="4281349430" textColour="4291539577"
                  itemColour="4281349430" itemColour2="4281349430"/>
-      <Component type="ScriptSlider" id="ScriptSlider57" x="245.0" y="70.0" width="40.0"
+      <Component type="ScriptSlider" id="ScriptSlider57" x="246.0" y="67.0" width="40.0"
                  height="30.0" parentComponent="Osc2" processorId="Shaper" parameterId="Gain2Mod"
                  middlePosition="0.0" min="-1.0" text="Env 2 Mod" filmstripImage="{PROJECT_FOLDER}k10.png"
                  numStrips="128.0" isVertical="0" showValuePopup="Below" showTextBox="0"/>
@@ -361,15 +368,15 @@
                  sampleIndex="1" itemColour2="4291648088" showFileName="0" opaque="0"
                  itemColour="4291648088" textColour="4289516456" itemColour3="16711680"
                  bgColour="4282269531" enableRange="0" enabled="0">
-        <Component type="ScriptLabel" id="FolderLabel" x="0.0" y="-1.0" width="110.0"
-                   height="20.0" parentComponent="OscVisual2" text="AD-Draw4" editable="0"
+        <Component type="ScriptLabel" id="FolderLabel" x="0.0" y="-1.0" width="140.0"
+                   height="30.0" parentComponent="OscVisual2" text="AX-2" editable="0"
                    fontName="Montserrat" saveInPreset="1" fontSize="15.0" textColour="4292202920"
                    bgColour="4278190080"/>
       </Component>
       <Component type="ScriptComboBox" id="LpLoad1" x="181.0" y="190.0" width="100.0"
-                 height="20.0" items="/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD-Draw1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD-Draw2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD-Draw4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD_DRAW3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/amp1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Cheb1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/chirp.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Filp1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/flip2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/flip3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/flip4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/LowQ.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Noisy1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/res1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Saw1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Saw2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/saw3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Saw4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/shSin.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Sine1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Square1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Trap1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/trap2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/WEDITDRAW1.wav"
+                 height="20.0" items="/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-19.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-21.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-22.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-23.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-24.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-25.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-26.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-27.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-28.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-29.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-31.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-32.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-33.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-34.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-35.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-36.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-19.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-20.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-21.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-22.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-23.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-24.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-25.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-26.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-9.wav"
                  parentComponent="Osc2" itemColour="4292823883" itemColour2="4292823883"
-                 textColour="4292823883" bgColour="4292823883" visible="0" max="29"
+                 textColour="4292823883" bgColour="4292823883" visible="0" max="152"
                  saveInPreset="0"/>
       <Component type="ScriptSlider" id="ScriptSlider56" x="84.0" y="78.0" width="40.0"
                  height="40.0" parentComponent="Osc2" processorId="Shaper" parameterId="PosSmooth"
@@ -381,14 +388,14 @@
                  height="30.0" parentComponent="Osc2" text="smth" editable="0"
                  fontName="Montserrat" textColour="4281349430" fontSize="14.0"/>
       <Component type="ScriptComboBox" id="LpLoad2" x="170" y="235" width="100"
-                 height="30" items="AD-Draw1&#10;AD-Draw2&#10;AD-Draw4&#10;AD_DRAW3&#10;amp1&#10;Cheb1&#10;chirp&#10;Filp1&#10;flip2&#10;flip3&#10;flip4&#10;LowQ&#10;Noisy1&#10;res1&#10;Saw1&#10;Saw2&#10;saw3&#10;Saw4&#10;shSin&#10;Sine1&#10;Square1&#10;square2&#10;square3&#10;square4&#10;square5&#10;square6&#10;Trap1&#10;trap2&#10;WEDITDRAW1"
+                 height="30" items="202-1&#10;202-10&#10;202-11&#10;202-12&#10;202-13&#10;202-14&#10;202-2&#10;202-3&#10;202-4&#10;202-5&#10;202-6&#10;202-7&#10;202-8&#10;202-9&#10;AX-1&#10;AX-11&#10;AX-12&#10;AX-13&#10;AX-14&#10;AX-15&#10;AX-16&#10;AX-17&#10;AX-18&#10;AX-2&#10;AX-3&#10;AX-4&#10;AX-5&#10;AX-6&#10;AX-7&#10;AX-8&#10;AX-9&#10;CS-1&#10;CS-11&#10;CS-12&#10;CS-13&#10;CS-14&#10;CS-15&#10;CS-16&#10;CS-17&#10;CS-18&#10;CS-19&#10;CS-2&#10;CS-21&#10;CS-22&#10;CS-23&#10;CS-24&#10;CS-25&#10;CS-26&#10;CS-27&#10;CS-28&#10;CS-29&#10;CS-3&#10;CS-31&#10;CS-32&#10;CS-33&#10;CS-34&#10;CS-35&#10;CS-36&#10;CS-4&#10;CS-5&#10;CS-6&#10;CS-7&#10;CS-8&#10;CS-9&#10;Mb-1&#10;Mb-11&#10;Mb-12&#10;Mb-13&#10;Mb-14&#10;Mb-16&#10;Mb-17&#10;Mb-2&#10;Mb-3&#10;Mb-4&#10;Mb-6&#10;Mb-7&#10;Mb-8&#10;Mb-9&#10;Mg-1&#10;Mg-10&#10;Mg-11&#10;Mg-12&#10;Mg-13&#10;Mg-14&#10;Mg-2&#10;Mg-3&#10;Mg-4&#10;Mg-5&#10;Mg-6&#10;Mg-7&#10;Mg-8&#10;Mg-9&#10;Ms-1&#10;Ms-10&#10;Ms-11&#10;Ms-12&#10;Ms-13&#10;Ms-14&#10;Ms-15&#10;Ms-16&#10;Ms-17&#10;Ms-18&#10;Ms-19&#10;Ms-2&#10;Ms-20&#10;Ms-21&#10;Ms-22&#10;Ms-23&#10;Ms-24&#10;Ms-25&#10;Ms-26&#10;Ms-3&#10;Ms-4&#10;Ms-5&#10;Ms-6&#10;Ms-7&#10;Ms-8&#10;Ms-9&#10;WONK1&#10;WONK10&#10;WONK11&#10;WONK12&#10;WONK13&#10;WONK14&#10;WONK15&#10;WONK16&#10;WONK17&#10;WONK18&#10;WONK2&#10;WONK3&#10;WONK4&#10;WONK5&#10;WONK6&#10;WONK7&#10;WONK8&#10;WONK9&#10;XP-1&#10;XP-10&#10;XP-11&#10;XP-12&#10;XP-13&#10;XP-14&#10;XP-15&#10;XP-16&#10;XP-2&#10;XP-3&#10;XP-4&#10;XP-5&#10;XP-6&#10;XP-7&#10;XP-8&#10;XP-9"
                  parentComponent="Osc2" itemColour="4281349430" itemColour2="4281349430"
-                 textColour="4281348918" bgColour="4281480752" max="29" text="SAMPLE"
+                 textColour="4281348918" bgColour="4281480752" max="152" text="SAMPLE"
                  saveInPreset="0"/>
-      <Component type="ScriptLabel" id="ScriptLabel89" x="49.0" y="6.0" width="70.0"
+      <Component type="ScriptLabel" id="ScriptLabel89" x="37.0" y="6.0" width="60.0"
                  height="20.0" parentComponent="Osc2" text="quantise" editable="0"
                  fontName="Montserrat" textColour="4281349430" fontSize="14.0"/>
-      <Component type="ScriptComboBox" id="CarPostqant" x="9.0" y="6.0" width="40.0"
+      <Component type="ScriptComboBox" id="CarPostqant" x="6.0" y="6.0" width="30.0"
                  height="20.0" max="9" parentComponent="Osc2" items="off&#10;4096&#10;2048&#10;1024&#10;512&#10;256&#10;128&#10;64&#10;32"
                  processorId="Shaper" parameterId="PostQuantise" bgColour="4281349430"
                  itemColour="4281349430" itemColour2="4281349430" textColour="4281349430"/>
@@ -396,18 +403,17 @@
                  height="30.0" parentComponent="Osc2" text="select a sample folder to populate the menu"
                  editable="0" fontName="Montserrat" bgColour="4287449402" textColour="4294503907"
                  itemColour="4287449402" itemColour2="4287449402"/>
-      <Component type="ScriptButton" id="Pshift" x="87.0" y="43.0" width="20.0"
+      <Component type="ScriptButton" id="Pshift" x="153.0" y="7.0" width="20.0"
                  height="20.0" parentComponent="Osc2" bgColour="16777215" itemColour="3355443"
-                 itemColour2="1118481" textColour="16777215" processorId="Shaper"
-                 parameterId="PsOnOff"/>
+                 itemColour2="1118481" textColour="16777215"/>
       <Component type="ScriptSlider" id="PsTmp" x="86.0" y="43.0" width="30.0"
                  height="30.0" parentComponent="Osc2" processorId="Shaper" parameterId="PsXfTempo"
                  text="Table Index" bgColour="4294967295" itemColour="4278215568"
                  filmstripImage="{PROJECT_FOLDER}bip13.png" numStrips="100.0"
                  showValuePopup="Below" middlePosition="9.0" showTextBox="0" scaleFactor="0.300000011920929"
                  max="18.0" mode="TempoSync" stepSize="1.0" visible="0"/>
-      <Component type="ScriptLabel" id="ScriptLabel92" x="105.0" y="43.0" width="70.0"
-                 height="20.0" parentComponent="Osc2" text="pitch shift" editable="0"
+      <Component type="ScriptLabel" id="ScriptLabel92" x="171.0" y="3.0" width="40.0"
+                 height="30.0" parentComponent="Osc2" text="pitch shift" editable="0"
                  fontName="Montserrat" textColour="4281349430" fontSize="14.0"/>
       <Component type="ScriptSlider" id="PsDiv" x="138.0" y="21.0" width="30.0"
                  height="30.0" parentComponent="Osc2" processorId="Shaper" parameterId="PsXfDivc"
@@ -428,10 +434,10 @@
                  height="10.0" parentComponent="Osc2" text="tempo" editable="0"
                  fontName="Montserrat" textColour="4281349430" fontSize="10.0"
                  visible="0"/>
-      <Component type="ScriptLabel" id="ScriptLabel99" x="140.0" y="6.0" width="40.0"
+      <Component type="ScriptLabel" id="ScriptLabel99" x="112.0" y="6.0" width="40.0"
                  height="20.0" parentComponent="Osc2" text="Xfade" editable="0"
                  fontName="Montserrat" textColour="4281349430" fontSize="14.0"/>
-      <Component type="ScriptButton" id="Xfade" x="120.0" y="6.0" width="20.0"
+      <Component type="ScriptButton" id="Xfade" x="94.0" y="6.0" width="20.0"
                  height="20.0" parentComponent="Osc2" bgColour="16777215" itemColour="3355443"
                  itemColour2="1118481" textColour="16777215"/>
       <Component type="ScriptPanel" id="FourFiles" x="11.0" y="138.0" width="270.0"
@@ -444,7 +450,7 @@
                    filmstripImage="{PROJECT_FOLDER}k10.png" numStrips="128.0" isVertical="0"
                    showValuePopup="Below" showTextBox="0" scaleFactor="0.800000011920929"/>
         <Component type="ScriptComboBox" id="ShapeModSource14" x="233.0" y="65.0"
-                   max="8" width="30.0" height="20.0" items="AHDSR&#10;Loop AHD&#10;Table&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch&#10;"
+                   max="8" width="30.0" height="20.0" items="AHDSR&#10;Table 1&#10;Table 2&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch&#10;"
                    processorId="Shaper" parameterId="xfsrc" parentComponent="FourFiles"
                    itemColour="4281349430" itemColour2="4281349430" textColour="4281349430"
                    bgColour="4281349430"/>
@@ -467,7 +473,7 @@
                    itemColour="4291648088" textColour="4289516456" itemColour3="16711680"
                    bgColour="4282269531" enableRange="0" enabled="0">
           <Component type="ScriptLabel" id="FolderLabel3" x="0.0" y="-1.0" width="57.0"
-                     height="15.0" parentComponent="OscVisual3" text="Cheb1" editable="0"
+                     height="15.0" parentComponent="OscVisual3" text="" editable="0"
                      fontName="Montserrat" saveInPreset="1" fontSize="15.0" textColour="4292202920"
                      bgColour="4278190080"/>
         </Component>
@@ -477,7 +483,7 @@
                    itemColour="4291648088" textColour="4289516456" itemColour3="16711680"
                    bgColour="4282269531" enableRange="0" enabled="0">
           <Component type="ScriptLabel" id="FolderLabel4" x="2.0" y="-3.0" width="57.0"
-                     height="15.0" parentComponent="OscVisual4" text="LowQ" editable="0"
+                     height="15.0" parentComponent="OscVisual4" text="" editable="0"
                      fontName="Montserrat" saveInPreset="1" fontSize="15.0" textColour="4292202920"
                      bgColour="4278190080"/>
         </Component>
@@ -497,41 +503,63 @@
                    textColour="4289516456" itemColour3="16711680" bgColour="4282269531"
                    enabled="0" enableRange="0" showFileName="0">
           <Component type="ScriptLabel" id="FolderLabel6" x="2.0" y="-3.0" width="57.0"
-                     height="15.0" parentComponent="OscVisual6" text="Saw1" editable="0"
+                     height="15.0" parentComponent="OscVisual6" text="" editable="0"
                      fontName="Montserrat" saveInPreset="1" fontSize="15.0" textColour="4292202920"
                      bgColour="4278190080"/>
         </Component>
       </Component>
       <Component type="ScriptComboBox" id="LpLoad3" x="198.0" y="235.0" width="25.0"
-                 height="30.0" items="/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD-Draw1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD-Draw2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD-Draw4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD_DRAW3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/amp1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Cheb1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/chirp.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Filp1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/flip2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/flip3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/flip4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/LowQ.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Noisy1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/res1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Saw1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Saw2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/saw3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Saw4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/shSin.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Sine1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Square1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Trap1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/trap2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/WEDITDRAW1.wav"
+                 height="30.0" items="/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-19.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-21.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-22.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-23.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-24.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-25.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-26.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-27.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-28.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-29.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-31.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-32.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-33.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-34.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-35.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-36.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-19.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-20.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-21.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-22.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-23.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-24.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-25.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-26.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-9.wav"
                  parentComponent="Osc2" itemColour="4281349430" itemColour2="4281349430"
-                 textColour="4281348918" bgColour="4281480752" max="29" text="SAMPLE"
+                 textColour="4281348918" bgColour="4281480752" max="152" text="SAMPLE"
                  saveInPreset="0" visible="0"/>
       <Component type="ScriptComboBox" id="LpLoad4" x="199.0" y="235.0" width="25.0"
-                 height="30.0" items="AD-Draw1&#10;AD-Draw2&#10;AD-Draw4&#10;AD_DRAW3&#10;amp1&#10;Cheb1&#10;chirp&#10;Filp1&#10;flip2&#10;flip3&#10;flip4&#10;LowQ&#10;Noisy1&#10;res1&#10;Saw1&#10;Saw2&#10;saw3&#10;Saw4&#10;shSin&#10;Sine1&#10;Square1&#10;square2&#10;square3&#10;square4&#10;square5&#10;square6&#10;Trap1&#10;trap2&#10;WEDITDRAW1"
+                 height="30.0" items="202-1&#10;202-10&#10;202-11&#10;202-12&#10;202-13&#10;202-14&#10;202-2&#10;202-3&#10;202-4&#10;202-5&#10;202-6&#10;202-7&#10;202-8&#10;202-9&#10;AX-1&#10;AX-11&#10;AX-12&#10;AX-13&#10;AX-14&#10;AX-15&#10;AX-16&#10;AX-17&#10;AX-18&#10;AX-2&#10;AX-3&#10;AX-4&#10;AX-5&#10;AX-6&#10;AX-7&#10;AX-8&#10;AX-9&#10;CS-1&#10;CS-11&#10;CS-12&#10;CS-13&#10;CS-14&#10;CS-15&#10;CS-16&#10;CS-17&#10;CS-18&#10;CS-19&#10;CS-2&#10;CS-21&#10;CS-22&#10;CS-23&#10;CS-24&#10;CS-25&#10;CS-26&#10;CS-27&#10;CS-28&#10;CS-29&#10;CS-3&#10;CS-31&#10;CS-32&#10;CS-33&#10;CS-34&#10;CS-35&#10;CS-36&#10;CS-4&#10;CS-5&#10;CS-6&#10;CS-7&#10;CS-8&#10;CS-9&#10;Mb-1&#10;Mb-11&#10;Mb-12&#10;Mb-13&#10;Mb-14&#10;Mb-16&#10;Mb-17&#10;Mb-2&#10;Mb-3&#10;Mb-4&#10;Mb-6&#10;Mb-7&#10;Mb-8&#10;Mb-9&#10;Mg-1&#10;Mg-10&#10;Mg-11&#10;Mg-12&#10;Mg-13&#10;Mg-14&#10;Mg-2&#10;Mg-3&#10;Mg-4&#10;Mg-5&#10;Mg-6&#10;Mg-7&#10;Mg-8&#10;Mg-9&#10;Ms-1&#10;Ms-10&#10;Ms-11&#10;Ms-12&#10;Ms-13&#10;Ms-14&#10;Ms-15&#10;Ms-16&#10;Ms-17&#10;Ms-18&#10;Ms-19&#10;Ms-2&#10;Ms-20&#10;Ms-21&#10;Ms-22&#10;Ms-23&#10;Ms-24&#10;Ms-25&#10;Ms-26&#10;Ms-3&#10;Ms-4&#10;Ms-5&#10;Ms-6&#10;Ms-7&#10;Ms-8&#10;Ms-9&#10;WONK1&#10;WONK10&#10;WONK11&#10;WONK12&#10;WONK13&#10;WONK14&#10;WONK15&#10;WONK16&#10;WONK17&#10;WONK18&#10;WONK2&#10;WONK3&#10;WONK4&#10;WONK5&#10;WONK6&#10;WONK7&#10;WONK8&#10;WONK9&#10;XP-1&#10;XP-10&#10;XP-11&#10;XP-12&#10;XP-13&#10;XP-14&#10;XP-15&#10;XP-16&#10;XP-2&#10;XP-3&#10;XP-4&#10;XP-5&#10;XP-6&#10;XP-7&#10;XP-8&#10;XP-9"
                  parentComponent="Osc2" itemColour="4281349430" itemColour2="4281349430"
-                 textColour="4281348918" bgColour="4281480752" max="29" text="SAMPLE"
+                 textColour="4281348918" bgColour="4281480752" max="152" text="SAMPLE"
                  saveInPreset="0" visible="0"/>
       <Component type="ScriptComboBox" id="LpLoad5" x="227.0" y="235.0" width="25.0"
-                 height="30.0" items="/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD-Draw1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD-Draw2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD-Draw4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD_DRAW3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/amp1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Cheb1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/chirp.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Filp1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/flip2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/flip3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/flip4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/LowQ.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Noisy1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/res1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Saw1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Saw2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/saw3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Saw4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/shSin.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Sine1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Square1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Trap1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/trap2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/WEDITDRAW1.wav"
+                 height="30.0" items="/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-19.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-21.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-22.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-23.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-24.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-25.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-26.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-27.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-28.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-29.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-31.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-32.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-33.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-34.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-35.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-36.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-19.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-20.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-21.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-22.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-23.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-24.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-25.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-26.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-9.wav"
                  parentComponent="Osc2" itemColour="4281349430" itemColour2="4281349430"
-                 textColour="4281348918" bgColour="4281480752" max="29" text="SAMPLE"
+                 textColour="4281348918" bgColour="4281480752" max="152" text="SAMPLE"
                  saveInPreset="0" visible="0"/>
       <Component type="ScriptComboBox" id="LpLoad6" x="228.0" y="235.0" width="25.0"
-                 height="30.0" items="AD-Draw1&#10;AD-Draw2&#10;AD-Draw4&#10;AD_DRAW3&#10;amp1&#10;Cheb1&#10;chirp&#10;Filp1&#10;flip2&#10;flip3&#10;flip4&#10;LowQ&#10;Noisy1&#10;res1&#10;Saw1&#10;Saw2&#10;saw3&#10;Saw4&#10;shSin&#10;Sine1&#10;Square1&#10;square2&#10;square3&#10;square4&#10;square5&#10;square6&#10;Trap1&#10;trap2&#10;WEDITDRAW1"
+                 height="30.0" items="202-1&#10;202-10&#10;202-11&#10;202-12&#10;202-13&#10;202-14&#10;202-2&#10;202-3&#10;202-4&#10;202-5&#10;202-6&#10;202-7&#10;202-8&#10;202-9&#10;AX-1&#10;AX-11&#10;AX-12&#10;AX-13&#10;AX-14&#10;AX-15&#10;AX-16&#10;AX-17&#10;AX-18&#10;AX-2&#10;AX-3&#10;AX-4&#10;AX-5&#10;AX-6&#10;AX-7&#10;AX-8&#10;AX-9&#10;CS-1&#10;CS-11&#10;CS-12&#10;CS-13&#10;CS-14&#10;CS-15&#10;CS-16&#10;CS-17&#10;CS-18&#10;CS-19&#10;CS-2&#10;CS-21&#10;CS-22&#10;CS-23&#10;CS-24&#10;CS-25&#10;CS-26&#10;CS-27&#10;CS-28&#10;CS-29&#10;CS-3&#10;CS-31&#10;CS-32&#10;CS-33&#10;CS-34&#10;CS-35&#10;CS-36&#10;CS-4&#10;CS-5&#10;CS-6&#10;CS-7&#10;CS-8&#10;CS-9&#10;Mb-1&#10;Mb-11&#10;Mb-12&#10;Mb-13&#10;Mb-14&#10;Mb-16&#10;Mb-17&#10;Mb-2&#10;Mb-3&#10;Mb-4&#10;Mb-6&#10;Mb-7&#10;Mb-8&#10;Mb-9&#10;Mg-1&#10;Mg-10&#10;Mg-11&#10;Mg-12&#10;Mg-13&#10;Mg-14&#10;Mg-2&#10;Mg-3&#10;Mg-4&#10;Mg-5&#10;Mg-6&#10;Mg-7&#10;Mg-8&#10;Mg-9&#10;Ms-1&#10;Ms-10&#10;Ms-11&#10;Ms-12&#10;Ms-13&#10;Ms-14&#10;Ms-15&#10;Ms-16&#10;Ms-17&#10;Ms-18&#10;Ms-19&#10;Ms-2&#10;Ms-20&#10;Ms-21&#10;Ms-22&#10;Ms-23&#10;Ms-24&#10;Ms-25&#10;Ms-26&#10;Ms-3&#10;Ms-4&#10;Ms-5&#10;Ms-6&#10;Ms-7&#10;Ms-8&#10;Ms-9&#10;WONK1&#10;WONK10&#10;WONK11&#10;WONK12&#10;WONK13&#10;WONK14&#10;WONK15&#10;WONK16&#10;WONK17&#10;WONK18&#10;WONK2&#10;WONK3&#10;WONK4&#10;WONK5&#10;WONK6&#10;WONK7&#10;WONK8&#10;WONK9&#10;XP-1&#10;XP-10&#10;XP-11&#10;XP-12&#10;XP-13&#10;XP-14&#10;XP-15&#10;XP-16&#10;XP-2&#10;XP-3&#10;XP-4&#10;XP-5&#10;XP-6&#10;XP-7&#10;XP-8&#10;XP-9"
                  parentComponent="Osc2" itemColour="4281349430" itemColour2="4281349430"
-                 textColour="4281348918" bgColour="4281480752" max="29" text="SAMPLE"
+                 textColour="4281348918" bgColour="4281480752" max="152" text="SAMPLE"
                  saveInPreset="0" visible="0"/>
       <Component type="ScriptComboBox" id="LpLoad7" x="256.0" y="235.0" width="25.0"
-                 height="30.0" items="/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD-Draw1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD-Draw2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD-Draw4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/AD_DRAW3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/amp1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Cheb1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/chirp.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Filp1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/flip2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/flip3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/flip4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/LowQ.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Noisy1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/res1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Saw1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Saw2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/saw3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Saw4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/shSin.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Sine1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Square1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/square6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/Trap1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/trap2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 2/WEDITDRAW1.wav"
+                 height="30.0" items="/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/202-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/AX-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-19.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-21.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-22.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-23.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-24.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-25.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-26.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-27.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-28.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-29.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-31.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-32.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-33.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-34.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-35.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-36.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/CS-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mb-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Mg-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-19.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-20.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-21.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-22.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-23.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-24.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-25.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-26.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/Ms-9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK17.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK18.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/WONK9.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-1.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-10.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-11.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-12.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-13.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-14.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-15.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-16.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-2.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-3.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-4.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-5.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-6.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-7.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-8.wav&#10;/Users/rick/Documents/GitHub/Shapey/AudioFiles/Factory/Single Cycle 1/XP-9.wav"
                  parentComponent="Osc2" itemColour="4281349430" itemColour2="4281349430"
-                 textColour="4281348918" bgColour="4281480752" max="29" text="SAMPLE"
+                 textColour="4281348918" bgColour="4281480752" max="152" text="SAMPLE"
                  saveInPreset="0" visible="0"/>
       <Component type="ScriptComboBox" id="LpLoad8" x="257.0" y="235.0" width="25.0"
-                 height="30.0" items="AD-Draw1&#10;AD-Draw2&#10;AD-Draw4&#10;AD_DRAW3&#10;amp1&#10;Cheb1&#10;chirp&#10;Filp1&#10;flip2&#10;flip3&#10;flip4&#10;LowQ&#10;Noisy1&#10;res1&#10;Saw1&#10;Saw2&#10;saw3&#10;Saw4&#10;shSin&#10;Sine1&#10;Square1&#10;square2&#10;square3&#10;square4&#10;square5&#10;square6&#10;Trap1&#10;trap2&#10;WEDITDRAW1"
+                 height="30.0" items="202-1&#10;202-10&#10;202-11&#10;202-12&#10;202-13&#10;202-14&#10;202-2&#10;202-3&#10;202-4&#10;202-5&#10;202-6&#10;202-7&#10;202-8&#10;202-9&#10;AX-1&#10;AX-11&#10;AX-12&#10;AX-13&#10;AX-14&#10;AX-15&#10;AX-16&#10;AX-17&#10;AX-18&#10;AX-2&#10;AX-3&#10;AX-4&#10;AX-5&#10;AX-6&#10;AX-7&#10;AX-8&#10;AX-9&#10;CS-1&#10;CS-11&#10;CS-12&#10;CS-13&#10;CS-14&#10;CS-15&#10;CS-16&#10;CS-17&#10;CS-18&#10;CS-19&#10;CS-2&#10;CS-21&#10;CS-22&#10;CS-23&#10;CS-24&#10;CS-25&#10;CS-26&#10;CS-27&#10;CS-28&#10;CS-29&#10;CS-3&#10;CS-31&#10;CS-32&#10;CS-33&#10;CS-34&#10;CS-35&#10;CS-36&#10;CS-4&#10;CS-5&#10;CS-6&#10;CS-7&#10;CS-8&#10;CS-9&#10;Mb-1&#10;Mb-11&#10;Mb-12&#10;Mb-13&#10;Mb-14&#10;Mb-16&#10;Mb-17&#10;Mb-2&#10;Mb-3&#10;Mb-4&#10;Mb-6&#10;Mb-7&#10;Mb-8&#10;Mb-9&#10;Mg-1&#10;Mg-10&#10;Mg-11&#10;Mg-12&#10;Mg-13&#10;Mg-14&#10;Mg-2&#10;Mg-3&#10;Mg-4&#10;Mg-5&#10;Mg-6&#10;Mg-7&#10;Mg-8&#10;Mg-9&#10;Ms-1&#10;Ms-10&#10;Ms-11&#10;Ms-12&#10;Ms-13&#10;Ms-14&#10;Ms-15&#10;Ms-16&#10;Ms-17&#10;Ms-18&#10;Ms-19&#10;Ms-2&#10;Ms-20&#10;Ms-21&#10;Ms-22&#10;Ms-23&#10;Ms-24&#10;Ms-25&#10;Ms-26&#10;Ms-3&#10;Ms-4&#10;Ms-5&#10;Ms-6&#10;Ms-7&#10;Ms-8&#10;Ms-9&#10;WONK1&#10;WONK10&#10;WONK11&#10;WONK12&#10;WONK13&#10;WONK14&#10;WONK15&#10;WONK16&#10;WONK17&#10;WONK18&#10;WONK2&#10;WONK3&#10;WONK4&#10;WONK5&#10;WONK6&#10;WONK7&#10;WONK8&#10;WONK9&#10;XP-1&#10;XP-10&#10;XP-11&#10;XP-12&#10;XP-13&#10;XP-14&#10;XP-15&#10;XP-16&#10;XP-2&#10;XP-3&#10;XP-4&#10;XP-5&#10;XP-6&#10;XP-7&#10;XP-8&#10;XP-9"
                  parentComponent="Osc2" itemColour="4281349430" itemColour2="4281349430"
-                 textColour="4281348918" bgColour="4281480752" max="29" text="SAMPLE"
+                 textColour="4281348918" bgColour="4281480752" max="152" text="SAMPLE"
                  saveInPreset="0" visible="0"/>
+      <Component type="ScriptSlider" id="Window" x="90.0" y="28.0" width="30.0"
+                 height="30.0" parentComponent="Osc2" processorId="Shaper" parameterId="PsXfTempo"
+                 text="Table Index" bgColour="4294967295" itemColour="4278215568"
+                 filmstripImage="{PROJECT_FOLDER}bip13.png" numStrips="100.0"
+                 showValuePopup="Below" middlePosition="5025.0" showTextBox="0"
+                 scaleFactor="0.300000011920929" max="10000.0" min="50.0" stepSize="1.0"
+                 mode="Time" defaultValue="50.0" visible="0"/>
+      <Component type="ScriptSlider" id="WinFx" x="118.0" y="27.0" width="30.0"
+                 height="30.0" parentComponent="Osc2" processorId="Shaper" parameterId="PsXfDivc"
+                 text="Table Index" bgColour="4294967295" itemColour="4278215568"
+                 filmstripImage="{PROJECT_FOLDER}bip13.png" numStrips="100.0"
+                 showValuePopup="Below" middlePosition="5000.5" showTextBox="0"
+                 scaleFactor="0.300000011920929" max="10000.0" mode="Time" min="1.0"
+                 stepSize="1.0" defaultValue="1.0" visible="0"/>
+      <Component type="ScriptLabel" id="ScriptLabel101" x="84.0" y="54.0" width="50.0"
+                 height="20.0" parentComponent="Osc2" text="window" editable="0"
+                 fontName="Montserrat" textColour="4281349430" fontSize="12.0"
+                 visible="0"/>
+      <Component type="ScriptLabel" id="ScriptLabel102" x="145.0" y="28.0" width="30.0"
+                 height="30.0" parentComponent="Osc2" text="win xf" editable="0"
+                 fontName="Montserrat" textColour="4281349430" fontSize="12.0"
+                 visible="0"/>
     </Component>
     <Component type="ScriptPanel" id="Panel3" x="489.0" y="47.0" width="310.0"
                height="300.0" itemColour="1646338339" itemColour2="2684354560"
@@ -630,7 +658,7 @@
                textColour="3474179" bgColour="16777215" visible="0">
       <Component type="ScriptFloatingTile" id="ScriptFloatingTile2" x="7.0" y="6.0"
                  width="430.0" height="270.0" parentComponent="PnS" ContentType="PresetBrowser"
-                 bgColour="5468552" itemColour="4282269531" itemColour2="4278190080"
+                 bgColour="5468552" itemColour="4291539577" itemColour2="4278190080"
                  Data="{&#10;  &quot;ShowSaveButton&quot;: true,&#10;  &quot;ShowExpansionsAsColumn&quot;: false,&#10;  &quot;ShowFolderButton&quot;: true,&#10;  &quot;ShowNotes&quot;: true,&#10;  &quot;ShowEditButtons&quot;: true,&#10;  &quot;EditButtonOffset&quot;: 10,&#10;  &quot;ShowAddButton&quot;: true,&#10;  &quot;ShowRenameButton&quot;: true,&#10;  &quot;ShowDeleteButton&quot;: true,&#10;  &quot;ShowFavoriteIcon&quot;: true,&#10;  &quot;ButtonsInsideBorder&quot;: false,&#10;  &quot;NumColumns&quot;: 3,&#10;  &quot;ColumnWidthRatio&quot;: [&#10;    0.2333333333333333,&#10;    0.2333333333333333,&#10;    0.5333333333333333&#10;  ],&#10;  &quot;ListAreaOffset&quot;: [&#10;    0,&#10;    0,&#10;    0,&#10;    0&#10;  ],&#10;  &quot;ColumnRowPadding&quot;: [&#10;    0,&#10;    0,&#10;    0,&#10;    0&#10;  ],&#10;  &quot;SearchBarBounds&quot;: [],&#10;  &quot;MoreButtonBounds&quot;: [],&#10;  &quot;SaveButtonBounds&quot;: [],&#10;  &quot;FavoriteButtonBounds&quot;: []&#10;}"
                  textColour="4282269531" itemColour3="4282269531"/>
       <Component type="ScriptImage" id="ScriptImage1" x="468.0" y="4.0" width="280.0"
@@ -642,7 +670,7 @@
                height="270.0" textColour="5525584" bgColour="16777215" itemColour="4292202920"
                itemColour2="4292202920" parentComponent="Oscs">
       <Component type="ScriptComboBox" id="ShapeModSource8" x="90.0" y="84.0"
-                 max="8" width="40.0" height="20.0" items="AHDSR&#10;Loop AHD&#10;Table&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch&#10;"
+                 max="8" width="40.0" height="20.0" items="AHDSR&#10;Table 1&#10;Table 2&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch"
                  processorId="Shaper" parameterId="AdjustMixSrc" parentComponent="Transform"
                  itemColour="4281349430" itemColour2="4281349430" textColour="4281349430"
                  bgColour="4281349430"/>
@@ -667,10 +695,10 @@
                  numStrips="100.0" scaleFactor="0.550000011920929" showTextBox="0"
                  middlePosition="0.5"/>
       <Component type="ScriptLabel" id="TransformLabel2" x="75.0" y="230.0" width="60.0"
-                 height="20.0" parentComponent="Transform" text="smooth" editable="0"
+                 height="20.0" parentComponent="Transform" text="resonance" editable="0"
                  fontName="Montserrat" textColour="4281349430" fontSize="14.0"/>
       <Component type="ScriptLabel" id="TransformLabel1" x="19.0" y="176.0" width="50.0"
-                 height="20.0" parentComponent="Transform" text="fold" editable="0"
+                 height="20.0" parentComponent="Transform" text="freq." editable="0"
                  fontName="Montserrat" textColour="4281349430" fontSize="14.0"/>
       <Component type="ScriptSlider" id="ScriptSlider51" x="95.0" y="129.0" width="30.0"
                  height="30.0" parentComponent="Transform" processorId="Shaper"
@@ -678,7 +706,7 @@
                  filmstripImage="{PROJECT_FOLDER}k10.png" numStrips="128.0" isVertical="0"
                  showTextBox="0"/>
       <Component type="ScriptComboBox" id="ShapeModSource9" x="90.0" y="172.0"
-                 max="8" width="40.0" height="20.0" items="AHDSR&#10;Loop AHD&#10;Table&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch&#10;"
+                 max="8" width="40.0" height="20.0" items="AHDSR&#10;Table 1&#10;Table 2&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch"
                  processorId="Shaper" parameterId="AdjSrc" parentComponent="Transform"
                  itemColour="4281349430" itemColour2="4281349430" textColour="4281349430"
                  bgColour="4281349430"/>
@@ -688,7 +716,7 @@
                  filmstripImage="{PROJECT_FOLDER}bip1.png" numStrips="100.0" scaleFactor="0.550000011920929"
                  showValuePopup="Below" showTextBox="0" middlePosition="0.5"/>
       <Component type="ScriptComboBox" id="ShapeModSource12" x="104.0" y="15.0"
-                 max="12" width="40.0" height="20.0" items="fold&#10;Multi&#10;Sub1&#10;Sub2&#10;Ring&#10;Comb&#10;Low pass&#10;High pass&#10;Divide&#10;FM&#10;S&amp;H&#10;Bit"
+                 max="12" width="40.0" height="20.0" items="fold&#10;Multi&#10;Sub1&#10;Sub2&#10;Ring&#10;Comb&#10;Low pass&#10;High pass&#10;Divide&#10;Comb2&#10;S&amp;H&#10;Bit"
                  parentComponent="Transform" itemColour="4281349430" itemColour2="4281349430"
                  textColour="4281349430" bgColour="4281349430"/>
       <Component type="ScriptLabel" id="ScriptLabel66" x="1.0" y="8.0" width="100.0"
@@ -814,7 +842,8 @@
     </Component>
     <Component type="ScriptPanel" id="LFO1" x="5.0" y="8.0" width="220.0" height="170.0"
                bgColour="16777215" itemColour="4291539577" itemColour2="4291539577"
-               textColour="1620877990" borderSize="0.5" parentComponent="mod">
+               textColour="1620877990" borderSize="0.5" parentComponent="mod"
+               visible="0">
       <Component type="ScriptLabel" id="ScriptLabel50" x="114.0" y="173.0" width="50.0"
                  height="20.0" parentComponent="LFO1" text="adjust" editable="0"
                  fontName="Montserrat"/>
@@ -906,133 +935,106 @@
     </Component>
     <Component type="ScriptPanel" id="MOD Env2" x="20.0" y="8.0" width="200.0"
                height="170.0" bgColour="16777215" itemColour="4291539577" itemColour2="4291539577"
-               textColour="1620877990" borderSize="0.5" parentComponent="mod"
-               visible="0">
-      <Component type="ScriptPanel" id="Panel2" x="6.0" y="110.0" parentComponent="MOD Env2"
-                 width="120.0" height="60.0">
-        <Component type="ScriptButton" id="ScriptButton2" x="12.0" y="9.0" width="20.0"
-                   height="20.0" parentComponent="Panel2" processorId="Shaper" parameterId="Env2Loop"
+               textColour="1620877990" borderSize="0.5" parentComponent="mod">
+      <Component type="ScriptPanel" id="Panel6" x="0.0" y="117.0" parentComponent="MOD Env2"
+                 width="200.0" height="60.0">
+        <Component type="ScriptButton" id="ScriptButton6" x="9.0" y="6.0" width="20.0"
+                   height="20.0" parentComponent="Panel6" processorId="Shaper" parameterId="TableLoop2"
                    bgColour="16777215" itemColour="3355443" itemColour2="1118481"
                    textColour="16777215"/>
-        <Component type="ScriptSlider" id="ModTempo6" x="37.0" y="1.0" width="40.0"
-                   height="40.0" parentComponent="Panel2" text="Table Index" bgColour="4294967295"
+        <Component type="ScriptSlider" id="ModTempo12" x="35.0" y="1.0" width="40.0"
+                   height="40.0" parentComponent="Panel6" text="Table Index" bgColour="4294967295"
                    itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
                    numStrips="100.0" scaleFactor="0.3499999940395355" middlePosition="9.0"
-                   showValuePopup="Below" showTextBox="0" processorId="Shaper" parameterId="Env2LoopTempo"
+                   showValuePopup="Below" showTextBox="0" processorId="Shaper" parameterId="TableTempo2"
                    mode="TempoSync" max="18.0" stepSize="1.0"/>
-        <Component type="ScriptLabel" id="Amp AHDSR24" x="35.0" y="35.0" width="40.0"
-                   height="20.0" parentComponent="Panel2" editable="0" text="tempo"
-                   textColour="4281349430"/>
-        <Component type="ScriptSlider" id="ModTempo7" x="77.0" y="0.0" width="40.0"
-                   height="40.0" parentComponent="Panel2" text="Table Index" bgColour="4294967295"
+        <Component type="ScriptLabel" id="Amp AHDSR37" x="29.0" y="34.0" width="50.0"
+                   height="20.0" parentComponent="Panel6" editable="0" text="tempo"
+                   textColour="4281349430" fontSize="12.0"/>
+        <Component type="ScriptSlider" id="ModTempo13" x="73.0" y="1.0" width="40.0"
+                   height="40.0" parentComponent="Panel6" text="Table Index" bgColour="4294967295"
                    itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
                    numStrips="100.0" scaleFactor="0.3499999940395355" middlePosition="16.5"
-                   showValuePopup="Below" showTextBox="0" processorId="Shaper" parameterId="Env2LoopDiv"
+                   showValuePopup="Below" showTextBox="0" processorId="Shaper" parameterId="TableDiv2"
                    min="1.0" max="32.0" stepSize="1.0"/>
-        <Component type="ScriptLabel" id="Amp AHDSR25" x="75.0" y="35.0" width="40.0"
-                   height="20.0" parentComponent="Panel2" editable="0" text="divide"
-                   textColour="4281349430"/>
-        <Component type="ScriptLabel" id="Amp AHDSR27" x="-2.0" y="35.0" width="50.0"
-                   height="20.0" parentComponent="Panel2" editable="0" text="loop"
-                   textColour="4281349430"/>
+        <Component type="ScriptLabel" id="Amp AHDSR38" x="65.0" y="34.0" width="50.0"
+                   height="20.0" parentComponent="Panel6" editable="0" text="divide"
+                   textColour="4281349430" fontSize="12.0"/>
+        <Component type="ScriptLabel" id="Amp AHDSR39" x="4.0" y="22.0" width="30.0"
+                   height="30.0" parentComponent="Panel6" editable="0" text="one shot"
+                   textColour="4281349430" fontSize="12.0"/>
+        <Component type="ScriptLabel" id="Amp AHDSR53" x="104.0" y="34.0" width="50.0"
+                   height="20.0" parentComponent="Panel6" editable="0" text="sustain"
+                   textColour="4281349430" fontSize="12.0"/>
+        <Component type="ScriptSlider" id="ModTempo14" x="111.0" y="1.0" width="40.0"
+                   height="40.0" parentComponent="Panel6" text="Table Index" bgColour="4294967295"
+                   itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
+                   numStrips="100.0" scaleFactor="0.3499999940395355" middlePosition="0.5"
+                   showValuePopup="Below" showTextBox="0" processorId="Shaper" parameterId="TableSus2"/>
+        <Component type="ScriptLabel" id="Amp AHDSR54" x="145.0" y="34.0" width="50.0"
+                   height="20.0" parentComponent="Panel6" editable="0" text="release"
+                   textColour="4281349430" fontSize="12.0"/>
+        <Component type="ScriptSlider" id="ModTempo15" x="149.0" y="1.0" width="40.0"
+                   height="40.0" parentComponent="Panel6" text="Table Index" bgColour="4294967295"
+                   itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
+                   numStrips="100.0" scaleFactor="0.3499999940395355" middlePosition="1000.0"
+                   showValuePopup="Below" showTextBox="0" processorId="Shaper" parameterId="TableRel2"
+                   max="10000.0" stepSize="1.0"/>
       </Component>
-      <Component type="ScriptLabel" id="ScriptLabel67" x="140.0" y="140.0" width="50.0"
-                 height="30.0" parentComponent="MOD Env2" text="velocity" editable="0"
-                 fontName="Montserrat" textColour="4281349430"/>
-      <Component type="ScriptSlider" id="ModTempo1" x="147.0" y="105.0" width="40.0"
-                 height="40.0" parentComponent="MOD Env2" text="Table Index" bgColour="4294967295"
-                 itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
-                 numStrips="100.0" scaleFactor="0.3499999940395355" middlePosition="0.5"
-                 showValuePopup="Below" showTextBox="0" processorId="Shaper" parameterId="EnvMod2"/>
-      <Component type="ScriptLabel" id="Amp AHDSR20" x="78.0" y="81.0" width="20.0"
-                 height="20.0" parentComponent="MOD Env2" editable="0" text="d"
-                 textColour="4281349430"/>
-      <Component type="ScriptLabel" id="Amp AHDSR22" x="25.0" y="81.0" width="20.0"
-                 height="20.0" parentComponent="MOD Env2" editable="0" text="a"
-                 textColour="4281349430"/>
-      <Component type="ScriptSlider" id="LpA" x="10.0" y="34.0" width="50.0" height="50.0"
-                 parentComponent="MOD Env2" text="Table Index" bgColour="4294967295"
-                 itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
-                 numStrips="100.0" scaleFactor="0.5" middlePosition="100.0" showValuePopup="Below"
-                 showTextBox="0" processorId="Shaper" parameterId="a2" mode="Time"
-                 max="1000.0" stepSize="1.0" suffix=" ms" visible="0"/>
-      <Component type="ScriptSlider" id="LpD" x="62.0" y="35.0" width="50.0" height="50.0"
-                 parentComponent="MOD Env2" text="Table Index" bgColour="4294967295"
-                 itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
-                 numStrips="100.0" scaleFactor="0.5" middlePosition="100.0" showValuePopup="Below"
-                 showTextBox="0" processorId="Shaper" parameterId="d2" mode="Time"
-                 max="1000.0" stepSize="1.0" suffix=" ms" defaultValue="500.0"
-                 visible="0"/>
-      <Component type="ScriptSlider" id="LpDiv" x="153.0" y="37.0" width="40.0"
-                 height="40.0" parentComponent="MOD Env2" text="Table Index" bgColour="4294967295"
-                 itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
-                 numStrips="100.0" scaleFactor="0.3499999940395355" middlePosition="16.5"
-                 showValuePopup="Below" showTextBox="0" processorId="Shaper" parameterId="EnvDiv"
-                 min="1.0" max="32.0" stepSize="1.0"/>
-      <Component type="ScriptLabel" id="Amp AHDSR23" x="152.0" y="81.0" width="40.0"
-                 height="20.0" parentComponent="MOD Env2" editable="0" text="divide"
-                 textColour="4281349430" fontName="Montserrat"/>
-      <Component type="ScriptButton" id="EnSync" x="119.0" y="47.0" width="20.0"
-                 height="20.0" parentComponent="MOD Env2" itemColour="3355443"
-                 itemColour2="1118481" textColour="16777215" bgColour="16777215"
-                 processorId="Shaper"/>
-      <Component type="ScriptSlider" id="LpA1" x="10.0" y="32.0" width="50.0"
-                 height="50.0" parentComponent="MOD Env2" text="Table Index" bgColour="4294967295"
-                 itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
-                 numStrips="100.0" scaleFactor="0.5" middlePosition="9.0" showValuePopup="Below"
-                 showTextBox="0" processorId="Shaper" parameterId="A2Tempo" mode="TempoSync"
-                 max="18.0" stepSize="1.0"/>
-      <Component type="ScriptSlider" id="LpH1" x="49.0" y="45.0" width="50.0"
-                 height="50.0" parentComponent="MOD Env2" text="Table Index" bgColour="4294967295"
-                 itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
-                 numStrips="100.0" scaleFactor="0.5" middlePosition="9.0" showValuePopup="Below"
-                 showTextBox="0" processorId="Shaper" parameterId="H2Tempo" mode="TempoSync"
-                 max="18.0" stepSize="1.0" visible="0"/>
-      <Component type="ScriptSlider" id="LpD1" x="63.0" y="32.0" width="50.0"
-                 height="50.0" parentComponent="MOD Env2" text="Table Index" bgColour="4294967295"
-                 itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
-                 numStrips="100.0" scaleFactor="0.5" middlePosition="9.0" showValuePopup="Below"
-                 showTextBox="0" processorId="Shaper" parameterId="D2Tempo" mode="TempoSync"
-                 max="18.0" stepSize="1.0" defaultValue="18.0"/>
-      <Component type="ScriptLabel" id="Amp AHDSR21" x="110.0" y="81.0" width="40.0"
-                 height="20.0" parentComponent="MOD Env2" editable="0" text="sync"
-                 textColour="4281349430"/>
+      <Component type="ScriptTable" id="ScriptTable2" x="22.0" y="34.0" width="160.0"
+                 height="70.0" parentComponent="MOD Env2" processorId="Shaper"
+                 bgColour="4079451" itemColour="4282269531" customColours="1"
+                 itemColour2="4292990139" tableIndex="1"/>
     </Component>
     <Component type="ScriptPanel" id="Table" x="24.0" y="8.0" width="190.0"
                height="170.0" bgColour="16777215" itemColour="4291539577" itemColour2="4291539577"
                textColour="1620877990" borderSize="0.5" parentComponent="mod"
                visible="0">
-      <Component type="ScriptPanel" id="Panel4" x="39.0" y="117.0" parentComponent="Table"
-                 width="120.0" height="60.0">
-        <Component type="ScriptButton" id="ScriptButton3" x="12.0" y="9.0" width="20.0"
+      <Component type="ScriptPanel" id="Panel4" x="-2.0" y="117.0" parentComponent="Table"
+                 width="200.0" height="60.0">
+        <Component type="ScriptButton" id="ScriptButton3" x="11.0" y="5.0" width="20.0"
                    height="20.0" parentComponent="Panel4" processorId="Shaper" parameterId="TableLoop"
                    bgColour="16777215" itemColour="3355443" itemColour2="1118481"
                    textColour="16777215"/>
-        <Component type="ScriptSlider" id="ModTempo8" x="37.0" y="1.0" width="40.0"
+        <Component type="ScriptSlider" id="ModTempo8" x="35.0" y="1.0" width="40.0"
                    height="40.0" parentComponent="Panel4" text="Table Index" bgColour="4294967295"
                    itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
                    numStrips="100.0" scaleFactor="0.3499999940395355" middlePosition="9.0"
                    showValuePopup="Below" showTextBox="0" processorId="Shaper" parameterId="TableTempo"
                    mode="TempoSync" max="18.0" stepSize="1.0"/>
-        <Component type="ScriptLabel" id="Amp AHDSR28" x="35.0" y="35.0" width="40.0"
+        <Component type="ScriptLabel" id="Amp AHDSR28" x="29.0" y="34.0" width="50.0"
                    height="20.0" parentComponent="Panel4" editable="0" text="tempo"
-                   textColour="4281349430" fontSize="14.0"/>
-        <Component type="ScriptSlider" id="ModTempo9" x="77.0" y="0.0" width="40.0"
+                   textColour="4281349430" fontSize="12.0"/>
+        <Component type="ScriptSlider" id="ModTempo9" x="73.0" y="1.0" width="40.0"
                    height="40.0" parentComponent="Panel4" text="Table Index" bgColour="4294967295"
                    itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
                    numStrips="100.0" scaleFactor="0.3499999940395355" middlePosition="16.5"
                    showValuePopup="Below" showTextBox="0" processorId="Shaper" parameterId="TableDiv"
                    min="1.0" max="32.0" stepSize="1.0"/>
-        <Component type="ScriptLabel" id="Amp AHDSR29" x="75.0" y="35.0" width="40.0"
+        <Component type="ScriptLabel" id="Amp AHDSR29" x="65.0" y="34.0" width="50.0"
                    height="20.0" parentComponent="Panel4" editable="0" text="divide"
-                   textColour="4281349430" fontSize="14.0"/>
-        <Component type="ScriptLabel" id="Amp AHDSR30" x="-2.0" y="35.0" width="50.0"
-                   height="20.0" parentComponent="Panel4" editable="0" text="loop"
-                   textColour="4281349430" fontSize="14.0"/>
+                   textColour="4281349430" fontSize="12.0"/>
+        <Component type="ScriptLabel" id="Amp AHDSR30" x="6.0" y="24.0" width="30.0"
+                   height="30.0" parentComponent="Panel4" editable="0" text="one shot"
+                   textColour="4281349430" fontSize="12.0"/>
+        <Component type="ScriptLabel" id="Amp AHDSR31" x="104.0" y="34.0" width="50.0"
+                   height="20.0" parentComponent="Panel4" editable="0" text="sustain"
+                   textColour="4281349430" fontSize="12.0"/>
+        <Component type="ScriptSlider" id="ModTempo10" x="111.0" y="1.0" width="40.0"
+                   height="40.0" parentComponent="Panel4" text="Table Index" bgColour="4294967295"
+                   itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
+                   numStrips="100.0" scaleFactor="0.3499999940395355" middlePosition="0.5"
+                   showValuePopup="Below" showTextBox="0" processorId="Shaper" parameterId="TableSus"/>
+        <Component type="ScriptLabel" id="Amp AHDSR32" x="145.0" y="34.0" width="50.0"
+                   height="20.0" parentComponent="Panel4" editable="0" text="release"
+                   textColour="4281349430" fontSize="12.0"/>
+        <Component type="ScriptSlider" id="ModTempo11" x="149.0" y="1.0" width="40.0"
+                   height="40.0" parentComponent="Panel4" text="Table Index" bgColour="4294967295"
+                   itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip1.png"
+                   numStrips="100.0" scaleFactor="0.3499999940395355" middlePosition="1000.0"
+                   showValuePopup="Below" showTextBox="0" processorId="Shaper" parameterId="Tablerel"
+                   max="10000.0" stepSize="1.0"/>
       </Component>
-      <Component type="ScriptLabel" id="ScriptLabel72" x="4.0" y="178.0" width="50.0"
-                 height="20.0" parentComponent="Table" text="adjust" editable="0"
-                 fontName="Montserrat"/>
       <Component type="ScriptLabel" id="ScriptLabel74" x="53.0" y="178.0" width="50.0"
                  height="20.0" parentComponent="Table" text="mode" editable="0"
                  fontName="Montserrat"/>
@@ -1042,9 +1044,9 @@
     </Component>
   </Component>
   <Component type="ScriptComboBox" id="ModPage" x="584.0" y="356.0" max="4"
-             items="AHDSR&#10;Looping AHD  &#10;Table&#10;LFO 1&amp;2&#10;"
-             bgColour="4281349430" itemColour="4281349430" itemColour2="4292990139"
-             textColour="4281349430" width="140.0" height="20.0"/>
+             items="AHDSR&#10;Table 1&#10;Table 2&#10;LFO 1&amp;2&#10;" bgColour="4281349430"
+             itemColour="4281349430" itemColour2="4292990139" textColour="4281349430"
+             width="140.0" height="20.0"/>
   <Component type="ScriptPanel" id="Filter" x="6.0" y="344.0" width="520.0"
              height="190.0" textColour="1620877990" borderSize="0.5" itemColour="4291648088"
              itemColour2="4291648088">
@@ -1053,8 +1055,8 @@
                textColour="10265254" borderSize="0.5" parentComponent="Filter">
       <Component type="ScriptSlider" id="ScriptSlider9" x="74.0" y="41.0" width="20.0"
                  height="90.0" parentComponent="AMP Env" processorId="AHDSR Envelope1"
-                 parameterId="Attack" mode="Time" max="40000.0" stepSize="1.0"
-                 suffix=" ms" middlePosition="2000.0" numStrips="128.0" filmstripImage="{PROJECT_FOLDER}slid2.png"
+                 parameterId="Attack" mode="Time" max="20000.0" stepSize="1.0"
+                 suffix=" ms" middlePosition="1000.0" numStrips="128.0" filmstripImage="{PROJECT_FOLDER}slid2.png"
                  showValuePopup="Below" showTextBox="0" style="Vertical" itemColour="4292990139"
                  textColour="16777215" itemColour2="4211147009" bgColour="4285429390"/>
       <Component type="ScriptSlider" id="ScriptSlider10" x="99.0" y="41.0" width="20.0"
@@ -1079,8 +1081,8 @@
                  min="-100.0" max="0.0" stepSize="0.1000000014901161"/>
       <Component type="ScriptSlider" id="ScriptSlider13" x="175.0" y="41.0" width="20.0"
                  height="90.0" parentComponent="AMP Env" processorId="AHDSR Envelope1"
-                 parameterId="Release" mode="Time" max="40000.0" stepSize="1.0"
-                 suffix=" ms" middlePosition="2000.0" numStrips="128.0" filmstripImage="{PROJECT_FOLDER}slid2.png"
+                 parameterId="Release" mode="Time" max="20000.0" stepSize="1.0"
+                 suffix=" ms" middlePosition="1000.0" numStrips="128.0" filmstripImage="{PROJECT_FOLDER}slid2.png"
                  showValuePopup="Below" showTextBox="0" style="Vertical" itemColour="4292990139"
                  textColour="16777215" itemColour2="4211147009" bgColour="4285429390"/>
       <Component type="ScriptLabel" id="Amp AHDSR" x="4.0" y="3.0" width="60.0"
@@ -1241,7 +1243,7 @@
                  parameterId="FilterMode" bgColour="16777215" itemColour="3355443"
                  itemColour2="1118481" textColour="16777215"/>
       <Component type="ScriptComboBox" id="ShapeModSource7" x="238.0" y="127.0"
-                 max="8" width="40.0" height="20.0" items="AHDSR&#10;Loop AHD&#10;Table&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch&#10;"
+                 max="8" width="40.0" height="20.0" items="AHDSR&#10;Table 1&#10;Table 2&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch"
                  processorId="Shaper" parameterId="HpSrc" parentComponent="Filter1"
                  itemColour="4281349430" itemColour2="4281349430" textColour="4281349430"
                  bgColour="4281349430"/>
@@ -1268,7 +1270,7 @@
                  filmstripImage="{PROJECT_FOLDER}bip1.png" numStrips="100.0" scaleFactor="0.5"
                  showValuePopup="Below" middlePosition="0.5" showTextBox="0"/>
       <Component type="ScriptComboBox" id="ShapeModSource6" x="101.0" y="128.0"
-                 max="8" width="40.0" height="20.0" items="AHDSR&#10;Loop AHD&#10;Table&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch&#10;"
+                 max="8" width="40.0" height="20.0" items="AHDSR&#10;Table 1&#10;Table 2&#10;LFO 1&#10;LFO 2&#10;Velocity&#10;Track&#10;Aftertouch"
                  processorId="Shaper" parameterId="LpSrc" parentComponent="Filter1"
                  itemColour="4281349430" itemColour2="4281349430" textColour="4281349430"
                  bgColour="4281349430"/>
@@ -1296,16 +1298,6 @@
                  height="30.0" parentComponent="Filter1" text="q" editable="0"
                  fontName="Montserrat" textColour="4281349430" alignment="left"
                  fontSize="14.0"/>
-      <Component type="ScriptSlider" id="ScriptSlider34" x="62.0" y="-3.0" width="40.0"
-                 height="40.0" parentComponent="Filter1" processorId="Shaper"
-                 parameterId="inPutGain" text="Table Index" bgColour="4294967295"
-                 itemColour="4278215568" filmstripImage="{PROJECT_FOLDER}bip13.png"
-                 numStrips="100.0" scaleFactor="0.3499999940395355" showValuePopup="Below"
-                 middlePosition="0.5" showTextBox="0"/>
-      <Component type="ScriptLabel" id="ScriptLabel31" x="93.0" y="6.0" width="70.0"
-                 height="20.0" parentComponent="Filter1" text="modulator in" editable="0"
-                 fontName="Montserrat" textColour="4281349430" alignment="left"
-                 fontSize="14.0"/>
     </Component>
   </Component>
   <Component type="ScriptAudioWaveform" id="AudioWaveform1" x="47.0" y="251.0"
@@ -1320,11 +1312,15 @@
              parameterId="Dest" visible="0"/>
   <Component type="ScriptSlider" id="Knob2" x="633.0" y="405.0" processorId="Gmod2"
              parameterId="Dest" visible="0"/>
-  <Component type="ScriptLabel" id="Label10" x="436.0" y="15.0" fontName="Montserrat"
-             width="80.0" height="20.0" editable="0" text="poly/ mono" textColour="4293719295"
+  <Component type="ScriptLabel" id="Label10" x="501.0" y="15.0" fontName="Montserrat"
+             width="80.0" height="15.0" editable="0" text="poly/ mono" textColour="4293719295"
              bgColour="4281221465" itemColour="4281221465" itemColour2="4281221465"
              alignment="left"/>
-  <Component type="ScriptButton" id="Button1" x="520.0" y="10.0" processorId="Legato with Retrigger1"
-             parameterId="Enabled" width="20.0" height="30.0" bgColour="16777156"
+  <Component type="ScriptButton" id="Button1" x="582.0" y="10.0" processorId="Legato with Retrigger1"
+             parameterId="Enabled" width="20" height="20" bgColour="16777156"
              itemColour="3355443" itemColour2="1118481" textColour="16777215"/>
+  <Component type="ScriptLabel" id="Label13" x="527.0" y="33.0" fontName="Montserrat"
+             width="75.0" height="15" editable="0" text="transpose" textColour="4293719295"
+             bgColour="4281221465" itemColour="4281221465" itemColour2="4281221465"
+             alignment="left"/>
 </ContentProperties>

@@ -35,16 +35,16 @@ Compilation options: -lang cpp -rui -nvi -ct 1 -cn _khp -scn ::faust::dsp -es 1 
 
 struct _khp final : public ::faust::dsp {
 	
-	FAUSTFLOAT fHslider0;
 	int fSampleRate;
 	float fConst0;
+	FAUSTFLOAT fHslider0;
 	FAUSTFLOAT fHslider1;
+	float fRec0[2];
 	float fRec1[2];
 	float fRec2[2];
-	float fRec3[2];
+	float fRec4[2];
 	float fRec5[2];
 	float fRec6[2];
-	float fRec7[2];
 	
 	_khp() {
 	}
@@ -90,28 +90,28 @@ struct _khp final : public ::faust::dsp {
 	}
 	
 	void instanceResetUserInterface() {
-		fHslider0 = FAUSTFLOAT(1.0f);
-		fHslider1 = FAUSTFLOAT(0.5f);
+		fHslider0 = FAUSTFLOAT(0.5f);
+		fHslider1 = FAUSTFLOAT(1.0f);
 	}
 	
 	void instanceClear() {
 		for (int l0 = 0; l0 < 2; l0 = l0 + 1) {
-			fRec1[l0] = 0.0f;
+			fRec0[l0] = 0.0f;
 		}
 		for (int l1 = 0; l1 < 2; l1 = l1 + 1) {
-			fRec2[l1] = 0.0f;
+			fRec1[l1] = 0.0f;
 		}
 		for (int l2 = 0; l2 < 2; l2 = l2 + 1) {
-			fRec3[l2] = 0.0f;
+			fRec2[l2] = 0.0f;
 		}
 		for (int l3 = 0; l3 < 2; l3 = l3 + 1) {
-			fRec5[l3] = 0.0f;
+			fRec4[l3] = 0.0f;
 		}
 		for (int l4 = 0; l4 < 2; l4 = l4 + 1) {
-			fRec6[l4] = 0.0f;
+			fRec5[l4] = 0.0f;
 		}
 		for (int l5 = 0; l5 < 2; l5 = l5 + 1) {
-			fRec7[l5] = 0.0f;
+			fRec6[l5] = 0.0f;
 		}
 	}
 	
@@ -136,8 +136,8 @@ struct _khp final : public ::faust::dsp {
 	
 	void buildUserInterface(UI* ui_interface) {
 		ui_interface->openVerticalBox("korg35HPF");
-		ui_interface->addHorizontalSlider("Q", &fHslider0, FAUSTFLOAT(1.0f), FAUSTFLOAT(0.5f), FAUSTFLOAT(1e+01f), FAUSTFLOAT(0.01f));
-		ui_interface->addHorizontalSlider("freq", &fHslider1, FAUSTFLOAT(0.5f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.001f));
+		ui_interface->addHorizontalSlider("Q", &fHslider1, FAUSTFLOAT(1.0f), FAUSTFLOAT(0.5f), FAUSTFLOAT(1e+01f), FAUSTFLOAT(0.01f));
+		ui_interface->addHorizontalSlider("freq", &fHslider0, FAUSTFLOAT(0.5f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.001f));
 		ui_interface->closeBox();
 	}
 	
@@ -146,42 +146,42 @@ struct _khp final : public ::faust::dsp {
 		FAUSTFLOAT* input1 = inputs[1];
 		FAUSTFLOAT* output0 = outputs[0];
 		FAUSTFLOAT* output1 = outputs[1];
-		float fSlow0 = std::max<float>(0.5f, std::min<float>(1e+01f, float(fHslider0))) + -0.70710677f;
-		float fSlow1 = std::tan(fConst0 * std::pow(1e+01f, 3.0f * std::max<float>(0.0f, std::min<float>(1.0f, float(fHslider1))) + 1.0f));
-		float fSlow2 = fSlow1 + 1.0f;
-		float fSlow3 = fSlow1 / fSlow2;
-		float fSlow4 = 1.0f - 0.21521823f * (fSlow0 * (1.0f - fSlow3) * fSlow1 / fSlow2);
-		float fSlow5 = 1.0f / fSlow4;
-		float fSlow6 = 1.0f / fSlow2;
-		float fSlow7 = 2.0f * fSlow3;
-		float fSlow8 = 0.21521823f * (fSlow0 / fSlow4);
+		float fSlow0 = std::tan(fConst0 * std::pow(1e+01f, 3.0f * std::max<float>(0.0f, std::min<float>(1.0f, float(fHslider0))) + 1.0f));
+		float fSlow1 = fSlow0 + 1.0f;
+		float fSlow2 = fSlow0 / fSlow1;
+		float fSlow3 = 2.0f * fSlow2;
+		float fSlow4 = std::max<float>(0.5f, std::min<float>(1e+01f, float(fHslider1))) + -0.70710677f;
+		float fSlow5 = 1.0f - 0.21521823f * (fSlow4 * (1.0f - fSlow2) * fSlow0 / fSlow1);
+		float fSlow6 = 0.21521823f * (fSlow4 / fSlow5);
+		float fSlow7 = 1.0f / fSlow1;
+		float fSlow8 = 1.0f / fSlow5;
 		for (int i0 = 0; i0 < count; i0 = i0 + 1) {
 			float fTemp0 = float(input0[i0]);
-			float fTemp1 = fTemp0 - fRec3[1];
-			float fTemp2 = fTemp0 - (fRec3[1] + fSlow6 * (fSlow1 * fTemp1 - fRec1[1] + fSlow3 * fRec2[1]));
-			float fRec0 = fSlow5 * fTemp2;
-			float fTemp3 = fSlow8 * fTemp2;
-			float fTemp4 = fTemp3 - fRec2[1];
-			fRec1[0] = fSlow7 * (fTemp3 - (fSlow3 * fTemp4 + fRec1[1] + fRec2[1])) + fRec1[1];
-			fRec2[0] = fSlow7 * fTemp4 + fRec2[1];
-			fRec3[0] = fSlow7 * fTemp1 + fRec3[1];
-			output0[i0] = FAUSTFLOAT(fRec0);
+			float fTemp1 = fTemp0 - fRec2[1];
+			float fTemp2 = fTemp0 - (fSlow7 * (fSlow0 * fTemp1 - fRec0[1] + fSlow2 * fRec1[1]) + fRec2[1]);
+			float fTemp3 = fSlow6 * fTemp2;
+			float fTemp4 = fTemp3 - fRec1[1];
+			fRec0[0] = fRec0[1] + fSlow3 * (fTemp3 - (fSlow2 * fTemp4 + fRec0[1] + fRec1[1]));
+			fRec1[0] = fRec1[1] + fSlow3 * fTemp4;
+			fRec2[0] = fSlow3 * fTemp1 + fRec2[1];
+			float fRec3 = fSlow8 * fTemp2;
+			output0[i0] = FAUSTFLOAT(fRec3);
 			float fTemp5 = float(input1[i0]);
-			float fTemp6 = fTemp5 - fRec7[1];
-			float fTemp7 = fTemp5 - (fRec7[1] + fSlow6 * (fSlow1 * fTemp6 - fRec5[1] + fSlow3 * fRec6[1]));
-			float fRec4 = fSlow5 * fTemp7;
-			float fTemp8 = fSlow8 * fTemp7;
-			float fTemp9 = fTemp8 - fRec6[1];
-			fRec5[0] = fRec5[1] + fSlow7 * (fTemp8 - (fSlow3 * fTemp9 + fRec5[1] + fRec6[1]));
-			fRec6[0] = fRec6[1] + fSlow7 * fTemp9;
-			fRec7[0] = fRec7[1] + fSlow7 * fTemp6;
-			output1[i0] = FAUSTFLOAT(fRec4);
+			float fTemp6 = fTemp5 - fRec6[1];
+			float fTemp7 = fTemp5 - (fRec6[1] + fSlow7 * (fSlow0 * fTemp6 - fRec4[1] + fSlow2 * fRec5[1]));
+			float fTemp8 = fSlow6 * fTemp7;
+			float fTemp9 = fTemp8 - fRec5[1];
+			fRec4[0] = fRec4[1] + fSlow3 * (fTemp8 - (fSlow2 * fTemp9 + fRec4[1] + fRec5[1]));
+			fRec5[0] = fRec5[1] + fSlow3 * fTemp9;
+			fRec6[0] = fRec6[1] + fSlow3 * fTemp6;
+			float fRec7 = fSlow8 * fTemp7;
+			output1[i0] = FAUSTFLOAT(fRec7);
+			fRec0[1] = fRec0[0];
 			fRec1[1] = fRec1[0];
 			fRec2[1] = fRec2[0];
-			fRec3[1] = fRec3[0];
+			fRec4[1] = fRec4[0];
 			fRec5[1] = fRec5[0];
 			fRec6[1] = fRec6[0];
-			fRec7[1] = fRec7[0];
 		}
 	}
 
@@ -197,12 +197,12 @@ struct _khp final : public ::faust::dsp {
 	#define FAUST_ACTIVES 2
 	#define FAUST_PASSIVES 0
 
-	FAUST_ADDHORIZONTALSLIDER("Q", fHslider0, 1.0f, 0.5f, 1e+01f, 0.01f);
-	FAUST_ADDHORIZONTALSLIDER("freq", fHslider1, 0.5f, 0.0f, 1.0f, 0.001f);
+	FAUST_ADDHORIZONTALSLIDER("Q", fHslider1, 1.0f, 0.5f, 1e+01f, 0.01f);
+	FAUST_ADDHORIZONTALSLIDER("freq", fHslider0, 0.5f, 0.0f, 1.0f, 0.001f);
 
 	#define FAUST_LIST_ACTIVES(p) \
-		p(HORIZONTALSLIDER, Q, "Q", fHslider0, 1.0f, 0.5f, 1e+01f, 0.01f) \
-		p(HORIZONTALSLIDER, freq, "freq", fHslider1, 0.5f, 0.0f, 1.0f, 0.001f) \
+		p(HORIZONTALSLIDER, Q, "Q", fHslider1, 1.0f, 0.5f, 1e+01f, 0.01f) \
+		p(HORIZONTALSLIDER, freq, "freq", fHslider0, 0.5f, 0.0f, 1.0f, 0.001f) \
 
 	#define FAUST_LIST_PASSIVES(p) \
 

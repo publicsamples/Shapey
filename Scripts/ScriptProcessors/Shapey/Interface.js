@@ -4,6 +4,9 @@ include("laf.js");
 include("Scopes.js");
 include("Loading.js");
 
+LpLoad2.setValue(1);
+LpLoad2.changed();
+
 //Impulse panel
 
 
@@ -332,8 +335,8 @@ inline function onShapeModSource12Control(component, value)
 	
 	if(value == 10)
 	{		
-		TransformLabel1.setValue("asin fold");
-		TransformLabel2.setValue("smooth");
+		TransformLabel1.setValue("freq");
+			TransformLabel2.setValue("resonance");
 	}
 	
 	if(value == 11)
@@ -352,49 +355,6 @@ inline function onShapeModSource12Control(component, value)
 
 Content.getComponent("ShapeModSource12").setControlCallback(onShapeModSource12Control);
 
-const var LoopAHD = [Content.getComponent("LpA"),
-                     Content.getComponent("LpD")];
-                     
-const var LoopAHDSync = [Content.getComponent("LpDiv"),
-                         Content.getComponent("LpA1"),
-                         Content.getComponent("Amp AHDSR23"),
-                         Content.getComponent("LpD1")];
-
-
-
-
-inline function onEnSyncControl(component, value)
-{
-  
-	  	  if(value == 0)
-	  	  	 {
-	  	  
-	  	  	  for(s in LoopAHD)
-	  	  	 s.showControl(1); 
-	  	  	 
-	  	  	 for(s in LoopAHDSync)
-	  	  	 s.showControl(0); 
-	  	  	 
-	  	  	 Shaper.setAttribute(Shaper.Env2Sync, 0);	       
-	  	  
-	  	  	  }
-	  	  	  
-	  	
-	  		  	  if(value == 1)
-	  		  	  	 {
-	  		  	  
-	  		  	  	  for(s in LoopAHD)
-	  		  	  	 s.showControl(0); 
-	  		  	  	 
-	  		  	  	 for(s in LoopAHDSync)
-	  		  	  	 s.showControl(1); 
-	  		  	  	 
-	  		  	  	 Shaper.setAttribute(Shaper.Env2Sync, 1);	       
-	  		  	  
-	  		  	  	  }  	  
-};
-
-Content.getComponent("EnSync").setControlCallback(onEnSyncControl);
 
 
 const var Mix = Content.getComponent("Mix");
@@ -454,6 +414,22 @@ const var Ptrack = [Content.getComponent("ScriptLabel96"),
                     Content.getComponent("PsTmp"),
                     Content.getComponent("PsDiv"),
                     Content.getComponent("ScriptLabel95")];
+
+const var PsControls = [Content.getComponent("Window"),
+                        Content.getComponent("WinFx"),
+                        Content.getComponent("ScriptLabel102"),
+                        Content.getComponent("ScriptLabel101")];
+
+
+inline function onPshiftControl(component, value)
+{
+ 	 for(s in PsControls)
+	  	  	  	 s.showControl(value); 
+	  	  	  	 
+	 Shaper.setAttribute(Shaper.PsOnOff, value);
+};
+
+Content.getComponent("Pshift").setControlCallback(onPshiftControl);
 
 
 

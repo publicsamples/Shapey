@@ -8,7 +8,7 @@
             Name="fix8_block">
         <Nodes>
           <Node ID="modchain1" FactoryPath="container.modchain" Bypassed="0"
-                Name="modchain1">
+                Name="modchain1" Folded="1">
             <Nodes>
               <Node ID="split5" FactoryPath="container.split" Bypassed="0" Name="split5">
                 <Nodes>
@@ -3531,7 +3531,7 @@
                 <Parameters/>
               </Node>
               <Node ID="chain20" FactoryPath="container.chain" Bypassed="0" Name="chain20"
-                    NodeColour="4284065458" ShowParameters="0" Folded="1">
+                    NodeColour="4284065458" ShowParameters="0">
                 <Nodes>
                   <Node ID="split16" FactoryPath="container.split" Bypassed="0" Name="split14"
                         NodeColour="4284065458">
@@ -3563,7 +3563,8 @@
                       <Property ID="SmoothingTime" Value="20"/>
                     </Properties>
                     <Nodes>
-                      <Node ID="chain7" FactoryPath="container.chain" Bypassed="0" Name="chain7">
+                      <Node ID="chain7" FactoryPath="container.chain" Bypassed="0" Name="chain7"
+                            Folded="1">
                         <Nodes>
                           <Node ID="xfader" FactoryPath="control.xfader" Bypassed="0" Name="xfader">
                             <Properties>
@@ -4620,6 +4621,17 @@
                       <Parameter MinValue="0.0" MaxValue="1" StepSize="1.0" ID="Index" Automated="1"/>
                     </Parameters>
                   </Node>
+                  <Node ID="gain10" FactoryPath="core.gain" Bypassed="0" Name="gain10">
+                    <Parameters>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="Gain" Value="-0.1999985128641129"
+                                 DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                    </Parameters>
+                  </Node>
                   <Node ID="send3" FactoryPath="routing.send" Bypassed="0" Name="send1"
                         NodeColour="4284051378">
                     <Properties>
@@ -4960,7 +4972,7 @@
           <Connection NodeId="branch3" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="5.551115123125783e-17" MaxValue="1.0" ID="Adj" Value="0.4600000083446503"
+      <Parameter MinValue="5.551115123125783e-17" MaxValue="1.0" ID="Adj" Value="0.3899999856948853"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma7" ParameterId="Add"/>
@@ -4977,7 +4989,7 @@
           <Connection NodeId="branch11" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Position" Value="0.6399999856948853"
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="Position" Value="0.5899999737739563"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma8" ParameterId="Add"/>
@@ -4999,7 +5011,7 @@
                  DefaultValue="0.0">
         <Connections/>
       </Parameter>
-      <Parameter MinValue="5.551115123125783e-17" MaxValue="1.0" ID="Gain2" Value="0.5099999904632568"
+      <Parameter MinValue="5.551115123125783e-17" MaxValue="1.0" ID="Gain2" Value="0.4900000095367432"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma9" ParameterId="Add"/>
@@ -5073,8 +5085,7 @@
                  DefaultValue="0.0">
         <Connections/>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="q" Value="0.7599999904632568"
-                 StepSize="0" DefaultValue="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="q" Value="0.0" StepSize="0">
         <Connections>
           <Connection NodeId="svf2" ParameterId="Q"/>
           <Connection NodeId="svf3" ParameterId="Q"/>
@@ -5087,17 +5098,19 @@
           <Connection NodeId="branch20" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="LP" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="LP" Value="0.9900000095367432"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma11" ParameterId="Add"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="-1.0" MaxValue="1.0" ID="LpMod" Value="1.0" DefaultValue="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="LpMod" Value="2.081668171172169e-17"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma11" ParameterId="Multiply"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="1.0" ID="LpSrc" Value="3.0"
+      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="1.0" ID="LpSrc" Value="2.0"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="branch14" ParameterId="Index"/>
@@ -5205,13 +5218,13 @@
           <Connection NodeId="branch18" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="18.0" ID="TableTempo" Value="10.0" StepSize="1.0"
+      <Parameter MinValue="0.0" MaxValue="18.0" ID="TableTempo" Value="18.0" StepSize="1.0"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="tempo_sync2" ParameterId="Tempo"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="1.0" MaxValue="32.0" ID="TableDiv" Value="10.0" DefaultValue="0.0"
+      <Parameter MinValue="1.0" MaxValue="32.0" ID="TableDiv" Value="31.0" DefaultValue="0.0"
                  StepSize="1.0">
         <Connections>
           <Connection NodeId="tempo_sync2" ParameterId="Multiplier"/>
@@ -5222,15 +5235,13 @@
           <Connection NodeId="ramp" ParameterId="LoopStart"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="TableSus" Value="0.2300000041723251"
-                 DefaultValue="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="TableSus" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="ahdsr1" ParameterId="Sustain"/>
         </Connections>
       </Parameter>
       <Parameter MinValue="0.0" MaxValue="10000.0" StepSize="0.1000000014901161"
-                 ID="Tablerel" Value="1208.000018000602" SkewFactor="0.1976716816425323"
-                 DefaultValue="0.0">
+                 ID="Tablerel" Value="0.0" SkewFactor="0.1976716816425323">
         <Connections>
           <Connection NodeId="ahdsr1" ParameterId="Release"/>
         </Connections>
@@ -5242,7 +5253,7 @@
         </Connections>
       </Parameter>
       <Parameter MinValue="1.0" MaxValue="32.0" StepSize="1.0" ID="TableDiv2"
-                 Value="3.0" DefaultValue="0.0">
+                 Value="8.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="tempo_sync9" ParameterId="Multiplier"/>
         </Connections>
@@ -5252,13 +5263,12 @@
           <Connection NodeId="ramp3" ParameterId="LoopStart"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="TableSus2" Value="0.4799999892711639"
-                 DefaultValue="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="TableSus2" Value="0.0">
         <Connections>
           <Connection NodeId="ahdsr2" ParameterId="Sustain"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="10000.0" ID="TableRel2" Value="2146.000031977891"
+      <Parameter MinValue="0.0" MaxValue="10000.0" ID="TableRel2" Value="1156.000017225742"
                  StepSize="0.1000000014901161" SkewFactor="0.1976716816425323"
                  DefaultValue="0.0">
         <Connections>
@@ -5329,17 +5339,19 @@
           <Connection NodeId="smoothed_parameter_unscaled" ParameterId="SmoothingTime"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="PsOnOff" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="PsOnOff" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="branch" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="PsXfTempo" Value="1.0" DefaultValue="0.0">
+      <Parameter MinValue="50.0" MaxValue="10000.0" ID="PsXfTempo" Value="50.0"
+                 DefaultValue="0.0" StepSize="1.0">
         <Connections>
           <Connection NodeId="faust" ParameterId="window (samples)"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="PsXfDivc" Value="1.0" DefaultValue="0.0">
+      <Parameter MinValue="1.0" MaxValue="10000.0" ID="PsXfDivc" Value="6532.0"
+                 DefaultValue="0.0" StepSize="1.0">
         <Connections>
           <Connection NodeId="faust" ParameterId="xfade (samples)"/>
         </Connections>
