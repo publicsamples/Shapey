@@ -109,7 +109,8 @@ inline function onModulatorModeControl(component, value)
 	 s.showControl(0);	
 	
 Shaper.setAttribute(Shaper.ModPostSwitch, 1);
-	 
+Shaper.setAttribute(Shaper.InputMode, 1);
+	 	 
    
 	}	  
 	
@@ -123,7 +124,8 @@ Shaper.setAttribute(Shaper.ModPostSwitch, 1);
 		for(s in ModWaveLoad)
 		       	 s.showControl(1);	  
 
-	Shaper.setAttribute(Shaper.ModPostSwitch, 3);	       	  
+	Shaper.setAttribute(Shaper.ModPostSwitch, 3);	  
+	Shaper.setAttribute(Shaper.InputMode, 3);     	  
 		       
 	}
 		    
@@ -289,52 +291,58 @@ inline function onShapeModSource12Control(component, value)
 	
 		if(value == 3)
 	{		
-		TransformLabel1.setValue("clip");
-		TransformLabel2.setValue("smooth");
+		TransformLabel1.setValue("Sub");
+		TransformLabel2.setValue("Pi");
 	}
 
 	if(value == 4)
 	{
-		TransformLabel1.setValue("freq.");
-		TransformLabel2.setValue("resonance");
+		TransformLabel1.setValue("Pi");
+		TransformLabel2.setValue("Sub");
 	}
 	
-		if(value == 5)
+	if(value == 5)
+		{		
+			TransformLabel1.setValue("freq");
+			TransformLabel2.setValue("resonance");
+		}
+		
+		if(value == 6)
 	{		
 		TransformLabel1.setValue("freq");
 		TransformLabel2.setValue("resonance");
 	}
 
-	if(value == 6)
+	if(value == 7)
 	{
 		TransformLabel1.setValue("freq.");
 		TransformLabel2.setValue("resonance");
 	}
 	
-		if(value == 7)
+		if(value == 8)
 	{		
 		TransformLabel1.setValue("freq");
 		TransformLabel2.setValue("resonance");
 	}
-	if(value == 8)
+	if(value == 9)
 	{
 		TransformLabel1.setValue("divide");
 		TransformLabel2.setValue("Smooth");
 	}
 	
-	if(value == 9)
+	if(value == 10)
 	{		
-		TransformLabel1.setValue("freq");
-		TransformLabel2.setValue("mod");
+		TransformLabel1.setValue("asin fold");
+		TransformLabel2.setValue("smooth");
 	}
 	
-	if(value == 10)
+	if(value == 11)
 	{
 		TransformLabel1.setValue("tempo");
 		TransformLabel2.setValue("divide");
 	}
 	
-	if(value == 11)
+	if(value == 12)
 	{		
 		TransformLabel1.setValue("bit depth");
 		TransformLabel2.setValue("smooth");
@@ -425,15 +433,6 @@ inline function onOscShapeControl(component, value)
 
 Content.getComponent("OscShape").setControlCallback(onOscShapeControl);
 
-const var ModoscExtra = Content.getComponent("ModoscExtra");
-
-
-inline function onSubPageControl(component, value)
-{
-	ModoscExtra.showControl(value);
-};
-
-Content.getComponent("SubPage").setControlCallback(onSubPageControl);
 
 const var ExpLink = Content.getComponent("ExpLink");
 
@@ -449,6 +448,12 @@ ExpLink.setMouseCallback(function(event)
     this.repaint();
   }
 });
+
+const var Ptrack = [Content.getComponent("ScriptLabel96"),
+                    Content.getComponent("ScriptLabel97"),
+                    Content.getComponent("PsTmp"),
+                    Content.getComponent("PsDiv"),
+                    Content.getComponent("ScriptLabel95")];
 
 
 

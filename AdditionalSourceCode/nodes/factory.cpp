@@ -39,6 +39,8 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		registerDataNode<project::lfo_networkdata>();
 		registerDataNode<project::MDel_networkdata>();
 		registerDataNode<project::osctests_networkdata>();
+		registerDataNode<project::tabletest_networkdata>();
+		registerDataNode<project::_networkdata>();
 		registerDataNode<project::verb_networkdata>();
 		registerDataNode<project::_networkdata>();
 	}

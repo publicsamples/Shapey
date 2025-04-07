@@ -33,8 +33,8 @@ OscVisual.startTimer(30);
 
 OscVisual.setPaintRoutine(function(g)
 {
-	g.fillAll(0x9ACBB279);
-	g.setColour(0xFF3E3F5B);
+	g.fillAll(0xFFCD5A58);
+	g.setColour(0xFF2E4159);
 	g.fillPath(this.data.buffer, this.getLocalBounds(0));
 });
 

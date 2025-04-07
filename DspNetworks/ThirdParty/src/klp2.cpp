@@ -152,7 +152,7 @@ struct _klp2 final : public ::faust::dsp {
 			iRec1[0] = iRec1[1] + 2;
 			int iTemp3 = iRec1[0] & iSlow4;
 			float fTemp4 = float(iTemp3);
-			output1[i0] = FAUSTFLOAT(fSlow2 * fTemp4 * (1.0f - fSlow5 * fTemp4) * fVec1[(IOTA0 - std::min<int>(iSlow0, std::max<int>(0, iTemp3))) & 65535]);
+			output1[i0] = FAUSTFLOAT(fSlow2 * (1.0f - fSlow5 * fTemp4) * fVec1[(IOTA0 - std::min<int>(iSlow0, std::max<int>(0, iTemp3))) & 65535] * fTemp4);
 			iVec0[1] = iVec0[0];
 			iRec0[1] = iRec0[0];
 			IOTA0 = IOTA0 + 1;

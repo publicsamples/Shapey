@@ -24,6 +24,7 @@
 #include "lfo_networkdata.h"
 #include "MDel_networkdata.h"
 #include "osctests_networkdata.h"
+#include "tabletest_networkdata.h"
 #include "verb_networkdata.h"
 #include "_networkdata.h"
 
