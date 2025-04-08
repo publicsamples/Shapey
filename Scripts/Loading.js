@@ -359,4 +359,3 @@ inline function onXfadeControl(component, value)
 };
 
 Content.getComponent("Xfade").setControlCallback(onXfadeControl);
-
