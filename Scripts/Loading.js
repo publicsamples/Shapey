@@ -333,29 +333,5 @@ const var FourFiles = [Content.getComponent("LpLoad8"),
 
 
 
-inline function onXfadeControl(component, value)
-{
-		for(s in FourFiles)
-	       s.showControl(value);
-	       
-	
-	   	Shaper.setAttribute(Shaper.XfoffOn, value);       	       
-	         	
-		if(value == 0)
-		{
-		
-		LpLoad2.setPosition(170, 235, 100, 30);
-		       	
-		}	
-		
-		if(value == 1)
-				{
-				
-				LpLoad2.setPosition(170, 235, 25, 30);
-				       	
-				}	
-		
-	       
-};
 
-Content.getComponent("Xfade").setControlCallback(onXfadeControl);
+

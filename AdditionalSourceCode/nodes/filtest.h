@@ -34,53 +34,48 @@ using minmax1_mod = parameter::chain<ranges::Identity,
 template <int NV>
 using minmax1_t = control::minmax<NV, minmax1_mod<NV>>;
 template <int NV>
-using pma17_t = control::pma<NV, 
+using pma18_t = control::pma<NV, 
                              parameter::plain<minmax1_t<NV>, 0>>;
-DECLARE_PARAMETER_RANGE(intensity_modRange, 
-                        -1., 
+template <int NV>
+using midi_t = wrap::mod<parameter::plain<pma18_t<NV>, 0>, 
+                         control::midi<midi_logic::velocity<NV>>>;
+
+DECLARE_PARAMETER_RANGE(ahdsr_c0Range, 
+                        5.55112e-17, 
                         1.);
 
 template <int NV>
-using intensity_mod = parameter::from0To1<pma17_t<NV>, 
-                                          2, 
-                                          intensity_modRange>;
+using ahdsr_c0 = parameter::from0To1<pma18_t<NV>, 
+                                     2, 
+                                     ahdsr_c0Range>;
 
 template <int NV>
-using intensity_t = control::intensity<NV, intensity_mod<NV>>;
-template <int NV>
-using ahdsr_multimod = parameter::list<parameter::plain<intensity_t<NV>, 0>, 
-                                       parameter::empty>;
+using ahdsr_multimod = parameter::list<ahdsr_c0<NV>, parameter::empty>;
 
 template <int NV>
 using ahdsr_t = wrap::no_data<envelope::ahdsr<NV, ahdsr_multimod<NV>>>;
-
 template <int NV>
-using midi_t = wrap::mod<parameter::plain<pma17_t<NV>, 0>, 
-                         control::midi<midi_logic::velocity<NV>>>;
+using midi1_t = wrap::mod<parameter::plain<ahdsr_t<NV>, 8>, 
+                          control::midi<midi_logic::gate<NV>>>;
 
-template <int NV>
-using minmax6_t = control::minmax<NV, 
-                                  parameter::plain<pma17_t<NV>, 1>>;
-
-// Create a signal between 0...1 here --------------------------------------------------------------
-
-template <int NV>
-using mod_signal_t = container::chain<parameter::empty, 
-                                      wrap::fix<1, wrap::no_process<math::sig2mod<NV>>>, 
-                                      intensity_t<NV>, 
-                                      minmax6_t<NV>, 
-                                      pma17_t<NV>>;
-
-template <int NV>
 using chain2_t = container::chain<parameter::empty, 
-                                  wrap::fix<1, midi_t<NV>>, 
-                                  mod_signal_t<NV>>;
+                                  wrap::fix<1, core::empty>>;
+
+template <int NV>
+using no_midi4_t_ = container::chain<parameter::empty, 
+                                     wrap::fix<1, ahdsr_t<NV>>, 
+                                     pma18_t<NV>, 
+                                     chain2_t, 
+                                     minmax1_t<NV>>;
+
+template <int NV>
+using no_midi4_t = wrap::no_midi<no_midi4_t_<NV>>;
 
 template <int NV>
 using chain25_t = container::chain<parameter::empty, 
-                                   wrap::fix<1, ahdsr_t<NV>>, 
-                                   chain2_t<NV>, 
-                                   minmax1_t<NV>>;
+                                   wrap::fix<1, midi_t<NV>>, 
+                                   midi1_t<NV>, 
+                                   no_midi4_t<NV>>;
 
 template <int NV>
 using ahdsr2_multimod = parameter::list<parameter::plain<math::add<NV>, 0>, 
@@ -292,21 +287,17 @@ using pma5_mod = parameter::chain<ranges::Identity,
 
 template <int NV>
 using pma5_t = control::pma<NV, pma5_mod<NV>>;
-DECLARE_PARAMETER_RANGE(pma10_modRange, 
-                        5.55112e-17, 
-                        1.);
-
 template <int NV>
 using pma10_mod = parameter::from0To1<pma5_t<NV>, 
                                       2, 
-                                      pma10_modRange>;
+                                      ahdsr_c0Range>;
 
 template <int NV>
 using pma10_t = control::pma<NV, pma10_mod<NV>>;
 template <int NV>
 using pma_mod = parameter::from0To1<pma10_t<NV>, 
                                     2, 
-                                    pma10_modRange>;
+                                    ahdsr_c0Range>;
 
 template <int NV>
 using pma_t = control::pma<NV, pma_mod<NV>>;
@@ -378,7 +369,7 @@ using pma3_t = control::pma<NV,
 template <int NV>
 using pma4_mod = parameter::from0To1<pma3_t<NV>, 
                                      2, 
-                                     pma10_modRange>;
+                                     ahdsr_c0Range>;
 
 template <int NV>
 using pma4_t = control::pma<NV, pma4_mod<NV>>;
@@ -2045,11 +2036,19 @@ using split18_t = container::split<parameter::empty,
                                    routing::receive<stereo_cable>, 
                                    routing::receive<stereo_cable>>;
 
+using ahdsr3_multimod = parameter::list<parameter::empty, 
+                                        parameter::plain<envelope::voice_manager, 0>>;
+
+template <int NV>
+using ahdsr3_t = wrap::no_data<envelope::ahdsr<NV, ahdsr3_multimod>>;
+
 template <int NV>
 using fix8_block_t_ = container::chain<parameter::empty, 
                                        wrap::fix<2, modchain1_t<NV>>, 
                                        split12_t<NV>, 
-                                       split18_t>;
+                                       split18_t, 
+                                       ahdsr3_t<NV>, 
+                                       envelope::voice_manager>;
 
 template <int NV>
 using fix8_block_t = wrap::fix_block<8, fix8_block_t_<NV>>;
@@ -2174,7 +2173,7 @@ using MathSmooth = parameter::chain<ranges::Identity,
 template <int NV>
 using Blimey = parameter::from0To1<filtest_impl::pma_t<NV>, 
                                    2, 
-                                   filtest_impl::pma10_modRange>;
+                                   filtest_impl::ahdsr_c0Range>;
 
 DECLARE_PARAMETER_RANGE_STEP(BlimeyModSrc_InputRange, 
                              1., 
@@ -2200,7 +2199,7 @@ DECLARE_PARAMETER_RANGE(Pitch_InputRange,
 template <int NV>
 using Pitch_0 = parameter::from0To1<filtest_impl::pma1_t<NV>, 
                                     2, 
-                                    filtest_impl::pma10_modRange>;
+                                    filtest_impl::ahdsr_c0Range>;
 
 template <int NV>
 using Pitch = parameter::chain<Pitch_InputRange, Pitch_0<NV>>;
@@ -2224,7 +2223,7 @@ DECLARE_PARAMETER_RANGE_STEP(Divide_InputRange,
 template <int NV>
 using Divide_0 = parameter::from0To1<filtest_impl::pma2_t<NV>, 
                                      2, 
-                                     filtest_impl::pma10_modRange>;
+                                     filtest_impl::ahdsr_c0Range>;
 
 template <int NV>
 using Divide = parameter::chain<Divide_InputRange, Divide_0<NV>>;
@@ -2290,7 +2289,7 @@ using OscMode = parameter::chain<OscMode_InputRange,
 template <int NV>
 using AdjustMix = parameter::from0To1<filtest_impl::pma6_t<NV>, 
                                       2, 
-                                      filtest_impl::pma10_modRange>;
+                                      filtest_impl::ahdsr_c0Range>;
 
 DECLARE_PARAMETER_RANGE_STEP(AdjustMixSrc_InputRange, 
                              1., 
@@ -2336,7 +2335,7 @@ using AdjSrc = parameter::chain<AdjSrc_InputRange, AdjSrc_0<NV>>;
 template <int NV>
 using Position = parameter::from0To1<filtest_impl::pma8_t<NV>, 
                                      2, 
-                                     filtest_impl::pma10_modRange>;
+                                     filtest_impl::ahdsr_c0Range>;
 
 DECLARE_PARAMETER_RANGE_STEP(PosSrc_InputRange, 
                              1., 
@@ -2361,6 +2360,15 @@ using Gain2Src_0 = parameter::from0To1<filtest_impl::branch13_t<NV>,
 
 template <int NV>
 using Gain2Src = parameter::chain<Gain2Src_InputRange, Gain2Src_0<NV>>;
+
+DECLARE_PARAMETER_RANGE(EnvMod1Range, 
+                        -1., 
+                        1.);
+
+template <int NV>
+using EnvMod1 = parameter::from0To1<filtest_impl::pma18_t<NV>, 
+                                    1, 
+                                    EnvMod1Range>;
 
 DECLARE_PARAMETER_RANGE_SKEW(q_0Range, 
                              0.3, 
@@ -2391,7 +2399,7 @@ using q = parameter::chain<ranges::Identity,
 template <int NV>
 using LP = parameter::from0To1<filtest_impl::pma11_t<NV>, 
                                2, 
-                               filtest_impl::pma10_modRange>;
+                               filtest_impl::ahdsr_c0Range>;
 
 DECLARE_PARAMETER_RANGE_STEP(LpSrc_InputRange, 
                              1., 
@@ -2408,7 +2416,7 @@ using LpSrc = parameter::chain<LpSrc_InputRange, LpSrc_0<NV>>;
 template <int NV>
 using HP = parameter::from0To1<filtest_impl::pma12_t<NV>, 
                                2, 
-                               filtest_impl::pma10_modRange>;
+                               filtest_impl::ahdsr_c0Range>;
 
 DECLARE_PARAMETER_RANGE(HpSrc_InputRange, 
                         1., 
@@ -2447,7 +2455,7 @@ using PostQuantise = parameter::chain<PostQuantise_InputRange,
 template <int NV>
 using PositionOSc1 = parameter::from0To1<filtest_impl::pma13_t<NV>, 
                                          2, 
-                                         filtest_impl::pma10_modRange>;
+                                         filtest_impl::ahdsr_c0Range>;
 
 DECLARE_PARAMETER_RANGE(PositionOscModSrc_InputRange, 
                         1., 
@@ -2469,7 +2477,7 @@ using PosSmoothOsc1 = parameter::chain<ranges::Identity,
 template <int NV>
 using Osc2Ratio = parameter::from0To1<control::pma<NV, parameter::empty>, 
                                       2, 
-                                      filtest_impl::pma10_modRange>;
+                                      filtest_impl::ahdsr_c0Range>;
 
 DECLARE_PARAMETER_RANGE_STEP(PhaseModSrc_InputRange, 
                              1., 
@@ -2521,7 +2529,7 @@ using PreQuant = parameter::chain<PreQuant_InputRange, PreQuant_0<NV>>;
 template <int NV>
 using xf = parameter::from0To1<filtest_impl::pma16_t<NV>, 
                                2, 
-                               filtest_impl::pma10_modRange>;
+                               filtest_impl::ahdsr_c0Range>;
 
 DECLARE_PARAMETER_RANGE_STEP(xfsrc_InputRange, 
                              1., 
@@ -2582,9 +2590,6 @@ using s1 = parameter::plain<filtest_impl::ahdsr_t<NV>,
 template <int NV>
 using r1 = parameter::plain<filtest_impl::ahdsr_t<NV>, 
                             5>;
-template <int NV>
-using EnvMod1 = parameter::plain<filtest_impl::minmax6_t<NV>, 
-                                 0>;
 using a2 = Fine;
 using h2 = Fine;
 using d2 = Fine;
@@ -2684,6 +2689,21 @@ using XfoffOn = parameter::plain<filtest_impl::branch1_t<NV>,
 template <int NV>
 using xfmod = parameter::plain<filtest_impl::pma16_t<NV>, 
                                1>;
+template <int NV>
+using a = parameter::plain<filtest_impl::ahdsr3_t<NV>, 
+                           0>;
+template <int NV>
+using d = parameter::plain<filtest_impl::ahdsr3_t<NV>, 
+                           3>;
+template <int NV>
+using h = parameter::plain<filtest_impl::ahdsr3_t<NV>, 
+                           2>;
+template <int NV>
+using s = parameter::plain<filtest_impl::ahdsr3_t<NV>, 
+                           4>;
+template <int NV>
+using r = parameter::plain<filtest_impl::ahdsr3_t<NV>, 
+                           5>;
 template <int NV>
 using filtest_t_plist = parameter::list<Tempo<NV>, 
                                         PosSmooth<NV>, 
@@ -2790,7 +2810,12 @@ using filtest_t_plist = parameter::list<Tempo<NV>,
                                         XfoffOn<NV>, 
                                         xf<NV>, 
                                         xfmod<NV>, 
-                                        xfsrc<NV>>;
+                                        xfsrc<NV>, 
+                                        a<NV>, 
+                                        d<NV>, 
+                                        h<NV>, 
+                                        s<NV>, 
+                                        r<NV>>;
 }
 
 template <int NV>
@@ -2812,7 +2837,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		SNEX_METADATA_ID(filtest);
 		SNEX_METADATA_NUM_CHANNELS(2);
-		SNEX_METADATA_ENCODED_PARAMETERS(1792)
+		SNEX_METADATA_ENCODED_PARAMETERS(1860)
 		{
 			0x005B, 0x0000, 0x5400, 0x6D65, 0x6F70, 0x0000, 0x8000, 0x003F, 
             0x0000, 0x0042, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x5B3F, 
@@ -2821,7 +2846,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x3DCC, 0x025B, 0x0000, 0x4D00, 0x7461, 0x5368, 0x6F6D, 0x746F, 
             0x0068, 0x0000, 0x0000, 0x0000, 0x3F80, 0x999A, 0x3F59, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x035B, 0x0000, 0x4200, 0x696C, 0x656D, 
-            0x0079, 0x0000, 0x0000, 0x0000, 0x3F80, 0x28F6, 0x3F5C, 0x0000, 
+            0x0079, 0x0000, 0x0000, 0x0000, 0x3F80, 0xEB85, 0x3ED1, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x045B, 0x0000, 0x4200, 0x696C, 0x656D, 
             0x4D79, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0xC000, 
             0x0023, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0005, 0x0000, 0x6C42, 
@@ -2846,7 +2871,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x0000, 0x5B00, 0x000E, 0x0000, 0x6E49, 0x7570, 0x4D74, 0x646F, 
             0x0065, 0x0000, 0x3F80, 0x0000, 0x4040, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0000, 0x3F80, 0x0F5B, 0x0000, 0x4F00, 0x6373, 0x6F4D, 
-            0x6564, 0x0000, 0x8000, 0x003F, 0xA000, 0x0040, 0x4000, 0x0040, 
+            0x6564, 0x0000, 0x8000, 0x003F, 0xA000, 0x0040, 0x0000, 0x0040, 
             0x8000, 0x003F, 0x8000, 0x5B3F, 0x0010, 0x0000, 0x6441, 0x756A, 
             0x7473, 0x694D, 0x0078, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
             0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x115B, 0x0000, 0x4100, 
@@ -2857,21 +2882,21 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x3F80, 0x0000, 0x3F80, 0x135B, 0x0000, 0x4100, 0x6A64, 0x7375, 
             0x4D74, 0x646F, 0x0065, 0x0000, 0x3F80, 0x0000, 0x4140, 0x0000, 
             0x40E0, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x145B, 0x0000, 0x4100, 
-            0x6A64, 0x0000, 0x8000, 0x0024, 0x8000, 0x143F, 0xC7AE, 0x003E, 
+            0x6A64, 0x0000, 0x8000, 0x0024, 0x8000, 0x1F3F, 0xEB85, 0x003E, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0015, 0x0000, 0x6441, 0x4D6A, 
             0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0xB83F, 0x051E, 0x003E, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0016, 0x0000, 0x6441, 0x536A, 
             0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 0x0041, 0xA000, 0x0040, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0017, 0x0000, 0x6F50, 0x6973, 
-            0x6974, 0x6E6F, 0x0000, 0x0000, 0x0000, 0x8000, 0x3D3F, 0x170A, 
-            0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0018, 0x0000, 0x6F50, 
+            0x6974, 0x6E6F, 0x0000, 0x0000, 0x0000, 0x8000, 0x8F3F, 0x75C2, 
+            0x003E, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0018, 0x0000, 0x6F50, 
             0x4D73, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0xC000, 
             0x0023, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0019, 0x0000, 0x6F50, 
             0x5373, 0x6372, 0x0000, 0x8000, 0x003F, 0x2000, 0x0041, 0x4000, 
             0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001A, 0x0000, 0x754F, 
             0x4D74, 0x646F, 0x0065, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x1B5B, 0x0000, 0x4700, 
-            0x6961, 0x326E, 0x0000, 0x8000, 0x0024, 0x8000, 0x483F, 0xFAE1, 
+            0x6961, 0x326E, 0x0000, 0x8000, 0x0024, 0x8000, 0xC33F, 0xA8F5, 
             0x003E, 0x8000, 0x003F, 0x0000, 0x5B00, 0x001C, 0x0000, 0x6147, 
             0x6E69, 0x4D32, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 
             0xC000, 0x0023, 0x8000, 0x003F, 0x0000, 0x5B00, 0x001D, 0x0000, 
@@ -2879,7 +2904,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x0041, 0x8000, 0x0040, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001E, 
             0x0000, 0x3161, 0x0000, 0x0000, 0x0000, 0xEA60, 0x0046, 0x79C0, 
             0x7245, 0x4A6A, 0xCD3E, 0xCCCC, 0x5B3D, 0x001F, 0x0000, 0x3168, 
-            0x0000, 0x0000, 0x0000, 0x1C40, 0x0046, 0x1C40, 0x7246, 0x4A6A, 
+            0x0000, 0x0000, 0x0000, 0x1C40, 0x0046, 0x2000, 0x7241, 0x4A6A, 
             0xCD3E, 0xCCCC, 0x5B3D, 0x0020, 0x0000, 0x3164, 0x0000, 0x0000, 
             0x0000, 0x1C40, 0x0046, 0x1C40, 0x7246, 0x4A6A, 0xCD3E, 0xCCCC, 
             0x5B3D, 0x0021, 0x0000, 0x3173, 0x0000, 0x0000, 0x0000, 0x8000, 
@@ -2938,7 +2963,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x3B5B, 0x0000, 0x4F00, 0x6373, 0x5232, 0x7461, 0x6F69, 0x0000, 
             0x0000, 0x0000, 0x8000, 0xD33F, 0x469B, 0x003D, 0x8000, 0x003F, 
             0x0000, 0x5B00, 0x003C, 0x0000, 0x6F4D, 0x5064, 0x6168, 0x6573, 
-            0x0000, 0x8000, 0x0024, 0x8000, 0x293F, 0x8F5C, 0x003D, 0x8000, 
+            0x0000, 0x8000, 0x0024, 0x8000, 0x003F, 0x8000, 0x0024, 0x8000, 
             0x003F, 0x0000, 0x5B00, 0x003D, 0x0000, 0x6850, 0x7361, 0x4D65, 
             0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0x0000, 0x0000, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x003E, 0x0000, 0x6850, 0x7361, 
@@ -2991,22 +3016,22 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x0000, 0x535B, 0x0000, 0x5300, 0x6275, 0x694D, 0x0078, 0x0000, 
             0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
             0x0000, 0x545B, 0x0000, 0x5300, 0x6275, 0x6D46, 0x0000, 0x8000, 
-            0x00BF, 0x8000, 0x003F, 0xC000, 0x0023, 0x8000, 0x003F, 0x0000, 
+            0x00BF, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
             0x5B00, 0x0055, 0x0000, 0x7553, 0x4162, 0x006D, 0x0000, 0xBF80, 
             0x0000, 0x3F80, 0x0000, 0x23C0, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x565B, 0x0000, 0x6400, 0x7465, 0x6E75, 0x0065, 0x0000, 0x0000, 
-            0x0000, 0x4180, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x4180, 0x0000, 0x3F00, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x575B, 0x0000, 0x4D00, 0x646F, 0x6F50, 0x7473, 0x7753, 0x7469, 
             0x6863, 0x0000, 0x0000, 0x0000, 0x0000, 0x0040, 0x8000, 0x003F, 
             0x8000, 0x003F, 0x8000, 0x5B3F, 0x0058, 0x0000, 0x6C47, 0x6469, 
             0x0065, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x595B, 0x0000, 0x5000, 0x4F73, 0x4F6E, 
-            0x6666, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x8000, 0x003F, 
+            0x6666, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x005A, 0x0000, 0x7350, 0x6658, 
             0x6554, 0x706D, 0x006F, 0x0000, 0x4248, 0x4000, 0x461C, 0x0000, 
             0x4248, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x5B5B, 0x0000, 0x5000, 
             0x5873, 0x4466, 0x7669, 0x0063, 0x0000, 0x3F80, 0x4000, 0x461C, 
-            0x2000, 0x45CC, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x5C5B, 0x0000, 
+            0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x5C5B, 0x0000, 
             0x5400, 0x6172, 0x666E, 0x726F, 0x436D, 0x7261, 0x4E49, 0x0000, 
             0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 
             0x0000, 0x5B00, 0x005D, 0x0000, 0x7254, 0x6E61, 0x6F66, 0x6D72, 
@@ -3037,7 +3062,16 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
             0x685B, 0x0000, 0x7800, 0x6D66, 0x646F, 0x0000, 0x8000, 0x00BF, 
             0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 
             0x0069, 0x0000, 0x6678, 0x7273, 0x0063, 0x0000, 0x3F80, 0x0000, 
-            0x4120, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000
+            0x4120, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x6A5B, 
+            0x0000, 0x6100, 0x0000, 0x0000, 0x0000, 0xEA60, 0x0046, 0xC000, 
+            0x7240, 0x4A6A, 0xCD3E, 0xCCCC, 0x5B3D, 0x006B, 0x0000, 0x0064, 
+            0x0000, 0x0000, 0x6000, 0x46EA, 0x0000, 0x3F80, 0x6A72, 0x3E4A, 
+            0xCCCD, 0x3DCC, 0x6C5B, 0x0000, 0x6800, 0x0000, 0x0000, 0x0000, 
+            0xEA60, 0x0046, 0x2000, 0x7241, 0x4A6A, 0xCD3E, 0xCCCC, 0x5B3D, 
+            0x006D, 0x0000, 0x0073, 0x0000, 0x0000, 0x0000, 0x3F80, 0xA6F5, 
+            0x3F55, 0x0000, 0x3F80, 0x0000, 0x0000, 0x6E5B, 0x0000, 0x7200, 
+            0x0000, 0x0000, 0x0000, 0xEA60, 0x0046, 0xA1F6, 0x7246, 0x4A6A, 
+            0xCD3E, 0xCCCC, 0x003D, 0x0000
 		};
 	};
 	
@@ -3049,15 +3083,13 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		auto& modchain1 = this->getT(0).getT(0);                                                   // filtest_impl::modchain1_t<NV>
 		auto& split5 = this->getT(0).getT(0).getT(0);                                              // filtest_impl::split5_t<NV>
 		auto& chain25 = this->getT(0).getT(0).getT(0).getT(0);                                     // filtest_impl::chain25_t<NV>
-		auto& ahdsr = this->getT(0).getT(0).getT(0).getT(0).getT(0);                               // filtest_impl::ahdsr_t<NV>
-		auto& chain2 = this->getT(0).getT(0).getT(0).getT(0).getT(1);                              // filtest_impl::chain2_t<NV>
-		auto& midi = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(0);                        // filtest_impl::midi_t<NV>
-		auto& mod_signal = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(1);                  // filtest_impl::mod_signal_t<NV>
-		auto& sig2mod1 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(1).getT(0);            // wrap::no_process<math::sig2mod<NV>>
-		auto& intensity = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(1).getT(1);           // filtest_impl::intensity_t<NV>
-		auto& minmax6 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(1).getT(2);             // filtest_impl::minmax6_t<NV>
-		auto& pma17 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(1).getT(3);               // filtest_impl::pma17_t<NV>
-		auto& minmax1 = this->getT(0).getT(0).getT(0).getT(0).getT(2);                             // filtest_impl::minmax1_t<NV>
+		auto& midi = this->getT(0).getT(0).getT(0).getT(0).getT(0);                                // filtest_impl::midi_t<NV>
+		auto& midi1 = this->getT(0).getT(0).getT(0).getT(0).getT(1);                               // filtest_impl::midi1_t<NV>
+		auto& no_midi4 = this->getT(0).getT(0).getT(0).getT(0).getT(2);                            // filtest_impl::no_midi4_t<NV>
+		auto& ahdsr = this->getT(0).getT(0).getT(0).getT(0).getT(2).getT(0);                       // filtest_impl::ahdsr_t<NV>
+		auto& pma18 = this->getT(0).getT(0).getT(0).getT(0).getT(2).getT(1);                       // filtest_impl::pma18_t<NV>
+		auto& chain2 = this->getT(0).getT(0).getT(0).getT(0).getT(2).getT(2);                      // filtest_impl::chain2_t
+		auto& minmax1 = this->getT(0).getT(0).getT(0).getT(0).getT(2).getT(3);                     // filtest_impl::minmax1_t<NV>
 		auto& chain34 = this->getT(0).getT(0).getT(0).getT(1);                                     // filtest_impl::chain34_t<NV>
 		auto& chain214 = this->getT(0).getT(0).getT(0).getT(1).getT(0);                            // filtest_impl::chain214_t<NV>
 		auto& midi7 = this->getT(0).getT(0).getT(0).getT(1).getT(0).getT(0);                       // filtest_impl::midi7_t<NV>
@@ -3912,6 +3944,8 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		auto& receive13 = this->getT(0).getT(2).getT(1);       // routing::receive<stereo_cable>
 		auto& receive14 = this->getT(0).getT(2).getT(2);       // routing::receive<stereo_cable>
 		auto& receive15 = this->getT(0).getT(2).getT(3);       // routing::receive<stereo_cable>
+		auto& ahdsr3 = this->getT(0).getT(3);                  // filtest_impl::ahdsr3_t<NV>
+		auto& voice_manager = this->getT(0).getT(4);           // envelope::voice_manager
 		
 		// Parameter Connections -------------------------------------------------------------------
 		
@@ -4007,7 +4041,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		this->getParameterT(34).connectT(0, ahdsr); // r1 -> ahdsr::Release
 		
-		this->getParameterT(35).connectT(0, minmax6); // EnvMod1 -> minmax6::Value
+		this->getParameterT(35).connectT(0, pma18); // EnvMod1 -> pma18::Multiply
 		
 		auto& q_p = this->getParameterT(41);
 		q_p.connectT(0, svf2); // q -> svf2::Q
@@ -4127,6 +4161,16 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		this->getParameterT(105).connectT(0, branch21); // xfsrc -> branch21::Index
 		
+		this->getParameterT(106).connectT(0, ahdsr3); // a -> ahdsr3::Attack
+		
+		this->getParameterT(107).connectT(0, ahdsr3); // d -> ahdsr3::Decay
+		
+		this->getParameterT(108).connectT(0, ahdsr3); // h -> ahdsr3::Hold
+		
+		this->getParameterT(109).connectT(0, ahdsr3); // s -> ahdsr3::Sustain
+		
+		this->getParameterT(110).connectT(0, ahdsr3); // r -> ahdsr3::Release
+		
 		// Modulation Connections ------------------------------------------------------------------
 		
 		minmax1.getWrappedObject().getParameter().connectT(0, add6);    // minmax1 -> add6::Value
@@ -4142,12 +4186,11 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		minmax1.getWrappedObject().getParameter().connectT(10, add20);  // minmax1 -> add20::Value
 		minmax1.getWrappedObject().getParameter().connectT(11, add65);  // minmax1 -> add65::Value
 		minmax1.getWrappedObject().getParameter().connectT(12, add141); // minmax1 -> add141::Value
-		pma17.getWrappedObject().getParameter().connectT(0, minmax1);   // pma17 -> minmax1::Value
-		intensity.getWrappedObject().getParameter().connectT(0, pma17); // intensity -> pma17::Add
+		pma18.getWrappedObject().getParameter().connectT(0, minmax1);   // pma18 -> minmax1::Value
+		midi.getParameter().connectT(0, pma18);                         // midi -> pma18::Value
 		auto& ahdsr_p = ahdsr.getWrappedObject().getParameter();
-		ahdsr_p.getParameterT(0).connectT(0, intensity);              // ahdsr -> intensity::Value
-		midi.getParameter().connectT(0, pma17);                       // midi -> pma17::Value
-		minmax6.getWrappedObject().getParameter().connectT(0, pma17); // minmax6 -> pma17::Multiply
+		ahdsr_p.getParameterT(0).connectT(0, pma18); // ahdsr -> pma18::Add
+		midi1.getParameter().connectT(0, ahdsr);     // midi1 -> ahdsr::Gate
 		auto& ahdsr2_p = ahdsr2.getWrappedObject().getParameter();
 		ahdsr2_p.getParameterT(0).connectT(0, add152);                      // ahdsr2 -> add152::Value
 		minmax24.getWrappedObject().getParameter().connectT(0, ahdsr2);     // minmax24 -> ahdsr2::Gate
@@ -4367,6 +4410,8 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		peak17.getParameter().connectT(0, pma3);                                               // peak17 -> pma3::Value
 		peak17.getParameter().connectT(1, pma5);                                               // peak17 -> pma5::Value
 		midi4.getParameter().connectT(0, faust);                                               // midi4 -> faust::shiftsemitones
+		auto& ahdsr3_p = ahdsr3.getWrappedObject().getParameter();
+		ahdsr3_p.getParameterT(1).connectT(0, voice_manager); // ahdsr3 -> voice_manager::KillVoice
 		
 		// Send Connections ------------------------------------------------------------------------
 		
@@ -4394,23 +4439,11 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		;                            // ahdsr::Release is automated
 		ahdsr.setParameterT(6, 0.5); // envelope::ahdsr::AttackCurve
 		ahdsr.setParameterT(7, 0.);  // envelope::ahdsr::Retrigger
-		ahdsr.setParameterT(8, 0.);  // envelope::ahdsr::Gate
+		;                            // ahdsr::Gate is automated
 		
-		sig2mod1.setParameterT(0, 0.); // math::sig2mod::Value
-		
-		;                               // intensity::Value is automated
-		intensity.setParameterT(1, 1.); // control::intensity::Intensity
-		
-		;                              // minmax6::Value is automated
-		minmax6.setParameterT(1, -1.); // control::minmax::Minimum
-		minmax6.setParameterT(2, 1.);  // control::minmax::Maximum
-		minmax6.setParameterT(3, 1.);  // control::minmax::Skew
-		minmax6.setParameterT(4, 0.);  // control::minmax::Step
-		minmax6.setParameterT(5, 1.);  // control::minmax::Polarity
-		
-		; // pma17::Value is automated
-		; // pma17::Multiply is automated
-		; // pma17::Add is automated
+		; // pma18::Value is automated
+		; // pma18::Multiply is automated
+		; // pma18::Add is automated
 		
 		;                             // minmax1::Value is automated
 		minmax1.setParameterT(1, 0.); // control::minmax::Minimum
@@ -4941,7 +4974,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		; // pma3::Multiply is automated
 		; // pma3::Add is automated
 		
-		pma4.setParameterT(0, 1.); // control::pma::Value
+		pma4.setParameterT(0, 0.); // control::pma::Value
 		pma4.setParameterT(1, 0.); // control::pma::Multiply
 		;                          // pma4::Add is automated
 		
@@ -4960,16 +4993,16 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		;                               // minmax14::Step is automated
 		minmax14.setParameterT(5, 0.);  // control::minmax::Polarity
 		
-		;                                  // oscillator8::Mode is automated
-		;                                  // oscillator8::Frequency is automated
-		;                                  // oscillator8::FreqRatio is automated
-		oscillator8.setParameterT(3, 1.);  // core::oscillator::Gate
-		oscillator8.setParameterT(4, 0.5); // core::oscillator::Phase
-		;                                  // oscillator8::Gain is automated
+		;                                 // oscillator8::Mode is automated
+		;                                 // oscillator8::Frequency is automated
+		;                                 // oscillator8::FreqRatio is automated
+		oscillator8.setParameterT(3, 1.); // core::oscillator::Gate
+		oscillator8.setParameterT(4, 0.); // core::oscillator::Phase
+		;                                 // oscillator8::Gain is automated
 		
-		;                              // gain5::Gain is automated
-		gain5.setParameterT(1, 178.);  // core::gain::Smoothing
-		gain5.setParameterT(2, -100.); // core::gain::ResetValue
+		;                             // gain5::Gain is automated
+		gain5.setParameterT(1, 3.6);  // core::gain::Smoothing
+		gain5.setParameterT(2, -11.); // core::gain::ResetValue
 		
 		;                           // pma19::Value is automated
 		pma19.setParameterT(1, 1.); // control::pma::Multiply
@@ -4995,13 +5028,13 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		sub1.setParameterT(0, 1.); // math::sub::Value
 		
-		;                           // gain::Gain is automated
-		gain.setParameterT(1, 20.); // core::gain::Smoothing
-		gain.setParameterT(2, 0.);  // core::gain::ResetValue
+		;                             // gain::Gain is automated
+		gain.setParameterT(1, 20.);   // core::gain::Smoothing
+		gain.setParameterT(2, -100.); // core::gain::ResetValue
 		
-		;                              // gain6::Gain is automated
-		gain6.setParameterT(1, 187.5); // core::gain::Smoothing
-		gain6.setParameterT(2, -100.); // core::gain::ResetValue
+		;                            // gain6::Gain is automated
+		gain6.setParameterT(1, 0.4); // core::gain::Smoothing
+		gain6.setParameterT(2, 0.);  // core::gain::ResetValue
 		
 		; // branch5::Index is automated
 		
@@ -5422,33 +5455,33 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		; // branch20::Index is automated
 		
-		;                            // svf2::Frequency is automated
-		;                            // svf2::Q is automated
-		svf2.setParameterT(2, 0.);   // filters::svf::Gain
-		svf2.setParameterT(3, 0.01); // filters::svf::Smoothing
-		svf2.setParameterT(4, 0.);   // filters::svf::Mode
-		svf2.setParameterT(5, 1.);   // filters::svf::Enabled
+		;                                   // svf2::Frequency is automated
+		;                                   // svf2::Q is automated
+		svf2.setParameterT(2, 0.);          // filters::svf::Gain
+		svf2.setParameterT(3, 0.000494663); // filters::svf::Smoothing
+		svf2.setParameterT(4, 0.);          // filters::svf::Mode
+		svf2.setParameterT(5, 1.);          // filters::svf::Enabled
 		
-		;                            // svf3::Frequency is automated
-		;                            // svf3::Q is automated
-		svf3.setParameterT(2, 0.);   // filters::svf::Gain
-		svf3.setParameterT(3, 0.01); // filters::svf::Smoothing
-		svf3.setParameterT(4, 1.);   // filters::svf::Mode
-		svf3.setParameterT(5, 1.);   // filters::svf::Enabled
+		;                                   // svf3::Frequency is automated
+		;                                   // svf3::Q is automated
+		svf3.setParameterT(2, 0.);          // filters::svf::Gain
+		svf3.setParameterT(3, 6.40174e-05); // filters::svf::Smoothing
+		svf3.setParameterT(4, 1.);          // filters::svf::Mode
+		svf3.setParameterT(5, 1.);          // filters::svf::Enabled
 		
-		;                           // svf::Frequency is automated
-		;                           // svf::Q is automated
-		svf.setParameterT(2, 0.);   // filters::svf::Gain
-		svf.setParameterT(3, 0.01); // filters::svf::Smoothing
-		svf.setParameterT(4, 0.);   // filters::svf::Mode
-		svf.setParameterT(5, 1.);   // filters::svf::Enabled
+		;                                 // svf::Frequency is automated
+		;                                 // svf::Q is automated
+		svf.setParameterT(2, 0.);         // filters::svf::Gain
+		svf.setParameterT(3, 0.00169742); // filters::svf::Smoothing
+		svf.setParameterT(4, 0.);         // filters::svf::Mode
+		svf.setParameterT(5, 1.);         // filters::svf::Enabled
 		
-		;                            // svf1::Frequency is automated
-		;                            // svf1::Q is automated
-		svf1.setParameterT(2, 0.);   // filters::svf::Gain
-		svf1.setParameterT(3, 0.01); // filters::svf::Smoothing
-		svf1.setParameterT(4, 1.);   // filters::svf::Mode
-		svf1.setParameterT(5, 1.);   // filters::svf::Enabled
+		;                                   // svf1::Frequency is automated
+		;                                   // svf1::Q is automated
+		svf1.setParameterT(2, 0.);          // filters::svf::Gain
+		svf1.setParameterT(3, 3.36348e-05); // filters::svf::Smoothing
+		svf1.setParameterT(4, 1.);          // filters::svf::Mode
+		svf1.setParameterT(5, 1.);          // filters::svf::Enabled
 		
 		clear20.setParameterT(0, 0.); // math::clear::Value
 		
@@ -5460,10 +5493,22 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		
 		; // receive15::Feedback is automated
 		
+		;                             // ahdsr3::Attack is automated
+		ahdsr3.setParameterT(1, 1.);  // envelope::ahdsr::AttackLevel
+		;                             // ahdsr3::Hold is automated
+		;                             // ahdsr3::Decay is automated
+		;                             // ahdsr3::Sustain is automated
+		;                             // ahdsr3::Release is automated
+		ahdsr3.setParameterT(6, 0.5); // envelope::ahdsr::AttackCurve
+		ahdsr3.setParameterT(7, 0.);  // envelope::ahdsr::Retrigger
+		ahdsr3.setParameterT(8, 1.);  // envelope::ahdsr::Gate
+		
+		; // voice_manager::KillVoice is automated
+		
 		this->setParameterT(0, 1.);
 		this->setParameterT(1, 0.);
 		this->setParameterT(2, 0.85);
-		this->setParameterT(3, 0.86);
+		this->setParameterT(3, 0.41);
 		this->setParameterT(4, 2.08167e-17);
 		this->setParameterT(5, 5.);
 		this->setParameterT(6, 1.);
@@ -5475,23 +5520,23 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		this->setParameterT(12, 0.);
 		this->setParameterT(13, -1.);
 		this->setParameterT(14, 1.);
-		this->setParameterT(15, 3.);
+		this->setParameterT(15, 2.);
 		this->setParameterT(16, 0.);
 		this->setParameterT(17, -1.);
 		this->setParameterT(18, 1.);
 		this->setParameterT(19, 7.);
-		this->setParameterT(20, 0.39);
+		this->setParameterT(20, 0.46);
 		this->setParameterT(21, 0.13);
 		this->setParameterT(22, 5.);
-		this->setParameterT(23, 0.59);
+		this->setParameterT(23, 0.24);
 		this->setParameterT(24, 2.08167e-17);
 		this->setParameterT(25, 3.);
 		this->setParameterT(26, 1.);
-		this->setParameterT(27, 0.49);
+		this->setParameterT(27, 0.33);
 		this->setParameterT(28, 2.08167e-17);
 		this->setParameterT(29, 4.);
 		this->setParameterT(30, 3996.);
-		this->setParameterT(31, 10000.);
+		this->setParameterT(31, 10.);
 		this->setParameterT(32, 10000.);
 		this->setParameterT(33, 0.);
 		this->setParameterT(34, 3251.);
@@ -5520,7 +5565,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		this->setParameterT(57, 5.);
 		this->setParameterT(58, 0.);
 		this->setParameterT(59, 0.0484885);
-		this->setParameterT(60, 0.07);
+		this->setParameterT(60, 5.55112e-17);
 		this->setParameterT(61, 0.);
 		this->setParameterT(62, 1.);
 		this->setParameterT(63, 0.65574);
@@ -5544,14 +5589,14 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		this->setParameterT(81, 0.);
 		this->setParameterT(82, 0.);
 		this->setParameterT(83, 0.);
-		this->setParameterT(84, 2.08167e-17);
+		this->setParameterT(84, 0.);
 		this->setParameterT(85, 2.08167e-17);
-		this->setParameterT(86, 0.);
+		this->setParameterT(86, 0.5);
 		this->setParameterT(87, 1.);
 		this->setParameterT(88, 0.);
-		this->setParameterT(89, 1.);
+		this->setParameterT(89, 0.);
 		this->setParameterT(90, 50.);
-		this->setParameterT(91, 6532.);
+		this->setParameterT(91, 1.);
 		this->setParameterT(92, 0.);
 		this->setParameterT(93, 1.);
 		this->setParameterT(94, 0.);
@@ -5566,6 +5611,11 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		this->setParameterT(103, 0.);
 		this->setParameterT(104, 0.);
 		this->setParameterT(105, 1.);
+		this->setParameterT(106, 6);
+		this->setParameterT(107, 1);
+		this->setParameterT(108, 10.);
+		this->setParameterT(109, 0.834579);
+		this->setParameterT(110, 20731.);
 		this->setExternalData({}, -1);
 	}
 	~instance() override
@@ -5619,7 +5669,7 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 	{
 		// External Data Connections ---------------------------------------------------------------
 		
-		this->getT(0).getT(0).getT(0).getT(0).getT(0).setExternalData(b, index);                 // filtest_impl::ahdsr_t<NV>
+		this->getT(0).getT(0).getT(0).getT(0).getT(2).getT(0).setExternalData(b, index);         // filtest_impl::ahdsr_t<NV>
 		this->getT(0).getT(0).getT(0).getT(1).getT(0).getT(3).setExternalData(b, index);         // filtest_impl::ramp3_t<NV>
 		this->getT(0).getT(0).getT(0).getT(1).                                                   // filtest_impl::ahdsr2_t<NV>
         getT(0).getT(5).getT(0).getT(0).setExternalData(b, index);
@@ -5658,15 +5708,16 @@ template <int NV> struct instance: public filtest_impl::filtest_t_<NV>
 		this->getT(0).getT(1).getT(2).getT(1).                                           // filtest_impl::file_player_t<NV>
         getT(2).getT(1).getT(1).getT(0).
         getT(0).setExternalData(b, index);
-		this->getT(0).getT(1).getT(2).getT(1).  // filtest_impl::file_player1_t<NV>
+		this->getT(0).getT(1).getT(2).getT(1).           // filtest_impl::file_player1_t<NV>
         getT(2).getT(1).getT(1).getT(1).
         getT(0).setExternalData(b, index);
-		this->getT(0).getT(1).getT(2).getT(1).  // filtest_impl::file_player2_t<NV>
+		this->getT(0).getT(1).getT(2).getT(1).           // filtest_impl::file_player2_t<NV>
         getT(2).getT(1).getT(1).getT(2).
         getT(0).setExternalData(b, index);
-		this->getT(0).getT(1).getT(2).getT(1).  // filtest_impl::file_player3_t<NV>
+		this->getT(0).getT(1).getT(2).getT(1).           // filtest_impl::file_player3_t<NV>
         getT(2).getT(1).getT(1).getT(3).
         getT(0).setExternalData(b, index);
+		this->getT(0).getT(3).setExternalData(b, index); // filtest_impl::ahdsr3_t<NV>
 	}
 };
 }

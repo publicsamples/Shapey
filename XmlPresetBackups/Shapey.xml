@@ -232,7 +232,7 @@
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
         </Processor>
-        <Processor Type="ScriptFX" ID="ScriptFX1" Bypassed="0">
+        <Processor Type="ScriptFX" ID="ScriptFX1" Bypassed="1">
           <ChildProcessors/>
           <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
           <Content/>
@@ -307,27 +307,9 @@
                        UseTable="0.0" Inverted="0.0" DecibelMode="0.0">
               <ChildProcessors/>
             </Processor>
-            <Processor Type="AHDSR" ID="AHDSR Envelope1" Bypassed="0" Monophonic="0.0"
-                       Retrigger="1.0" Intensity="1.0" AttackCurve="0.0" DecayCurve="0.0"
-                       Attack="0.0" AttackLevel="0.0" Hold="0.0" Decay="19598.0" Sustain="-0.09999832510948181"
-                       Release="448.0" EcoMode="1.0">
-              <ChildProcessors>
-                <Processor Type="ModulatorChain" ID="Attack Time" Bypassed="0" Intensity="1.0">
-                  <ChildProcessors/>
-                </Processor>
-                <Processor Type="ModulatorChain" ID="Attack Level" Bypassed="0" Intensity="1.0">
-                  <ChildProcessors/>
-                </Processor>
-                <Processor Type="ModulatorChain" ID="Decay Time" Bypassed="0" Intensity="1.0">
-                  <ChildProcessors/>
-                </Processor>
-                <Processor Type="ModulatorChain" ID="Sustain Level" Bypassed="0" Intensity="1.0">
-                  <ChildProcessors/>
-                </Processor>
-                <Processor Type="ModulatorChain" ID="Release Time" Bypassed="0" Intensity="1.0">
-                  <ChildProcessors/>
-                </Processor>
-              </ChildProcessors>
+            <Processor Type="ScriptnodeVoiceKiller" ID="Scriptnode Voice Killer1" Bypassed="0"
+                       Monophonic="0.0" Retrigger="0.0" Intensity="1.0">
+              <ChildProcessors/>
             </Processor>
           </ChildProcessors>
         </Processor>
@@ -385,7 +367,8 @@
                            Glide="0.0" PsOnOff="0.0" PsXfTempo="50.0" PsXfDivc="1.0" TranformCarIN="0.0"
                            TranformModIN="1.0" TransformFitlerIn="0.0" CarModIN="0.0" CarTransIN="1.0"
                            CarFilterIn="0.0" FilterModin="0.0" FilterTrasnIn="0.0" FilterCarIn="1.0"
-                           PreQuant="1.0" XfoffOn="0.0" xf="0.0" xfmod="0.0" xfsrc="1.0">
+                           PreQuant="1.0" XfoffOn="0.0" xf="0.0" xfmod="0.0" xfsrc="1.0"
+                           a="0.0" d="19598.0" h="0.0" s="-0.09999851137399673" r="448.0">
                   <ChildProcessors/>
                   <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
                   <Tables>

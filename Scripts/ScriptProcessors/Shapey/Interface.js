@@ -4,8 +4,7 @@ include("laf.js");
 include("Scopes.js");
 include("Loading.js");
 
-LpLoad2.setValue(1);
-LpLoad2.changed();
+
 
 //Impulse panel
 
@@ -18,7 +17,6 @@ const var ModTrig = Content.getComponent("ModTrig");
 //sync button
 
 const var SyncOff = [Content.getComponent("Pitch"),
-                     Content.getComponent("PitchModuation"),
                      Content.getComponent("PitchModSrc"),
                      Content.getComponent("PitchMod"),
                      Content.getComponent("PitchLabel")];
@@ -30,6 +28,13 @@ const var SyncOn = [Content.getComponent("ScriptLabel80"),
                     Content.getComponent("ScriptSlider59"),
                     Content.getComponent("ShapeModSource16")];
 
+
+inline function onFileLoadInitControl(component, value)
+{
+	slot2.loadFile("{ProjectFolder} + Saw1.wav");
+};
+
+Content.getComponent("FileLoadInit").setControlCallback(onFileLoadInitControl);
 
 
 inline function onPitchSyncControl(component, value)
@@ -431,6 +436,33 @@ inline function onPshiftControl(component, value)
 
 Content.getComponent("Pshift").setControlCallback(onPshiftControl);
 
+
+inline function onXfadeControl(component, value)
+{
+		for(s in FourFiles)
+	       s.showControl(value);
+	       
+	
+	   	Shaper.setAttribute(Shaper.XfoffOn, value);       	       
+	         	
+		if(value == 0)
+		{
+		
+		LpLoad2.setPosition(170, 235, 100, 30);
+		       	
+		}	
+		
+		if(value == 1)
+				{
+				
+				LpLoad2.setPosition(170, 235, 25, 30);
+				       	
+				}	
+		
+	       
+};
+
+Content.getComponent("Xfade").setControlCallback(onXfadeControl);
 
 
 

@@ -2867,8 +2867,9 @@
                                               <Connection NodeId="pma3" ParameterId="Add"/>
                                             </ModulationTargets>
                                             <Parameters>
-                                              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
-                                              <Parameter MinValue="-1.0" MaxValue="1.0" ID="Multiply" Value="0.0" DefaultValue="1.0"/>
+                                              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                              <Parameter MinValue="-0.25" MaxValue="0.25" ID="Multiply" DefaultValue="1.0"
+                                                         Value="0.0"/>
                                               <Parameter MinValue="5.551115123125783e-17" MaxValue="1.0" ID="Add" DefaultValue="0.0"
                                                          Automated="1"/>
                                             </Parameters>
@@ -2937,7 +2938,7 @@
                                                          StepSize="0" Automated="1"/>
                                               <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
                                               <Parameter MinValue="0.0" MaxValue="1.0" ID="Phase" DefaultValue="0.6470493164062501"
-                                                         Value="0.5"/>
+                                                         Value="0.0"/>
                                               <Parameter MinValue="0.0" MaxValue="1.0" ID="Gain" DefaultValue="1.0" Automated="1"/>
                                             </Parameters>
                                           </Node>
@@ -2952,10 +2953,11 @@
                                       <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
                                                  SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
                                       <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="178.0000026524067"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="3.60000005364418"
                                                  DefaultValue="20.0"/>
                                       <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-11.7999986857176"
+                                                 DefaultValue="0.0"/>
                                     </Parameters>
                                   </Node>
                                 </Nodes>
@@ -3057,11 +3059,10 @@
                                       <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
                                                  SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
                                       <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="187.5000027939677"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="0.4000000059604644"
                                                  DefaultValue="20.0"/>
                                       <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-26.89999891072513"
-                                                 DefaultValue="0.0"/>
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
                                     </Parameters>
                                   </Node>
                                   <Node ID="send5" FactoryPath="routing.send" Bypassed="0" Name="send5">
@@ -4899,7 +4900,7 @@
           <Connection NodeId="allpass" ParameterId="Q"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Blimey" Value="0.5899999737739563"
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="Blimey" Value="0.4099999964237213"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma" ParameterId="Add"/>
@@ -4917,8 +4918,8 @@
           <Connection NodeId="branch4" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="16.0" ID="Pitch" Value="1.549999952316284"
-                 StepSize="0" DefaultValue="0.0">
+      <Parameter MinValue="0.0" MaxValue="16.0" ID="Pitch" Value="1.0" StepSize="0"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma1" ParameterId="Add"/>
         </Connections>
@@ -5037,7 +5038,7 @@
                  DefaultValue="0.0">
         <Connections/>
       </Parameter>
-      <Parameter MinValue="5.551115123125783e-17" MaxValue="1.0" ID="Gain2" Value="0.4399999976158142"
+      <Parameter MinValue="5.551115123125783e-17" MaxValue="1.0" ID="Gain2" Value="0.3300000131130219"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma9" ParameterId="Add"/>
@@ -5056,14 +5057,15 @@
         </Connections>
       </Parameter>
       <Parameter MinValue="0.0" MaxValue="30000.0" StepSize="0.1000000014901161"
-                 SkewFactor="0.1976716816425323" ID="a1" Value="958.0000142753123"
+                 SkewFactor="0.1976716816425323" ID="a1" Value="3996.00005954504"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="ahdsr" ParameterId="Attack"/>
         </Connections>
       </Parameter>
       <Parameter MinValue="0.0" MaxValue="10000.0" StepSize="0.1000000014901161"
-                 SkewFactor="0.1976716816425323" ID="h1" Value="0.0">
+                 SkewFactor="0.1976716816425323" ID="h1" Value="10.00000014901161"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="ahdsr" ParameterId="Hold"/>
         </Connections>
@@ -5086,8 +5088,7 @@
           <Connection NodeId="ahdsr" ParameterId="Release"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="EnvMod1" Value="0.5936650815217391"
-                 DefaultValue="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="EnvMod1" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma18" ParameterId="Multiply"/>
         </Connections>
@@ -5125,18 +5126,19 @@
           <Connection NodeId="branch20" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="LP" Value="0.2000000029802322"
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="LP" Value="0.9900000095367432"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma11" ParameterId="Add"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="-1.0" MaxValue="1.0" ID="LpMod" Value="1.0" DefaultValue="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="LpMod" Value="2.081668171172169e-17"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma11" ParameterId="Multiply"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="1.0" ID="LpSrc" Value="1.0"
+      <Parameter MinValue="1.0" MaxValue="10.0" StepSize="1.0" ID="LpSrc" Value="2.0"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="branch14" ParameterId="Index"/>
@@ -5216,7 +5218,7 @@
         </Connections>
       </Parameter>
       <Parameter MinValue="5.551115123125783e-17" MaxValue="1.0" ID="ModPhase"
-                 Value="0.07000000029802322" DefaultValue="0.0">
+                 Value="5.551115123125783e-17" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma15" ParameterId="Add"/>
         </Connections>
@@ -5345,7 +5347,8 @@
           <Connection NodeId="pma3" ParameterId="Multiply"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="-1.0" MaxValue="1.0" ID="SubAm" Value="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="SubAm" Value="2.081668171172169e-17"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma5" ParameterId="Multiply"/>
         </Connections>
@@ -5412,8 +5415,7 @@
           <Connection NodeId="receive3" ParameterId="Feedback"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="FilterModin" Value="0.7200000286102295"
-                 DefaultValue="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="FilterModin" Value="0.0">
         <Connections>
           <Connection NodeId="receive9" ParameterId="Feedback"/>
         </Connections>
@@ -5423,8 +5425,7 @@
           <Connection NodeId="receive10" ParameterId="Feedback"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="FilterCarIn" Value="0.02999999932944775"
-                 DefaultValue="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="FilterCarIn" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="receive11" ParameterId="Feedback"/>
         </Connections>
