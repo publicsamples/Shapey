@@ -6,7 +6,7 @@
   <Description value=""/>
   <BundleIdentifier value="com.modularsamples.product"/>
   <PluginCode value="Shpy"/>
-  <EmbedAudioFiles value="0"/>
+  <EmbedAudioFiles value="1"/>
   <EmbedImageFiles value="Yes"/>
   <SupportFullDynamicsHLAC value="1"/>
   <AdditionalDspLibraries value=""/>

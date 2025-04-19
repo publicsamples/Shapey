@@ -5,6 +5,13 @@
 
 const FolderPath = [];
 const FolderPath2 = [];
+
+const var FileLoadInit1 = Content.getComponent("FileLoadInit");
+
+
+FileLoadInit1.setValue(1);
+FileLoadInit1.changed();
+
 const var LpLoad1 = Content.getComponent("LpLoad1");
 const var LpLoad2 = Content.getComponent("LpLoad2");
 const var LpLoad3 = Content.getComponent("LpLoad3");
@@ -136,12 +143,6 @@ Content.getComponent("FolderSelect1").setControlCallback(onFolderSelect1Control)
 
 const var Shaper = Synth.getAudioSampleProcessor("Shaper");
 
-
-const slot1 = Shaper.getAudioFile(0);
-const slot2 = Shaper.getAudioFile(1);
-const slot3 = Shaper.getAudioFile(2);
-const slot4 = Shaper.getAudioFile(3);
-const slot5 = Shaper.getAudioFile(4);
 
 
 const var ScriptnodeSynthesiser1 = Synth.getChildSynth("ScriptnodeSynthesiser1");
