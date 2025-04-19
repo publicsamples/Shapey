@@ -1,5 +1,4 @@
 
-*.wav
 *.hwt
 *.zip
 *.dat
@@ -14,3 +13,4 @@ Samples/wavetables.hwm
 /AudioFiles Expanded
 /Binaries
 /AudioFiles/Expansion
+Presets/Autosave_4.hip
