@@ -4,9 +4,28 @@ include("laf.js");
 include("Scopes.js");
 include("Loading.js");
 
+ 
+const slot1 = Shaper.getAudioFile(0);
+const slot2 = Shaper.getAudioFile(1);
+const slot3 = Shaper.getAudioFile(2);
+const slot4 = Shaper.getAudioFile(3);
+const slot5 = Shaper.getAudioFile(4);
+
+const var pool = Engine.loadAudioFilesIntoPool();
+
+slot1.loadFile(FileSystem.AudioFiles + "Sine1.wav");  
 
 
-//Impulse panel
+const var FileLoad1 = Content.getComponent("FileLoad1");
+
+
+Content.callAfterDelay(100, function(){
+	slot1.loadFile("{PROJECT_FOLDER}Sine1.wav"); 
+	slot2.loadFile("{PROJECT_FOLDER}Saw1.wav"); 
+    slot3.loadFile("{PROJECT_FOLDER}Noisy1.wav");  
+    slot4.loadFile("{PROJECT_FOLDER}Square1.wav");  
+    slot5.loadFile("{PROJECT_FOLDER}AD-Draw1.wav");  
+}, this);
 
 
 const var ModA = Content.getComponent("ModA");
@@ -28,13 +47,6 @@ const var SyncOn = [Content.getComponent("ScriptLabel80"),
                     Content.getComponent("ScriptSlider59"),
                     Content.getComponent("ShapeModSource16")];
 
-
-inline function onFileLoadInitControl(component, value)
-{
-	slot2.loadFile("{ProjectFolder} + Saw1.wav");
-};
-
-Content.getComponent("FileLoadInit").setControlCallback(onFileLoadInitControl);
 
 
 inline function onPitchSyncControl(component, value)
@@ -463,7 +475,6 @@ inline function onXfadeControl(component, value)
 };
 
 Content.getComponent("Xfade").setControlCallback(onXfadeControl);
-
 
 
 

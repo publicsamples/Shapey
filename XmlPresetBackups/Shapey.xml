@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Processor Type="SynthChain" ID="Shapey" Bypassed="0" Gain="0.2511886358261108"
+<Processor Type="SynthChain" ID="Shapey" Bypassed="0" Gain="0.4466835856437683"
            Balance="0.0" VoiceLimit="8.0" KillFadeTime="20.0" IconColour="0"
            packageName="" BuildVersion="650">
   <ChildProcessors>
@@ -50,8 +50,7 @@
             <Control type="ScriptComboBox" id="ShapeModSource15" value="4.0"/>
             <Control type="ScriptSlider" id="ScriptSlider57" value="2.081668171172169e-17"/>
             <Control type="ScriptAudioWaveform" id="OscVisual2" value="0.0" data="{PROJECT_FOLDER}Factory/Single Cycle 1/AX-2.wav"
-                     rangeStart="0" rangeEnd="256"/>
-            <Control type="ScriptLabel" id="FolderLabel" value="AX-2"/>
+                     rangeStart="0" rangeEnd="0"/>
             <Control type="ScriptSlider" id="ScriptSlider56" value="0.0"/>
             <Control type="ScriptComboBox" id="CarPostqant" value="1.0"/>
             <Control type="ScriptButton" id="Pshift" value="0.0"/>
@@ -62,7 +61,7 @@
             <Control type="ScriptComboBox" id="ShapeModSource14" value="1.0"/>
             <Control type="ScriptSlider" id="ScriptSlider60" value="0.0"/>
             <Control type="ScriptAudioWaveform" id="OscVisual3" value="0.0" data="{PROJECT_FOLDER}Factory/Single Cycle 1/AX-2.wav"
-                     rangeStart="0" rangeEnd="256"/>
+                     rangeStart="0" rangeEnd="0"/>
             <Control type="ScriptLabel" id="FolderLabel3" value=""/>
             <Control type="ScriptAudioWaveform" id="OscVisual4" value="0.0" data=""
                      rangeStart="0" rangeEnd="0"/>
@@ -157,6 +156,9 @@
             <Control type="ScriptSlider" id="Knob1" value="0.0"/>
             <Control type="ScriptSlider" id="Knob2" value="1.0"/>
             <Control type="ScriptButton" id="Button1" value="0.0"/>
+            <Control type="ScriptComboBox" id="Expansion1" value="1.0"/>
+            <Control type="ScriptComboBox" id="Bank1" value="1.0"/>
+            <Control type="ScriptComboBox" id="Sample1" value="1.0"/>
           </Content>
           <UIData Source="ShapeyUIData"/>
         </Processor>
@@ -303,12 +305,30 @@
         </Processor>
         <Processor Type="ModulatorChain" ID="GainModulation" Bypassed="0" Intensity="1.0">
           <ChildProcessors>
+            <Processor Type="AHDSR" ID="AHDSR Envelope1" Bypassed="0" Monophonic="0.0"
+                       Retrigger="1.0" Intensity="1.0" AttackCurve="0.0" DecayCurve="0.0"
+                       Attack="0.0" AttackLevel="0.0" Hold="0.0" Decay="19598.0" Sustain="-0.09999832510948181"
+                       Release="448.0" EcoMode="1.0">
+              <ChildProcessors>
+                <Processor Type="ModulatorChain" ID="Attack Time" Bypassed="0" Intensity="1.0">
+                  <ChildProcessors/>
+                </Processor>
+                <Processor Type="ModulatorChain" ID="Attack Level" Bypassed="0" Intensity="1.0">
+                  <ChildProcessors/>
+                </Processor>
+                <Processor Type="ModulatorChain" ID="Decay Time" Bypassed="0" Intensity="1.0">
+                  <ChildProcessors/>
+                </Processor>
+                <Processor Type="ModulatorChain" ID="Sustain Level" Bypassed="0" Intensity="1.0">
+                  <ChildProcessors/>
+                </Processor>
+                <Processor Type="ModulatorChain" ID="Release Time" Bypassed="0" Intensity="1.0">
+                  <ChildProcessors/>
+                </Processor>
+              </ChildProcessors>
+            </Processor>
             <Processor Type="Velocity" ID="Velocity Modulator1" Bypassed="0" Intensity="0.0"
                        UseTable="0.0" Inverted="0.0" DecibelMode="0.0">
-              <ChildProcessors/>
-            </Processor>
-            <Processor Type="ScriptnodeVoiceKiller" ID="Scriptnode Voice Killer1" Bypassed="0"
-                       Monophonic="0.0" Retrigger="0.0" Intensity="1.0">
               <ChildProcessors/>
             </Processor>
           </ChildProcessors>
@@ -379,7 +399,7 @@
                     <AudioFile EmbeddedData="{PROJECT_FOLDER}Factory/Single Cycle 1/202-1.wav"
                                MinValue="0" MaxValue="0"/>
                     <AudioFile EmbeddedData="{PROJECT_FOLDER}Factory/Single Cycle 1/AX-2.wav"
-                               MinValue="0" MaxValue="256"/>
+                               MinValue="0" MaxValue="0"/>
                     <AudioFile EmbeddedData="" MinValue="0" MaxValue="0"/>
                     <AudioFile EmbeddedData="" MinValue="0" MaxValue="0"/>
                     <AudioFile EmbeddedData="" MinValue="0" MaxValue="0"/>
