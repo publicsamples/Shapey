@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="filters" AllowCompilation="1" AllowPolyphonic="1" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="filters" Bypassed="0" Name="filters"
+        ShowParameters="1">
+    <Nodes>
+      <Node ID="softbypass_switch5" FactoryPath="container.chain" ShowParameters="1"
+            Bypassed="0" Name="Filters" NodeColour="4287584690">
+        <Nodes>
+          <Node ID="branch20" FactoryPath="container.branch" Bypassed="0" Name="branch20"
+                ShowParameters="1">
+            <Nodes>
+              <Node ID="chain164" FactoryPath="container.chain" Bypassed="0" Name="chain164">
+                <Nodes>
+                  <Node ID="no_midi1" FactoryPath="container.no_midi" Bypassed="0" Name="no_midi1">
+                    <Nodes>
+                      <Node ID="faust" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                        <Properties>
+                          <Property ID="ClassId" Value="klp"/>
+                          <Property ID="NumParameters" Value="0"/>
+                        </Properties>
+                        <Parameters>
+                          <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
+                                     ID="Q" DefaultValue="1.0" Automated="1"/>
+                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
+                                     ID="freq" DefaultValue="0.5" Automated="1"/>
+                        </Parameters>
+                        <SwitchTargets/>
+                      </Node>
+                      <Node ID="faust1" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                        <Properties>
+                          <Property ID="ClassId" Value="khp"/>
+                          <Property ID="NumParameters" Value="0"/>
+                        </Properties>
+                        <Parameters>
+                          <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
+                                     ID="Q" DefaultValue="1.0" Automated="1"/>
+                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
+                                     ID="freq" DefaultValue="0.5" Automated="1"/>
+                        </Parameters>
+                        <SwitchTargets/>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="chain186" FactoryPath="container.chain" Bypassed="0" Name="chain164">
+                <Nodes>
+                  <Node ID="split8" FactoryPath="container.split" Bypassed="0" Name="split8">
+                    <Nodes>
+                      <Node ID="faust2" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                        <Properties>
+                          <Property ID="ClassId" Value="klp"/>
+                          <Property ID="NumParameters" Value="0"/>
+                        </Properties>
+                        <Parameters>
+                          <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
+                                     ID="Q" DefaultValue="1.0" Automated="1"/>
+                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
+                                     ID="freq" DefaultValue="0.5" Automated="1"/>
+                        </Parameters>
+                        <SwitchTargets/>
+                      </Node>
+                      <Node ID="faust3" FactoryPath="core.faust" Bypassed="0" Name="faust">
+                        <Properties>
+                          <Property ID="ClassId" Value="khp"/>
+                          <Property ID="NumParameters" Value="0"/>
+                        </Properties>
+                        <Parameters>
+                          <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
+                                     ID="Q" DefaultValue="1.0" Automated="1"/>
+                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
+                                     ID="freq" DefaultValue="0.5" Automated="1"/>
+                        </Parameters>
+                        <SwitchTargets/>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+            </Nodes>
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1" StepSize="1.0" ID="Index" DefaultValue="0.0"
+                         Automated="1"/>
+            </Parameters>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
+    </Nodes>
+    <Parameters>
+      <Parameter ID="Low" MinValue="0.0" MaxValue="1.0" Value="0.6191721496582031"
+                 DefaultValue="1.0">
+        <Connections>
+          <Connection NodeId="faust" ParameterId="freq"/>
+          <Connection NodeId="faust2" ParameterId="freq"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="High" MinValue="0.0" MaxValue="1.0" Value="0.3784288330078125"
+                 DefaultValue="1.0">
+        <Connections>
+          <Connection NodeId="faust1" ParameterId="freq"/>
+          <Connection NodeId="faust3" ParameterId="freq"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="Q" MinValue="0.0" MaxValue="1.0" Value="1.0">
+        <Connections>
+          <Connection NodeId="faust" ParameterId="Q"/>
+          <Connection NodeId="faust1" ParameterId="Q"/>
+          <Connection NodeId="faust2" ParameterId="Q"/>
+          <Connection NodeId="faust3" ParameterId="Q"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="mode" Value="0.0">
+        <Connections>
+          <Connection NodeId="branch20" ParameterId="Index"/>
+        </Connections>
+      </Parameter>
+    </Parameters>
+  </Node>
+</Network>

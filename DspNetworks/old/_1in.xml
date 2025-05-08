@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="_1in" AllowPolyphonic="1" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="_1in" Bypassed="0" Name="_1in">
+    <Nodes>
+      <Node ID="global_receive" FactoryPath="routing.global_receive" Bypassed="0"
+            Name="global_receive" NodeColour="4282873010">
+        <Properties>
+          <Property ID="Connection" Value="2out"/>
+        </Properties>
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+        </Parameters>
+      </Node>
+    </Nodes>
+    <Parameters/>
+  </Node>
+</Network>

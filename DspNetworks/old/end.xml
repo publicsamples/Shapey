@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="end" AllowPolyphonic="1" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="end" Bypassed="0" Name="end">
+    <Nodes>
+      <Node ID="split" FactoryPath="container.split" Bypassed="0" Name="split">
+        <Nodes>
+          <Node ID="global_receive" FactoryPath="routing.global_receive" Bypassed="0"
+                Name="global_receive" NodeColour="4282888825">
+            <Properties>
+              <Property ID="Connection" Value="1out"/>
+            </Properties>
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+            </Parameters>
+          </Node>
+          <Node ID="global_receive1" FactoryPath="routing.global_receive" Bypassed="0"
+                Name="global_receive" NodeColour="4282873010">
+            <Properties>
+              <Property ID="Connection" Value="2out"/>
+            </Properties>
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0" DefaultValue="1.0"/>
+            </Parameters>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
+    </Nodes>
+    <Parameters/>
+  </Node>
+</Network>

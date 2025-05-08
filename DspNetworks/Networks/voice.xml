@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="voice" AllowPolyphonic="1" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="voice" Bypassed="0" Name="voice">
+    <Nodes/>
+    <Parameters/>
+  </Node>
+</Network>

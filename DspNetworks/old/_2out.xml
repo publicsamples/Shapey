@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="_2out" AllowPolyphonic="1" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="_2out" Bypassed="0" Name="_2out">
+    <Nodes>
+      <Node ID="global_send" FactoryPath="routing.global_send" Bypassed="0"
+            Name="global_send" NodeColour="4282873010">
+        <Properties>
+          <Property ID="Connection" Value="2out"/>
+        </Properties>
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+        </Parameters>
+      </Node>
+      <Node ID="clear" FactoryPath="math.clear" Bypassed="0" Name="clear">
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+        </Parameters>
+      </Node>
+    </Nodes>
+    <Parameters/>
+  </Node>
+</Network>

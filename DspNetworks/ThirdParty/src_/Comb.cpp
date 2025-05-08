@@ -55,7 +55,7 @@ struct _Comb final : public ::faust::dsp {
 		m->declare("filters.lib/fb_fcomb:author", "Julius O. Smith III");
 		m->declare("filters.lib/fb_fcomb:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/fb_fcomb:license", "MIT-style STK-4.3 license");
-		m->declare("filters.lib/lowpass0_highpass1", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
+		m->declare("filters.lib/lowpass0_highpass1", "MIT-style STK-4.3 license");
 		m->declare("filters.lib/name", "Faust Filters Library");
 		m->declare("filters.lib/version", "1.3.0");
 		m->declare("maths.lib/author", "GRAME");

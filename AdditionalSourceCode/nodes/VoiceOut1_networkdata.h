@@ -1,0 +1,20 @@
+namespace project
+{
+
+struct VoiceOut1_networkdata: public scriptnode::dll::InterpretedNetworkData
+{
+	String getId() const override
+	{
+		return "VoiceOut1";
+	}
+	bool isModNode() const override
+	{
+		return false;
+	}
+	String getNetworkData() const override
+	{
+		return "665.nT6K8ClXGzGE.Xj2ecB3via.XvTtGsBGMPUvN.CPHik1HovIv9YU40GLmhSweYL+BQQORoPT.LE.UAPOEg2c6A+YdmkB621bsNGVQWUnuD5U47pKfWQU2SGcVubHhv6iM6v7VgpkvqbB2nOn80P38BJmhz5hSOklwnl8U4r3ufSPMEds3.g2QzYo52Y2CqzWaR87f2LOpKYxTko5RG.uTtYbtoRHIrxMo8AXxeKinqwLFpEn25m4T2ytOE5H7xwiI4v7tQ+M1fygNOpsAsXdWu5Vb7Qsr4lGbkmRYG4uV7ghh50SllzXOF1qQ1CO1ETBwHbhN.5GxkdVFjv37n9gnNFhtpvRe1spgjw0oGHBW40lwmj7aBnaXh7sk73vqXaIrhH7x7CulfZ.384hNn50KkyMVbR0ylUNM0HmuwaMwLBUOhdJDjVozOIJ2ley+3eQOYgci6SOgxRme8VsDpJr3ThdJ9jdJDXe8znKuV0z.rVprrP0ELuLXdLfggFJ8i9rOLuGUCWdFzA7i1WCuAZX4NhTCQ.HHDTQfA.LB.fhwttAubHHSGDrcb3TG2rh16oEaVjDU9NEmfM7T1EUjxnojWY8.2MI.xwYcBFE.36yXaFOiqbKaWG67kLK+40S49n4qvdUVOEWiCgoZiS1r.131IkbBcW5LCIKl8nEeWnI9kfDmKrEMvCIC7n.R.wqB.ri3wK53FXARv.2iMD2Br.YiR06fB6B.6JZYKTVPgB2UNJ3iXihU9g0FmKjvvg+Z+ZAnzsPD5BfDIL7DZYeZyiOIv.bLsNaDnwjsnBFhn4kFKOaYt.QIKngtvsBQYOwefIC+Nr.LrPjtKs6WM8BWx3GviENP9tSggfLYsQK1PAzJaBoHGcdfJNfed.";
+	}
+};
+}
+

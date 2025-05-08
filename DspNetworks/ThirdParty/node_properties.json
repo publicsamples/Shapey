@@ -1,0 +1,26 @@
+{
+  "Comb": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ],
+  "khp": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ],
+  "khp2": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ],
+  "klp": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ],
+  "klp2": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ],
+  "shfiter": [
+    "IsPolyphonic",
+    "AllowPolyphonic"
+  ]
+}

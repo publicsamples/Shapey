@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="Shapey" AllowPolyphonic="1" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="Shapey" Bypassed="0" Name="Shapey"
+        ShowParameters="1">
+    <Nodes>
+      <Node ID="chain" FactoryPath="container.chain" Bypassed="0" Name="chain">
+        <Nodes>
+          <Node ID="modchain" FactoryPath="container.modchain" Bypassed="0" Name="modchain">
+            <Nodes>
+              <Node ID="split" FactoryPath="container.split" Bypassed="0" Name="split">
+                <Nodes>
+                  <Node ID="chain1" FactoryPath="container.chain" Bypassed="0" Name="chain1">
+                    <Nodes>
+                      <Node ID="global_cable" FactoryPath="routing.global_cable" Bypassed="0"
+                            Name="global_cable" NodeColour="4286755400">
+                        <Properties>
+                          <Property ID="Connection" Value="Osc_Shape1"/>
+                        </Properties>
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6801875000000001"
+                                     DefaultValue="1.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="global_cable2" FactoryPath="routing.global_cable" Bypassed="0"
+                            Name="global_cable" NodeColour="4289882439">
+                        <Properties>
+                          <Property ID="Connection" Value="OscOut1"/>
+                        </Properties>
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.4046923828125"
+                                     DefaultValue="1.0"/>
+                        </Parameters>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="split2" FactoryPath="container.split" Bypassed="0" Name="split2">
+            <Nodes>
+              <Node ID="fix8_block" FactoryPath="container.fix8_block" Bypassed="1"
+                    Name="fix8_block">
+                <Nodes>
+                  <Node ID="chain4" FactoryPath="container.chain" Bypassed="0" Name="chain4">
+                    <Nodes>
+                      <Node ID="split1" FactoryPath="container.split" Bypassed="0" Name="split1">
+                        <Nodes>
+                          <Node ID="chain2" FactoryPath="container.chain" Bypassed="0" Name="chain2"
+                                NodeColour="4284068491">
+                            <Nodes>
+                              <Node ID="split9" FactoryPath="container.split" Bypassed="0" Name="split9">
+                                <Nodes>
+                                  <Node ID="receive4" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                                        NodeColour="4288131673">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="receive3" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                                        NodeColour="4284050610">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="receive2" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                                        NodeColour="4289878443">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="receive1" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                                        NodeColour="4289878372">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="receive5" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                                        NodeColour="4289884761">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="OSC" FactoryPath="project.OSC" Bypassed="0" Name="OSC">
+                                <ComplexData>
+                                  <Tables>
+                                    <Table Index="0"/>
+                                  </Tables>
+                                </ComplexData>
+                                <Parameters>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="OscShape1" Value="0.3723956909179688"
+                                             DefaultValue="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="PW" Value="0.3605529627799987"
+                                             DefaultValue="0.397843062877655"/>
+                                  <Parameter MinValue="0.0" MaxValue="35.0" StepSize="1.0" ID="tempo1" Value="10.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="pitch1" Value="0.5220614256858824"
+                                             DefaultValue="0.5663213133811951"/>
+                                  <Parameter MinValue="0.0" MaxValue="2.0" StepSize="1.0" ID="pitch1mode"
+                                             Value="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="phase" Value="0.50057466340065"
+                                             DefaultValue="0.4978770315647125"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="osc1track" Value="0.0" DefaultValue="0.1856317967176437"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="step" Value="0.174010009765625"
+                                             DefaultValue="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="input" Value="0.0" DefaultValue="0.9391240477561951"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="output" Value="0.653327347278595"
+                                             DefaultValue="0.449813187122345"/>
+                                </Parameters>
+                              </Node>
+                              <Node ID="peak_unscaled1" FactoryPath="core.peak_unscaled" Bypassed="0"
+                                    Name="peak_unscaled">
+                                <ModulationTargets>
+                                  <Connection NodeId="global_cable3" ParameterId="Value"/>
+                                </ModulationTargets>
+                                <ComplexData>
+                                  <DisplayBuffers>
+                                    <DisplayBuffer Index="-1"/>
+                                  </DisplayBuffers>
+                                </ComplexData>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="global_cable3" FactoryPath="routing.global_cable" Bypassed="0"
+                                    Name="global_cable3" NodeColour="4289882439">
+                                <Properties>
+                                  <Property ID="Connection" Value="OscOut1"/>
+                                </Properties>
+                                <Parameters>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                </Parameters>
+                              </Node>
+                              <Node ID="gain" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                <Parameters>
+                                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                             SkewFactor="5.422270774841309" ID="Gain" Value="-4.799998581409469"
+                                             DefaultValue="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                             SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                             SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                                </Parameters>
+                              </Node>
+                              <Node ID="send" FactoryPath="routing.send" Bypassed="0" Name="send">
+                                <Properties>
+                                  <Property ID="Connection" Value="receive13"/>
+                                </Properties>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clear" FactoryPath="math.clear" Bypassed="0" Name="clear">
+                                <Parameters>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                </Parameters>
+                              </Node>
+                            </Nodes>
+                            <Parameters/>
+                          </Node>
+                          <Node ID="chain3" FactoryPath="container.chain" Bypassed="0" Name="chain2"
+                                NodeColour="4288131673">
+                            <Nodes>
+                              <Node ID="split10" FactoryPath="container.split" Bypassed="0" Name="split9">
+                                <Nodes>
+                                  <Node ID="receive6" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                                        NodeColour="4284068491">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="receive8" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                                        NodeColour="4284050610">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="receive9" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                                        NodeColour="4289878443">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="receive10" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                                        NodeColour="4289878372">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="receive11" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                                        NodeColour="4289884761">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="OSC1" FactoryPath="project.OSC" Bypassed="0" Name="OSC1">
+                                <ComplexData>
+                                  <Tables>
+                                    <Table Index="1"/>
+                                  </Tables>
+                                </ComplexData>
+                                <Parameters>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="OscShape1" Value="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="PW" Value="0.397843062877655"/>
+                                  <Parameter MinValue="0.0" MaxValue="35.0" StepSize="1.0" ID="tempo1" Value="10.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="pitch1" Value="0.5663213133811951"/>
+                                  <Parameter MinValue="0.0" MaxValue="2.0" StepSize="1.0" ID="pitch1mode"
+                                             Value="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="phase" Value="0.4978770315647125"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="osc1track" Value="0.1856317967176437"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="step" Value="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="input" Value="0.9391240477561951"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="output" Value="0.449813187122345"/>
+                                </Parameters>
+                              </Node>
+                              <Node ID="peak_unscaled" FactoryPath="core.peak_unscaled" Bypassed="0"
+                                    Name="peak_unscaled">
+                                <ModulationTargets>
+                                  <Connection NodeId="global_cable1" ParameterId="Value"/>
+                                </ModulationTargets>
+                                <ComplexData>
+                                  <DisplayBuffers>
+                                    <DisplayBuffer Index="-1"/>
+                                  </DisplayBuffers>
+                                </ComplexData>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="global_cable1" FactoryPath="routing.global_cable" Bypassed="0"
+                                    Name="global_cable1" NodeColour="4289882183">
+                                <Properties>
+                                  <Property ID="Connection" Value="OscOut2"/>
+                                </Properties>
+                                <Parameters>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                </Parameters>
+                              </Node>
+                              <Node ID="gain1" FactoryPath="core.gain" Bypassed="1" Name="gain">
+                                <Parameters>
+                                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                             SkewFactor="5.422270774841309" ID="Gain" Value="-100.0" DefaultValue="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                             SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                                  <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                             SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                                </Parameters>
+                              </Node>
+                              <Node ID="clear1" FactoryPath="math.clear" Bypassed="1" Name="clear">
+                                <Parameters>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                </Parameters>
+                              </Node>
+                            </Nodes>
+                            <Parameters/>
+                          </Node>
+                        </Nodes>
+                        <Parameters/>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="chain6" FactoryPath="container.chain" Bypassed="0" Name="chain6"
+                    NodeColour="4284050610">
+                <Nodes>
+                  <Node ID="split11" FactoryPath="container.split" Bypassed="0" Name="split9">
+                    <Nodes>
+                      <Node ID="receive12" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4284068491">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive14" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4284050610">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive15" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4289878443">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive16" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4289878372">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive17" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4289884761">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
+                  </Node>
+                  <Node ID="transform1" FactoryPath="project.transform" Bypassed="0"
+                        Name="transform">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="mix" Value="0.09987554931640613"
+                                 DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="A" Value="0.79532958984375"
+                                 DefaultValue="0.2079653590917587"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="B" Value="0.0" DefaultValue="0.6123471260070801"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="mode" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="split5" FactoryPath="container.split" Bypassed="0" Name="split3">
+                    <Nodes>
+                      <Node ID="send14" FactoryPath="routing.send" Bypassed="0" Name="send"
+                            NodeColour="4284050610">
+                        <Properties>
+                          <Property ID="Connection" Value=""/>
+                        </Properties>
+                        <Parameters/>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
+                  </Node>
+                  <Node ID="clear2" FactoryPath="math.clear" Bypassed="0" Name="clear">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="chain5" FactoryPath="container.chain" Bypassed="0" Name="chain5"
+                    NodeColour="4289878443">
+                <Nodes>
+                  <Node ID="split12" FactoryPath="container.split" Bypassed="0" Name="split9">
+                    <Nodes>
+                      <Node ID="receive18" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4284068491">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive20" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4284050610">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive21" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4289878443">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive22" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4289878372">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive23" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4289884761">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
+                  </Node>
+                  <Node ID="transform" FactoryPath="project.transform" Bypassed="0" Name="transform">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="mix" Value="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="A" Value="0.3193166503906253"
+                                 DefaultValue="0.2079653590917587"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="B" Value="0.72325146484375"
+                                 DefaultValue="0.6123471260070801"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="mode" Value="0.552806640625"
+                                 DefaultValue="0.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="split6" FactoryPath="container.split" Bypassed="0" Name="split3">
+                    <Nodes>
+                      <Node ID="send21" FactoryPath="routing.send" Bypassed="0" Name="send"
+                            NodeColour="4289878443">
+                        <Properties>
+                          <Property ID="Connection" Value=""/>
+                        </Properties>
+                        <Parameters/>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
+                  </Node>
+                  <Node ID="clear3" FactoryPath="math.clear" Bypassed="0" Name="clear">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="chain7" FactoryPath="container.chain" Bypassed="0" Name="chain7"
+                    NodeColour="4289878372">
+                <Nodes>
+                  <Node ID="split13" FactoryPath="container.split" Bypassed="0" Name="split9">
+                    <Nodes>
+                      <Node ID="receive24" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4284068491">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive26" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4284050610">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive27" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4289878443">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive28" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4289878372">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive29" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4289884761">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
+                  </Node>
+                  <Node ID="files" FactoryPath="project.files" Bypassed="0" Name="files">
+                    <ComplexData>
+                      <AudioFiles>
+                        <AudioFile Index="0" MinValue="0" MaxValue="437"/>
+                        <AudioFile Index="0" MinValue="0" MaxValue="437"/>
+                        <AudioFile Index="-1"/>
+                      </AudioFiles>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Position" Value="0.5962833738327026"
+                                 DefaultValue="0.6774576902389526"/>
+                      <Parameter MinValue="-100.0" MaxValue="24.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="Input" Value="10.30000164359807"
+                                 DefaultValue="-13.09999847412109"/>
+                      <Parameter MinValue="0.0" MaxValue="24.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.2313782125711441" ID="smooth" Value="0.0" DefaultValue="0.6000000238418579"/>
+                      <Parameter MinValue="0.0" MaxValue="8.0" StepSize="1.0" ID="quant" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="split7" FactoryPath="container.split" Bypassed="0" Name="split3">
+                    <Nodes>
+                      <Node ID="send28" FactoryPath="routing.send" Bypassed="0" Name="send"
+                            NodeColour="4289878372">
+                        <Properties>
+                          <Property ID="Connection" Value=""/>
+                        </Properties>
+                        <Parameters/>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
+                  </Node>
+                  <Node ID="clear4" FactoryPath="math.clear" Bypassed="0" Name="clear">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="chain8" FactoryPath="container.chain" Bypassed="0" Name="chain8"
+                    NodeColour="4289884761">
+                <Nodes>
+                  <Node ID="split14" FactoryPath="container.split" Bypassed="0" Name="split9">
+                    <Nodes>
+                      <Node ID="receive30" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4284068491">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive32" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4284050610">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive33" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4289878443">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive34" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4289878372">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                      <Node ID="receive35" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                            NodeColour="4289884761">
+                        <Parameters>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                        </Parameters>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
+                  </Node>
+                  <Node ID="files1" FactoryPath="project.files" Bypassed="0" Name="files">
+                    <ComplexData>
+                      <AudioFiles>
+                        <AudioFile Index="1" MinValue="0" MaxValue="437"/>
+                        <AudioFile Index="1" MinValue="0" MaxValue="437"/>
+                        <AudioFile Index="-1"/>
+                      </AudioFiles>
+                    </ComplexData>
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Position" Value="0.43843950176239"
+                                 DefaultValue="0.6774576902389526"/>
+                      <Parameter MinValue="-100.0" MaxValue="24.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="Input" Value="24.0" DefaultValue="-13.09999847412109"/>
+                      <Parameter MinValue="0.0" MaxValue="24.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.2313782125711441" ID="smooth" Value="0.0" DefaultValue="0.6000000238418579"/>
+                      <Parameter MinValue="0.0" MaxValue="8.0" StepSize="1.0" ID="quant" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="split8" FactoryPath="container.split" Bypassed="0" Name="split3">
+                    <Nodes>
+                      <Node ID="send35" FactoryPath="routing.send" Bypassed="0" Name="send"
+                            NodeColour="4289884761">
+                        <Properties>
+                          <Property ID="Connection" Value=""/>
+                        </Properties>
+                        <Parameters/>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
+                  </Node>
+                  <Node ID="clear5" FactoryPath="math.clear" Bypassed="0" Name="clear">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="split15" FactoryPath="container.split" Bypassed="0" Name="split9">
+            <Nodes>
+              <Node ID="chain10" FactoryPath="container.chain" Bypassed="0" Name="chain10">
+                <Nodes>
+                  <Node ID="receive13" FactoryPath="routing.receive" Bypassed="0" Name="receive13">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="1.0" DefaultValue="0.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="gain2" FactoryPath="core.gain" Bypassed="0" Name="gain2">
+                    <Parameters>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="Gain" Value="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="chain12" FactoryPath="container.chain" Bypassed="0" Name="chain10">
+                <Nodes>
+                  <Node ID="gain9" FactoryPath="core.gain" Bypassed="1" Name="gain2">
+                    <Parameters>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="Gain" Value="-0.1999985128641271"
+                                 DefaultValue="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="chain16" FactoryPath="container.chain" Bypassed="0" Name="chain11">
+                <Nodes>
+                  <Node ID="receive38" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                        NodeColour="4284050610">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="gain6" FactoryPath="core.gain" Bypassed="0" Name="gain3">
+                    <Parameters>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="Gain" Value="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="chain15" FactoryPath="container.chain" Bypassed="0" Name="chain11">
+                <Nodes>
+                  <Node ID="receive39" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                        NodeColour="4289878443">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="gain5" FactoryPath="core.gain" Bypassed="0" Name="gain3">
+                    <Parameters>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="Gain" Value="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="chain14" FactoryPath="container.chain" Bypassed="0" Name="chain11">
+                <Nodes>
+                  <Node ID="receive40" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                        NodeColour="4289878372">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="gain4" FactoryPath="core.gain" Bypassed="0" Name="gain3">
+                    <Parameters>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="Gain" Value="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="chain13" FactoryPath="container.chain" Bypassed="0" Name="chain11">
+                <Nodes>
+                  <Node ID="receive41" FactoryPath="routing.receive" Bypassed="0" Name="receive"
+                        NodeColour="4289884761">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Feedback" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="gain7" FactoryPath="core.gain" Bypassed="0" Name="gain3">
+                    <Parameters>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="Gain" Value="0.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="chain9" FactoryPath="container.chain" Bypassed="0" Name="chain9">
+            <Nodes/>
+            <Parameters/>
+          </Node>
+          <Node ID="frame2_block" FactoryPath="container.frame2_block" Bypassed="1"
+                Name="frame2_block">
+            <Nodes>
+              <Node ID="filters" FactoryPath="project.filters" Bypassed="1" Name="filters">
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Low" Value="1.0" DefaultValue="0.6191721558570862"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="High" Value="0.204" DefaultValue="0.3784288465976715"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Q" Value="0.83272607421875"
+                             DefaultValue="1.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="mode" Value="0.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="gain8" FactoryPath="core.gain" Bypassed="1" Name="gain8">
+            <Parameters>
+              <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                         SkewFactor="5.422270774841309" ID="Gain" Value="0.0"/>
+              <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                         SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+              <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                         SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+            </Parameters>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
+    </Nodes>
+    <Parameters/>
+  </Node>
+</Network>

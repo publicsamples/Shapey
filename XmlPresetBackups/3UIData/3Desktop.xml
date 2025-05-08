@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentProperties DeviceType="Desktop">
+  <Component type="ScriptSlider" id="SlotInputSource1" x="89.0" y="22.0" width="170.0"
+             height="50.0" min="1.0" max="4.0" middlePosition="2.5" processorId="input"
+             parameterId="Input"/>
+  <Component type="ScriptComboBox" id="SlotSelect1" x="77.0" y="91.0" max="2"
+             items="Oscilator&#10;Sample" width="190.0" height="40.0"/>
+  <Component type="ScriptComboBox" id="SlotSelect2" x="324.0" y="91.0" max="12"
+             items="Divide&#10;Subtract&#10;Multiply&#10;Simple Osc&#10;Fold&#10;Bitcrush&#10;S&amp;H&#10;S&amp;H Clocked&#10;Ring Mod&#10;LP/HP&#10;EQ&#10;Comb&#10;&#10;&#10;&#10;"/>
+  <Component type="ScriptComboBox" id="SlotSelect3" x="517.0" y="91.0" max="2"
+             items="Oscilator&#10;File"/>
+  <Component type="ScriptComboBox" id="SlotSelect4" x="716.0" y="88.0" items="LP/HP&#10;EQ&#10;Comb"
+             max="3"/>
+  <Component type="ScriptSlider" id="SlotInputSource2" x="303.0" y="20.0"
+             width="170.0" height="50.0" min="1.0" max="3.0" middlePosition="2.0"
+             processorId="io1" parameterId="input"/>
+  <Component type="ScriptSlider" id="SlotInputSource3" x="512.0" y="10.0"
+             width="170.0" height="50.0" min="1.0" max="3.0" middlePosition="2.0"
+             processorId="io2" parameterId="input"/>
+  <Component type="ScriptSlider" id="SlotInputSource4" x="721.0" y="16.0"
+             width="170.0" height="50.0" min="1.0" max="3.0" middlePosition="2.0"
+             processorId="io3" parameterId="input"/>
+  <Component type="ScriptSlider" id="SlotVol1" x="570.0" y="660.0" width="30.0"
+             height="100.0" middlePosition="0.5" processorId="mix" parameterId="vol1"
+             style="Vertical" itemColour="1727987712"/>
+  <Component type="ScriptSlider" id="SlotVol2" x="623.0" y="660.0" width="30.0"
+             height="100.0" middlePosition="0.5" processorId="mix" parameterId="vol2"
+             style="Vertical" itemColour="1727987712"/>
+  <Component type="ScriptSlider" id="SlotVol3" x="676.0" y="660.0" width="30.0"
+             height="100.0" middlePosition="0.5" processorId="mix" parameterId="vol3"
+             style="Vertical" itemColour="1727987712"/>
+  <Component type="ScriptSlider" id="SlotVol4" x="729.0" y="660.0" width="30.0"
+             height="100.0" middlePosition="0.5" processorId="mix" parameterId="vol4"
+             style="Vertical" itemColour="1727987712"/>
+  <Component type="ScriptSlider" id="SlotVol5" x="783.0" y="659.0" width="30.0"
+             height="100.0" middlePosition="0.5" processorId="mix" parameterId="Master"
+             style="Vertical" itemColour="1727987712"/>
+  <Component type="ScriptSlider" id="SlotVol6" x="299.0" y="661.0" width="30.0"
+             height="100.0" middlePosition="0.5" processorId="mix" parameterId="r"
+             style="Vertical" itemColour="1711314431"/>
+  <Component type="ScriptSlider" id="SlotVol7" x="245.0" y="662.0" width="30.0"
+             height="100.0" middlePosition="0.5" processorId="mix" parameterId="s"
+             style="Vertical" itemColour="1711314431"/>
+  <Component type="ScriptSlider" id="SlotVol8" x="192.0" y="662.0" width="30.0"
+             height="100.0" middlePosition="0.5" processorId="mix" parameterId="d"
+             style="Vertical" itemColour="1711314431"/>
+  <Component type="ScriptSlider" id="SlotVol9" x="139.0" y="662.0" width="30.0"
+             height="100.0" middlePosition="0.5" processorId="mix" parameterId="h"
+             style="Vertical" itemColour="1711314431"/>
+  <Component type="ScriptSlider" id="SlotVol10" x="86.0" y="662.0" width="30.0"
+             height="100.0" middlePosition="0.5" processorId="mix" parameterId="a"
+             style="Vertical" itemColour="1711314431"/>
+  <Component type="ScriptPanel" id="Osc1" x="60.0" y="149.0" width="240.0"
+             height="480.0">
+    <Component type="ScriptTable" id="Table1" x="128.0" y="52.0" processorId="slot1a"
+               parentComponent="Osc1"/>
+    <Component type="ScriptSliderPack" id="SliderPack1" x="70.0" y="376.0" width="110.0"
+               height="10.0" processorId="slot1a" stepSequencerMode="1" sliderAmount="8.0"
+               parentComponent="Osc1"/>
+    <Component type="ScriptSliderPack" id="ShapePack1" x="70.0" y="391.0" width="110.0"
+               height="10.0" processorId="slot1a" stepSequencerMode="1" sliderAmount="8.0"
+               parentComponent="Osc1" SliderPackIndex="1"/>
+    <Component type="ScriptSliderPack" id="SliderPack3" x="70.0" y="407.0" width="110.0"
+               height="10.0" processorId="slot1a" stepSequencerMode="1" sliderAmount="8.0"
+               parentComponent="Osc1" SliderPackIndex="2"/>
+    <Component type="ScriptSliderPack" id="SliderPack4" x="70.0" y="407.0" width="110.0"
+               height="10.0" processorId="slot1a" stepSequencerMode="1" sliderAmount="8.0"
+               parentComponent="Osc1" SliderPackIndex="3"/>
+    <Component type="ScriptSliderPack" id="SliderPack5" x="70.0" y="425.0" width="110.0"
+               height="10.0" processorId="slot1a" stepSequencerMode="1" sliderAmount="8.0"
+               parentComponent="Osc1" SliderPackIndex="4"/>
+    <Component type="ScriptSliderPack" id="SliderPack6" x="70.0" y="440.0" width="110.0"
+               height="10.0" processorId="slot1a" stepSequencerMode="1" sliderAmount="8.0"
+               parentComponent="Osc1" SliderPackIndex="5"/>
+    <Component type="ScriptSlider" id="OscShapeMod1" x="160.0" y="0.0" width="40.0"
+               height="50.0" parentComponent="Osc1" min="-1.0" middlePosition="0.0"
+               processorId="OscShaper1" parameterId="shapemod"/>
+    <Component type="ScriptSlider" id="WidthMod1" x="70.0" y="127.0" width="40.0"
+               height="50.0" parentComponent="Osc1" processorId="slot1a" parameterId="WidthMod"
+               min="-1.0" middlePosition="0.0"/>
+    <Component type="ScriptSlider" id="Width1" x="16.0" y="127.0" width="40.0"
+               height="50.0" parentComponent="Osc1" processorId="slot1a" parameterId="Width"/>
+    <Component type="ScriptSlider" id="PitchMod1" x="183.0" y="127.0" width="40.0"
+               height="50.0" parentComponent="Osc1" processorId="slot1a" parameterId="PitchMod"
+               min="-1.0" middlePosition="0.0"/>
+    <Component type="ScriptSlider" id="Pitch1" x="129.0" y="127.0" width="40.0"
+               height="50.0" parentComponent="Osc1" processorId="slot1a" parameterId="Pitch"/>
+    <Component type="ScriptSlider" id="InputMod1" x="73.0" y="188.0" width="40.0"
+               height="50.0" parentComponent="Osc1" processorId="slot1a" parameterId="InputMod"
+               min="-1.0" middlePosition="0.0"/>
+    <Component type="ScriptSlider" id="Input1" x="19.0" y="188.0" width="40.0"
+               height="50.0" parentComponent="Osc1" processorId="slot1a" parameterId="Input"/>
+    <Component type="ScriptSlider" id="OutMod1" x="184.0" y="188.0" width="40.0"
+               height="50.0" parentComponent="Osc1" processorId="slot1a" parameterId="OutputMod"
+               min="-1.0" middlePosition="0.0"/>
+    <Component type="ScriptSlider" id="Out1" x="130.0" y="188.0" width="40.0"
+               height="50.0" parentComponent="Osc1" processorId="slot1a" parameterId="Output"/>
+    <Component type="ScriptSlider" id="Step1" x="131.0" y="261.0" width="40.0"
+               height="50.0" parentComponent="Osc1" processorId="slot1a" parameterId="step"/>
+    <Component type="ScriptButton" id="Sync1" x="56.0" y="261.0" width="40.0"
+               height="50.0" parentComponent="Osc1" processorId="slot1a" parameterId="sync"/>
+    <Component type="ScriptSlider" id="OscShapeInput1" x="20.0" y="11.0" width="80.0"
+               height="100.0" parentComponent="Osc1" text="ShapeMod" stepSize="0.0"
+               middlePosition="0.5" processorId="OscShaper1" parameterId="shaper"/>
+  </Component>
+  <Component type="ScriptPanel" id="File1" x="60.0" y="149.0" width="240.0"
+             height="480.0" visible="0">
+    <Component type="ScriptSliderPack" id="SliderPack7" x="71.0" y="405.0" width="110.0"
+               height="10.0" processorId="slot1b" stepSequencerMode="1" sliderAmount="8.0"
+               parentComponent="File1"/>
+    <Component type="ScriptSliderPack" id="SliderPack8" x="70.0" y="422.0" width="110.0"
+               height="10.0" processorId="slot1b" stepSequencerMode="1" sliderAmount="8.0"
+               parentComponent="File1" SliderPackIndex="1"/>
+    <Component type="ScriptSliderPack" id="SliderPack9" x="70.0" y="438.0" width="110.0"
+               height="10.0" processorId="slot1b" stepSequencerMode="1" sliderAmount="8.0"
+               parentComponent="File1" SliderPackIndex="2"/>
+    <Component type="ScriptAudioWaveform" id="ScriptAudioWaveform1" x="23.0"
+               y="21.0" width="190.0" height="80.0" parentComponent="File1"
+               processorId="slot1b" sampleIndex="1"/>
+    <Component type="ScriptSlider" id="Position1" x="19.0" y="140.0" width="40.0"
+               height="50.0" parentComponent="File1" text="Width" stepSize="0.0"
+               middlePosition="0.5" defaultValue="0.1993036717176437" processorId="slot1b"/>
+    <Component type="ScriptSlider" id="PositionMod1" x="68.0" y="139.0" width="40.0"
+               height="50.0" parentComponent="File1" processorId="slot1b"/>
+    <Component type="ScriptSlider" id="FileInput1" x="120.0" y="143.0" width="40.0"
+               height="50.0" parentComponent="File1" processorId="slot1b"/>
+    <Component type="ScriptSlider" id="FileInMod1" x="176.0" y="144.0" width="40.0"
+               height="50.0" parentComponent="File1" min="-1.0" middlePosition="0.0"
+               processorId="slot1b"/>
+    <Component type="ScriptComboBox" id="Quant1" x="175.0" y="205.0" width="40.0"
+               height="40.0" max="0" parentComponent="File1" processorId="slot1b"/>
+    <Component type="ScriptSlider" id="Smooth1" x="120.0" y="201.0" width="40.0"
+               height="50.0" parentComponent="File1" processorId="slot1b"/>
+    <Component type="ScriptButton" id="FileTrackinput1" x="20.0" y="202.0" width="50.0"
+               height="50.0" parentComponent="File1" processorId="slot1b"/>
+    <Component type="ScriptButton" id="PsOn1" x="20.0" y="280.0" width="50.0"
+               height="50.0" parentComponent="File1" processorId="slot1b"/>
+    <Component type="ScriptSlider" id="Win1" x="107.0" y="268.0" width="40.0"
+               height="50.0" parentComponent="File1" processorId="slot1b"/>
+    <Component type="ScriptSlider" id="Xf1" x="163.0" y="269.0" width="40.0"
+               height="50.0" parentComponent="File1" processorId="slot1b"/>
+  </Component>
+  <Component type="ScriptPanel" id="TransFx" x="319.0" y="130.0" width="170.0"
+             height="500.0">
+    <Component type="ScriptSlider" id="ScriptSlider1" x="12.0" y="70.0" width="50.0"
+               height="50.0" parentComponent="TransFx" processorId="slot2" parameterId="TransformMix"/>
+    <Component type="ScriptSlider" id="ScriptSlider2" x="100.0" y="70.0" width="50.0"
+               height="50.0" parentComponent="TransFx" processorId="slot2" min="-1.0"
+               middlePosition="0.0" parameterId="MixMod"/>
+    <Component type="ScriptSlider" id="ScriptSlider3" x="12.0" y="185.0" width="50.0"
+               height="50.0" parentComponent="TransFx" processorId="slot2" parameterId="TransformA"/>
+    <Component type="ScriptSlider" id="ScriptSlider4" x="100.0" y="185.0" width="50.0"
+               height="50.0" parentComponent="TransFx" processorId="slot2" min="-1.0"
+               middlePosition="0.0" parameterId="Amod"/>
+    <Component type="ScriptSlider" id="ScriptSlider5" x="12.0" y="295.0" width="50.0"
+               height="50.0" parentComponent="TransFx" processorId="slot2" parameterId="TransformB"/>
+    <Component type="ScriptSlider" id="ScriptSlider6" x="100.0" y="295.0" width="50.0"
+               height="50.0" parentComponent="TransFx" processorId="slot2" min="-1.0"
+               middlePosition="0.0" parameterId="Bmod"/>
+  </Component>
+</ContentProperties>

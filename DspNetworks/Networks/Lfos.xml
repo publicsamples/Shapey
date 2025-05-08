@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="Lfos" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="Lfos" Bypassed="0" Name="Lfos">
+    <Nodes>
+      <Node ID="chain3" FactoryPath="container.chain" Bypassed="0" Name="chain">
+        <Nodes>
+          <Node ID="tempo_sync" FactoryPath="control.tempo_sync" Bypassed="0"
+                Name="tempo_sync">
+            <ModulationTargets>
+              <Connection NodeId="ramp" ParameterId="PeriodTime"/>
+            </ModulationTargets>
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="18.0" StepSize="1.0" ID="Tempo" Value="7.0"
+                         DefaultValue="0.0"/>
+              <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Multiplier"
+                         Value="3.0" DefaultValue="1.0"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"
+                         DefaultValue="0.0"/>
+              <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                         ID="UnsyncedTime" Value="200.0"/>
+            </Parameters>
+          </Node>
+          <Node ID="ramp" FactoryPath="core.ramp" Bypassed="0" Name="ramp">
+            <ComplexData>
+              <DisplayBuffers>
+                <DisplayBuffer Index="-1"/>
+              </DisplayBuffers>
+            </ComplexData>
+            <Parameters>
+              <Parameter MinValue="0.1000000014901161" MaxValue="1000.0" StepSize="0.1000000014901161"
+                         ID="PeriodTime" DefaultValue="100.0" Automated="1"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="LoopStart" Value="0.0"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Gate" Value="1.0"/>
+            </Parameters>
+          </Node>
+          <Node ID="pi" FactoryPath="math.pi" Bypassed="0" Name="pi">
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="2.0"/>
+            </Parameters>
+          </Node>
+          <Node ID="sin" FactoryPath="math.sin" Bypassed="0" Name="sin">
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="2.0"/>
+            </Parameters>
+          </Node>
+          <Node ID="peak" FactoryPath="core.peak" Bypassed="0" Name="peak">
+            <ComplexData>
+              <DisplayBuffers>
+                <DisplayBuffer Index="-1"/>
+              </DisplayBuffers>
+            </ComplexData>
+            <Parameters/>
+            <ModulationTargets>
+              <Connection NodeId="event_data_writer3" ParameterId="Value"/>
+              <Connection NodeId="global_cable" ParameterId="Value"/>
+            </ModulationTargets>
+          </Node>
+          <Node ID="global_cable" FactoryPath="routing.global_cable" Bypassed="0"
+                Name="global_cable" NodeColour="4282883250">
+            <Properties>
+              <Property ID="Connection" Value="LFO1"/>
+            </Properties>
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+            </Parameters>
+          </Node>
+          <Node ID="midichain" FactoryPath="container.midichain" Bypassed="0"
+                Name="midichain">
+            <Nodes>
+              <Node ID="event_data_writer3" FactoryPath="routing.event_data_writer"
+                    Bypassed="0" Name="event_data_writer">
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="16.0" StepSize="1.0" ID="SlotIndex"
+                             Value="3.0" DefaultValue="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                </Parameters>
+              </Node>
+              <Node ID="event_data_writer4" FactoryPath="routing.event_data_writer"
+                    Bypassed="0" Name="event_data_writer">
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="16.0" StepSize="1.0" ID="SlotIndex"
+                             Value="4.0" DefaultValue="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value"/>
+                </Parameters>
+              </Node>
+              <Node ID="event_data_writer5" FactoryPath="routing.event_data_writer"
+                    Bypassed="0" Name="event_data_writer">
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="16.0" StepSize="1.0" ID="SlotIndex"
+                             Value="5.0" DefaultValue="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value"/>
+                </Parameters>
+              </Node>
+              <Node ID="event_data_writer6" FactoryPath="routing.event_data_writer"
+                    Bypassed="0" Name="event_data_writer">
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="16.0" StepSize="1.0" ID="SlotIndex"
+                             Value="6.0" DefaultValue="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value"/>
+                </Parameters>
+              </Node>
+              <Node ID="event_data_writer7" FactoryPath="routing.event_data_writer"
+                    Bypassed="0" Name="event_data_writer">
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="16.0" StepSize="1.0" ID="SlotIndex"
+                             Value="7.0" DefaultValue="0.0"/>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
+    </Nodes>
+    <Parameters/>
+  </Node>
+</Network>
