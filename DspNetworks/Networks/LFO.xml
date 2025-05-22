@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Network ID="lfo" Version="0.0.0" CompileChannelAmount="1">
+<Network ID="lfo" Version="0.0.0" CompileChannelAmount="1" AllowCompilation="1"
+         HasTail="0" SuspendOnSilence="1" AllowPolyphonic="1">
   <Node FactoryPath="container.chain" ID="lfo" Bypassed="0" ShowParameters="1"
         Name="lfo">
     <Nodes>
@@ -147,8 +148,7 @@
         <Nodes>
           <Node ID="chain" FactoryPath="container.chain" Bypassed="0" Name="chain">
             <Nodes>
-              <Node ID="peak1" FactoryPath="core.peak" Bypassed="0" Name="peak1"
-                    Folded="1">
+              <Node ID="peak1" FactoryPath="core.peak" Bypassed="0" Name="peak1">
                 <ModulationTargets>
                   <Connection NodeId="global_cable" ParameterId="Value"/>
                 </ModulationTargets>
@@ -197,20 +197,46 @@
             </Nodes>
             <Parameters/>
           </Node>
+          <Node ID="chain6" FactoryPath="container.chain" Bypassed="0" Name="chain">
+            <Nodes>
+              <Node ID="peak4" FactoryPath="core.peak" Bypassed="0" Name="peak1"
+                    Folded="1">
+                <ModulationTargets>
+                  <Connection NodeId="global_cable3" ParameterId="Value"/>
+                </ModulationTargets>
+                <ComplexData>
+                  <DisplayBuffers>
+                    <DisplayBuffer Index="-1"/>
+                  </DisplayBuffers>
+                </ComplexData>
+                <Parameters/>
+              </Node>
+              <Node ID="global_cable3" FactoryPath="routing.global_cable" Bypassed="0"
+                    Name="global_cable" NodeColour="4282882994">
+                <Properties>
+                  <Property ID="Connection" Value="LFO3"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
         </Nodes>
         <Parameters>
-          <Parameter MinValue="0.0" MaxValue="1" StepSize="1.0" ID="Index" Automated="1"/>
+          <Parameter MinValue="0.0" MaxValue="2" StepSize="1.0" ID="Index" Automated="1"/>
         </Parameters>
       </Node>
     </Nodes>
     <Parameters>
-      <Parameter ID="tempo" MinValue="0.0" MaxValue="18.0" StepSize="1.0" Value="10.0"
+      <Parameter ID="tempo" MinValue="0.0" MaxValue="18.0" StepSize="1.0" Value="15.0"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="tempo_sync" ParameterId="Tempo"/>
         </Connections>
       </Parameter>
-      <Parameter ID="div" MinValue="1.0" MaxValue="16.0" StepSize="1.0" Value="2.0"
+      <Parameter ID="div" MinValue="1.0" MaxValue="16.0" StepSize="1.0" Value="13.0"
                  DefaultValue="1.0">
         <Connections>
           <Connection NodeId="tempo_sync" ParameterId="Multiplier"/>
@@ -223,20 +249,20 @@
           <Connection NodeId="oscillator1" ParameterId="Mode"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Dest" Value="1.0" StepSize="1.0"
+      <Parameter MinValue="1.0" MaxValue="3.0" ID="Dest" Value="3.0" StepSize="1.0"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="branch" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Adjst" Value="0.07999999821186066"
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="Adjst" Value="0.7185801630434783"
                  StepSize="0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="tempo_sync2" ParameterId="Tempo"/>
           <Connection NodeId="minmax" ParameterId="Step"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="1.0" MaxValue="3.0" StepSize="1.0" ID="AjustMode" Value="2.0"
+      <Parameter MinValue="1.0" MaxValue="3.0" StepSize="1.0" ID="AjustMode" Value="1.0"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="branch1" ParameterId="Index"/>

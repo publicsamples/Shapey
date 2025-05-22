@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Network ID="TransFX" AllowPolyphonic="1" Version="0.0.0" AllowCompilation="1">
+<Network ID="TransFX" Version="0.0.0" AllowCompilation="1">
   <Node FactoryPath="container.chain" ID="TransFX" Bypassed="0" Name="TransFX"
         ShowParameters="1">
     <Nodes>
@@ -236,8 +236,7 @@
                                   <Connection NodeId="add39" ParameterId="Value"/>
                                 </ModulationTargets>
                                 <Parameters>
-                                  <Parameter MinValue="2.0" MaxValue="5.0" StepSize="1.0" ID="SlotIndex" DefaultValue="0.0"
-                                             Automated="1"/>
+                                  <Parameter MinValue="2.0" MaxValue="5.0" StepSize="1.0" ID="SlotIndex" DefaultValue="0.0"/>
                                   <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Static" Value="0.0"/>
                                 </Parameters>
                               </Node>
@@ -261,18 +260,17 @@
                           </Node>
                           <Node ID="chain61" FactoryPath="container.chain" Bypassed="0" Name="chain1">
                             <Nodes>
-                              <Node ID="midi5" FactoryPath="control.midi" Bypassed="0" Name="midi">
-                                <Properties>
-                                  <Property ID="Mode" Value="Velocity"/>
-                                </Properties>
-                                <ModulationTargets>
-                                  <Connection NodeId="add40" ParameterId="Value"/>
-                                </ModulationTargets>
-                                <Parameters/>
+                              <Node ID="event_data_reader19" FactoryPath="routing.event_data_reader"
+                                    Bypassed="0" Name="event_data_reader">
+                                <Parameters>
+                                  <Parameter MinValue="3.0" MaxValue="6.0" StepSize="1.0" ID="SlotIndex" DefaultValue="0.0"
+                                             Automated="1"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Static" Value="0.0"/>
+                                </Parameters>
                               </Node>
                               <Node ID="add40" FactoryPath="math.add" Bypassed="0" Name="add">
                                 <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value"/>
                                 </Parameters>
                               </Node>
                               <Node ID="gain48" FactoryPath="core.gain" Bypassed="0" Name="gain">
@@ -290,20 +288,153 @@
                           </Node>
                           <Node ID="chain62" FactoryPath="container.chain" Bypassed="0" Name="chain1">
                             <Nodes>
-                              <Node ID="midi_cc4" FactoryPath="control.midi_cc" Bypassed="0" Name="midi_cc">
-                                <ModulationTargets>
-                                  <Connection NodeId="add41" ParameterId="Value"/>
-                                </ModulationTargets>
+                              <Node ID="branch5" FactoryPath="container.branch" Bypassed="0" Name="branch4"
+                                    ShowParameters="1">
+                                <Nodes>
+                                  <Node ID="chain13" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi_cc10" FactoryPath="control.midi_cc" Bypassed="0" Name="midi_cc3">
+                                        <ModulationTargets>
+                                          <Connection NodeId="add50" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="131.0" StepSize="1.0" ID="CCNumber"
+                                                     Value="128.0" DefaultValue="1.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="EnableMPE" Value="0.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
+                                        </Parameters>
+                                      </Node>
+                                      <Node ID="add50" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain18" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi_cc11" FactoryPath="control.midi_cc" Bypassed="0" Name="midi_cc3">
+                                        <ModulationTargets>
+                                          <Connection NodeId="add51" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="131.0" StepSize="1.0" ID="CCNumber"
+                                                     Value="129.0" DefaultValue="1.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="EnableMPE" Value="0.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
+                                        </Parameters>
+                                      </Node>
+                                      <Node ID="add51" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain22" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi_cc12" FactoryPath="control.midi_cc" Bypassed="0" Name="midi_cc3">
+                                        <ModulationTargets>
+                                          <Connection NodeId="add52" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="131.0" StepSize="1.0" ID="CCNumber"
+                                                     Value="1.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="EnableMPE" Value="0.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
+                                        </Parameters>
+                                      </Node>
+                                      <Node ID="add52" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain24" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi_cc13" FactoryPath="control.midi_cc" Bypassed="0" Name="midi_cc3">
+                                        <ModulationTargets>
+                                          <Connection NodeId="add53" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="131.0" StepSize="1.0" ID="CCNumber"
+                                                     Value="2.0" DefaultValue="1.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="EnableMPE" Value="0.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
+                                        </Parameters>
+                                      </Node>
+                                      <Node ID="add53" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain25" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi7" FactoryPath="control.midi" Bypassed="0" Name="midi1">
+                                        <Properties>
+                                          <Property ID="Mode" Value="Velocity"/>
+                                        </Properties>
+                                        <ModulationTargets>
+                                          <Connection NodeId="add54" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters/>
+                                      </Node>
+                                      <Node ID="add54" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain26" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi8" FactoryPath="control.midi" Bypassed="0" Name="midi1">
+                                        <Properties>
+                                          <Property ID="Mode" Value="Velocity"/>
+                                        </Properties>
+                                        <ModulationTargets>
+                                          <Connection NodeId="add55" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters/>
+                                      </Node>
+                                      <Node ID="add55" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain27" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi9" FactoryPath="control.midi" Bypassed="0" Name="midi1">
+                                        <Properties>
+                                          <Property ID="Mode" Value="Random"/>
+                                        </Properties>
+                                        <ModulationTargets>
+                                          <Connection NodeId="add56" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters/>
+                                      </Node>
+                                      <Node ID="add56" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                </Nodes>
                                 <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="131.0" StepSize="1.0" ID="CCNumber"
-                                             Value="1.0"/>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="EnableMPE" Value="0.0"/>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
-                                </Parameters>
-                              </Node>
-                              <Node ID="add41" FactoryPath="math.add" Bypassed="0" Name="add">
-                                <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                  <Parameter MinValue="0.0" MaxValue="6" StepSize="1.0" ID="Index" Automated="1"/>
                                 </Parameters>
                               </Node>
                               <Node ID="gain49" FactoryPath="core.gain" Bypassed="0" Name="gain">
@@ -573,8 +704,7 @@
                                   <Connection NodeId="add31" ParameterId="Value"/>
                                 </ModulationTargets>
                                 <Parameters>
-                                  <Parameter MinValue="2.0" MaxValue="5.0" StepSize="1.0" ID="SlotIndex" DefaultValue="0.0"
-                                             Automated="1"/>
+                                  <Parameter MinValue="2.0" MaxValue="5.0" StepSize="1.0" ID="SlotIndex" DefaultValue="0.0"/>
                                   <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Static" Value="0.0"/>
                                 </Parameters>
                               </Node>
@@ -598,14 +728,16 @@
                           </Node>
                           <Node ID="chain52" FactoryPath="container.chain" Bypassed="0" Name="chain1">
                             <Nodes>
-                              <Node ID="midi4" FactoryPath="control.midi" Bypassed="0" Name="midi">
-                                <Properties>
-                                  <Property ID="Mode" Value="Velocity"/>
-                                </Properties>
+                              <Node ID="event_data_reader20" FactoryPath="routing.event_data_reader"
+                                    Bypassed="0" Name="event_data_reader">
                                 <ModulationTargets>
                                   <Connection NodeId="add32" ParameterId="Value"/>
                                 </ModulationTargets>
-                                <Parameters/>
+                                <Parameters>
+                                  <Parameter MinValue="3.0" MaxValue="6.0" StepSize="1.0" ID="SlotIndex" DefaultValue="0.0"
+                                             Automated="1"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Static" Value="0.0"/>
+                                </Parameters>
                               </Node>
                               <Node ID="add32" FactoryPath="math.add" Bypassed="0" Name="add">
                                 <Parameters>
@@ -627,20 +759,153 @@
                           </Node>
                           <Node ID="chain53" FactoryPath="container.chain" Bypassed="0" Name="chain1">
                             <Nodes>
-                              <Node ID="midi_cc3" FactoryPath="control.midi_cc" Bypassed="0" Name="midi_cc">
-                                <ModulationTargets>
-                                  <Connection NodeId="add33" ParameterId="Value"/>
-                                </ModulationTargets>
+                              <Node ID="branch6" FactoryPath="container.branch" Bypassed="0" Name="branch4"
+                                    ShowParameters="1">
+                                <Nodes>
+                                  <Node ID="chain14" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi_cc14" FactoryPath="control.midi_cc" Bypassed="0" Name="midi_cc3">
+                                        <ModulationTargets>
+                                          <Connection NodeId="add57" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="131.0" StepSize="1.0" ID="CCNumber"
+                                                     Value="128.0" DefaultValue="1.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="EnableMPE" Value="0.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
+                                        </Parameters>
+                                      </Node>
+                                      <Node ID="add57" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain19" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi_cc15" FactoryPath="control.midi_cc" Bypassed="0" Name="midi_cc3">
+                                        <ModulationTargets>
+                                          <Connection NodeId="add58" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="131.0" StepSize="1.0" ID="CCNumber"
+                                                     Value="129.0" DefaultValue="1.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="EnableMPE" Value="0.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
+                                        </Parameters>
+                                      </Node>
+                                      <Node ID="add58" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain23" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi_cc16" FactoryPath="control.midi_cc" Bypassed="0" Name="midi_cc3">
+                                        <ModulationTargets>
+                                          <Connection NodeId="add59" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="131.0" StepSize="1.0" ID="CCNumber"
+                                                     Value="1.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="EnableMPE" Value="0.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
+                                        </Parameters>
+                                      </Node>
+                                      <Node ID="add59" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain28" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi_cc17" FactoryPath="control.midi_cc" Bypassed="0" Name="midi_cc3">
+                                        <ModulationTargets>
+                                          <Connection NodeId="add60" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="131.0" StepSize="1.0" ID="CCNumber"
+                                                     Value="2.0" DefaultValue="1.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="EnableMPE" Value="0.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
+                                        </Parameters>
+                                      </Node>
+                                      <Node ID="add60" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain29" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi10" FactoryPath="control.midi" Bypassed="0" Name="midi1">
+                                        <Properties>
+                                          <Property ID="Mode" Value="Velocity"/>
+                                        </Properties>
+                                        <ModulationTargets>
+                                          <Connection NodeId="add61" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters/>
+                                      </Node>
+                                      <Node ID="add61" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain30" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi11" FactoryPath="control.midi" Bypassed="0" Name="midi1">
+                                        <Properties>
+                                          <Property ID="Mode" Value="Velocity"/>
+                                        </Properties>
+                                        <ModulationTargets>
+                                          <Connection NodeId="add62" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters/>
+                                      </Node>
+                                      <Node ID="add62" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain31" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi12" FactoryPath="control.midi" Bypassed="0" Name="midi1">
+                                        <Properties>
+                                          <Property ID="Mode" Value="Random"/>
+                                        </Properties>
+                                        <ModulationTargets>
+                                          <Connection NodeId="add63" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters/>
+                                      </Node>
+                                      <Node ID="add63" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                </Nodes>
                                 <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="131.0" StepSize="1.0" ID="CCNumber"
-                                             Value="1.0"/>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="EnableMPE" Value="0.0"/>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
-                                </Parameters>
-                              </Node>
-                              <Node ID="add33" FactoryPath="math.add" Bypassed="0" Name="add">
-                                <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                  <Parameter MinValue="0.0" MaxValue="6" StepSize="1.0" ID="Index" Automated="1"/>
                                 </Parameters>
                               </Node>
                               <Node ID="gain41" FactoryPath="core.gain" Bypassed="0" Name="gain">
@@ -672,18 +937,13 @@
                       </Node>
                       <Node ID="pma5" FactoryPath="control.pma" Bypassed="0" Name="pma">
                         <ModulationTargets>
-                          <Connection NodeId="div" ParameterId="Value"/>
-                          <Connection NodeId="mul6" ParameterId="Value"/>
-                          <Connection NodeId="sub" ParameterId="Value"/>
-                          <Connection NodeId="pi3" ParameterId="Value"/>
-                          <Connection NodeId="pi7" ParameterId="Value"/>
                           <Connection NodeId="bitcrush" ParameterId="BitDepth"/>
                           <Connection NodeId="sampleandhold" ParameterId="Counter"/>
                           <Connection NodeId="ring_mod" ParameterId="Frequency"/>
-                          <Connection NodeId="faust" ParameterId="freq"/>
-                          <Connection NodeId="faust6" ParameterId="freq"/>
-                          <Connection NodeId="allpass1" ParameterId="Frequency"/>
-                          <Connection NodeId="cable_table1" ParameterId="Value"/>
+                          <Connection NodeId="expr3" ParameterId="Value"/>
+                          <Connection NodeId="expr2" ParameterId="Value"/>
+                          <Connection NodeId="cable_table" ParameterId="Value"/>
+                          <Connection NodeId="cable_table2" ParameterId="Value"/>
                         </ModulationTargets>
                         <Parameters>
                           <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
@@ -915,14 +1175,13 @@
                           </Node>
                           <Node ID="chain69" FactoryPath="container.chain" Bypassed="0" Name="chain1">
                             <Nodes>
-                              <Node ID="event_data_reader18" FactoryPath="routing.event_data_reader"
+                              <Node ID="event_data_reader21" FactoryPath="routing.event_data_reader"
                                     Bypassed="0" Name="event_data_reader">
                                 <ModulationTargets>
                                   <Connection NodeId="add47" ParameterId="Value"/>
                                 </ModulationTargets>
                                 <Parameters>
-                                  <Parameter MinValue="2.0" MaxValue="5.0" StepSize="1.0" ID="SlotIndex" DefaultValue="0.0"
-                                             Automated="1"/>
+                                  <Parameter MinValue="2.0" MaxValue="5.0" StepSize="1.0" ID="SlotIndex" DefaultValue="0.0"/>
                                   <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Static" Value="0.0"/>
                                 </Parameters>
                               </Node>
@@ -946,14 +1205,16 @@
                           </Node>
                           <Node ID="chain70" FactoryPath="container.chain" Bypassed="0" Name="chain1">
                             <Nodes>
-                              <Node ID="midi6" FactoryPath="control.midi" Bypassed="0" Name="midi">
-                                <Properties>
-                                  <Property ID="Mode" Value="Velocity"/>
-                                </Properties>
+                              <Node ID="event_data_reader18" FactoryPath="routing.event_data_reader"
+                                    Bypassed="0" Name="event_data_reader">
                                 <ModulationTargets>
                                   <Connection NodeId="add48" ParameterId="Value"/>
                                 </ModulationTargets>
-                                <Parameters/>
+                                <Parameters>
+                                  <Parameter MinValue="3.0" MaxValue="6.0" StepSize="1.0" ID="SlotIndex" DefaultValue="0.0"
+                                             Automated="1"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Static" Value="0.0"/>
+                                </Parameters>
                               </Node>
                               <Node ID="add48" FactoryPath="math.add" Bypassed="0" Name="add">
                                 <Parameters>
@@ -975,20 +1236,153 @@
                           </Node>
                           <Node ID="chain71" FactoryPath="container.chain" Bypassed="0" Name="chain1">
                             <Nodes>
-                              <Node ID="midi_cc5" FactoryPath="control.midi_cc" Bypassed="0" Name="midi_cc">
-                                <ModulationTargets>
-                                  <Connection NodeId="add49" ParameterId="Value"/>
-                                </ModulationTargets>
+                              <Node ID="branch7" FactoryPath="container.branch" Bypassed="0" Name="branch4"
+                                    ShowParameters="1">
+                                <Nodes>
+                                  <Node ID="chain15" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi_cc18" FactoryPath="control.midi_cc" Bypassed="0" Name="midi_cc3">
+                                        <ModulationTargets>
+                                          <Connection NodeId="add64" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="131.0" StepSize="1.0" ID="CCNumber"
+                                                     Value="128.0" DefaultValue="1.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="EnableMPE" Value="0.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
+                                        </Parameters>
+                                      </Node>
+                                      <Node ID="add64" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain20" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi_cc19" FactoryPath="control.midi_cc" Bypassed="0" Name="midi_cc3">
+                                        <ModulationTargets>
+                                          <Connection NodeId="add65" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="131.0" StepSize="1.0" ID="CCNumber"
+                                                     Value="129.0" DefaultValue="1.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="EnableMPE" Value="0.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
+                                        </Parameters>
+                                      </Node>
+                                      <Node ID="add65" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain32" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi_cc20" FactoryPath="control.midi_cc" Bypassed="0" Name="midi_cc3">
+                                        <ModulationTargets>
+                                          <Connection NodeId="add66" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="131.0" StepSize="1.0" ID="CCNumber"
+                                                     Value="1.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="EnableMPE" Value="0.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
+                                        </Parameters>
+                                      </Node>
+                                      <Node ID="add66" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain33" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi_cc21" FactoryPath="control.midi_cc" Bypassed="0" Name="midi_cc3">
+                                        <ModulationTargets>
+                                          <Connection NodeId="add67" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="131.0" StepSize="1.0" ID="CCNumber"
+                                                     Value="2.0" DefaultValue="1.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="EnableMPE" Value="0.0"/>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
+                                        </Parameters>
+                                      </Node>
+                                      <Node ID="add67" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain35" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi13" FactoryPath="control.midi" Bypassed="0" Name="midi1">
+                                        <Properties>
+                                          <Property ID="Mode" Value="Velocity"/>
+                                        </Properties>
+                                        <ModulationTargets>
+                                          <Connection NodeId="add68" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters/>
+                                      </Node>
+                                      <Node ID="add68" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain36" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi14" FactoryPath="control.midi" Bypassed="0" Name="midi1">
+                                        <Properties>
+                                          <Property ID="Mode" Value="Velocity"/>
+                                        </Properties>
+                                        <ModulationTargets>
+                                          <Connection NodeId="add69" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters/>
+                                      </Node>
+                                      <Node ID="add69" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                  <Node ID="chain41" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                                    <Nodes>
+                                      <Node ID="midi15" FactoryPath="control.midi" Bypassed="0" Name="midi1">
+                                        <Properties>
+                                          <Property ID="Mode" Value="Random"/>
+                                        </Properties>
+                                        <ModulationTargets>
+                                          <Connection NodeId="add70" ParameterId="Value"/>
+                                        </ModulationTargets>
+                                        <Parameters/>
+                                      </Node>
+                                      <Node ID="add70" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                        <Parameters>
+                                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                        </Parameters>
+                                      </Node>
+                                    </Nodes>
+                                    <Parameters/>
+                                  </Node>
+                                </Nodes>
                                 <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="131.0" StepSize="1.0" ID="CCNumber"
-                                             Value="1.0"/>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="EnableMPE" Value="0.0"/>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
-                                </Parameters>
-                              </Node>
-                              <Node ID="add49" FactoryPath="math.add" Bypassed="0" Name="add">
-                                <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                  <Parameter MinValue="0.0" MaxValue="6" StepSize="1.0" ID="Index" Automated="1"/>
                                 </Parameters>
                               </Node>
                               <Node ID="gain57" FactoryPath="core.gain" Bypassed="0" Name="gain">
@@ -1021,17 +1415,10 @@
                       <Node ID="pma7" FactoryPath="control.pma" Bypassed="0" Name="pma">
                         <ModulationTargets>
                           <Connection NodeId="smoother2" ParameterId="SmoothingTime"/>
-                          <Connection NodeId="allpass1" ParameterId="Q"/>
-                          <Connection NodeId="faust5" ParameterId="aN"/>
-                          <Connection NodeId="faust6" ParameterId="Q"/>
-                          <Connection NodeId="faust" ParameterId="Q"/>
                           <Connection NodeId="ring_mod" ParameterId="Q"/>
                           <Connection NodeId="one_pole2" ParameterId="Frequency"/>
                           <Connection NodeId="one_pole1" ParameterId="Frequency"/>
-                          <Connection NodeId="fmod2" ParameterId="Value"/>
-                          <Connection NodeId="sub1" ParameterId="Value"/>
-                          <Connection NodeId="pi2" ParameterId="Value"/>
-                          <Connection NodeId="smoother3" ParameterId="SmoothingTime"/>
+                          <Connection NodeId="one_pole6" ParameterId="Frequency"/>
                         </ModulationTargets>
                         <Parameters>
                           <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
@@ -1097,9 +1484,32 @@
                         <Nodes>
                           <Node ID="chain197" FactoryPath="container.chain" Bypassed="0" Name="chain197">
                             <Nodes>
-                              <Node ID="div" FactoryPath="math.div" Bypassed="0" Name="div">
+                              <Node ID="expr3" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                <Properties>
+                                  <Property ID="Code" Value="input * Math.sin(Math.PI * 12.0 * value * input) * (2 - Math.PI);"/>
+                                  <Property ID="Debug" Value="0"/>
+                                </Properties>
                                 <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                  <Parameter MinValue="0.11" MaxValue="1.0" ID="Value" DefaultValue="1.0"
+                                             Automated="1"/>
+                                </Parameters>
+                              </Node>
+                              <Node ID="one_pole5" FactoryPath="filters.one_pole" Bypassed="0" Name="one_pole">
+                                <ComplexData>
+                                  <Filters>
+                                    <Filter Index="-1"/>
+                                  </Filters>
+                                </ComplexData>
+                                <Parameters>
+                                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                                             ID="Frequency" DefaultValue="1000.0"/>
+                                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                                             ID="Q" Value="1.0"/>
+                                  <Parameter MinValue="-18.0" MaxValue="18.0" ID="Gain" Value="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                                             ID="Smoothing" Value="0.009999999776482582"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Mode" Value="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
                                 </Parameters>
                               </Node>
                               <Node ID="smoother2" FactoryPath="core.smoother" Bypassed="0" Name="smoother">
@@ -1110,76 +1520,47 @@
                                   <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
                                 </Parameters>
                               </Node>
-                              <Node ID="mono2stereo" FactoryPath="core.mono2stereo" Bypassed="0"
-                                    Name="mono2stereo">
-                                <Parameters/>
-                              </Node>
                             </Nodes>
                             <Parameters/>
                           </Node>
                           <Node ID="chain198" FactoryPath="container.chain" Bypassed="0" Name="chain197">
                             <Nodes>
-                              <Node ID="mul6" FactoryPath="math.mul" Bypassed="0" Name="mul6">
+                              <Node ID="expr2" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                <Properties>
+                                  <Property ID="Code" Value="input * Math.cos(Math.PI * 12.0 * value * input) * (8 - Math.PI);"/>
+                                  <Property ID="Debug" Value="0"/>
+                                </Properties>
                                 <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                  <Parameter MinValue="0.11" MaxValue="1.0" ID="Value" DefaultValue="1.0"
+                                             Automated="1"/>
                                 </Parameters>
                               </Node>
-                              <Node ID="smoother3" FactoryPath="core.smoother" Bypassed="0" Name="smoother">
+                              <Node ID="tanh" FactoryPath="math.tanh" Bypassed="0" Name="tanh">
                                 <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="24.0" StepSize="0.1000000014901161"
-                                             SkewFactor="0.2313782125711441" ID="SmoothingTime" DefaultValue="100.0"
-                                             Automated="1"/>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                </Parameters>
+                              </Node>
+                              <Node ID="one_pole4" FactoryPath="filters.one_pole" Bypassed="0" Name="one_pole">
+                                <ComplexData>
+                                  <Filters>
+                                    <Filter Index="-1"/>
+                                  </Filters>
+                                </ComplexData>
+                                <Parameters>
+                                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                                             ID="Frequency" DefaultValue="1000.0"/>
+                                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                                             ID="Q" Value="1.0"/>
+                                  <Parameter MinValue="-18.0" MaxValue="18.0" ID="Gain" Value="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                                             ID="Smoothing" Value="0.009999999776482582"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Mode" Value="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
                                 </Parameters>
                               </Node>
                               <Node ID="mono2stereo1" FactoryPath="core.mono2stereo" Bypassed="0"
                                     Name="mono2stereo">
                                 <Parameters/>
-                              </Node>
-                            </Nodes>
-                            <Parameters/>
-                          </Node>
-                          <Node ID="chain199" FactoryPath="container.chain" Bypassed="0" Name="chain197">
-                            <Nodes>
-                              <Node ID="sub" FactoryPath="math.sub" Bypassed="0" Name="sub">
-                                <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
-                                </Parameters>
-                              </Node>
-                              <Node ID="pi2" FactoryPath="math.pi" Bypassed="0" Name="pi">
-                                <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="2.0" Automated="1"/>
-                                </Parameters>
-                              </Node>
-                            </Nodes>
-                            <Parameters/>
-                          </Node>
-                          <Node ID="chain200" FactoryPath="container.chain" Bypassed="0" Name="chain197">
-                            <Nodes>
-                              <Node ID="pi3" FactoryPath="math.pi" Bypassed="0" Name="pi">
-                                <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="2.0" Automated="1"/>
-                                </Parameters>
-                              </Node>
-                              <Node ID="sub1" FactoryPath="math.sub" Bypassed="0" Name="sub">
-                                <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
-                                </Parameters>
-                              </Node>
-                            </Nodes>
-                            <Parameters/>
-                          </Node>
-                          <Node ID="chain37" FactoryPath="container.chain" Bypassed="0" Name="chain12">
-                            <Nodes>
-                              <Node ID="pi7" FactoryPath="math.pi" Bypassed="0" Name="pi">
-                                <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="2.0" Automated="1"/>
-                                </Parameters>
-                              </Node>
-                              <Node ID="fmod2" FactoryPath="math.fmod" Bypassed="0" Name="fmod">
-                                <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
-                                </Parameters>
                               </Node>
                             </Nodes>
                             <Parameters/>
@@ -1246,6 +1627,96 @@
                             </Nodes>
                             <Parameters/>
                           </Node>
+                          <Node ID="chain42" FactoryPath="container.chain" Bypassed="0" Name="sh"
+                                ShowParameters="1">
+                            <Nodes>
+                              <Node ID="split" FactoryPath="container.split" Bypassed="0" Name="split">
+                                <Nodes>
+                                  <Node ID="cable_table" FactoryPath="control.cable_table" Bypassed="0"
+                                        Name="cable_table">
+                                    <ModulationTargets>
+                                      <Connection NodeId="tempo_sync" ParameterId="Multiplier"/>
+                                    </ModulationTargets>
+                                    <ComplexData>
+                                      <Tables>
+                                        <Table Index="-1" EmbeddedData="60..........9C...vO....+.........vO....+.........vO....+.........vO...f+.........vO"/>
+                                      </Tables>
+                                    </ComplexData>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="cable_table2" FactoryPath="control.cable_table" Bypassed="0"
+                                        Name="cable_table">
+                                    <ModulationTargets>
+                                      <Connection NodeId="tempo_sync" ParameterId="Tempo"/>
+                                    </ModulationTargets>
+                                    <ComplexData>
+                                      <Tables>
+                                        <Table Index="-1" EmbeddedData="36...............vO....+.........vO...f+....9C...vO"/>
+                                      </Tables>
+                                    </ComplexData>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="tempo_sync" FactoryPath="control.tempo_sync" Bypassed="0"
+                                    Name="tempo_sync">
+                                <ModulationTargets>
+                                  <Connection NodeId="converter" ParameterId="Value"/>
+                                </ModulationTargets>
+                                <Parameters>
+                                  <Parameter MinValue="0.0" MaxValue="18.0" StepSize="1.0" ID="Tempo" Automated="1"/>
+                                  <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Multiplier"
+                                             DefaultValue="1.0" Automated="1"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"
+                                             DefaultValue="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                             ID="UnsyncedTime" Value="200.0"/>
+                                </Parameters>
+                              </Node>
+                              <Node ID="converter" FactoryPath="control.converter" Bypassed="0" Name="converter">
+                                <Properties>
+                                  <Property ID="Mode" Value="Ms2Samples"/>
+                                </Properties>
+                                <ModulationTargets>
+                                  <Connection NodeId="sampleandhold1" ParameterId="Counter"/>
+                                </ModulationTargets>
+                                <Parameters>
+                                  <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="1.0" ID="Value" Automated="1"/>
+                                </Parameters>
+                              </Node>
+                              <Node ID="sampleandhold1" FactoryPath="fx.sampleandhold" Bypassed="0"
+                                    Name="sampleandhold">
+                                <Parameters>
+                                  <Parameter MinValue="1.0" MaxValue="64.0" StepSize="1.0" ID="Counter" DefaultValue="1.0"
+                                             Automated="1"/>
+                                </Parameters>
+                              </Node>
+                              <Node ID="one_pole6" FactoryPath="filters.one_pole" Bypassed="0" Name="one_pole">
+                                <ComplexData>
+                                  <Filters>
+                                    <Filter Index="-1"/>
+                                  </Filters>
+                                </ComplexData>
+                                <Parameters>
+                                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
+                                             ID="Frequency" DefaultValue="1000.0" Automated="1"/>
+                                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
+                                             ID="Q" Value="1.0"/>
+                                  <Parameter MinValue="-18.0" MaxValue="18.0" ID="Gain" Value="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
+                                             ID="Smoothing" Value="0.009999999776482582"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Mode" Value="0.0"/>
+                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
+                                </Parameters>
+                              </Node>
+                            </Nodes>
+                            <Parameters/>
+                          </Node>
                           <Node ID="chain40" FactoryPath="container.chain" Bypassed="0" Name="chain1">
                             <Nodes>
                               <Node ID="ring_mod" FactoryPath="filters.ring_mod" Bypassed="0" Name="ring_mod">
@@ -1270,106 +1741,9 @@
                             </Nodes>
                             <Parameters/>
                           </Node>
-                          <Node ID="no_midi1" FactoryPath="container.no_midi" Bypassed="0" Name="no_midi1">
-                            <Nodes>
-                              <Node ID="faust" FactoryPath="core.faust" Bypassed="0" Name="faust">
-                                <Properties>
-                                  <Property ID="ClassId" Value="klp"/>
-                                  <Property ID="NumParameters" Value="0"/>
-                                </Properties>
-                                <Parameters>
-                                  <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                             ID="Q" DefaultValue="1.0" Automated="1"/>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                             ID="freq" DefaultValue="0.5" Automated="1"/>
-                                </Parameters>
-                                <SwitchTargets/>
-                              </Node>
-                            </Nodes>
-                            <Parameters/>
-                          </Node>
-                          <Node ID="no_midi2" FactoryPath="container.no_midi" Bypassed="0" Name="no_midi1">
-                            <Nodes>
-                              <Node ID="faust6" FactoryPath="core.faust" Bypassed="0" Name="faust">
-                                <Properties>
-                                  <Property ID="ClassId" Value="khp"/>
-                                  <Property ID="NumParameters" Value="0"/>
-                                </Properties>
-                                <Parameters>
-                                  <Parameter MinValue="0.5" MaxValue="10.0" StepSize="0.009999999776482582"
-                                             ID="Q" DefaultValue="1.0" Automated="1"/>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.001000000047497451"
-                                             ID="freq" DefaultValue="0.5" Automated="1"/>
-                                </Parameters>
-                                <SwitchTargets/>
-                              </Node>
-                            </Nodes>
-                            <Parameters/>
-                          </Node>
-                          <Node ID="chain43" FactoryPath="container.chain" Bypassed="0" Name="chain13">
-                            <Nodes>
-                              <Node ID="cable_table1" FactoryPath="control.cable_table" Bypassed="0"
-                                    Name="cable_table">
-                                <ComplexData>
-                                  <Tables>
-                                    <Table Index="-1" EmbeddedData="24..........9C...vO...f+.........vO"/>
-                                  </Tables>
-                                </ComplexData>
-                                <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
-                                </Parameters>
-                                <ModulationTargets>
-                                  <Connection NodeId="faust5" ParameterId="del"/>
-                                </ModulationTargets>
-                              </Node>
-                              <Node ID="faust5" FactoryPath="core.faust" Bypassed="0" Name="faust2">
-                                <Properties>
-                                  <Property ID="ClassId" Value="Comb"/>
-                                  <Property ID="NumParameters" Value="0"/>
-                                </Properties>
-                                <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.009999999776482582"
-                                             ID="aN" Automated="1"/>
-                                  <Parameter MinValue="0.0" MaxValue="100.0" StepSize="0.009999999776482582"
-                                             ID="del" Automated="1"/>
-                                </Parameters>
-                                <SwitchTargets/>
-                              </Node>
-                            </Nodes>
-                            <Parameters/>
-                          </Node>
-                          <Node ID="chain44" FactoryPath="container.chain" Bypassed="0" Name="chain3">
-                            <Nodes>
-                              <Node ID="allpass1" FactoryPath="filters.allpass" Bypassed="0" Name="allpass">
-                                <ComplexData>
-                                  <Filters>
-                                    <Filter Index="-1"/>
-                                  </Filters>
-                                </ComplexData>
-                                <Parameters>
-                                  <Parameter MinValue="20.0" MaxValue="20000.0" SkewFactor="0.2299045622348785"
-                                             ID="Frequency" DefaultValue="1000.0" Automated="1"/>
-                                  <Parameter MinValue="0.300000011920929" MaxValue="9.899999618530273" SkewFactor="0.2647178173065186"
-                                             ID="Q" DefaultValue="1.0" Automated="1"/>
-                                  <Parameter MinValue="-18.0" MaxValue="18.0" ID="Gain" Value="0.0"/>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" SkewFactor="0.3010300099849701"
-                                             ID="Smoothing" Value="0.009999999776482582"/>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Mode" Value="0.0"/>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Enabled" Value="1.0"/>
-                                </Parameters>
-                              </Node>
-                              <Node ID="tanh1" FactoryPath="math.tanh" Bypassed="0" Name="tanh">
-                                <Parameters>
-                                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.9589096679687501"
-                                             DefaultValue="1.0"/>
-                                </Parameters>
-                              </Node>
-                            </Nodes>
-                            <Parameters/>
-                          </Node>
                         </Nodes>
                         <Parameters>
-                          <Parameter MinValue="0.0" MaxValue="11" StepSize="1.0" ID="Index" Automated="1"/>
+                          <Parameter MinValue="0.0" MaxValue="5" StepSize="1.0" ID="Index" Automated="1"/>
                         </Parameters>
                       </Node>
                       <Node ID="gain32" FactoryPath="core.gain" Bypassed="0" Name="gain2">
@@ -1416,13 +1790,13 @@
       </Node>
     </Nodes>
     <Parameters>
-      <Parameter MinValue="1.0" MaxValue="12.0" StepSize="1.0" ID="FxMope" Value="1.0"
+      <Parameter MinValue="1.0" MaxValue="6.0" StepSize="1.0" ID="FxMope" Value="4.0"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="branch1" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="FxMix" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="FxMix" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma6" ParameterId="Add"/>
         </Connections>
@@ -1437,7 +1811,7 @@
           <Connection NodeId="pma5" ParameterId="Add"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="FxParamB" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="FxParamB" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma7" ParameterId="Add"/>
         </Connections>
@@ -1455,9 +1829,35 @@
       <Parameter MinValue="1.0" MaxValue="4.0" StepSize="1" ID="XfStage" Value="1.0"
                  DefaultValue="0.0">
         <Connections>
-          <Connection NodeId="event_data_reader15" ParameterId="SlotIndex"/>
-          <Connection NodeId="event_data_reader12" ParameterId="SlotIndex"/>
+          <Connection NodeId="event_data_reader19" ParameterId="SlotIndex"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1" ID="Midi1" Value="1.0"
+                 DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="branch5" ParameterId="Index"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="4.0" ID="Xf2" Value="1.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="event_data_reader20" ParameterId="SlotIndex"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="7.0" ID="Mid2" Value="1.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="branch6" ParameterId="Index"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="4.0" StepSize="1" ID="xf3" Value="1.0"
+                 DefaultValue="0.0">
+        <Connections>
           <Connection NodeId="event_data_reader18" ParameterId="SlotIndex"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1" ID="mid3" Value="1.0"
+                 DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="branch7" ParameterId="Index"/>
         </Connections>
       </Parameter>
     </Parameters>

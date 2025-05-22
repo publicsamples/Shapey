@@ -1,0 +1,2049 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Processor Type="SynthChain" ID="Smut" Bypassed="0" Gain="1.0" Balance="0.0"
+           VoiceLimit="64.0" KillFadeTime="20.0" IconColour="0" packageName=""
+           BuildVersion="650">
+  <EditorStates BodyShown="0" Visible="1" Solo="0" Folded="1"/>
+  <ChildProcessors>
+    <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
+      <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+      <ChildProcessors>
+        <Processor Type="ScriptProcessor" ID="Interface" Bypassed="0" NumSliderPacks="1"
+                   Script="Content.makeFrontInterface(900, 900);&#10;&#10;Engine.loadFontAs(&quot;{PROJECT_FOLDER}TabloidScuzzball.otf&quot;, &quot;scuz&quot;);&#10;Engine.loadFontAs(&quot;{PROJECT_FOLDER}Montserrat-Medium.ttf&quot;, &quot;mon&quot;);&#10;include(&quot;laf.js&quot;);&#10;include(&quot;KnobLAF1.js&quot;);&#10;include(&quot;KnobLAF2.js&quot;);&#10;include(&quot;Rect.js&quot;);&#10;include(&quot;Scopes.js&quot;);&#10;include(&quot;Loading.js&quot;);&#10;&#10;&#10;const var Poly = [Content.getComponent(&quot;Voices4&quot;),&#10;                  Content.getComponent(&quot;Voices3&quot;),&#10;                  Content.getComponent(&quot;Voices2&quot;),&#10;                  Content.getComponent(&quot;Voices1&quot;)];&#10;&#10;const var v1 = Synth.getChildSynth(&quot;v1&quot;);&#10;const var v2 = Synth.getChildSynth(&quot;v2&quot;);&#10;const var v3 = Synth.getChildSynth(&quot;v3&quot;);&#10;const var v4 = Synth.getChildSynth(&quot;v4&quot;);&#10;&#10;inline function onVoiceModeControl(component, value)&#10;{&#10;&#9; if (value == 1){&#10;&#9; &#10;&#9; for(s in Poly)&#10;&#9;           s.setValue(16); &#9;&#10;&#9; for(s in Poly)&#9;&#10;&#9;           s.changed();  &#10;&#9;           &#10;     v1.setBypassed(0);&#10;     v2.setBypassed(1);   &#10;     v3.setBypassed(1);   &#10;     v4.setBypassed(1);                      &#10;&#9;           &#10;&#9;}&#10;&#9;&#10;&#9;if (value == 2){&#10;&#9;&#9; &#10;&#9;&#9; for(s in Poly)&#10;&#9;&#9;           s.setValue(8); &#9;&#10;&#9;&#9; for(s in Poly)&#9;&#10;&#9;&#9;           s.changed(); &#10;&#9;v1.setBypassed(0);&#10;&#9;   v2.setBypassed(0);   &#10;&#9;   v3.setBypassed(1);   &#10;&#9;   v4.setBypassed(1); &#9;                      &#10;&#9;&#9;           &#10;&#9;&#9;}&#10;&#9;if (value == 3){&#10;&#9;&#9; &#10;&#9;&#9; for(s in Poly)&#10;&#9;&#9;           s.setValue(4); &#9;&#10;&#9;&#9; for(s in Poly)&#9;&#10;&#9;&#9;           s.changed(); &#10;&#9;&#9;           &#10;&#9;v1.setBypassed(0);&#10;&#9;   v2.setBypassed(0);   &#10;&#9;   v3.setBypassed(0);   &#10;&#9;   v4.setBypassed(0); &#9;           &#10;&#9;&#9;}            &#10;&#9;&#9;           &#10;&#9;if (value == 4){&#10;&#9;&#9; &#10;&#9;&#9; for(s in Poly)&#10;&#9;&#9;           s.setValue(1); &#9;&#10;&#9;&#9; for(s in Poly)&#9;&#10;&#9;&#9;           s.changed();  &#10;&#9;&#9;           &#10;&#9;v1.setBypassed(0);&#10;&#9;   v2.setBypassed(0);   &#10;&#9;   v3.setBypassed(0);   &#10;&#9;   v4.setBypassed(0); &#9;&#9;                                              &#10;&#9;&#9;           &#10;&#9;&#9;}&#9; &#10;&#9;if (value == 5){&#10;&#9;&#9; &#10;&#9;&#9; for(s in Poly)&#10;&#9;&#9;           s.setValue(1); &#9;&#10;&#9;&#9; for(s in Poly)&#9;&#10;&#9;&#9;           s.changed();  &#10;&#10;&#9;v1.setBypassed(0);&#10;&#9;   v2.setBypassed(0);   &#10;&#9;   v3.setBypassed(0);   &#10;&#9;   v4.setBypassed(0); &#9;&#9;           &#10;&#9;&#9;                                              &#10;&#9;&#9;           &#10;&#9;&#9;}&#9;&#9; &#10;&#9; &#10;};&#10;&#10;Content.getComponent(&quot;VoiceMode&quot;).setControlCallback(onVoiceModeControl);&#10;&#10;&#10;//mod page menus&#10;&#10;Synth.setUseUniformVoiceHandler(&quot;Smut&quot;, true);&#10;&#10;const var rm = Engine.getGlobalRoutingManager();&#10;&#10;const var Osc1 = Synth.getEffect(&quot;Osc1&quot;);&#10;&#10;const var Osc1Mods =[];&#10;&#10;for (i = 0; i &lt; 8; i++)&#10;{&#10;    Osc1Mods[i] = Content.getComponent(&quot;OsModRoute&quot;+(i+1));&#10;&#10;} &#10;&#10;inline function onOscModRoutPage1Control(component, value)&#10;{&#10;  for (i = 0; i &lt; Osc1Mods.length; i++)&#10;        Osc1Mods[i].showControl(value - 1 == i);&#10;};&#10;&#10;Content.getComponent(&quot;OscModRoutPage1&quot;).setControlCallback(onOscModRoutPage1Control);&#10;&#10;&#10;&#10;const var File1Mods =[];&#10;&#10;for (i = 0; i &lt; 4; i++)&#10;{&#10;    File1Mods[i] = Content.getComponent(&quot;flModRouteA&quot;+(i+1));&#10;&#10;} &#10;&#10;&#10;inline function onfileModRoutPage1Control(component, value)&#10;{&#10; for (i = 0; i &lt; File1Mods.length; i++)&#10;        File1Mods[i].showControl(value - 1 == i);&#10;};&#10;&#10;Content.getComponent(&quot;fileModRoutPage1&quot;).setControlCallback(onfileModRoutPage1Control);&#10;&#10;const var Filter1Mods =[];&#10;&#10;for (i = 0; i &lt; 3; i++)&#10;{&#10;    Filter1Mods[i] = Content.getComponent(&quot;fModRouteA&quot;+(i+1));&#10;&#10;} &#10;&#10;inline function onFlModRoutPage1Control(component, value)&#10;{&#10;&#9; for (i = 0; i &lt; Filter1Mods.length; i++)&#10;        Filter1Mods[i].showControl(value - 1 == i);&#10;};&#10;&#10;Content.getComponent(&quot;FlModRoutPage1&quot;).setControlCallback(onFlModRoutPage1Control);&#10;&#10;&#10;&#10;const var ShapePanel1 = Content.getComponent(&quot;ShapePanel1&quot;);&#10; &#10; inline function onShowUserTable1Control(component, value)&#10; {&#10; &#9;ShapePanel1.showControl(value);&#10; };&#10; &#10; Content.getComponent(&quot;ShowUserTable1&quot;).setControlCallback(onShowUserTable1Control);&#10; &#10; &#10; //Pitch Mode Menu&#10; &#10; const var Semitones1 = [Content.getComponent(&quot;Pitch1&quot;),&#10;                         Content.getComponent(&quot;Step1&quot;)];&#10; &#10;const var Harmonic1 = [Content.getComponent(&quot;Harm1&quot;),&#10;                       Content.getComponent(&quot;HarmStep1&quot;)];&#10;&#10;const var Tempo1 = [Content.getComponent(&quot;Tempo1&quot;),&#10;                    Content.getComponent(&quot;Div1&quot;)];&#10;&#10;&#10; &#10; inline function onPitchMode1Control(component, value)&#10; {&#10;&#9;&#10;Osc1.setAttribute(Osc1.pitchmode, value);           &#10;&#10; if (value == 1){&#10;&#9; &#10; for(s in Semitones1)&#10;       s.showControl(1);&#10; for(s in Harmonic1)&#10;       s.showControl(0);    &#10; for(s in Tempo1)&#10;       s.showControl(0);    &#10;        &#10;       }&#10;   if (value == 2){&#10;    &#9; &#10; for(s in Semitones1)&#10;      s.showControl(0);&#10; for(s in Harmonic1)&#10;       s.showControl(1);    &#10; for(s in Tempo1)&#10;       s.showControl(0); &#10;               &#10;          }   &#10;   if (value == 3){&#10;      &#9; &#10;  for(s in Semitones1)&#10;            s.showControl(0); &#10;   for(s in Harmonic1)&#10;         s.showControl(0);    &#10;   for(s in Tempo1)&#10;         s.showControl(1);           &#10;              &#10;       }&#10;   if (value == 4){&#10;      &#9; &#10;     for(s in Semitones1)&#10;            s.showControl(0); &#10;   for(s in Harmonic1)&#10;         s.showControl(0);    &#10;   for(s in Tempo1)&#10;         s.showControl(1);           &#10;              &#10;       }    &#10;       &#10;  &#10; };&#10; &#10; Content.getComponent(&quot;PitchMode1&quot;).setControlCallback(onPitchMode1Control);&#10; &#10; &#10; namespace MacroParameterHandling&#10; {&#10; &#10; // Use EXACTLY as many names as you define with HISE_NUM_MACROS in your extra definitions here&#10; Engine.setFrontendMacros([&quot;Slot 1&quot;, &quot;Slot 2&quot;, &quot;Slot 3&quot;, &quot;Slot 4&quot;]);&#10; &#10; const var mh = Engine.createMacroHandler();&#10; &#10; // This command will make sure that you can't assign more than one parameter to a macro slot&#10; // (omit this if you want to keep this, but usually you want a 1:1 connection to plugin parameters)&#10; mh.setExclusiveMode(true);&#10; &#10; //Note that macro assignments are part of the user preset data model, so they will be &#10; // restored correctly when loading a DAW session. However if you want to keep the &#10; // macro assignments consistent across user preset browsing, you will have to implement &#10; // this manually by saving and restoring the macro connection data&#10; const var uph = Engine.createUserPresetHandler();&#10; &#10; reg currentMacroConnections;&#10; &#10; // This will be executed before a preset is loaded&#10; uph.setPreCallback(function(presetData)&#10; {&#10; &#9;// checks if the preset load is coming from a user trying to load a preset&#10; &#9;// (as opposed to the DAW restoring the project session)&#10; &#9;if(!uph.isInternalPresetLoad())&#10; &#9;{&#10; &#9;&#9;// Store the current macro connections as a JSON object.&#10; &#9;&#9;currentMacroConnections = mh.getMacroDataObject();&#10; &#9;}&#10; });&#10; &#10; // This will be executed after a preset load and will restore the macro connection objects&#10; // when the user loads a preset so they stay consistent across browsing presets.&#10; uph.setPostCallback(function(presetFile)&#10; {&#10; &#9;if(!uph.isInternalPresetLoad() &amp;&amp; isDefined(currentMacroConnections))&#10; &#9;{&#10; &#9;&#9;mh.setMacroDataFromObject(currentMacroConnections);&#10; &#9;}&#10; });&#10; &#9;&#10; }&#10; &#10; &#10; &#10; &#10; &#10; function onNoteOn()&#10;{&#10;&#9;&#10;}&#10; function onNoteOff()&#10;{&#10;&#9;&#10;}&#10; function onController()&#10;{&#10;&#9;&#10;}&#10; function onTimer()&#10;{&#10;&#9;&#10;}&#10; function onControl(number, value)&#10;{&#10;&#9;&#10;}&#10; ">
+          <EditorStates BodyShown="1" Visible="1" Solo="0" contentShown="1" onInitOpen="1"/>
+          <ChildProcessors/>
+          <Content>
+            <Control type="ScriptButton" id="Button2" value="0.0"/>
+            <Control type="ScriptComboBox" id="VoiceMode" value="1.0"/>
+            <Control type="ScriptComboBox" id="VoiceMode1" value="1.0"/>
+            <Control type="ScriptComboBox" id="VoiceMode2" value="1.0"/>
+            <Control type="ScriptSlider" id="Width1" value="0.0"/>
+            <Control type="ScriptComboBox" id="PitchMode1" value="1.0"/>
+            <Control type="ScriptSlider" id="Pitch1" value="0.0"/>
+            <Control type="ScriptSlider" id="Input1" value="1.0"/>
+            <Control type="ScriptSlider" id="Step1" value="0.0"/>
+            <Control type="ScriptButton" id="SawSine1" value="0.0"/>
+            <Control type="ScriptSlider" id="OscShapeInput1" value="0.2099999934434891"/>
+            <Control type="ScriptComboBox" id="OscModRoutPage1" value="1.0"/>
+            <Control type="ScriptComboBox" id="XfSelOsc6" value="1.0"/>
+            <Control type="ScriptComboBox" id="MidiSelOsc6" value="1.0"/>
+            <Control type="ScriptSliderPack" id="FxSp1" value="-1.0" data="32............................................"/>
+            <Control type="ScriptSlider" id="FxMixMod1" value="0.0"/>
+            <Control type="ScriptComboBox" id="MidiSelOsc7" value="1.0"/>
+            <Control type="ScriptComboBox" id="XfSelOsc7" value="1.0"/>
+            <Control type="ScriptSliderPack" id="FxSp2" value="-1.0" data="32............................................"/>
+            <Control type="ScriptSlider" id="FxParamAMod1" value="0.0"/>
+            <Control type="ScriptComboBox" id="XfSelOsc8" value="1.0"/>
+            <Control type="ScriptComboBox" id="MidiSelOsc8" value="1.0"/>
+            <Control type="ScriptSliderPack" id="FxSp3" value="-1.0" data="32............................................"/>
+            <Control type="ScriptSlider" id="FxParamBMod1" value="0.0"/>
+            <Control type="ScriptSliderPack" id="PmSp1" value="-1.0" data="32............................................"/>
+            <Control type="ScriptSlider" id="PitchMod1" value="0.0"/>
+            <Control type="ScriptComboBox" id="XfSelOsc1" value="1.0"/>
+            <Control type="ScriptComboBox" id="MidiSelOsc1" value="1.0"/>
+            <Control type="ScriptComboBox" id="XfSelOsc2" value="1.0"/>
+            <Control type="ScriptComboBox" id="MidiSelOsc2" value="1.0"/>
+            <Control type="ScriptSliderPack" id="InMdSp1" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+            <Control type="ScriptSlider" id="InputMod1" value="0.0"/>
+            <Control type="ScriptComboBox" id="XfSelOsc4" value="1.0"/>
+            <Control type="ScriptComboBox" id="MidiSelOsc4" value="1.0"/>
+            <Control type="ScriptSliderPack" id="ShSp1" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+            <Control type="ScriptSlider" id="ShapeMod1" value="0.0"/>
+            <Control type="ScriptComboBox" id="MidiSelOsc5" value="1.0"/>
+            <Control type="ScriptComboBox" id="XfSelOsc5" value="1.0"/>
+            <Control type="ScriptSliderPack" id="WdMdSp1" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+            <Control type="ScriptSlider" id="WidthMod1" value="0.0"/>
+            <Control type="ScriptComboBox" id="XfSelOsc3" value="1.0"/>
+            <Control type="ScriptComboBox" id="MidiSelOsc3" value="1.0"/>
+            <Control type="ScriptSliderPack" id="OtMdSp1" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+            <Control type="ScriptSlider" id="OutMod1" value="0.0"/>
+            <Control type="ScriptSlider" id="FmIn1" value="0.8999999761581421"/>
+            <Control type="ScriptComboBox" id="ScriptComboBox1" value="1.0"/>
+            <Control type="ScriptSlider" id="FxMix1" value="0.0"/>
+            <Control type="ScriptSlider" id="XfParamB1" value="0.0"/>
+            <Control type="ScriptSlider" id="XfParamA1" value="0.0"/>
+            <Control type="ScriptTable" id="UserShape1" value="0.0" data=""/>
+            <Control type="ScriptButton" id="ShowUserTable1" value="0.0"/>
+            <Control type="ScriptSlider" id="Harm1" value="0.0"/>
+            <Control type="ScriptSlider" id="HarmStep1" value="1.0"/>
+            <Control type="ScriptSlider" id="Tempo1" value="0.0"/>
+            <Control type="ScriptSlider" id="Div1" value="0.0"/>
+            <Control type="ScriptComboBox" id="PitchMode2" value="5.0"/>
+            <Control type="ScriptComboBox" id="fileModRoutPage1" value="1.0"/>
+            <Control type="ScriptSlider" id="FilePitch1" value="0.4000000059604645"/>
+            <Control type="ScriptSlider" id="FilePos1" value="0.5199999809265137"/>
+            <Control type="ScriptSlider" id="FileWin1" value="0.0"/>
+            <Control type="ScriptSlider" id="FileIn1" value="0.4399999976158142"/>
+            <Control type="ScriptSlider" id="FileSmooth1" value="4.170000076293945"/>
+            <Control type="ScriptSlider" id="PosMod1" value="0.0"/>
+            <Control type="ScriptTable" id="PosTable1" value="0.0" data=""/>
+            <Control type="ScriptSlider" id="PosModTempo1" value="0.0"/>
+            <Control type="ScriptSlider" id="PosModDiv1" value="0.0"/>
+            <Control type="ScriptComboBox" id="XfSelOsc9" value="1.0"/>
+            <Control type="ScriptComboBox" id="MidiSelOsc9" value="1.0"/>
+            <Control type="ScriptSliderPack" id="FxSp7" value="-1.0" data="32............................................"/>
+            <Control type="ScriptSlider" id="FileTempoMod1" value="0.0"/>
+            <Control type="ScriptComboBox" id="XfSelOsc10" value="1.0"/>
+            <Control type="ScriptComboBox" id="MidiSelOsc10" value="1.0"/>
+            <Control type="ScriptSliderPack" id="FxSp8" value="-1.0" data="32............................................"/>
+            <Control type="ScriptSlider" id="FilePitchMod1" value="0.0"/>
+            <Control type="ScriptComboBox" id="MidiSelOsc11" value="1.0"/>
+            <Control type="ScriptComboBox" id="XfSelOsc11" value="1.0"/>
+            <Control type="ScriptSliderPack" id="FxSp9" value="-1.0" data="32............................................"/>
+            <Control type="ScriptSlider" id="FileInMod1" value="0.0"/>
+            <Control type="ScriptAudioWaveform" id="Wav1" value="0.0" data="{PROJECT_FOLDER}Misc/Drawn/AD-Draw1.wav"
+                     rangeStart="0" rangeEnd="0"/>
+            <Control type="ScriptSlider" id="FileXf1" value="0.0"/>
+            <Control type="ScriptComboBox" id="Quantise1" value="9.0"/>
+            <Control type="ScriptSlider" id="FileMix1" value="1.0"/>
+            <Control type="ScriptComboBox" id="FileSelect1" value="1.0"/>
+            <Control type="ScriptButton" id="FolderSelect1" value="0.0"/>
+            <Control type="ScriptComboBox" id="Quantise2" value="3.0"/>
+            <Control type="ScriptSlider" id="Feed1" value="0.8600000143051147"/>
+            <Control type="ScriptComboBox" id="FlModRoutPage1" value="1.0"/>
+            <Control type="ScriptComboBox" id="XfSelOsc14" value="1.0"/>
+            <Control type="ScriptComboBox" id="MidiSelOsc14" value="1.0"/>
+            <Control type="ScriptSliderPack" id="FxSp12" value="-1.0" data="32............................................"/>
+            <Control type="ScriptSlider" id="FilterMixMod1" value="0.0"/>
+            <Control type="ScriptComboBox" id="XfSelOsc12" value="1.0"/>
+            <Control type="ScriptComboBox" id="MidiSelOsc12" value="1.0"/>
+            <Control type="ScriptSliderPack" id="FxSp10" value="-1.0" data="32............................................"/>
+            <Control type="ScriptSlider" id="FilterMixMod2" value="0.0"/>
+            <Control type="ScriptComboBox" id="XfSelOsc13" value="1.0"/>
+            <Control type="ScriptComboBox" id="MidiSelOsc13" value="1.0"/>
+            <Control type="ScriptSliderPack" id="FxSp11" value="-1.0" data="32............................................"/>
+            <Control type="ScriptSlider" id="FilterMixMod3" value="0.0"/>
+            <Control type="ScriptSlider" id="SlotVol6" value="0.0"/>
+            <Control type="ScriptSlider" id="SlotVol7" value="0.0"/>
+            <Control type="ScriptSlider" id="SlotVol8" value="0.0"/>
+            <Control type="ScriptSlider" id="SlotVol9" value="0.0"/>
+            <Control type="ScriptSlider" id="SlotVol10" value="0.0"/>
+            <Control type="ScriptSlider" id="FxMix2" value="0.0"/>
+            <Control type="ScriptSlider" id="XfParamB2" value="0.0"/>
+            <Control type="ScriptSlider" id="XfParamA2" value="0.0"/>
+            <Control type="ScriptComboBox" id="ScriptComboBox2" value="1.0"/>
+            <Control type="ScriptSlider" id="XfParamB3" value="0.0"/>
+            <Control type="ScriptSlider" id="SlotVol1" value="1.0"/>
+            <Control type="ScriptSlider" id="SlotVol2" value="1.0"/>
+            <Control type="ScriptSlider" id="SlotVol3" value="1.0"/>
+            <Control type="ScriptSlider" id="SlotVol4" value="1.0"/>
+            <Control type="ScriptSlider" id="SlotVol5" value="0.0"/>
+            <Control type="ScriptSlider" id="Voices1" value="0.0"/>
+            <Control type="ScriptSlider" id="Voices2" value="0.0"/>
+            <Control type="ScriptSlider" id="Voices3" value="0.0"/>
+            <Control type="ScriptSlider" id="Voices4" value="0.0"/>
+            <Control type="ScriptButton" id="Button1" value="0.0"/>
+            <Control type="ScriptComboBox" id="SecondCB" value="1.0"/>
+            <Control type="ScriptButton" id="Button3" value="0.0"/>
+            <Control type="ScriptedViewport" id="FirstSp" value="1"/>
+            <Control type="ScriptedViewport" id="SecondSp" value="0"/>
+            <Control type="ScriptedViewport" id="ThirdSp" value="0.0"/>
+            <Control type="ScriptComboBox" id="FirstCB" value="1.0"/>
+            <Control type="ScriptComboBox" id="ThirdCB" value="1.0"/>
+          </Content>
+          <UIData>
+            <ContentProperties DeviceType="Desktop">
+              <Component type="ScriptPanel" id="ScriptPanel1" x="-1.0" y="-2.0" width="1000.0"
+                         height="900.0" itemColour="4294967295" itemColour2="4294967295"
+                         textColour="4294967295" locked="1">
+                <Component type="ScriptImage" id="ScriptImage8" x="301.0" y="-40.0" width="600.0"
+                           height="590.0" parentComponent="ScriptPanel1" fileName="{PROJECT_FOLDER}MuckyBG.png"
+                           locked="1"/>
+                <Component type="ScriptImage" id="ScriptImage9" x="600.0" y="442.0" width="600.0"
+                           height="600.0" parentComponent="ScriptPanel1" fileName="{PROJECT_FOLDER}MuckyBG.png"
+                           locked="1"/>
+                <Component type="ScriptImage" id="ScriptImage10" x="0.0" y="422.0" width="680.0"
+                           height="480.0" parentComponent="ScriptPanel1" fileName="{PROJECT_FOLDER}MuckyBG.png"
+                           locked="1"/>
+                <Component type="ScriptImage" id="ScriptImage7" x="1.0" y="2.0" width="500.0"
+                           height="500.0" parentComponent="ScriptPanel1" fileName="{PROJECT_FOLDER}MuckyBG.png"
+                           locked="1"/>
+              </Component>
+              <Component type="ScriptPanel" id="TopMenu" x="332.0" y="14.0" width="540.0"
+                         height="100.0" itemColour="4025871832" itemColour2="4294307288"
+                         textColour="4278190080">
+                <Component type="ScriptButton" id="Button2" x="413.0" y="13.0" parentComponent="TopMenu"
+                           width="100.0" height="50.0"/>
+                <Component type="ScriptLabel" id="Shape36" x="21.0" y="71.0" parentComponent="TopMenu"
+                           width="120.0" height="20.0" editable="0" text="VOICE MODE" fontName="Impact"
+                           fontSize="20.0" bgColour="4278190080"/>
+                <Component type="ScriptComboBox" id="VoiceMode" x="21.0" y="13.0" max="5"
+                           items="Poly 1&#10;Poly 2&#10;Poly 3&#10;Stack&#10;Round Robin"
+                           tooltip="Poly 1: 1 Voices/16 Polyphony - Poly 2: 2 Voiced/8 Polyphony - Poly 3: 4 Voices/4 Polyphony - Stack: 4 Voices/Monophonic - Round Robin: Cycle between voices"
+                           textColour="4278190080" bgColour="1427246606" width="120.0" height="50.0"
+                           parentComponent="TopMenu"/>
+                <Component type="ScriptLabel" id="Shape37" x="151.0" y="70.0" parentComponent="TopMenu"
+                           width="120.0" height="20.0" editable="0" text="VOICE PAGE" fontName="Impact"
+                           fontSize="20.0" bgColour="4278190080"/>
+                <Component type="ScriptComboBox" id="VoiceMode1" x="151.0" y="12.0" max="4"
+                           items="VOICE 1&#10;VOICE 2&#10;VOICE 3&#10;VOICE 4" tooltip="Poly 1: 1 Voices/16 Polyphony - Poly 2: 2 Voiced/8 Polyphony - Poly 3: 4 Voices/4 Polyphony - Stack: 4 Voices/Monophonic - Round Robin: Cycle between voices"
+                           textColour="4278190080" bgColour="1427246606" width="120.0" height="50.0"
+                           parentComponent="TopMenu"/>
+                <Component type="ScriptComboBox" id="VoiceMode2" x="280.0" y="12.0" max="4"
+                           items="VOICE 1&#10;VOICE 2&#10;VOICE 3&#10;VOICE 4" tooltip="Poly 1: 1 Voices/16 Polyphony - Poly 2: 2 Voiced/8 Polyphony - Poly 3: 4 Voices/4 Polyphony - Stack: 4 Voices/Monophonic - Round Robin: Cycle between voices"
+                           textColour="4278190080" bgColour="1427246606" width="120.0" height="50.0"
+                           parentComponent="TopMenu"/>
+                <Component type="ScriptLabel" id="Shape38" x="280.0" y="70.0" parentComponent="TopMenu"
+                           width="120.0" height="20.0" editable="0" text="PRESET" fontName="Impact"
+                           fontSize="20.0" bgColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape39" x="404.0" y="70.0" parentComponent="TopMenu"
+                           width="120.0" height="20.0" editable="0" text="PRESET MANAGER"
+                           fontName="Impact" fontSize="20.0" bgColour="4278190080"/>
+              </Component>
+              <Component type="ScriptPanel" id="Osc1" x="33.0" y="124.0" width="290.0"
+                         height="590.0" itemColour="4294307288" itemColour2="4294307288"
+                         textColour="4278190080">
+                <Component type="ScriptSlider" id="Width1" x="152.0" y="210.0" width="40.0"
+                           height="40.0" parentComponent="Osc1" processorId="OscShaper1"
+                           parameterId="width" isPluginParameter="1" pluginParameterName="Width1"
+                           text="Width" bgColour="4294967295" itemColour2="4278190080"/>
+                <Component type="ScriptComboBox" id="PitchMode1" x="101.0" y="136.0" max="4"
+                           items="Semitones&#10;Harmonic&#10;Tempo Sync&#10;LFO&#10;" width="80.0"
+                           height="20.0" parentComponent="Osc1" pluginParameterName="PitchMode1"
+                           isPluginParameter="1" textColour="4279834648" bgColour="4278190080"/>
+                <Component type="ScriptSlider" id="Pitch1" x="5.0" y="54.0" width="80.0"
+                           height="80.0" parentComponent="Osc1" processorId="Osc1" parameterId="Pitch"
+                           pluginParameterName="Pitch1" isPluginParameter="1" min="-24.0"
+                           max="24.0" middlePosition="0.0" showValuePopup="Below" itemColour="4278190080"
+                           itemColour2="4278190080" text="Pitch" bgColour="4294967295"/>
+                <Component type="ScriptSlider" id="Input1" x="218.0" y="210.0" width="40.0"
+                           height="40.0" parentComponent="Osc1" processorId="OscShaper1"
+                           parameterId="out" pluginParameterName="FmInput1" isPluginParameter="1"
+                           defaultValue="1.0" text="Output" bgColour="4294967295" itemColour2="4278190080"/>
+                <Component type="ScriptSlider" id="Step1" x="97.0" y="60.0" width="40.0"
+                           height="40.0" parentComponent="Osc1" processorId="Osc1" parameterId="step"
+                           pluginParameterName="Step1" isPluginParameter="1" text="Step"
+                           max="12.0" stepSize="1.0" showValuePopup="Below" bgColour="4294967295"
+                           itemColour2="4278190080"/>
+                <Component type="ScriptButton" id="SawSine1" x="250.0" y="5.0" width="20.0"
+                           height="20.0" parentComponent="Osc1" processorId="Osc1" parameterId="Shape"
+                           defaultValue="1.0" textColour="16777215" itemColour="3355443"
+                           bgColour="4294901760" itemColour2="1118481"/>
+                <Component type="ScriptSlider" id="OscShapeInput1" x="23.0" y="172.0" width="80.0"
+                           height="80.0" parentComponent="Osc1" text="Osc Shape" stepSize="0.0"
+                           middlePosition="0.5" processorId="OscShaper1" parameterId="shaper"
+                           isPluginParameter="1" pluginParameterName="OscShapeInput1" itemColour2="4278190080"
+                           bgColour="4294967295"/>
+                <Component type="ScriptComboBox" id="OscModRoutPage1" x="172.0" y="385.0"
+                           width="80.0" height="20.0" max="8" items="Pitch&#10;FM Input&#10;Shape&#10;Width&#10;Output&#10;Fx Mix&#10;Fx Param A&#10;Fx Param B&#10;"
+                           parentComponent="Osc1" itemColour2="4211081216" itemColour="4278190080"
+                           bgColour="4278190080" textColour="4278190080"/>
+                <Component type="ScriptPanel" id="OscModRouting1" x="35.0" y="413.0" width="220.0"
+                           height="160.0" parentComponent="Osc1" textColour="1630348838"
+                           itemColour2="0" itemColour="0" bgColour="16777215">
+                  <Component type="ScriptPanel" id="OsModRoute6" x="2.0" y="6.0" width="220.0"
+                             height="160.0" parentComponent="OscModRouting1" bgColour="16777215"
+                             textColour="16777215" itemColour2="0" itemColour="0" visible="0">
+                    <Component type="ScriptComboBox" id="XfSelOsc6" x="191.0" y="103.0" width="20.0"
+                               height="20.0" max="4" parentComponent="OsModRoute6" bgColour="4278190080"
+                               itemColour="4278190080" items="1&#10;2&#10;3&#10;4" processorId="TransFX1"
+                               parameterId="XfStage" itemColour2="4211081216" textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="MidiSelOsc6" x="191.0" y="128.0" width="20.0"
+                               height="20.0" max="7" parentComponent="OsModRoute6" bgColour="4278190080"
+                               itemColour="4278190080" items="Pitchbend&#10;Aftertouch&#10;Mod Wheel&#10;Breath&#10;Velocity&#10;Track&#10;Random"
+                               processorId="TransFX1" parameterId="Midi1" itemColour2="4211081216"
+                               textColour="4278190080"/>
+                    <Component type="ScriptSliderPack" id="FxSp1" x="8.0" y="22.0" width="200.0"
+                               height="70.0" parentComponent="OsModRoute6" processorId="TransFX1"
+                               defaultValue="0.0" itemColour="816931083" itemColour2="1014908684"
+                               bgColour="13421633" textColour="0"/>
+                    <Component type="ScriptSlider" id="FxMixMod1" x="7.0" y="98.0" width="40.0"
+                               height="50.0" parentComponent="OsModRoute6" processorId="Filter1"
+                               parameterId="MixMod" min="-1.0" middlePosition="0.0" pluginParameterName="FxMixMod1"
+                               isPluginParameter="1"/>
+                  </Component>
+                  <Component type="ScriptPanel" id="OsModRoute7" x="2.0" y="6.0" width="220.0"
+                             height="160.0" parentComponent="OscModRouting1" bgColour="16777215"
+                             textColour="16777215" itemColour2="0" itemColour="0" visible="0">
+                    <Component type="ScriptComboBox" id="MidiSelOsc7" x="191.0" y="129.0" width="20.0"
+                               height="20.0" max="7" parentComponent="OsModRoute7" bgColour="4278190080"
+                               itemColour="4278190080" items="Pitchbend&#10;Aftertouch&#10;Mod Wheel&#10;Breath&#10;Velocity&#10;Track&#10;Random"
+                               processorId="TransFX1" parameterId="Mid2" itemColour2="4211081216"
+                               textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="XfSelOsc7" x="191.0" y="104.0" width="20.0"
+                               height="20.0" max="4" parentComponent="OsModRoute7" bgColour="4278190080"
+                               itemColour="4278190080" items="1&#10;2&#10;3&#10;4" processorId="TransFX1"
+                               parameterId="Xf2" itemColour2="4211081216" textColour="4278190080"/>
+                    <Component type="ScriptSliderPack" id="FxSp2" x="8.0" y="22.0" width="200.0"
+                               height="70.0" parentComponent="OsModRoute7" processorId="Filter1"
+                               SliderPackIndex="1" defaultValue="0.0" itemColour="816931083"
+                               itemColour2="1014908684" bgColour="13421633" textColour="0"/>
+                    <Component type="ScriptSlider" id="FxParamAMod1" x="7.0" y="98.0" width="40.0"
+                               height="50.0" parentComponent="OsModRoute7" processorId="Filter1"
+                               parameterId="MixMod" min="-1.0" middlePosition="0.0" pluginParameterName="FxParamAMod1"
+                               isPluginParameter="1"/>
+                  </Component>
+                  <Component type="ScriptPanel" id="OsModRoute8" x="2.0" y="6.0" width="220.0"
+                             height="160.0" parentComponent="OscModRouting1" bgColour="16777215"
+                             textColour="16777215" itemColour2="0" itemColour="0" visible="0">
+                    <Component type="ScriptComboBox" id="XfSelOsc8" x="190.0" y="103.0" width="20.0"
+                               height="20.0" max="4" parentComponent="OsModRoute8" bgColour="4278190080"
+                               itemColour="4278190080" items="1&#10;2&#10;3&#10;4" processorId="TransFX1"
+                               parameterId="xf3" itemColour2="4211081216" textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="MidiSelOsc8" x="190.0" y="128.0" width="20.0"
+                               height="20.0" max="7" parentComponent="OsModRoute8" bgColour="4278190080"
+                               itemColour="4278190080" items="Pitchbend&#10;Aftertouch&#10;Mod Wheel&#10;Breath&#10;Velocity&#10;Track&#10;Random"
+                               processorId="TransFX1" parameterId="mid3" itemColour2="4211081216"
+                               textColour="4278190080"/>
+                    <Component type="ScriptSliderPack" id="FxSp3" x="8.0" y="22.0" width="200.0"
+                               height="70.0" parentComponent="OsModRoute8" processorId="Filter1"
+                               SliderPackIndex="2" defaultValue="0.0" itemColour="816931083"
+                               itemColour2="1014908684" bgColour="13421633" textColour="0"/>
+                    <Component type="ScriptSlider" id="FxParamBMod1" x="7.0" y="98.0" width="40.0"
+                               height="50.0" parentComponent="OsModRoute8" processorId="Filter1"
+                               parameterId="bmod" min="-1.0" middlePosition="0.0" pluginParameterName="FxParamBMod1"
+                               isPluginParameter="1"/>
+                  </Component>
+                  <Component type="ScriptPanel" id="OsModRoute1" x="2.0" y="6.0" width="220.0"
+                             height="160.0" parentComponent="OscModRouting1" bgColour="16777215"
+                             textColour="16777215" itemColour2="0" itemColour="0">
+                    <Component type="ScriptSliderPack" id="PmSp1" x="8.0" y="22.0" width="200.0"
+                               height="70.0" parentComponent="OsModRoute1" processorId="Osc1"
+                               defaultValue="0.0" textColour="0" itemColour="816931083" itemColour2="1014908684"
+                               bgColour="13421633"/>
+                    <Component type="ScriptSlider" id="PitchMod1" x="7.0" y="98.0" width="40.0"
+                               height="50.0" parentComponent="OsModRoute1" processorId="Osc1"
+                               parameterId="PitchMod" min="-1.0" middlePosition="0.0" pluginParameterName="PitchMod1"
+                               isPluginParameter="1" text="mod"/>
+                    <Component type="ScriptComboBox" id="XfSelOsc1" x="191.0" y="103.0" width="20.0"
+                               height="20.0" max="4" parentComponent="OsModRoute1" bgColour="4278190080"
+                               itemColour="4278190080" items="1&#10;2&#10;3&#10;4" processorId="Osc1"
+                               parameterId="XfstagePitch" itemColour2="4211081216" textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="MidiSelOsc1" x="191.0" y="128.0" width="20.0"
+                               height="20.0" max="7" parentComponent="OsModRoute1" bgColour="4278190080"
+                               itemColour="4278190080" items="Pitchbend&#10;Aftertouch&#10;Mod Wheel&#10;Breath&#10;Velocity&#10;Track&#10;Random"
+                               processorId="Osc1" parameterId="MidiSlotPitch" itemColour2="4211081216"
+                               textColour="4278190080"/>
+                  </Component>
+                  <Component type="ScriptPanel" id="OsModRoute2" x="2.0" y="6.0" width="220.0"
+                             height="160.0" parentComponent="OscModRouting1" bgColour="16777215"
+                             textColour="16777215" itemColour2="0" itemColour="0" visible="0">
+                    <Component type="ScriptComboBox" id="XfSelOsc2" x="161.0" y="99.0" width="20.0"
+                               height="20.0" max="4" parentComponent="OsModRoute2" bgColour="4278190080"
+                               itemColour="4278190080" items="1&#10;2&#10;3&#10;4" processorId="Osc1"
+                               parameterId="XfstageInput" itemColour2="4211081216" textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="MidiSelOsc2" x="186.0" y="99.0" width="20.0"
+                               height="20.0" max="7" parentComponent="OsModRoute2" bgColour="4278190080"
+                               itemColour="4278190080" items="Pitchbend&#10;Aftertouch&#10;Mod Wheel&#10;Breath&#10;Velocity&#10;Track&#10;Random"
+                               processorId="Osc1" parameterId="MidiSlotIn" itemColour2="4211081216"
+                               textColour="4278190080"/>
+                    <Component type="ScriptSliderPack" id="InMdSp1" x="8.0" y="22.0" width="200.0"
+                               height="70.0" parentComponent="OsModRoute2" processorId="Osc1"
+                               SliderPackIndex="1" itemColour="816931083" itemColour2="1014908684"
+                               bgColour="13421633" textColour="0"/>
+                    <Component type="ScriptSlider" id="InputMod1" x="7.0" y="98.0" width="40.0"
+                               height="50.0" parentComponent="OsModRoute2" processorId="Osc1"
+                               parameterId="InputMod" min="-1.0" middlePosition="0.0" pluginParameterName="InMod1"
+                               isPluginParameter="1" text="mod"/>
+                  </Component>
+                  <Component type="ScriptPanel" id="OsModRoute3" x="2.0" y="6.0" width="220.0"
+                             height="160.0" parentComponent="OscModRouting1" bgColour="16777215"
+                             textColour="16777215" itemColour2="0" itemColour="0" visible="0">
+                    <Component type="ScriptComboBox" id="XfSelOsc4" x="160.0" y="98.0" width="20.0"
+                               height="20.0" max="4" parentComponent="OsModRoute3" bgColour="4278190080"
+                               itemColour="4278190080" items="1&#10;2&#10;3&#10;4" processorId="OscShaper1"
+                               parameterId="XfStage" itemColour2="4211081216" textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="MidiSelOsc4" x="185.0" y="98.0" width="20.0"
+                               height="20.0" max="7" parentComponent="OsModRoute3" bgColour="4278190080"
+                               itemColour="4278190080" items="Pitchbend&#10;Aftertouch&#10;Mod Wheel&#10;Breath&#10;Velocity&#10;Track&#10;Random"
+                               processorId="OscShaper1" parameterId="Midi1" itemColour2="4211081216"
+                               textColour="4278190080"/>
+                    <Component type="ScriptSliderPack" id="ShSp1" x="8.0" y="22.0" width="200.0"
+                               height="70.0" parentComponent="OsModRoute3" processorId="OscShaper1"
+                               sliderAmount="8.0" itemColour="816931083" itemColour2="1014908684"
+                               bgColour="13421633" textColour="0"/>
+                    <Component type="ScriptSlider" id="ShapeMod1" x="7.0" y="98.0" width="40.0"
+                               height="50.0" parentComponent="OsModRoute3" processorId="OscShaper1"
+                               parameterId="shapemod" min="-1.0" middlePosition="0.0" pluginParameterName="ShapeMod1"
+                               isPluginParameter="1" text="mod"/>
+                  </Component>
+                  <Component type="ScriptPanel" id="OsModRoute4" x="2.0" y="6.0" width="220.0"
+                             height="160.0" parentComponent="OscModRouting1" bgColour="16777215"
+                             textColour="16777215" itemColour2="0" itemColour="0" visible="0">
+                    <Component type="ScriptComboBox" id="MidiSelOsc5" x="185.0" y="98.0" width="20.0"
+                               height="20.0" max="7" parentComponent="OsModRoute4" bgColour="4278190080"
+                               itemColour="4278190080" items="Pitchbend&#10;Aftertouch&#10;Mod Wheel&#10;Breath&#10;Velocity&#10;Track&#10;Random"
+                               processorId="OscShaper1" parameterId="midi2" itemColour2="4211081216"
+                               textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="XfSelOsc5" x="160.0" y="98.0" width="20.0"
+                               height="20.0" max="4" parentComponent="OsModRoute4" bgColour="4278190080"
+                               itemColour="4278190080" items="1&#10;2&#10;3&#10;4" processorId="OscShaper1"
+                               parameterId="xf2" itemColour2="4211081216" textColour="4278190080"/>
+                    <Component type="ScriptSliderPack" id="WdMdSp1" x="8.0" y="22.0" width="200.0"
+                               height="70.0" parentComponent="OsModRoute4" processorId="OscShaper1"
+                               SliderPackIndex="1" sliderAmount="8.0" itemColour="816931083"
+                               itemColour2="1014908684" bgColour="13421633" textColour="0"/>
+                    <Component type="ScriptSlider" id="WidthMod1" x="7.0" y="98.0" width="40.0"
+                               height="50.0" parentComponent="OsModRoute4" processorId="OscShaper1"
+                               parameterId="widthmod" min="-1.0" middlePosition="0.0" pluginParameterName="WidthMod1"
+                               isPluginParameter="1" text="mod"/>
+                  </Component>
+                  <Component type="ScriptPanel" id="OsModRoute5" x="2.0" y="6.0" width="220.0"
+                             height="160.0" parentComponent="OscModRouting1" bgColour="16777215"
+                             textColour="16777215" itemColour2="0" itemColour="0" visible="0">
+                    <Component type="ScriptComboBox" id="XfSelOsc3" x="161.0" y="99.0" width="20.0"
+                               height="20.0" max="4" parentComponent="OsModRoute5" bgColour="4278190080"
+                               itemColour="4278190080" items="1&#10;2&#10;3&#10;4" processorId="OscShaper1"
+                               parameterId="xf3" itemColour2="4211081216" textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="MidiSelOsc3" x="186.0" y="99.0" width="20.0"
+                               height="20.0" max="7" parentComponent="OsModRoute5" bgColour="4278190080"
+                               itemColour="4278190080" items="Pitchbend&#10;Aftertouch&#10;Mod Wheel&#10;Breath&#10;Velocity&#10;Track&#10;Random"
+                               processorId="OscShaper1" parameterId="midi3" itemColour2="4211081216"
+                               textColour="4278190080"/>
+                    <Component type="ScriptSliderPack" id="OtMdSp1" x="8.0" y="22.0" width="200.0"
+                               height="70.0" parentComponent="OsModRoute5" processorId="OscShaper1"
+                               SliderPackIndex="2" sliderAmount="8.0" itemColour="816931083"
+                               itemColour2="1014908684" bgColour="13421633" textColour="0"/>
+                    <Component type="ScriptSlider" id="OutMod1" x="7.0" y="98.0" width="40.0"
+                               height="50.0" parentComponent="OsModRoute5" processorId="OscShaper1"
+                               parameterId="outmod" min="-1.0" middlePosition="0.0" pluginParameterName="WidthMod1"
+                               isPluginParameter="1" text="mod"/>
+                  </Component>
+                  <Component type="ScriptLabel" id="ScriptLabel1" x="11.0" y="3.0" width="25.0"
+                             height="25.0" text="L1" fontSize="20.0" parentComponent="OscModRouting1"
+                             fontName="Montserrat" textColour="4278190080" editable="0"/>
+                  <Component type="ScriptLabel" id="ScriptLabel2" x="35.0" y="3.0" width="25.0"
+                             height="25.0" text="L2" fontSize="20.0" parentComponent="OscModRouting1"
+                             fontName="Montserrat" textColour="4278190080" editable="0"/>
+                  <Component type="ScriptLabel" id="ScriptLabel3" x="59.0" y="3.0" width="25.0"
+                             height="25.0" text="L3" fontSize="20.0" parentComponent="OscModRouting1"
+                             fontName="Montserrat" textColour="4278190080" editable="0"/>
+                  <Component type="ScriptLabel" id="ScriptLabel4" x="85.0" y="3.0" width="25.0"
+                             height="25.0" text="E1" fontSize="20.0" parentComponent="OscModRouting1"
+                             fontName="Montserrat" textColour="4278190080" editable="0"/>
+                  <Component type="ScriptLabel" id="ScriptLabel5" x="111.0" y="3.0" width="25.0"
+                             height="25.0" text="E2" fontSize="20.0" parentComponent="OscModRouting1"
+                             fontName="Montserrat" textColour="4278190080" editable="0"/>
+                  <Component type="ScriptLabel" id="ScriptLabel6" x="134.0" y="3.0" width="25.0"
+                             height="25.0" text="E3" fontSize="20.0" parentComponent="OscModRouting1"
+                             fontName="Montserrat" textColour="4278190080" editable="0"/>
+                  <Component type="ScriptLabel" id="ScriptLabel7" x="159.0" y="3.0" width="25.0"
+                             height="25.0" text="XF" fontSize="20.0" parentComponent="OscModRouting1"
+                             fontName="Montserrat" textColour="4278190080" editable="0"/>
+                  <Component type="ScriptLabel" id="ScriptLabel8" x="177.0" y="5.0" width="38.0"
+                             height="20.0" text="MIDI" fontSize="20.0" parentComponent="OscModRouting1"
+                             fontName="Montserrat" textColour="4278190080" editable="0"/>
+                </Component>
+                <Component type="ScriptLabel" id="Shape1" x="28.0" y="221.0" parentComponent="Osc1"
+                           width="30.0" height="40.0" editable="0" text="FM IN" fontName="Impact"
+                           visible="0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape3" x="158.0" y="356.0" parentComponent="Osc1"
+                           width="50.0" height="20.0" editable="0" text="Width" fontName="Impact"
+                           visible="0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape4" x="165.0" y="112.0" parentComponent="Osc1"
+                           width="80.0" height="20.0" editable="0" text="Output" fontName="Impact"
+                           visible="0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape5" x="6.0" y="6.0" parentComponent="Osc1"
+                           width="130.0" height="40.0" editable="0" text="OSCILLATOR 1"
+                           fontSize="20.0" fontName="scuz" bgColour="4294901760"/>
+                <Component type="ScriptSlider" id="FmIn1" x="155.0" y="60.0" width="40.0"
+                           height="40.0" parentComponent="Osc1" processorId="Osc1" parameterId="Input"
+                           pluginParameterName="FmInput1" isPluginParameter="1" text="FM"
+                           bgColour="4294967295" itemColour2="4278190080"/>
+                <Component type="ScriptLabel" id="Shape7" x="132.0" y="110.0" parentComponent="Osc1"
+                           width="40.0" height="30.0" editable="0" text="Pitch Mode" fontName="Impact"
+                           visible="0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape8" x="121.0" y="241.0" parentComponent="Osc1"
+                           width="70.0" height="20.0" editable="0" text="FM Source" fontName="Impact"
+                           visible="0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape9" x="42.0" y="362.0" parentComponent="Osc1"
+                           width="50.0" height="20.0" editable="0" text="Shape" fontName="Impact"
+                           visible="0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape10" x="233.0" y="30.0" parentComponent="Osc1"
+                           width="50.0" height="20.0" editable="0" text="saw/sin" fontName="Impact"
+                           fontSize="15.0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape15" x="327.0" y="45.0" parentComponent="Osc1"
+                           width="30.0" height="10.0" editable="0" text="Voice2" fontSize="10.0"
+                           fontName="Impact" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape17" x="13.0" y="239.0" parentComponent="Osc1"
+                           width="30.0" height="10.0" editable="0" text="sine" fontSize="10.0"
+                           fontName="Montserrat" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape18" x="11.0" y="184.0" parentComponent="Osc1"
+                           width="30.0" height="10.0" editable="0" text="pulse" fontSize="10.0"
+                           fontName="Montserrat" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape19" x="89.0" y="184.0" parentComponent="Osc1"
+                           width="30.0" height="10.0" editable="0" text="sync" fontSize="10.0"
+                           fontName="Montserrat" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape20" x="88.0" y="239.0" parentComponent="Osc1"
+                           width="30.0" height="10.0" editable="0" text="user" fontSize="10.0"
+                           fontName="Montserrat" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape21" x="185.0" y="10.0" parentComponent="Osc1"
+                           width="60.0" height="10.0" editable="0" text="Core Wave" fontName="Impact"
+                           fontSize="15.0" textColour="4278190080"/>
+                <Component type="ScriptComboBox" id="ScriptComboBox1" x="13.0" y="307.0"
+                           width="60.0" height="40.0" max="11" parentComponent="Osc1" processorId="TransFX1"
+                           parameterId="FxMope" items="Divide&#10;Multplu&#10;Sub1&#10;Sub2&#10;Fmod&#10;Bitcrusher&#10;S&amp;H&#10;Ring Mod&#10;Low Shelf&#10;High Shelf&#10;Comb"
+                           pluginParameterName="XfParamSel1" isPluginParameter="1" textColour="4279834648"
+                           bgColour="4278190080" itemColour2="4278190080" itemColour="4278190080"/>
+                <Component type="ScriptSlider" id="FxMix1" x="89.0" y="305.0" width="40.0"
+                           height="40.0" parentComponent="Osc1" processorId="TransFX1" parameterId="FxMix"
+                           isPluginParameter="1" pluginParameterName="FxMix1" text="Mix"
+                           bgColour="4294967295" itemColour2="4278190080"/>
+                <Component type="ScriptSlider" id="XfParamB1" x="226.0" y="305.0" width="40.0"
+                           height="40.0" parentComponent="Osc1" processorId="TransFX1" parameterId="FxParamB"
+                           pluginParameterName="XfParamA1" isPluginParameter="1" text="LP"
+                           bgColour="4294967295" itemColour2="4278190080"/>
+                <Component type="ScriptSlider" id="XfParamA1" x="157.0" y="305.0" width="40.0"
+                           height="40.0" parentComponent="Osc1" processorId="TransFX1" parameterId="FxParamA"
+                           pluginParameterName="XfParamA1" isPluginParameter="1" text="Fx"
+                           bgColour="4294967295" itemColour2="4278190080"/>
+                <Component type="ScriptLabel" id="Shape22" x="28.0" y="385.0" parentComponent="Osc1"
+                           width="100.0" height="20.0" editable="0" text="Modulation" fontSize="16.0"
+                           fontName="Montserrat" textColour="4278190080"/>
+                <Component type="ScriptPanel" id="ShapePanel1" x="11.0" y="169.0" width="110.0"
+                           height="90.0" parentComponent="Osc1" bgColour="4293056985" textColour="16777215"
+                           itemColour2="4293056985" itemColour="4293056985" borderRadius="0.0"
+                           visible="0">
+                  <Component type="ScriptTable" id="UserShape1" x="0.0" y="0.0" processorId="OscShaper1"
+                             parentComponent="ShapePanel1" width="110.0" height="90.0" bgColour="4291804364"
+                             itemColour="1241448448" itemColour2="4211081216" customColours="1"/>
+                </Component>
+                <Component type="ScriptButton" id="ShowUserTable1" x="126.0" y="178.0" width="20.0"
+                           height="20.0" parentComponent="Osc1" textColour="4294901760"
+                           bgColour="1442775040"/>
+                <Component type="ScriptLabel" id="TempoLabel1" x="3.0" y="118.0" parentComponent="Osc1"
+                           width="80.0" height="20.0" editable="0" text="Tempo" fontName="Impact"
+                           visible="0" textColour="4278190080"/>
+                <Component type="ScriptSlider" id="Harm1" x="13.0" y="51.0" width="60.0"
+                           height="60.0" parentComponent="Osc1" processorId="Osc1" parameterId="harm"
+                           pluginParameterName="Pitch1" isPluginParameter="1" min="1.0"
+                           max="16.0" middlePosition="8.5" text="Harm" visible="0"/>
+                <Component type="ScriptSlider" id="HarmStep1" x="82.0" y="57.0" width="40.0"
+                           height="50.0" parentComponent="Osc1" processorId="Osc1" parameterId="step"
+                           pluginParameterName="Step1" isPluginParameter="1" defaultValue="1.0"
+                           visible="0"/>
+                <Component type="ScriptSlider" id="Tempo1" x="13.0" y="51.0" width="60.0"
+                           height="60.0" parentComponent="Osc1" processorId="Osc1" parameterId="tempo"
+                           pluginParameterName="Pitch1" isPluginParameter="1" max="18.0"
+                           middlePosition="9.0" mode="TempoSync" stepSize="1.0" visible="0"/>
+                <Component type="ScriptSlider" id="Div1" x="82.0" y="57.0" width="40.0"
+                           height="50.0" parentComponent="Osc1" processorId="Osc1" parameterId="div"
+                           pluginParameterName="Step1" isPluginParameter="1" min="1.0" max="32.0"
+                           visible="0"/>
+                <Component type="ScriptLabel" id="DivideLabel1" x="77.0" y="118.0" parentComponent="Osc1"
+                           width="50.0" height="20.0" editable="0" text="Divide" fontName="Impact"
+                           visible="0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="HarmLabel1" x="3.0" y="118.0" parentComponent="Osc1"
+                           width="80.0" height="20.0" editable="0" text="Pitch" fontName="Impact"
+                           visible="0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="HstepLabel1" x="77.0" y="118.0" parentComponent="Osc1"
+                           width="50.0" height="20.0" editable="0" text="Step" fontName="Impact"
+                           visible="0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape23" x="17.0" y="136.0" parentComponent="Osc1"
+                           width="70.0" height="20.0" editable="0" text="Pitch" fontName="Impact"
+                           fontSize="20.0" bgColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape24" x="83.0" y="104.0" parentComponent="Osc1"
+                           width="70.0" height="20.0" editable="0" text="Pitch Step" fontName="Montserrat"
+                           fontSize="15.0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape25" x="154.0" y="104.0" parentComponent="Osc1"
+                           width="40.0" height="20.0" editable="0" text="FM" fontName="Montserrat"
+                           fontSize="15.0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape27" x="26.0" y="264.0" parentComponent="Osc1"
+                           width="80.0" height="20.0" editable="0" text="Shape" fontName="Impact"
+                           fontSize="20.0" bgColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape28" x="142.0" y="264.0" parentComponent="Osc1"
+                           width="60.0" height="20.0" editable="0" text="Width" fontName="Montserrat"
+                           fontSize="15.0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape30" x="80.0" y="351.0" parentComponent="Osc1"
+                           width="60.0" height="20.0" editable="0" text="Fx Mix" fontName="Montserrat"
+                           fontSize="15.0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape31" x="148.0" y="351.0" parentComponent="Osc1"
+                           width="60.0" height="20.0" editable="0" text="FX A" fontName="Montserrat"
+                           fontSize="15.0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape32" x="216.0" y="351.0" parentComponent="Osc1"
+                           width="60.0" height="20.0" editable="0" text="FX B" fontName="Montserrat"
+                           fontSize="15.0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape33" x="212.0" y="264.0" parentComponent="Osc1"
+                           width="60.0" height="20.0" editable="0" text="Output" fontName="Montserrat"
+                           fontSize="15.0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape34" x="86.0" y="522.0" parentComponent="Osc1"
+                           width="70.0" height="40.0" editable="0" text="Master Mod Amount"
+                           fontName="Montserrat" fontSize="15.0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape35" x="12.0" y="351.0" parentComponent="Osc1"
+                           width="60.0" height="20.0" editable="0" text="Fx Mode" fontName="Montserrat"
+                           fontSize="15.0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape29" x="150.0" y="177.0" parentComponent="Osc1"
+                           width="90.0" height="20.0" editable="0" text="User Shape" fontName="Montserrat"
+                           fontSize="15.0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape40" x="166.0" y="522.0" parentComponent="Osc1"
+                           width="60.0" height="20.0" editable="0" text="XF STAGE" fontName="Montserrat"
+                           fontSize="12.0" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape41" x="167.0" y="547.0" parentComponent="Osc1"
+                           width="60.0" height="20.0" editable="0" text="MIDI SRC" fontName="Montserrat"
+                           fontSize="12.0" textColour="4278190080"/>
+                <Component type="ScriptComboBox" id="PitchMode2" x="206.0" y="60.0" max="8"
+                           items="Osc 1&#10;Osc 2&#10;Osc 3&#10;Osc 4&#10;VCA 1&#10;VCA 2&#10;VCA 3&#10;VCA 4&#10;&#10;"
+                           width="60.0" height="40.0" parentComponent="Osc1" pluginParameterName="PitchMode1"
+                           isPluginParameter="1" textColour="4279834648" bgColour="4278190080"
+                           processorId="FmIn1" parameterId="Input"/>
+                <Component type="ScriptLabel" id="Shape26" x="191.0" y="104.0" parentComponent="Osc1"
+                           width="80.0" height="20.0" editable="0" text="FM Source" fontName="Montserrat"
+                           fontSize="15.0" textColour="4278190080"/>
+              </Component>
+              <Component type="ScriptPanel" id="FileShp1" x="328.0" y="124.0" width="290.0"
+                         height="590.0" textColour="4278190080" itemColour2="4294307288"
+                         itemColour="4294307288" bgColour="16777215">
+                <Component type="ScriptComboBox" id="fileModRoutPage1" x="171.0" y="385.0"
+                           width="80.0" height="20.0" max="4" items="Position&#10;Position Tempo&#10;Pitch&#10;Input&#10;"
+                           parentComponent="FileShp1" itemColour2="4211081216" itemColour="4278190080"
+                           bgColour="4278190080" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape42" x="27.0" y="385.0" parentComponent="FileShp1"
+                           width="100.0" height="20.0" editable="0" text="Modulation" fontSize="16.0"
+                           fontName="Montserrat" textColour="4278190080"/>
+                <Component type="ScriptSlider" id="FilePitch1" x="69.0" y="305.0" width="40.0"
+                           height="40.0" parentComponent="FileShp1" processorId="Files1"
+                           parameterId="pitch" isPluginParameter="1" pluginParameterName="FilePitch1"
+                           defaultValue="0.5" text="Pitch"/>
+                <Component type="ScriptSlider" id="FilePos1" x="14.0" y="170.0" width="80.0"
+                           height="80.0" parentComponent="FileShp1" processorId="Files1"
+                           parameterId="Position" pluginParameterName="Position1" isPluginParameter="1"
+                           text="Pos" textColour="4278190080" itemColour="4294904073" bgColour="503316224"
+                           itemColour2="4279308561"/>
+                <Component type="ScriptSlider" id="FileWin1" x="177.0" y="305.0" width="40.0"
+                           height="40.0" parentComponent="FileShp1" processorId="Files1"
+                           parameterId="Win" pluginParameterName="FileWin1" isPluginParameter="1"
+                           max="10000.0" min="50.0" text="Window"/>
+                <Component type="ScriptSlider" id="FileIn1" x="199.0" y="170.0" width="80.0"
+                           height="80.0" parentComponent="FileShp1" processorId="Files1"
+                           parameterId="Input" pluginParameterName="FileIn1" defaultValue="0.25"
+                           text="Input"/>
+                <Component type="ScriptSlider" id="FileSmooth1" x="107.0" y="212.0" width="40.0"
+                           height="40.0" parentComponent="FileShp1" processorId="Files1"
+                           parameterId="smooth" pluginParameterName="FileSmooth1" isPluginParameter="1"
+                           max="50.0" text="Smooth"/>
+                <Component type="ScriptPanel" id="OscModRouting2" x="35.0" y="413.0" width="220.0"
+                           height="160.0" parentComponent="FileShp1" textColour="1630348838"
+                           itemColour2="0" itemColour="0" bgColour="16777215">
+                  <Component type="ScriptPanel" id="flModRouteA1" x="-1.0" y="2.0" width="220.0"
+                             height="160.0" parentComponent="OscModRouting2" bgColour="16777215"
+                             textColour="16777215" itemColour2="0" itemColour="0">
+                    <Component type="ScriptSlider" id="PosMod1" x="8.0" y="99.0" width="40.0"
+                               height="40.0" parentComponent="flModRouteA1" processorId="Files1"
+                               parameterId="IntMod" min="-1.0" middlePosition="0.0" pluginParameterName="PitchMod1"
+                               isPluginParameter="1"/>
+                    <Component type="ScriptTable" id="PosTable1" x="11.0" y="13.0" width="200.0"
+                               height="70.0" parentComponent="flModRouteA1" processorId="Files1"
+                               itemColour="2100507443" customColours="1"/>
+                    <Component type="ScriptSlider" id="PosModTempo1" x="55.0" y="100.0" width="40.0"
+                               height="40.0" parentComponent="flModRouteA1" processorId="Files1"
+                               parameterId="intmodtempo" middlePosition="9.0" pluginParameterName="PitchMod1"
+                               isPluginParameter="1" mode="TempoSync" max="18.0" stepSize="1.0"
+                               text="Tempo"/>
+                    <Component type="ScriptSlider" id="PosModDiv1" x="104.0" y="100.0" width="40.0"
+                               height="40.0" parentComponent="flModRouteA1" processorId="Files1"
+                               parameterId="InmodDiv" middlePosition="9.0" pluginParameterName="PitchMod1"
+                               isPluginParameter="1" mode="TempoSync" max="32.0" stepSize="1.0"
+                               min="1.0" text="Divide"/>
+                  </Component>
+                  <Component type="ScriptPanel" id="flModRouteA2" x="-1.0" y="2.0" width="220.0"
+                             height="160.0" parentComponent="OscModRouting2" bgColour="16777215"
+                             textColour="16777215" itemColour2="0" itemColour="0" visible="0">
+                    <Component type="ScriptComboBox" id="XfSelOsc9" x="189.0" y="101.0" width="20.0"
+                               height="20.0" max="4" parentComponent="flModRouteA2" bgColour="4278190080"
+                               itemColour="4278190080" items="1&#10;2&#10;3&#10;4" processorId="Files1"
+                               parameterId="XfStage" itemColour2="4211081216" textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="MidiSelOsc9" x="189.0" y="126.0" width="20.0"
+                               height="20.0" max="7" parentComponent="flModRouteA2" bgColour="4278190080"
+                               itemColour="4278190080" items="Pitchbend&#10;Aftertouch&#10;Mod Wheel&#10;Breath&#10;Velocity&#10;Track&#10;Random"
+                               processorId="Files1" parameterId="Midi1" itemColour2="4211081216"
+                               textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="Shape43" x="128.0" y="126.0" parentComponent="flModRouteA2"
+                               width="60.0" height="20.0" editable="0" text="MIDI SRC" fontName="Montserrat"
+                               fontSize="12.0" textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="Shape44" x="127.0" y="101.0" parentComponent="flModRouteA2"
+                               width="60.0" height="20.0" editable="0" text="XF STAGE" fontName="Montserrat"
+                               fontSize="12.0" textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="ScriptLabel9" x="9.0" y="-3.0" width="25.0"
+                               height="25.0" text="L1" fontSize="20.0" parentComponent="flModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel10" x="33.0" y="-3.0" width="25.0"
+                               height="25.0" text="L2" fontSize="20.0" parentComponent="flModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel11" x="57.0" y="-3.0" width="25.0"
+                               height="25.0" text="L3" fontSize="20.0" parentComponent="flModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel12" x="83.0" y="-3.0" width="25.0"
+                               height="25.0" text="E1" fontSize="20.0" parentComponent="flModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel13" x="109.0" y="-3.0" width="25.0"
+                               height="25.0" text="E2" fontSize="20.0" parentComponent="flModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel14" x="132.0" y="-3.0" width="25.0"
+                               height="25.0" text="E3" fontSize="20.0" parentComponent="flModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel15" x="157.0" y="-3.0" width="25.0"
+                               height="25.0" text="XF" fontSize="20.0" parentComponent="flModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel16" x="175.0" y="-1.0" width="38.0"
+                               height="20.0" text="MIDI" fontSize="20.0" parentComponent="flModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptSliderPack" id="FxSp7" x="8.0" y="22.0" width="200.0"
+                               height="70.0" parentComponent="flModRouteA2" processorId="Files1"
+                               defaultValue="0.0" itemColour="816931083" itemColour2="1014908684"
+                               bgColour="13421633" textColour="0"/>
+                    <Component type="ScriptSlider" id="FileTempoMod1" x="7.0" y="98.0" width="40.0"
+                               height="50.0" parentComponent="flModRouteA2" processorId="Files1"
+                               parameterId="PositionTempoMod" min="-1.0" middlePosition="0.0"
+                               pluginParameterName="FxMixMod1" isPluginParameter="1"/>
+                  </Component>
+                  <Component type="ScriptPanel" id="flModRouteA3" x="-1.0" y="2.0" width="220.0"
+                             height="160.0" parentComponent="OscModRouting2" bgColour="16777215"
+                             textColour="16777215" itemColour2="0" itemColour="0" visible="0">
+                    <Component type="ScriptLabel" id="Shape45" x="127.0" y="101.0" parentComponent="flModRouteA3"
+                               width="60.0" height="20.0" editable="0" text="XF STAGE" fontName="Montserrat"
+                               fontSize="12.0" textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="XfSelOsc10" x="189.0" y="101.0" width="20.0"
+                               height="20.0" max="4" parentComponent="flModRouteA3" bgColour="4278190080"
+                               itemColour="4278190080" items="1&#10;2&#10;3&#10;4" processorId="Files1"
+                               parameterId="xf2" itemColour2="4211081216" textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="MidiSelOsc10" x="189.0" y="126.0" width="20.0"
+                               height="20.0" max="7" parentComponent="flModRouteA3" bgColour="4278190080"
+                               itemColour="4278190080" items="Pitchbend&#10;Aftertouch&#10;Mod Wheel&#10;Breath&#10;Velocity&#10;Track&#10;Random"
+                               processorId="Files1" parameterId="Midi2" itemColour2="4211081216"
+                               textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="Shape46" x="128.0" y="126.0" parentComponent="flModRouteA3"
+                               width="60.0" height="20.0" editable="0" text="MIDI SRC" fontName="Montserrat"
+                               fontSize="12.0" textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="ScriptLabel17" x="9.0" y="-3.0" width="25.0"
+                               height="25.0" text="L1" fontSize="20.0" parentComponent="flModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel18" x="33.0" y="-3.0" width="25.0"
+                               height="25.0" text="L2" fontSize="20.0" parentComponent="flModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel19" x="57.0" y="-3.0" width="25.0"
+                               height="25.0" text="L3" fontSize="20.0" parentComponent="flModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel20" x="83.0" y="-3.0" width="25.0"
+                               height="25.0" text="E1" fontSize="20.0" parentComponent="flModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel21" x="109.0" y="-3.0" width="25.0"
+                               height="25.0" text="E2" fontSize="20.0" parentComponent="flModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel22" x="132.0" y="-3.0" width="25.0"
+                               height="25.0" text="E3" fontSize="20.0" parentComponent="flModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel23" x="157.0" y="-3.0" width="25.0"
+                               height="25.0" text="XF" fontSize="20.0" parentComponent="flModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel24" x="175.0" y="-1.0" width="38.0"
+                               height="20.0" text="MIDI" fontSize="20.0" parentComponent="flModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptSliderPack" id="FxSp8" x="8.0" y="22.0" width="200.0"
+                               height="70.0" parentComponent="flModRouteA3" processorId="Files1"
+                               defaultValue="0.0" itemColour="816931083" itemColour2="1014908684"
+                               bgColour="13421633" textColour="0" SliderPackIndex="1"/>
+                    <Component type="ScriptSlider" id="FilePitchMod1" x="7.0" y="98.0" width="40.0"
+                               height="50.0" parentComponent="flModRouteA3" processorId="Files1"
+                               parameterId="PitchMod" min="-1.0" middlePosition="0.0" pluginParameterName="FxMixMod1"
+                               isPluginParameter="1"/>
+                  </Component>
+                  <Component type="ScriptPanel" id="flModRouteA4" x="-1.0" y="2.0" width="220.0"
+                             height="160.0" parentComponent="OscModRouting2" bgColour="16777215"
+                             textColour="16777215" itemColour2="0" itemColour="0" visible="0">
+                    <Component type="ScriptComboBox" id="MidiSelOsc11" x="189.0" y="126.0" width="20.0"
+                               height="20.0" max="7" parentComponent="flModRouteA4" bgColour="4278190080"
+                               itemColour="4278190080" items="Pitchbend&#10;Aftertouch&#10;Mod Wheel&#10;Breath&#10;Velocity&#10;Track&#10;Random"
+                               processorId="Files1" parameterId="Midi3" itemColour2="4211081216"
+                               textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="XfSelOsc11" x="189.0" y="101.0" width="20.0"
+                               height="20.0" max="4" parentComponent="flModRouteA4" bgColour="4278190080"
+                               itemColour="4278190080" items="1&#10;2&#10;3&#10;4" processorId="Files1"
+                               parameterId="xf3" itemColour2="4211081216" textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="Shape47" x="127.0" y="101.0" parentComponent="flModRouteA4"
+                               width="60.0" height="20.0" editable="0" text="XF STAGE" fontName="Montserrat"
+                               fontSize="12.0" textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="Shape48" x="128.0" y="126.0" parentComponent="flModRouteA4"
+                               width="60.0" height="20.0" editable="0" text="MIDI SRC" fontName="Montserrat"
+                               fontSize="12.0" textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="ScriptLabel33" x="9.0" y="-3.0" width="25.0"
+                               height="25.0" text="L1" fontSize="20.0" parentComponent="flModRouteA4"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel34" x="33.0" y="-3.0" width="25.0"
+                               height="25.0" text="L2" fontSize="20.0" parentComponent="flModRouteA4"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel35" x="57.0" y="-3.0" width="25.0"
+                               height="25.0" text="L3" fontSize="20.0" parentComponent="flModRouteA4"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel46" x="83.0" y="-3.0" width="25.0"
+                               height="25.0" text="E1" fontSize="20.0" parentComponent="flModRouteA4"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel47" x="109.0" y="-3.0" width="25.0"
+                               height="25.0" text="E2" fontSize="20.0" parentComponent="flModRouteA4"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel49" x="132.0" y="-3.0" width="25.0"
+                               height="25.0" text="E3" fontSize="20.0" parentComponent="flModRouteA4"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel51" x="157.0" y="-3.0" width="25.0"
+                               height="25.0" text="XF" fontSize="20.0" parentComponent="flModRouteA4"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel52" x="175.0" y="-1.0" width="38.0"
+                               height="20.0" text="MIDI" fontSize="20.0" parentComponent="flModRouteA4"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptSliderPack" id="FxSp9" x="8.0" y="22.0" width="200.0"
+                               height="70.0" parentComponent="flModRouteA4" processorId="Files1"
+                               defaultValue="0.0" itemColour="816931083" itemColour2="1014908684"
+                               bgColour="13421633" textColour="0" SliderPackIndex="2"/>
+                    <Component type="ScriptSlider" id="FileInMod1" x="7.0" y="98.0" width="40.0"
+                               height="50.0" parentComponent="flModRouteA4" processorId="Files1"
+                               parameterId="InputMod" min="-1.0" middlePosition="0.0" pluginParameterName="FxMixMod1"
+                               isPluginParameter="1"/>
+                  </Component>
+                </Component>
+                <Component type="ScriptAudioWaveform" id="Wav1" x="14.0" y="46.0" width="260.0"
+                           height="110.0" parentComponent="FileShp1" processorId="Files1"
+                           sampleIndex="1" showFileName="0" bgColour="4294901760" itemColour2="4287276234"
+                           textColour="4278190080"/>
+                <Component type="ScriptSlider" id="FileXf1" x="123.0" y="305.0" width="40.0"
+                           height="40.0" parentComponent="FileShp1" processorId="Files1"
+                           parameterId="Xf" pluginParameterName="FileXf1" isPluginParameter="1"
+                           max="10000.0" min="1.0" text="Fade"/>
+                <Component type="ScriptComboBox" id="Quantise1" x="103.0" y="175.0" max="9"
+                           items="Off&#10;4096&#10;2048&#10;1024&#10;512&#10;256&#10;128&#10;64&#10;32"
+                           processorId="Files1" parameterId="quant" width="30.0" height="30.0"
+                           parentComponent="FileShp1" pluginParameterName="Quantise1" isPluginParameter="1"
+                           textColour="4279834648" bgColour="4278190080"/>
+                <Component type="ScriptSlider" id="FileMix1" x="152.0" y="212.0" width="40.0"
+                           height="40.0" parentComponent="FileShp1" processorId="Files1"
+                           parameterId="Mix" pluginParameterName="FileMix1" isPluginParameter="1"
+                           defaultValue="1.0" text="Mix"/>
+                <Component type="ScriptComboBox" id="FileSelect1" x="120.0" y="5.0" width="90.0"
+                           height="30.0" max="0" parentComponent="FileShp1" textColour="4279834648"
+                           bgColour="1427114249"/>
+                <Component type="ScriptLabel" id="ScriptLabel36" x="4.0" y="5.0" width="110.0"
+                           height="30.0" parentComponent="FileShp1" text="File Shaper 1"
+                           fontSize="20.0" editable="0" fontName="scuz" bgColour="4294901760"/>
+                <Component type="ScriptLabel" id="ScriptLabel37" x="17.0" y="263.0" width="80.0"
+                           height="30.0" parentComponent="FileShp1" text="Position" fontSize="20.0"
+                           editable="0" fontName="scuz" bgColour="4278190080"/>
+                <Component type="ScriptLabel" id="ScriptLabel38" x="94.0" y="268.0" width="80.0"
+                           height="20.0" parentComponent="FileShp1" text="Smooth" fontSize="15.0"
+                           editable="0" fontName="Montserrat" textColour="4281149480"/>
+                <Component type="ScriptLabel" id="ScriptLabel39" x="136.0" y="179.0" width="60.0"
+                           height="20.0" parentComponent="FileShp1" text="Quantise" fontSize="14.0"
+                           editable="0" fontName="Montserrat" textColour="4281149480"/>
+                <Component type="ScriptLabel" id="ScriptLabel40" x="65.0" y="351.0" width="50.0"
+                           height="20.0" parentComponent="FileShp1" text="Pitch" fontSize="15.0"
+                           editable="0" fontName="Montserrat" textColour="4281149480"/>
+                <Component type="ScriptLabel" id="ScriptLabel41" x="9.0" y="351.0" width="60.0"
+                           height="20.0" parentComponent="FileShp1" text="Pitch Shift" fontSize="15.0"
+                           editable="0" fontName="Montserrat" textColour="4281149480"/>
+                <Component type="ScriptLabel" id="ScriptLabel42" x="124.0" y="351.0" width="40.0"
+                           height="20.0" parentComponent="FileShp1" text="win" fontSize="15.0"
+                           editable="0" fontName="Montserrat" textColour="4281149480"/>
+                <Component type="ScriptLabel" id="ScriptLabel43" x="178.0" y="351.0" width="40.0"
+                           height="20.0" parentComponent="FileShp1" text="fade" fontSize="15.0"
+                           editable="0" fontName="Montserrat" textColour="4281149480"/>
+                <Component type="ScriptLabel" id="ScriptLabel44" x="142.0" y="268.0" width="60.0"
+                           height="20.0" parentComponent="FileShp1" text="Mix" fontSize="15.0"
+                           editable="0" fontName="Montserrat" textColour="4281149480"/>
+                <Component type="ScriptLabel" id="ScriptLabel45" x="206.0" y="262.0" width="70.0"
+                           height="30.0" parentComponent="FileShp1" text="Input" fontSize="20.0"
+                           editable="0" fontName="scuz" bgColour="4278190080"/>
+                <Component type="ScriptButton" id="FolderSelect1" x="240.0" y="8.0" width="20.0"
+                           height="20.0" parentComponent="FileShp1" isMomentary="1"/>
+                <Component type="ScriptComboBox" id="Quantise2" x="16.0" y="305.0" max="3"
+                           items="Off&#10;Fixed&#10;Track" processorId="Files1" parameterId="shift"
+                           width="40.0" height="40.0" parentComponent="FileShp1" pluginParameterName="Quantise1"
+                           isPluginParameter="1" textColour="4279834648" bgColour="4278190080"/>
+                <Component type="ScriptSlider" id="Feed1" x="231.0" y="306.0" width="40.0"
+                           height="40.0" parentComponent="FileShp1" processorId="Files1"
+                           parameterId="fb" pluginParameterName="FileMix1" isPluginParameter="1"
+                           defaultValue="1.0" text="Mix"/>
+                <Component type="ScriptLabel" id="ScriptLabel53" x="226.0" y="351.0" width="60.0"
+                           height="20.0" parentComponent="FileShp1" text="Feedback" fontSize="15.0"
+                           editable="0" fontName="Montserrat" textColour="4281149480"/>
+              </Component>
+              <Component type="ScriptPanel" id="Filter1" x="623.0" y="124.0" width="250.0"
+                         height="590.0" itemColour="4294307288" itemColour2="4294307288"
+                         textColour="4278190080">
+                <Component type="ScriptComboBox" id="FlModRoutPage1" x="153.0" y="385.0"
+                           width="80.0" height="20.0" max="3" items="Mix&#10;Param 1&#10;Param 2"
+                           parentComponent="Filter1" itemColour2="4211081216" itemColour="4278190080"
+                           bgColour="4278190080" textColour="4278190080"/>
+                <Component type="ScriptLabel" id="Shape55" x="9.0" y="385.0" parentComponent="Filter1"
+                           width="100.0" height="20.0" editable="0" text="Modulation" fontSize="16.0"
+                           fontName="Montserrat" textColour="4278190080"/>
+                <Component type="ScriptPanel" id="OscModRouting3" x="15.0" y="413.0" width="220.0"
+                           height="160.0" parentComponent="Filter1" textColour="1630348838"
+                           itemColour2="0" itemColour="0" bgColour="16777215">
+                  <Component type="ScriptPanel" id="fModRouteA1" x="-1.0" y="2.0" width="220.0"
+                             height="160.0" parentComponent="OscModRouting3" bgColour="16777215"
+                             textColour="16777215" itemColour2="0" itemColour="0">
+                    <Component type="ScriptComboBox" id="XfSelOsc14" x="189.0" y="101.0" width="20.0"
+                               height="20.0" max="4" parentComponent="fModRouteA1" bgColour="4278190080"
+                               itemColour="4278190080" items="1&#10;2&#10;3&#10;4" processorId="Filter1"
+                               parameterId="XfStage" itemColour2="4211081216" textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="MidiSelOsc14" x="189.0" y="126.0" width="20.0"
+                               height="20.0" max="7" parentComponent="fModRouteA1" bgColour="4278190080"
+                               itemColour="4278190080" items="Pitchbend&#10;Aftertouch&#10;Mod Wheel&#10;Breath&#10;Velocity&#10;Track&#10;Random"
+                               processorId="Filter1" parameterId="Midi1" itemColour2="4211081216"
+                               textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="Shape53" x="128.0" y="126.0" parentComponent="fModRouteA1"
+                               width="60.0" height="20.0" editable="0" text="MIDI SRC" fontName="Montserrat"
+                               fontSize="12.0" textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="Shape54" x="127.0" y="101.0" parentComponent="fModRouteA1"
+                               width="60.0" height="20.0" editable="0" text="XF STAGE" fontName="Montserrat"
+                               fontSize="12.0" textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="ScriptLabel62" x="9.0" y="-3.0" width="25.0"
+                               height="25.0" text="L1" fontSize="20.0" parentComponent="fModRouteA1"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel63" x="33.0" y="-3.0" width="25.0"
+                               height="25.0" text="L2" fontSize="20.0" parentComponent="fModRouteA1"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel64" x="57.0" y="-3.0" width="25.0"
+                               height="25.0" text="L3" fontSize="20.0" parentComponent="fModRouteA1"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel65" x="83.0" y="-3.0" width="25.0"
+                               height="25.0" text="E1" fontSize="20.0" parentComponent="fModRouteA1"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel66" x="109.0" y="-3.0" width="25.0"
+                               height="25.0" text="E2" fontSize="20.0" parentComponent="fModRouteA1"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel67" x="132.0" y="-3.0" width="25.0"
+                               height="25.0" text="E3" fontSize="20.0" parentComponent="fModRouteA1"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel68" x="157.0" y="-3.0" width="25.0"
+                               height="25.0" text="XF" fontSize="20.0" parentComponent="fModRouteA1"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel69" x="175.0" y="-1.0" width="38.0"
+                               height="20.0" text="MIDI" fontSize="20.0" parentComponent="fModRouteA1"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptSliderPack" id="FxSp12" x="8.0" y="22.0" width="200.0"
+                               height="70.0" parentComponent="fModRouteA1" processorId="Filter1"
+                               defaultValue="0.0" itemColour="816931083" itemColour2="1014908684"
+                               bgColour="13421633" textColour="0"/>
+                    <Component type="ScriptSlider" id="FilterMixMod1" x="7.0" y="98.0" width="40.0"
+                               height="50.0" parentComponent="fModRouteA1" processorId="Filter1"
+                               parameterId="MixMod" min="-1.0" middlePosition="0.0" pluginParameterName="FxMixMod1"
+                               isPluginParameter="1"/>
+                  </Component>
+                  <Component type="ScriptPanel" id="fModRouteA2" x="-1.0" y="2.0" width="220.0"
+                             height="160.0" parentComponent="OscModRouting3" bgColour="16777215"
+                             textColour="16777215" itemColour2="0" itemColour="0" visible="0">
+                    <Component type="ScriptComboBox" id="XfSelOsc12" x="189.0" y="101.0" width="20.0"
+                               height="20.0" max="4" parentComponent="fModRouteA2" bgColour="4278190080"
+                               itemColour="4278190080" items="1&#10;2&#10;3&#10;4" processorId="Filter1"
+                               parameterId="XF2" itemColour2="4211081216" textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="MidiSelOsc12" x="189.0" y="126.0" width="20.0"
+                               height="20.0" max="7" parentComponent="fModRouteA2" bgColour="4278190080"
+                               itemColour="4278190080" items="Pitchbend&#10;Aftertouch&#10;Mod Wheel&#10;Breath&#10;Velocity&#10;Track&#10;Random"
+                               processorId="Filter1" parameterId="MIDI2" itemColour2="4211081216"
+                               textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="Shape49" x="128.0" y="126.0" parentComponent="fModRouteA2"
+                               width="60.0" height="20.0" editable="0" text="MIDI SRC" fontName="Montserrat"
+                               fontSize="12.0" textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="Shape50" x="127.0" y="101.0" parentComponent="fModRouteA2"
+                               width="60.0" height="20.0" editable="0" text="XF STAGE" fontName="Montserrat"
+                               fontSize="12.0" textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="ScriptLabel25" x="9.0" y="-3.0" width="25.0"
+                               height="25.0" text="L1" fontSize="20.0" parentComponent="fModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel26" x="33.0" y="-3.0" width="25.0"
+                               height="25.0" text="L2" fontSize="20.0" parentComponent="fModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel27" x="57.0" y="-3.0" width="25.0"
+                               height="25.0" text="L3" fontSize="20.0" parentComponent="fModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel28" x="83.0" y="-3.0" width="25.0"
+                               height="25.0" text="E1" fontSize="20.0" parentComponent="fModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel29" x="109.0" y="-3.0" width="25.0"
+                               height="25.0" text="E2" fontSize="20.0" parentComponent="fModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel30" x="132.0" y="-3.0" width="25.0"
+                               height="25.0" text="E3" fontSize="20.0" parentComponent="fModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel31" x="157.0" y="-3.0" width="25.0"
+                               height="25.0" text="XF" fontSize="20.0" parentComponent="fModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel32" x="175.0" y="-1.0" width="38.0"
+                               height="20.0" text="MIDI" fontSize="20.0" parentComponent="fModRouteA2"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptSliderPack" id="FxSp10" x="8.0" y="22.0" width="200.0"
+                               height="70.0" parentComponent="fModRouteA2" processorId="Filter1"
+                               defaultValue="0.0" itemColour="816931083" itemColour2="1014908684"
+                               bgColour="13421633" textColour="0" SliderPackIndex="1"/>
+                    <Component type="ScriptSlider" id="FilterMixMod2" x="7.0" y="98.0" width="40.0"
+                               height="50.0" parentComponent="fModRouteA2" processorId="Filter1"
+                               parameterId="Amod" min="-1.0" middlePosition="0.0" pluginParameterName="FxMixMod1"
+                               isPluginParameter="1"/>
+                  </Component>
+                  <Component type="ScriptPanel" id="fModRouteA3" x="-1.0" y="2.0" width="220.0"
+                             height="160.0" parentComponent="OscModRouting3" bgColour="16777215"
+                             textColour="16777215" itemColour2="0" itemColour="0" visible="0">
+                    <Component type="ScriptLabel" id="Shape51" x="127.0" y="101.0" parentComponent="fModRouteA3"
+                               width="60.0" height="20.0" editable="0" text="XF STAGE" fontName="Montserrat"
+                               fontSize="12.0" textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="XfSelOsc13" x="189.0" y="101.0" width="20.0"
+                               height="20.0" max="4" parentComponent="fModRouteA3" bgColour="4278190080"
+                               itemColour="4278190080" items="1&#10;2&#10;3&#10;4" processorId="Filter1"
+                               parameterId="XF3" itemColour2="4211081216" textColour="4278190080"/>
+                    <Component type="ScriptComboBox" id="MidiSelOsc13" x="189.0" y="126.0" width="20.0"
+                               height="20.0" max="7" parentComponent="fModRouteA3" bgColour="4278190080"
+                               itemColour="4278190080" items="Pitchbend&#10;Aftertouch&#10;Mod Wheel&#10;Breath&#10;Velocity&#10;Track&#10;Random"
+                               processorId="Filter1" parameterId="MID3" itemColour2="4211081216"
+                               textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="Shape52" x="128.0" y="126.0" parentComponent="fModRouteA3"
+                               width="60.0" height="20.0" editable="0" text="MIDI SRC" fontName="Montserrat"
+                               fontSize="12.0" textColour="4278190080"/>
+                    <Component type="ScriptLabel" id="ScriptLabel54" x="9.0" y="-3.0" width="25.0"
+                               height="25.0" text="L1" fontSize="20.0" parentComponent="fModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel55" x="33.0" y="-3.0" width="25.0"
+                               height="25.0" text="L2" fontSize="20.0" parentComponent="fModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel56" x="57.0" y="-3.0" width="25.0"
+                               height="25.0" text="L3" fontSize="20.0" parentComponent="fModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel57" x="83.0" y="-3.0" width="25.0"
+                               height="25.0" text="E1" fontSize="20.0" parentComponent="fModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel58" x="109.0" y="-3.0" width="25.0"
+                               height="25.0" text="E2" fontSize="20.0" parentComponent="fModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel59" x="132.0" y="-3.0" width="25.0"
+                               height="25.0" text="E3" fontSize="20.0" parentComponent="fModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel60" x="157.0" y="-3.0" width="25.0"
+                               height="25.0" text="XF" fontSize="20.0" parentComponent="fModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptLabel" id="ScriptLabel61" x="175.0" y="-1.0" width="38.0"
+                               height="20.0" text="MIDI" fontSize="20.0" parentComponent="fModRouteA3"
+                               fontName="Montserrat" textColour="4278190080" editable="0"/>
+                    <Component type="ScriptSliderPack" id="FxSp11" x="8.0" y="22.0" width="200.0"
+                               height="70.0" parentComponent="fModRouteA3" processorId="Filter1"
+                               defaultValue="0.0" itemColour="816931083" itemColour2="1014908684"
+                               bgColour="13421633" textColour="0" SliderPackIndex="2"/>
+                    <Component type="ScriptSlider" id="FilterMixMod3" x="7.0" y="98.0" width="40.0"
+                               height="50.0" parentComponent="fModRouteA3" processorId="Filter1"
+                               parameterId="bmod" min="-1.0" middlePosition="0.0" pluginParameterName="FxMixMod1"
+                               isPluginParameter="1"/>
+                  </Component>
+                </Component>
+                <Component type="ScriptSlider" id="SlotVol6" x="188.0" y="267.0" width="30.0"
+                           height="100.0" middlePosition="0.5" processorId="mix" parameterId="r"
+                           style="Vertical" itemColour="1711314431" parentComponent="Filter1"/>
+                <Component type="ScriptSlider" id="SlotVol7" x="147.0" y="268.0" width="30.0"
+                           height="100.0" middlePosition="0.5" processorId="mix" parameterId="s"
+                           style="Vertical" itemColour="1711314431" parentComponent="Filter1"/>
+                <Component type="ScriptSlider" id="SlotVol8" x="107.0" y="268.0" width="30.0"
+                           height="100.0" middlePosition="0.5" processorId="mix" parameterId="d"
+                           style="Vertical" itemColour="1711314431" parentComponent="Filter1"/>
+                <Component type="ScriptSlider" id="SlotVol9" x="67.0" y="268.0" width="30.0"
+                           height="100.0" middlePosition="0.5" processorId="mix" parameterId="h"
+                           style="Vertical" itemColour="1711314431" parentComponent="Filter1"/>
+                <Component type="ScriptSlider" id="SlotVol10" x="27.0" y="268.0" width="30.0"
+                           height="100.0" middlePosition="0.5" processorId="mix" parameterId="a"
+                           style="Vertical" itemColour="1711314431" parentComponent="Filter1"/>
+                <Component type="ScriptSlider" id="FxMix2" x="36.0" y="197.0" width="50.0"
+                           height="40.0" parentComponent="Filter1" processorId="Filter1"
+                           parameterId="TransformMix" isPluginParameter="1" pluginParameterName="FxMix1"
+                           text="Mix"/>
+                <Component type="ScriptSlider" id="XfParamB2" x="126.0" y="52.0" width="90.0"
+                           height="90.0" parentComponent="Filter1" processorId="Filter1"
+                           parameterId="TransformB" pluginParameterName="XfParamA1" isPluginParameter="1"
+                           text="Param B"/>
+                <Component type="ScriptSlider" id="XfParamA2" x="34.0" y="52.0" width="80.0"
+                           height="90.0" parentComponent="Filter1" processorId="Filter1"
+                           parameterId="TransformA" pluginParameterName="XfParamA1" isPluginParameter="1"
+                           text="Param A"/>
+                <Component type="ScriptComboBox" id="ScriptComboBox2" x="146.0" y="202.0"
+                           width="80.0" height="40.0" max="3" parentComponent="Filter1"
+                           processorId="Filter1" parameterId="type" items="LP/HP&#10;EQ&#10;Comb"
+                           pluginParameterName="XfParamSel1" isPluginParameter="1" textColour="4279834648"/>
+                <Component type="ScriptLabel" id="ScriptLabel48" x="66.0" y="245.0" width="100.0"
+                           height="10.0" parentComponent="Filter1" editable="0" fontSize="14.0"
+                           text="Mix" fontName="Montserrat" textColour="4281149480"/>
+                <Component type="ScriptLabel" id="TransLabel3" x="23.0" y="157.0" width="100.0"
+                           height="30.0" parentComponent="Filter1" editable="0" fontSize="20.0"
+                           text="Param A" fontName="scuz" bgColour="4278190080"/>
+                <Component type="ScriptLabel" id="TransLabel4" x="127.0" y="157.0" width="100.0"
+                           height="30.0" parentComponent="Filter1" editable="0" fontSize="20.0"
+                           text="Param B" fontName="scuz" bgColour="4278190080"/>
+                <Component type="ScriptLabel" id="ScriptLabel50" x="16.0" y="8.0" width="220.0"
+                           height="40.0" parentComponent="Filter1" editable="0" fontSize="20.0"
+                           text="Filter/VCA" fontName="scuz" bgColour="4294901760"/>
+                <Component type="ScriptLabel" id="TransLabel5" x="37.0" y="245.0" width="40.0"
+                           height="10.0" parentComponent="Filter1" editable="0" fontSize="14.0"
+                           text="Q" fontName="Montserrat" textColour="4281149480"/>
+                <Component type="ScriptSlider" id="XfParamB3" x="100.0" y="199.0" width="40.0"
+                           height="40.0" parentComponent="Filter1" processorId="Filter1"
+                           parameterId="Q" pluginParameterName="XfParamA1" isPluginParameter="1"/>
+              </Component>
+              <Component type="ScriptPanel" id="ScriptPanel2" x="31.0" y="722.0" width="840.0"
+                         height="170.0" itemColour="4294307288" itemColour2="4294307288"
+                         textColour="4278190080">
+                <Component type="ScriptSlider" id="SlotVol1" x="594.0" y="28.0" width="30.0"
+                           height="100.0" middlePosition="0.5" processorId="VoiceOut1" parameterId="vol"
+                           style="Vertical" itemColour="4294962432" defaultValue="1.0" parentComponent="ScriptPanel2"/>
+                <Component type="ScriptSlider" id="SlotVol2" x="638.0" y="28.0" width="30.0"
+                           height="100.0" middlePosition="0.5" processorId="VoiceOu2" parameterId="vol"
+                           style="Vertical" itemColour="1727987712" defaultValue="1.0" parentComponent="ScriptPanel2"/>
+                <Component type="ScriptSlider" id="SlotVol3" x="681.0" y="28.0" width="30.0"
+                           height="100.0" middlePosition="0.5" processorId="VoiceOu3" parameterId="vol"
+                           style="Vertical" itemColour="1727987712" defaultValue="1.0" parentComponent="ScriptPanel2"/>
+                <Component type="ScriptSlider" id="SlotVol4" x="724.0" y="28.0" width="30.0"
+                           height="100.0" middlePosition="0.5" processorId="VoiceOu4" parameterId="vol"
+                           style="Vertical" itemColour="1727987712" defaultValue="1.0" parentComponent="ScriptPanel2"/>
+                <Component type="ScriptSlider" id="SlotVol5" x="765.0" y="28.0" width="30.0"
+                           height="100.0" middlePosition="0.5" processorId="mix" parameterId="Master"
+                           style="Vertical" itemColour="1727987712" parentComponent="ScriptPanel2"/>
+                <Component type="ScriptPanel" id="ScriptPanel4" x="21.0" y="12.0" width="260.0"
+                           height="140.0" parentComponent="ScriptPanel2"/>
+                <Component type="ScriptPanel" id="ScriptPanel5" x="298.0" y="13.0" width="260.0"
+                           height="140.0" parentComponent="ScriptPanel2"/>
+              </Component>
+              <Component type="ScriptSlider" id="Voices1" x="36.0" y="746.0" min="1.0"
+                         max="16.0" processorId="Synthesiser Group1" parameterId="VoiceLimit"
+                         stepSize="1.0" visible="0"/>
+              <Component type="ScriptSlider" id="Voices2" x="174.0" y="759.0" min="1.0"
+                         max="16.0" processorId="Synthesiser Group2" parameterId="VoiceLimit"
+                         stepSize="1.0" visible="0"/>
+              <Component type="ScriptSlider" id="Voices3" x="270.0" y="752.0" min="1.0"
+                         max="16.0" processorId="Synthesiser Group3" parameterId="VoiceLimit"
+                         stepSize="1.0" visible="0"/>
+              <Component type="ScriptSlider" id="Voices4" x="396.0" y="778.0" min="1.0"
+                         max="16.0" processorId="Synthesiser Group4" parameterId="VoiceLimit"
+                         stepSize="1.0" visible="0"/>
+              <Component type="ScriptButton" id="Button1" x="825.0" y="162.0" width="30.0"
+                         height="30.0" processorId="Filter1" parameterId="Mode"/>
+              <Component type="ScriptFloatingTile" id="FloatingTile1" x="-27.0" y="802.0"
+                         width="970.0" height="80.0" ContentType="TooltipPanel" bgColour="4281874488"
+                         itemColour="872415231" itemColour2="0" textColour="3439329279"
+                         FontSize="12.0"/>
+              <Component type="ScriptPanel" id="VisPanel" x="237.0" y="830.0" width="100.0"
+                         height="70.0" visible="0"/>
+              <Component type="ScriptLabel" id="SHAPEYLabel" x="36.0" y="22.0" fontSize="80.0"
+                         fontName="scuz" bgColour="4294901760" text="SMUT" width="280.0"
+                         height="90.0" multiline="1" editable="0"/>
+              <Component type="ScriptPanel" id="AudioFileLoader" x="30.0" y="120.0" width="850.0"
+                         height="600.0" itemColour="4294307288" itemColour2="4294307288"
+                         textColour="4278190080">
+                <Component type="ScriptComboBox" id="SecondCB" x="310.0" y="20.0" parentComponent="AudioFileLoader"
+                           items="Drawn&#10;Misc Synths&#10;Synths 2&#10;xp" textColour="4278190080"
+                           max="4"/>
+                <Component type="ScriptButton" id="Button3" x="10.0" y="10.0" parentComponent="AudioFileLoader"
+                           width="40.0" height="40.0"/>
+                <Component type="ScriptedViewport" id="FirstSp" x="20.0" y="90.0" width="210.0"
+                           height="440.0" parentComponent="AudioFileLoader" useList="1"
+                           items="Misc&#10;Single Cycle&#10;Wavetables" textColour="4278190080"/>
+                <Component type="ScriptedViewport" id="SecondSp" x="271.0" y="90.0" width="210.0"
+                           height="440.0" parentComponent="AudioFileLoader" useList="1"
+                           items="Drawn&#10;Misc Synths&#10;Synths 2&#10;xp" textColour="4278190080"/>
+                <Component type="ScriptedViewport" id="ThirdSp" x="571.0" y="90.0" width="210.0"
+                           height="440.0" parentComponent="AudioFileLoader" useList="1"
+                           items="no file" textColour="4278190080"/>
+                <Component type="ScriptComboBox" id="FirstCB" x="144.0" y="24.0" parentComponent="AudioFileLoader"
+                           items="Misc&#10;Single Cycle&#10;Wavetables" textColour="4278190080"
+                           max="3"/>
+                <Component type="ScriptComboBox" id="ThirdCB" x="572.0" y="8.0" parentComponent="AudioFileLoader"
+                           items="no file" textColour="4278190080"/>
+              </Component>
+            </ContentProperties>
+          </UIData>
+        </Processor>
+      </ChildProcessors>
+    </Processor>
+    <Processor Type="ModulatorChain" ID="GainModulation" Bypassed="0" Intensity="1.0">
+      <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+      <ChildProcessors/>
+    </Processor>
+    <Processor Type="ModulatorChain" ID="PitchModulation" Bypassed="1" Intensity="0.0">
+      <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+      <ChildProcessors/>
+    </Processor>
+    <Processor Type="EffectChain" ID="FX" Bypassed="0">
+      <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+      <ChildProcessors>
+        <Processor Type="Analyser" ID="Analyser1" Bypassed="0" BufferSize="32768.0"
+                   PreviewType="3.0">
+          <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+          <ChildProcessors/>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+        </Processor>
+      </ChildProcessors>
+    </Processor>
+    <Processor Type="GlobalModulatorContainer" ID="Global Modulator Container1"
+               Bypassed="0" Gain="0.25" Balance="0.0" VoiceLimit="256.0" KillFadeTime="20.0"
+               IconColour="0">
+      <EditorStates BodyShown="1" Visible="1" Solo="0" Folded="1"/>
+      <ChildProcessors>
+        <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="Global Modulators" Bypassed="0" Intensity="1.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors>
+            <Processor Type="ScriptEnvelopeModulator" ID="Env1" Bypassed="1" Monophonic="0.0"
+                       Retrigger="1.0" Bipolar="0" Intensity="1.0" Script=" function onControl(number, value)&#10;{&#10;&#9;&#10;}&#10; ">
+              <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+              <ChildProcessors/>
+              <Content/>
+              <Networks>
+                <Network ID="lfo" Version="0.0.0" CompileChannelAmount="1" AllowCompilation="1"
+                         HasTail="0" SuspendOnSilence="1" AllowPolyphonic="1"/>
+              </Networks>
+              <UIData>
+                <ContentProperties DeviceType="Desktop"/>
+              </UIData>
+            </Processor>
+            <Processor Type="Hardcoded Timevariant Modulator" ID="HardcodedTimeVariantModulator1"
+                       Bypassed="0" Intensity="1.0" Bipolar="0" Network="lfo" tempo="0.0"
+                       div="1.0" mode="3.0" Dest="1.0" Adjst="0.0" AjustMode="1.0">
+              <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+          </ChildProcessors>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="PitchModulation" Bypassed="0" Intensity="0.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="EffectChain" ID="FX" Bypassed="0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+      </ChildProcessors>
+      <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+    </Processor>
+    <Processor Type="SynthGroup" ID="Synthesiser Group1" Bypassed="0" Gain="1.0"
+               Balance="0.0" VoiceLimit="2.0" KillFadeTime="20.0" IconColour="0"
+               EnableFM="0.0" CarrierIndex="-1.0" ModulatorIndex="-1.0" UnisonoVoiceAmount="1.0"
+               UnisonoDetune="0.0" UnisonoSpread="1.0" KillSecondVoices="1.0">
+      <EditorStates BodyShown="1" Visible="1" Solo="0" Folded="1"/>
+      <ChildProcessors>
+        <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="GainModulation" Bypassed="0" Intensity="1.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors>
+            <Processor Type="SimpleEnvelope" ID="DefaultEnvelope" Bypassed="0" Monophonic="0.0"
+                       Retrigger="1.0" Intensity="1.0" Attack="5.0" Release="10.0" LinearMode="1.0">
+              <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+              <ChildProcessors>
+                <Processor Type="ModulatorChain" ID="Attack Time Modulation" Bypassed="0"
+                           Intensity="1.0">
+                  <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+                  <ChildProcessors/>
+                </Processor>
+              </ChildProcessors>
+            </Processor>
+          </ChildProcessors>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="PitchModulation" Bypassed="0" Intensity="0.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="EffectChain" ID="FX" Bypassed="0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="Detune Mod" Bypassed="1" Intensity="1.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="Spread Mod" Bypassed="1" Intensity="1.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ScriptSynth" ID="v1" Bypassed="0" Gain="0.192752480506897"
+                   Balance="0.0" VoiceLimit="256.0" KillFadeTime="20.0" IconColour="0"
+                   NumTables="1" NumSliderPacks="6" Script=" function onControl(number, value)&#10;{&#10;&#9;&#10;}&#10; ">
+          <EditorStates BodyShown="1" Visible="1" Solo="0" Folded="1"/>
+          <ChildProcessors>
+            <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="GainModulation" Bypassed="0" Intensity="1.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="PitchModulation" Bypassed="0" Intensity="0.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="EffectChain" ID="FX" Bypassed="0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors>
+                <Processor Type="PolyScriptFX" ID="FmIn1" Bypassed="0" NumSliderPacks="3"
+                           Script=" function onControl()&#10;{&#10;&#9;&#10;}&#10; ">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <Content/>
+                  <Networks>
+                    <Network ID="input" AllowPolyphonic="1" Version="0.0.0"/>
+                  </Networks>
+                  <UIData>
+                    <ContentProperties DeviceType="Desktop"/>
+                  </UIData>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="Osc1" Bypassed="0" Network="osc1"
+                           Pitch="0.0" tempo="0.0" div="0.0" pitchmode="1.0" step="1.0"
+                           Input="0.8999999761581421" Shape="0.0" PitchMod="0.0" InputMod="0.0"
+                           OutPut="0.9319999814033508" OutMod="0.0" harm="0.0" sync="1.0"
+                           LfoUnsync="1.0" XfstagePitch="1.0" MidiSlotPitch="1.0" XfstageInput="1.0"
+                           MidiSlotIn="1.0" XfstageOut="1.0" MidiSlotOut="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32............................................"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32......ziBW4Sb8nvOjBWO+Lb8n8C...3O...f+....9C"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="OscShaper1" Bypassed="0" Network="oscshaper"
+                           shaper="0.2099999934434891" width="0.0" out="1.0" shapemod="0.0"
+                           widthmod="0.0" outmod="0.0" XfStage="1.0" Midi1="1.0" xf2="1.0"
+                           xf3="1.0" midi2="1.0" midi3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <Tables>
+                    <Table EmbeddedData=""/>
+                  </Tables>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="PolyScriptFX" ID="scope1" Bypassed="0" NumDisplayBuffers="2"
+                           Script=" function onControl()&#10;{&#10;&#9;&#10;}&#10; ">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <Content/>
+                  <Networks>
+                    <Network ID="blank" AllowPolyphonic="1" Version="0.0.0"/>
+                  </Networks>
+                  <UIData>
+                    <ContentProperties DeviceType="Desktop"/>
+                  </UIData>
+                </Processor>
+                <Processor Type="PolyScriptFX" ID="OscOut1" Bypassed="0" NumTables="1" NumSliderPacks="3"
+                           NumAudioFiles="2" Script=" function onControl()&#10;{&#10;&#9;&#10;}&#10; ">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <Content/>
+                  <Networks>
+                    <Network ID="OscOut1" AllowPolyphonic="1" Version="0.0.0"/>
+                  </Networks>
+                  <UIData>
+                    <ContentProperties DeviceType="Desktop"/>
+                  </UIData>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="TransFX1" Bypassed="0" Network="TransFX"
+                           FxMope="1.0" FxMix="0.0" MixMod="0.0" FxParamA="0.0" FxParamB="0.0"
+                           Amod="0.0" bMod="0.0" XfStage="1.0" Midi1="1.0" Xf2="1.0" Mid2="1.0"
+                           xf3="1.0" mid3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32............................................"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32............................................"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="Files1" Bypassed="0" Network="files"
+                           smooth="4.170000076293945" quant="9.0" Position="0.5199999809265137"
+                           Input="0.4399999976158142" Win="0.0" Xf="0.0" shift="3.0" pitch="0.4000000059604645"
+                           Mix="1.0" PositionTempoMod="0.0" PitchMod="0.0" InputMod="0.0"
+                           XfStage="1.0" IntMod="0.0" IntModSteps="4.0" IntmodOne="0.0"
+                           intmodtempo="0.0" InmodDiv="0.0" fb="0.8600000143051147" tablestep="0.0"
+                           Midi1="1.0" Midi2="1.0" Midi3="1.0" xf2="1.0" xf3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <Tables>
+                    <Table EmbeddedData=""/>
+                  </Tables>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32............................................"/>
+                    <SliderPack EmbeddedData="32............................................"/>
+                    <SliderPack EmbeddedData="32............................................"/>
+                    <SliderPack EmbeddedData="16.tdT3935Qg6C...3O...f+."/>
+                  </SliderPacks>
+                  <AudioFiles>
+                    <AudioFile EmbeddedData="{PROJECT_FOLDER}Single Cycle/512/jp-2.WAV" MinValue="0"
+                               MaxValue="0"/>
+                    <AudioFile EmbeddedData="{PROJECT_FOLDER}Misc/Drawn/AD-Draw1.wav" MinValue="0"
+                               MaxValue="0"/>
+                  </AudioFiles>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="Filter1" Bypassed="1" Network="HpLp"
+                           TransformMix="0.0" TransformA="0.0" TransformB="0.0" Mode="0.0"
+                           Q="0.0" type="1.0" MixMod="0.0" Amod="0.0" bmod="0.0" XfStage="1.0"
+                           MIDI1="1.0" MIDI2="1.0" MID3="1.0" XF2="1.0" XF3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32............................................"/>
+                    <SliderPack EmbeddedData="32............................................"/>
+                    <SliderPack EmbeddedData="32............................................"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="PolyScriptFX" ID="VoiceOut1" Bypassed="1" NumTables="1"
+                           NumSliderPacks="4" NumAudioFiles="2" Script=" function onControl()&#10;{&#10;&#9;&#10;}&#10; ">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <Content/>
+                  <Networks>
+                    <Network ID="files" AllowPolyphonic="1" Version="0.0.0" AllowCompilation="1"/>
+                  </Networks>
+                  <UIData>
+                    <ContentProperties DeviceType="Desktop"/>
+                  </UIData>
+                </Processor>
+              </ChildProcessors>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="Extra1" Bypassed="0" Intensity="1.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="Extra2" Bypassed="0" Intensity="1.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+          </ChildProcessors>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+          <Content/>
+          <Networks>
+            <Network ID="Xfade1" AllowPolyphonic="1" Version="0.0.0"/>
+          </Networks>
+          <UIData>
+            <ContentProperties DeviceType="Desktop"/>
+          </UIData>
+        </Processor>
+      </ChildProcessors>
+      <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+    </Processor>
+    <Processor Type="SynthGroup" ID="Synthesiser Group2" Bypassed="0" Gain="1.0"
+               Balance="0.0" VoiceLimit="2.0" KillFadeTime="20.0" IconColour="0"
+               EnableFM="0.0" CarrierIndex="-1.0" ModulatorIndex="-1.0" UnisonoVoiceAmount="1.0"
+               UnisonoDetune="0.0" UnisonoSpread="1.0" KillSecondVoices="1.0">
+      <EditorStates BodyShown="1" Visible="1" Solo="0" Folded="1"/>
+      <ChildProcessors>
+        <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="GainModulation" Bypassed="0" Intensity="1.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors>
+            <Processor Type="SimpleEnvelope" ID="DefaultEnvelope" Bypassed="0" Monophonic="0.0"
+                       Retrigger="1.0" Intensity="1.0" Attack="5.0" Release="10.0" LinearMode="1.0">
+              <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+              <ChildProcessors>
+                <Processor Type="ModulatorChain" ID="Attack Time Modulation" Bypassed="0"
+                           Intensity="1.0">
+                  <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+                  <ChildProcessors/>
+                </Processor>
+              </ChildProcessors>
+            </Processor>
+          </ChildProcessors>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="PitchModulation" Bypassed="0" Intensity="0.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="EffectChain" ID="FX" Bypassed="0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="Detune Mod" Bypassed="1" Intensity="1.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="Spread Mod" Bypassed="1" Intensity="1.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ScriptSynth" ID="v2" Bypassed="1" Gain="0.25" Balance="0.0"
+                   VoiceLimit="256.0" KillFadeTime="20.0" IconColour="0" NumTables="1"
+                   NumSliderPacks="6" Script=" function onControl(number, value)&#10;{&#10;&#9;&#10;}&#10; ">
+          <EditorStates BodyShown="1" Visible="1" Solo="0" Folded="1"/>
+          <ChildProcessors>
+            <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="GainModulation" Bypassed="0" Intensity="1.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="PitchModulation" Bypassed="0" Intensity="0.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="EffectChain" ID="FX" Bypassed="0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors>
+                <Processor Type="PolyScriptFX" ID="FmIn2" Bypassed="0" Script=" function onControl()&#10;{&#10;&#9;&#10;}&#10; ">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <Content/>
+                  <Networks>
+                    <Network ID="in2" AllowPolyphonic="1" Version="0.0.0"/>
+                  </Networks>
+                  <UIData>
+                    <ContentProperties DeviceType="Desktop"/>
+                  </UIData>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="Osc2" Bypassed="0" Network="osc1"
+                           Pitch="6.802000045776367" tempo="8.76766300201416" div="1.0"
+                           pitchmode="1.0" step="1.0" Input="0.0" Shape="0.0" PitchMod="0.0"
+                           InputMod="0.0" OutPut="1.0" OutMod="-0.7279999852180481" harm="1.0"
+                           sync="1.0" LfoUnsync="0.0" XfstagePitch="1.0" MidiSlotPitch="1.0"
+                           XfstageInput="1.0" MidiSlotIn="1.0" XfstageOut="1.0" MidiSlotOut="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="OscShaper2" Bypassed="0" Network="oscshaper"
+                           shaper="0.0" width="0.0" out="0.9620000123977661" shapemod="0.0"
+                           widthmod="0.0" outmod="0.0" XfStage="1.0" Midi1="2.0" xf2="1.0"
+                           xf3="1.0" midi2="1.0" midi3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <Tables>
+                    <Table EmbeddedData=""/>
+                  </Tables>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32............................................"/>
+                    <SliderPack EmbeddedData="32....f+......................................"/>
+                    <SliderPack EmbeddedData="32....P+......................................"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="PolyScriptFX" ID="OscOut2" Bypassed="0" NumTables="1" NumSliderPacks="3"
+                           NumAudioFiles="2" Script=" function onControl()&#10;{&#10;&#9;&#10;}&#10; ">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <Content/>
+                  <Networks>
+                    <Network ID="OscOut2" AllowPolyphonic="1" Version="0.0.0"/>
+                  </Networks>
+                  <UIData>
+                    <ContentProperties DeviceType="Desktop"/>
+                  </UIData>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="TransFX2" Bypassed="0" Network="TransFX"
+                           FxMope="1.0" FxMix="0.0" MixMod="0.0" FxParamA="0.0" FxParamB="0.0"
+                           Amod="0.0" bMod="0.0" XfStage="1.0" Midi1="1.0" Xf2="1.0" Mid2="1.0"
+                           xf3="1.0" mid3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="Files2" Bypassed="0" Network="files"
+                           smooth="0.0" quant="1.0" Position="0.05000000074505806" Input="0.6589999794960022"
+                           Win="3935.0" Xf="4475.0" shift="1.0" pitch="0.0" Mix="1.0" PositionTempoMod="-0.7917798757553101"
+                           PitchMod="0.0" InputMod="0.0" XfStage="1.0" IntMod="0.0" IntModSteps="4.0"
+                           IntmodOne="0.0" intmodtempo="0.0" InmodDiv="1.0" fb="0.2810801565647125"
+                           tablestep="0.0" Midi1="1.0" Midi2="1.0" Midi3="1.0" xf2="1.0"
+                           xf3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <Tables>
+                    <Table EmbeddedData=""/>
+                  </Tables>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="16....f+....9C...3O...f+."/>
+                  </SliderPacks>
+                  <AudioFiles>
+                    <AudioFile EmbeddedData="" MinValue="0" MaxValue="0"/>
+                    <AudioFile EmbeddedData="{PROJECT_FOLDER}Single Cycle 3/GL3.WAV" MinValue="0"
+                               MaxValue="0"/>
+                  </AudioFiles>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="Filter2" Bypassed="0" Network="HpLp"
+                           TransformMix="1.0" TransformA="1.0" TransformB="0.3100000023841858"
+                           Mode="0.0" Q="0.0" type="1.0" MixMod="0.0" Amod="0.0" bmod="0.0"
+                           XfStage="1.0" MIDI1="1.0" MIDI2="1.0" MID3="1.0" XF2="1.0" XF3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32............................................"/>
+                    <SliderPack EmbeddedData="32......................nv0ivyiBWOOJb8H8jBWO1C"/>
+                    <SliderPack EmbeddedData="32.Etdz9vdT35yGEtlO35QA97nv00C................"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="PolyScriptFX" ID="VoiceOu2" Bypassed="0" NumSliderPacks="3"
+                           Script=" function onControl()&#10;{&#10;&#9;&#10;}&#10; ">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <Content/>
+                  <Networks>
+                    <Network ID="VoiceOut2" AllowPolyphonic="1" Version="0.0.0"/>
+                  </Networks>
+                  <UIData>
+                    <ContentProperties DeviceType="Desktop"/>
+                  </UIData>
+                </Processor>
+              </ChildProcessors>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="Extra1" Bypassed="0" Intensity="1.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="Extra2" Bypassed="0" Intensity="1.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+          </ChildProcessors>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+          <Content/>
+          <Networks>
+            <Network ID="Xfade1" AllowPolyphonic="1" Version="0.0.0"/>
+          </Networks>
+          <UIData>
+            <ContentProperties DeviceType="Desktop"/>
+          </UIData>
+        </Processor>
+      </ChildProcessors>
+      <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+    </Processor>
+    <Processor Type="SynthGroup" ID="Synthesiser Group3" Bypassed="0" Gain="1.0"
+               Balance="0.0" VoiceLimit="2.0" KillFadeTime="20.0" IconColour="0"
+               EnableFM="0.0" CarrierIndex="-1.0" ModulatorIndex="-1.0" UnisonoVoiceAmount="1.0"
+               UnisonoDetune="0.0" UnisonoSpread="1.0" KillSecondVoices="1.0">
+      <EditorStates BodyShown="1" Visible="1" Solo="0" Folded="1"/>
+      <ChildProcessors>
+        <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="GainModulation" Bypassed="0" Intensity="1.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors>
+            <Processor Type="SimpleEnvelope" ID="DefaultEnvelope" Bypassed="0" Monophonic="0.0"
+                       Retrigger="1.0" Intensity="1.0" Attack="5.0" Release="10.0" LinearMode="1.0">
+              <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+              <ChildProcessors>
+                <Processor Type="ModulatorChain" ID="Attack Time Modulation" Bypassed="0"
+                           Intensity="1.0">
+                  <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+                  <ChildProcessors/>
+                </Processor>
+              </ChildProcessors>
+            </Processor>
+          </ChildProcessors>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="PitchModulation" Bypassed="0" Intensity="0.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="EffectChain" ID="FX" Bypassed="0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="Detune Mod" Bypassed="1" Intensity="1.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="Spread Mod" Bypassed="1" Intensity="1.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ScriptSynth" ID="v3" Bypassed="1" Gain="0.25" Balance="0.0"
+                   VoiceLimit="256.0" KillFadeTime="20.0" IconColour="0" NumTables="1"
+                   NumSliderPacks="6" Script=" function onControl(number, value)&#10;{&#10;&#9;&#10;}&#10; ">
+          <EditorStates BodyShown="1" Visible="1" Solo="0" Folded="1"/>
+          <ChildProcessors>
+            <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="GainModulation" Bypassed="0" Intensity="1.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="PitchModulation" Bypassed="0" Intensity="0.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="EffectChain" ID="FX" Bypassed="0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors>
+                <Processor Type="PolyScriptFX" ID="FmIn3" Bypassed="0" Script=" function onControl()&#10;{&#10;&#9;&#10;}&#10; ">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <Content/>
+                  <Networks>
+                    <Network ID="Input3" AllowPolyphonic="1" Version="0.0.0"/>
+                  </Networks>
+                  <UIData>
+                    <ContentProperties DeviceType="Desktop"/>
+                  </UIData>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="Osc3" Bypassed="0" Network="osc1"
+                           Pitch="0.0" tempo="8.76766300201416" div="1.0" pitchmode="1.0"
+                           step="0.0" Input="0.0" Shape="0.0" PitchMod="0.0" InputMod="0.0"
+                           OutPut="0.1058933436870575" OutMod="0.0" harm="1.0" sync="1.0"
+                           LfoUnsync="0.0" XfstagePitch="1.0" MidiSlotPitch="1.0" XfstageInput="1.0"
+                           MidiSlotIn="1.0" XfstageOut="1.0" MidiSlotOut="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="OscShaper3" Bypassed="0" Network="oscshaper"
+                           shaper="0.0" width="0.0" out="0.300000011920929" shapemod="0.0"
+                           widthmod="0.0" outmod="0.0" XfStage="1.0" Midi1="2.0" xf2="1.0"
+                           xf3="1.0" midi2="1.0" midi3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <Tables>
+                    <Table EmbeddedData=""/>
+                  </Tables>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32............................................"/>
+                    <SliderPack EmbeddedData="32....f+......................................"/>
+                    <SliderPack EmbeddedData="32....P+......................................"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="PolyScriptFX" ID="OscOut3" Bypassed="0" NumTables="1" NumSliderPacks="3"
+                           NumAudioFiles="2" Script=" function onControl()&#10;{&#10;&#9;&#10;}&#10; ">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <Content/>
+                  <Networks>
+                    <Network ID="OscOut3" AllowPolyphonic="1" Version="0.0.0"/>
+                  </Networks>
+                  <UIData>
+                    <ContentProperties DeviceType="Desktop"/>
+                  </UIData>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="TransFX3" Bypassed="0" Network="TransFX"
+                           FxMope="1.0" FxMix="0.0" MixMod="0.0" FxParamA="0.0" FxParamB="0.0"
+                           Amod="0.0" bMod="0.0" XfStage="1.0" Midi1="1.0" Xf2="1.0" Mid2="1.0"
+                           xf3="1.0" mid3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="Files3" Bypassed="0" Network="files"
+                           smooth="2.100000143051147" quant="4.0" Position="0.3319999873638153"
+                           Input="0.004999999888241291" Win="3935.0" Xf="4818.0" shift="0.0"
+                           pitch="0.0" Mix="1.0" PositionTempoMod="-0.7917798757553101"
+                           PitchMod="0.0" InputMod="0.0" XfStage="1.0" IntMod="0.0" IntModSteps="4.0"
+                           IntmodOne="0.0" intmodtempo="0.0" InmodDiv="1.0" fb="0.2810801565647125"
+                           tablestep="0.0" Midi1="1.0" Midi2="1.0" Midi3="1.0" xf2="1.0"
+                           xf3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <Tables>
+                    <Table EmbeddedData=""/>
+                  </Tables>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="16....f+....9C...3O...f+."/>
+                  </SliderPacks>
+                  <AudioFiles>
+                    <AudioFile EmbeddedData="" MinValue="0" MaxValue="0"/>
+                    <AudioFile EmbeddedData="{PROJECT_FOLDER}Single Cycle 3/GL2.WAV" MinValue="0"
+                               MaxValue="0"/>
+                  </AudioFiles>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="Filter3" Bypassed="0" Network="HpLp"
+                           TransformMix="1.0" TransformA="1.0" TransformB="0.3100000023841858"
+                           Mode="0.0" Q="0.0" type="1.0" MixMod="0.0" Amod="0.0" bmod="0.0"
+                           XfStage="1.0" MIDI1="1.0" MIDI2="1.0" MID3="1.0" XF2="1.0" XF3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32............................................"/>
+                    <SliderPack EmbeddedData="32......................nv0ivyiBWOOJb8H8jBWO1C"/>
+                    <SliderPack EmbeddedData="32.Etdz9vdT35yGEtlO35QA97nv00C................"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="PolyScriptFX" ID="VoiceOu3" Bypassed="0" NumSliderPacks="3"
+                           Script=" function onControl()&#10;{&#10;&#9;&#10;}&#10; ">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <Content/>
+                  <Networks>
+                    <Network ID="VoiceOut3" AllowPolyphonic="1" Version="0.0.0"/>
+                  </Networks>
+                  <UIData>
+                    <ContentProperties DeviceType="Desktop"/>
+                  </UIData>
+                </Processor>
+              </ChildProcessors>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="Extra1" Bypassed="0" Intensity="1.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="Extra2" Bypassed="0" Intensity="1.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+          </ChildProcessors>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+          <Content/>
+          <Networks>
+            <Network ID="Xfade1" AllowPolyphonic="1" Version="0.0.0"/>
+          </Networks>
+          <UIData>
+            <ContentProperties DeviceType="Desktop"/>
+          </UIData>
+        </Processor>
+      </ChildProcessors>
+      <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+    </Processor>
+    <Processor Type="SynthGroup" ID="Synthesiser Group4" Bypassed="0" Gain="1.0"
+               Balance="0.0" VoiceLimit="2.0" KillFadeTime="20.0" IconColour="0"
+               EnableFM="0.0" CarrierIndex="-1.0" ModulatorIndex="-1.0" UnisonoVoiceAmount="1.0"
+               UnisonoDetune="0.0" UnisonoSpread="1.0" KillSecondVoices="1.0">
+      <EditorStates BodyShown="1" Visible="1" Solo="0" Folded="1"/>
+      <ChildProcessors>
+        <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="GainModulation" Bypassed="0" Intensity="1.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors>
+            <Processor Type="SimpleEnvelope" ID="DefaultEnvelope" Bypassed="0" Monophonic="0.0"
+                       Retrigger="1.0" Intensity="1.0" Attack="5.0" Release="10.0" LinearMode="1.0">
+              <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+              <ChildProcessors>
+                <Processor Type="ModulatorChain" ID="Attack Time Modulation" Bypassed="0"
+                           Intensity="1.0">
+                  <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+                  <ChildProcessors/>
+                </Processor>
+              </ChildProcessors>
+            </Processor>
+          </ChildProcessors>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="PitchModulation" Bypassed="0" Intensity="0.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="EffectChain" ID="FX" Bypassed="0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="Detune Mod" Bypassed="1" Intensity="1.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ModulatorChain" ID="Spread Mod" Bypassed="1" Intensity="1.0">
+          <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+          <ChildProcessors/>
+        </Processor>
+        <Processor Type="ScriptSynth" ID="v4" Bypassed="1" Gain="0.25" Balance="0.0"
+                   VoiceLimit="256.0" KillFadeTime="20.0" IconColour="0" NumTables="1"
+                   NumSliderPacks="6" Script=" function onControl(number, value)&#10;{&#10;&#9;&#10;}&#10; ">
+          <EditorStates BodyShown="1" Visible="1" Solo="0" Folded="1"/>
+          <ChildProcessors>
+            <Processor Type="MidiProcessorChain" ID="Midi Processor" Bypassed="0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="GainModulation" Bypassed="0" Intensity="1.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="PitchModulation" Bypassed="0" Intensity="0.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="EffectChain" ID="FX" Bypassed="0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors>
+                <Processor Type="PolyScriptFX" ID="FmIn4" Bypassed="0" NumTables="1" NumSliderPacks="3"
+                           Script=" function onControl()&#10;{&#10;&#9;&#10;}&#10; ">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <Content/>
+                  <Networks>
+                    <Network ID="oscshaper" AllowPolyphonic="1" Version="0.0.0" AllowCompilation="1"/>
+                  </Networks>
+                  <UIData>
+                    <ContentProperties DeviceType="Desktop"/>
+                  </UIData>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="Osc4" Bypassed="0" Network="osc1"
+                           Pitch="0.0" tempo="8.76766300201416" div="1.0" pitchmode="1.0"
+                           step="0.0" Input="0.0" Shape="0.0" PitchMod="0.0" InputMod="0.0"
+                           OutPut="0.1058933436870575" OutMod="0.0" harm="1.0" sync="1.0"
+                           LfoUnsync="0.0" XfstagePitch="1.0" MidiSlotPitch="1.0" XfstageInput="1.0"
+                           MidiSlotIn="1.0" XfstageOut="1.0" MidiSlotOut="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="OscShaper4" Bypassed="0" Network="oscshaper"
+                           shaper="0.0" width="0.0" out="0.300000011920929" shapemod="0.0"
+                           widthmod="0.0" outmod="0.0" XfStage="1.0" Midi1="2.0" xf2="1.0"
+                           xf3="1.0" midi2="1.0" midi3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <Tables>
+                    <Table EmbeddedData=""/>
+                  </Tables>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32............................................"/>
+                    <SliderPack EmbeddedData="32....f+......................................"/>
+                    <SliderPack EmbeddedData="32....P+......................................"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="PolyScriptFX" ID="OscOut4" Bypassed="0" NumTables="1" NumSliderPacks="3"
+                           NumAudioFiles="2" Script=" function onControl()&#10;{&#10;&#9;&#10;}&#10; ">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <Content/>
+                  <Networks>
+                    <Network ID="OscOut4" AllowPolyphonic="1" Version="0.0.0"/>
+                  </Networks>
+                  <UIData>
+                    <ContentProperties DeviceType="Desktop"/>
+                  </UIData>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="TransFX4" Bypassed="0" Network="TransFX"
+                           FxMope="1.0" FxMix="0.0" MixMod="0.0" FxParamA="0.0" FxParamB="0.0"
+                           Amod="0.0" bMod="0.0" XfStage="1.0" Midi1="1.0" Xf2="1.0" Mid2="1.0"
+                           xf3="1.0" mid3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="Files4" Bypassed="0" Network="files"
+                           smooth="2.100000143051147" quant="4.0" Position="0.3319999873638153"
+                           Input="0.004999999888241291" Win="3935.0" Xf="4818.0" shift="0.0"
+                           pitch="0.0" Mix="1.0" PositionTempoMod="-0.7917798757553101"
+                           PitchMod="0.0" InputMod="0.0" XfStage="1.0" IntMod="0.0" IntModSteps="4.0"
+                           IntmodOne="0.0" intmodtempo="0.0" InmodDiv="1.0" fb="0.2810801565647125"
+                           tablestep="0.0" Midi1="1.0" Midi2="1.0" Midi3="1.0" xf2="1.0"
+                           xf3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <Tables>
+                    <Table EmbeddedData=""/>
+                  </Tables>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+                    <SliderPack EmbeddedData="16....f+....9C...3O...f+."/>
+                  </SliderPacks>
+                  <AudioFiles>
+                    <AudioFile EmbeddedData="" MinValue="0" MaxValue="0"/>
+                    <AudioFile EmbeddedData="{PROJECT_FOLDER}Single Cycle 3/JP3.WAV" MinValue="0"
+                               MaxValue="0"/>
+                  </AudioFiles>
+                </Processor>
+                <Processor Type="HardcodedPolyphonicFX" ID="Filter4" Bypassed="0" Network="HpLp"
+                           TransformMix="1.0" TransformA="1.0" TransformB="0.3100000023841858"
+                           Mode="0.0" Q="0.0" type="1.0" MixMod="0.0" Amod="0.0" bmod="0.0"
+                           XfStage="1.0" MIDI1="1.0" MIDI2="1.0" MID3="1.0" XF2="1.0" XF3="1.0">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+                  <SliderPacks>
+                    <SliderPack EmbeddedData="32............................................"/>
+                    <SliderPack EmbeddedData="32......................nv0ivyiBWOOJb8H8jBWO1C"/>
+                    <SliderPack EmbeddedData="32.Etdz9vdT35yGEtlO35QA97nv00C................"/>
+                  </SliderPacks>
+                </Processor>
+                <Processor Type="PolyScriptFX" ID="VoiceOu4" Bypassed="0" NumSliderPacks="3"
+                           Script=" function onControl()&#10;{&#10;&#9;&#10;}&#10; ">
+                  <EditorStates BodyShown="1" Visible="1" Solo="0"/>
+                  <ChildProcessors/>
+                  <Content/>
+                  <Networks>
+                    <Network ID="VoiceOut4" AllowPolyphonic="1" Version="0.0.0"/>
+                  </Networks>
+                  <UIData>
+                    <ContentProperties DeviceType="Desktop"/>
+                  </UIData>
+                </Processor>
+              </ChildProcessors>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="Extra1" Bypassed="0" Intensity="1.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+            <Processor Type="ModulatorChain" ID="Extra2" Bypassed="0" Intensity="1.0">
+              <EditorStates BodyShown="1" Visible="0" Solo="0"/>
+              <ChildProcessors/>
+            </Processor>
+          </ChildProcessors>
+          <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+          <Content/>
+          <Networks>
+            <Network ID="Xfade1" AllowPolyphonic="1" Version="0.0.0"/>
+          </Networks>
+          <UIData>
+            <ContentProperties DeviceType="Desktop"/>
+          </UIData>
+        </Processor>
+      </ChildProcessors>
+      <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+    </Processor>
+  </ChildProcessors>
+  <RoutingMatrix NumSourceChannels="2" Channel0="0" Send0="-1" Channel1="1" Send1="-1"/>
+  <macro_controls>
+    <macro name="Slot 1" value="0.0" midi_cc="-1"/>
+    <macro name="Slot 2" value="0.0" midi_cc="-1"/>
+    <macro name="Slot 3" value="0.0" midi_cc="-1"/>
+    <macro name="Slot 4" value="0.0" midi_cc="-1"/>
+    <macro name="" value="0.0" midi_cc="-1"/>
+    <macro name="" value="0.0" midi_cc="-1"/>
+    <macro name="" value="0.0" midi_cc="-1"/>
+    <macro name="" value="0.0" midi_cc="-1"/>
+  </macro_controls>
+  <MidiAutomation/>
+  <MPEData Enabled="0"/>
+</Processor>

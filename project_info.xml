@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ProjectSettings>
-  <Name value="Shapey"/>
-  <Version value="0.4.7"/>
+  <Name value="Smut"/>
+  <Version value="0.1.0"/>
   <Description value=""/>
   <BundleIdentifier value="com.modularsamples.product"/>
-  <PluginCode value="Shpy"/>
+  <PluginCode value="Smut"/>
   <EmbedAudioFiles value="1"/>
   <EmbedImageFiles value="Yes"/>
   <SupportFullDynamicsHLAC value="1"/>

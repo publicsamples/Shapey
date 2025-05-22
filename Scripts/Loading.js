@@ -1,338 +1,173 @@
-///// Loop Player Internal
+const var allList = [];
+const var allIds = [];
 
+const var AudioList = Engine.loadAudioFilesIntoPool();
 
-//Store folder path
+const Folder = [];
 
-const FolderPath = [];
-const FolderPath2 = [];
+const var Files1 = Synth.getAudioSampleProcessor("Files1");
 
-const var FileLoadInit1 = Content.getComponent("FileLoadInit");
-
-
-FileLoadInit1.setValue(1);
-FileLoadInit1.changed();
-
-const var LpLoad1 = Content.getComponent("LpLoad1");
-const var LpLoad2 = Content.getComponent("LpLoad2");
-const var LpLoad3 = Content.getComponent("LpLoad3");
-const var LpLoad4 = Content.getComponent("LpLoad4");
-const var LpLoad5 = Content.getComponent("LpLoad5");
-const var LpLoad6 = Content.getComponent("LpLoad6");
-const var LpLoad7 = Content.getComponent("LpLoad7");
-const var LpLoad8 = Content.getComponent("LpLoad8");
-
-const var ModLoadWave = Content.getComponent("ModLoadWave");
-const var ModLoadWave1 = Content.getComponent("ModLoadWave1");
-const var BankB1 = Content.getComponent("BankB1");
+const slot1 = Files1.getAudioFile(1);
 
 
 
-const var FolderLabel = Content.getComponent("FolderLabel");
+const var foldersV1 = [];        // Top-level Genre foldersV1
+const var instrumentsV1 = {};    // Maps Genre to Instruments
+const var samplesV1 = {};        // Maps Instrument to .wav files
 
-const var FolderLabel3 = Content.getComponent("FolderLabel3");
-const var FolderLabel4 = Content.getComponent("FolderLabel4");
-const var FolderLabel5 = Content.getComponent("FolderLabel5");
-const var FolderLabel6 = Content.getComponent("FolderLabel6");
+const var FirstSp = Content.getComponent("FirstSp");
+const var SecondSp = Content.getComponent("SecondSp");
+const var ThirdSp = Content.getComponent("ThirdSp");
 
+const var FirstCB = Content.getComponent("FirstCB");
+const var SecondCB = Content.getComponent("SecondCB");
+const var ThirdCB = Content.getComponent("ThirdCB");
 
-
-// Choose a folder to load samples from. 
-
-inline function onFolderSelectControl(component, value) {
-
-//Select a folder
-
-if (value == 1)
-
-    FileSystem.browseForDirectory(FileSystem.AudioFiles, function(folder) {
-        if (isDefined(folder) && folder.isDirectory()) {
-         
-         //find files in selected folder
-         
-            var folderArray = FileSystem.findFiles(folder, "*.wav, *.aif", false);
-
-            for (file in folderArray) {
-                file = file.toString(0);
-                
-                var folderArray2 = FileSystem.findFiles(folder, "*.wav, *.aif", false);
-                            
-                            for (file1 in folderArray2) {
-                                        file1 = file1.toString(1);        
-                
-         //Populate the Folder Label
-              
-              	
-              
-                FolderPath.push(folder);
-              
-            };
-            
-            
-            
-            //send items to hidden ComboBox
-            
-
-         LpLoad1.set("items", folderArray.join("\n"));
-		LpLoad2.set("items", folderArray2.join("\n"));
-		LpLoad3.set("items", folderArray.join("\n"));
-		LpLoad4.set("items", folderArray2.join("\n"));
-		LpLoad5.set("items", folderArray.join("\n"));
-		LpLoad6.set("items", folderArray2.join("\n"));
-		LpLoad7.set("items", folderArray.join("\n"));
-		LpLoad8.set("items", folderArray2.join("\n"));
+// Populate the hierarchy
+inline function sortAudioFilesListV1() {
 	
-			
-	//	LpLoad2.set("items", folderArray2.join("\n"));
+///	for (file in samplesArray) {
+	               
+for (file in AudioList) {
+
+        local fullPath = file.split("}")[1];
+
+        local pathParts = fullPath.split("/");
     
+        local genreFolder = pathParts[0];
+        local instrumentFolder = pathParts[1];
+        local sampleFile = pathParts[2];
+
+     
+        if (foldersV1.indexOf(genreFolder) == -1) {
+            foldersV1.push(genreFolder);
+            instrumentsV1[genreFolder] = []; 
+        }
+
+       
+        if (instrumentsV1[genreFolder].indexOf(instrumentFolder) == -1) {
+            instrumentsV1[genreFolder].push(instrumentFolder);
+            samplesV1[instrumentFolder] = []; 
+        }
+
+
+        samplesV1[instrumentFolder].push(sampleFile);
+  
+  
+    }
+
+   FirstSp.set("items", foldersV1.join("\n"));
+   FirstCB.set("items", foldersV1.join("\n"));
 }
 
+
+
+// Run the sorting function
+sortAudioFilesListV1();
+
+// Callback for GenreV1 selection
+inline function onFirstCBControl(component, value) {
+    if (value >= 0) {
+        // Get the selected Genre
+        local selectedGenre = foldersV1[value-1];
+     //   Console.print("Selected Genre: " + selectedGenre);
+
+        // Update InstrumentV1 dropdown with instrumentsV1 in the selected Genre
+        if (instrumentsV1[selectedGenre]) {
+            SecondSp.set("items", instrumentsV1[selectedGenre].join("\n"));
+            SecondCB.set("items", instrumentsV1[selectedGenre].join("\n"));
+     
+        } else {
+            SecondSp.set("items", "no file");
+            SecondCB.set("items", "no file");
+
+
         }
-    });
-};
 
-Content.getComponent("FolderSelect").setControlCallback(onFolderSelectControl);
-
-
-inline function onFolderSelect1Control(component, value) {
-
-//Select a folder
-
-if (value == 1)
-
-    FileSystem.browseForDirectory(FileSystem.AudioFiles, function(folder) {
-        if (isDefined(folder) && folder.isDirectory()) {
+        // Clear SampleV1 as no Instrument is selected yet
+        ThirdSp.set("items", "no file");
+        
+     //   FirstCB.setValue(value);
+		SecondCB.setValue(value);
          
-         //find files in selected folder
-         
-            var folderArray3 = FileSystem.findFiles(folder, "*.wav, *.aif, *.sfz", false);
-
-            for (file in folderArray3) {
-                file = file.toString(0);
-                
-                var folderArray4 = FileSystem.findFiles(folder, "*.wav, *.aif, *.sfz", false);
-                            
-                            for (file1 in folderArray4) {
-                                        file1 = file1.toString(1);        
-                
-         //Populate the Folder Label
-              
-              	
-                FolderLabel2.set("text", folder.toString(0));
-                FolderPath2.push(folder);
-              
-            };
-            
-            
-            
-            //send items to hidden ComboBox
-            
-
-         ModLoadWave.set("items", folderArray3.join("\n"));
-		ModLoadWave1.set("items", folderArray4.join("\n"));
-    
+    }
 }
 
+Content.getComponent("FirstCB").setControlCallback(onFirstCBControl);
+
+inline function onSecondCBControl(component, value) {
+    if (value >= 0) {
+	    
+    
+        // Get the selected Instrument
+        local selectedInstrument = SecondCB.getItemText();
+    //    Console.print("Selected Instrument: " + selectedInstrument);
+ 		
+        // Update SampleV1 dropdown with .wav files in the selected Instrument
+        if (samplesV1[selectedInstrument]) {
+
+            ThirdSp.set("items", samplesV1[selectedInstrument].join("\n"));
+            ThirdCB.set("items", samplesV1[selectedInstrument].join("\n"))-1;
+        } else {
+            ThirdSp.set("items", "no file");
+ 			ThirdCB.set("items", "no file");
         }
-    });
-};
+      
+        
+    }
+    
+    SecondCB.setValue(value);
+}
 
-Content.getComponent("FolderSelect1").setControlCallback(onFolderSelect1Control);
+Content.getComponent("SecondCB").setControlCallback(onSecondCBControl);
+
+inline function onThirdCBControl(component, value) {
+    if (value >= 0) {
+        // Get the selected sample name
+        local selectedSample = ThirdCB.get("items").split("\n")[value - 1];
+
+        // Construct the full path to the sample
+        local selectedGenre = FirstCB.getItemText();
+        local selectedInstrument = SecondCB.getItemText();
+        local fullPath = "{PROJECT_FOLDER}" + selectedGenre + "/" + selectedInstrument + "/" + selectedSample;
+
+        // Print the full path to the console to verify
+       // Console.print("Attempting to load: " + fullPath);
+
+        // Load the sample using the full path
+        slot1.loadFile(fullPath);
+      //  Console.print("Sample loaded successfully!");
+    }
+ //   ThirdCB.setValue(value+1);
+
+}
+
+Content.getComponent("ThirdCB").setControlCallback(onThirdCBControl);
 
 
-
-
-const var Shaper = Synth.getAudioSampleProcessor("Shaper");
-
-
-
-const var ScriptnodeSynthesiser1 = Synth.getChildSynth("ScriptnodeSynthesiser1");
-
-inline function onLpLoad1Control(component, value)
+inline function onFirstSpControl(component, value)
 {
-
-	ScriptnodeSynthesiser1.setBypassed(false);
-	
-	reg v = value-1;
-	Content.callAfterDelay(300, function()
-	{
-		Engine.allNotesOff();
-	
-		this.setBypassed(true);
-		
-		Content.callAfterDelay(300, function()
-		{
-
-
-		this.setBypassed(false);
-	
-		slot2.loadFile(LpLoad1.get("items").split("\n")[v]);
-		}, this);
-
-	}, ScriptnodeSynthesiser1);
+	FirstCB.setValue(value+1);
+	FirstCB.changed();
 };
 
-Content.getComponent("LpLoad1").setControlCallback(onLpLoad1Control);
+Content.getComponent("FirstSp").setControlCallback(onFirstSpControl);
 
-inline function onLpLoad2Control(component, value)
+
+inline function onSecondSpControl(component, value)
 {
-	LpLoad1.setValue(value);
-	LpLoad1.changed();
-	FolderLabel.set("text", LpLoad2.getItemText());
+	SecondCB.setValue(value+1);
+	SecondCB.changed();
 };
 
-Content.getComponent("LpLoad2").setControlCallback(onLpLoad2Control);
+Content.getComponent("SecondSp").setControlCallback(onSecondSpControl);
 
 
-inline function onLpLoad3Control(component, value)
+inline function onThirdSpControl(component, value)
 {
-
-	ScriptnodeSynthesiser1.setBypassed(false);
-	
-	reg v3 = value-1;
-	Content.callAfterDelay(300, function()
-	{
-		Engine.allNotesOff();
-	
-		this.setBypassed(true);
-		
-		Content.callAfterDelay(300, function()
-		{
-
-
-		this.setBypassed(false);
-	
-		slot3.loadFile(LpLoad3.get("items").split("\n")[v3]);
-		}, this);
-
-	}, ScriptnodeSynthesiser1);
+	ThirdCB.setValue(value+1);
+	ThirdCB.changed();
 };
 
-Content.getComponent("LpLoad3").setControlCallback(onLpLoad3Control);
-
-inline function onLpLoad4Control(component, value)
-{
-	LpLoad3.setValue(value);
-	LpLoad3.changed();
-	FolderLabel3.set("text", LpLoad4.getItemText());
-};
-
-Content.getComponent("LpLoad4").setControlCallback(onLpLoad4Control);
-
-
-inline function onLpLoad5Control(component, value)
-{
-
-	ScriptnodeSynthesiser1.setBypassed(false);
-	
-	reg v4 = value-1;
-	Content.callAfterDelay(300, function()
-	{
-		Engine.allNotesOff();
-	
-		this.setBypassed(true);
-		
-		Content.callAfterDelay(300, function()
-		{
-
-
-		this.setBypassed(false);
-	
-		slot4.loadFile(LpLoad5.get("items").split("\n")[v4]);
-		}, this);
-
-	}, ScriptnodeSynthesiser1);
-};
-
-Content.getComponent("LpLoad5").setControlCallback(onLpLoad5Control);
-
-inline function onLpLoad6Control(component, value)
-{
-	LpLoad5.setValue(value);
-	LpLoad5.changed();
-	FolderLabel4.set("text", LpLoad6.getItemText());
-};
-
-Content.getComponent("LpLoad6").setControlCallback(onLpLoad6Control);
-
-
-inline function onLpLoad7Control(component, value)
-{
-
-	ScriptnodeSynthesiser1.setBypassed(false);
-	
-	reg v5 = value-1;
-	Content.callAfterDelay(300, function()
-	{
-		Engine.allNotesOff();
-	
-		this.setBypassed(true);
-		
-		Content.callAfterDelay(300, function()
-		{
-
-
-		this.setBypassed(false);
-	
-		slot5.loadFile(LpLoad7.get("items").split("\n")[v5]);
-		}, this);
-
-	}, ScriptnodeSynthesiser1);
-};
-
-Content.getComponent("LpLoad7").setControlCallback(onLpLoad7Control);
-
-inline function onLpLoad8Control(component, value)
-{
-	LpLoad7.setValue(value);
-	LpLoad7.changed();
-	FolderLabel6.set("text", LpLoad8.getItemText());
-};
-
-Content.getComponent("LpLoad8").setControlCallback(onLpLoad8Control);
-
-
-const var ScriptnodeSynthesiser2 = Synth.getChildSynth("ScriptnodeSynthesiser1");
-
-inline function onModLoadWaveControl(component, value)
-{
-
-	ScriptnodeSynthesiser2.setBypassed(false);
-	
-	reg v1 = value-1;
-	Content.callAfterDelay(300, function()
-	{
-		Engine.allNotesOff();
-	
-		this.setBypassed(true);
-		
-		Content.callAfterDelay(300, function()
-		{
-
-
-		this.setBypassed(false);
-		slot1.loadFile(ModLoadWave.get("items").split("\n")[v1]);
-		}, this);
-
-	}, ScriptnodeSynthesiser2);
-};
-
-Content.getComponent("ModLoadWave").setControlCallback(onModLoadWaveControl);
-
-
-inline function onModLoadWave1Control(component, value)
-{
-		ModLoadWave.setValue(value);
-	ModLoadWave.changed();
-};
-
-Content.getComponent("ModLoadWave1").setControlCallback(onModLoadWave1Control);
-
-const var FourFiles = [Content.getComponent("LpLoad8"),
-                       Content.getComponent("LpLoad6"),
-                       Content.getComponent("LpLoad4"),
-                       Content.getComponent("FourFiles")];
-
-
-
-
+Content.getComponent("ThirdSp").setControlCallback(onThirdSpControl);
 

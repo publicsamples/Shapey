@@ -1,1 +1,50 @@
-<empty/>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="blank" AllowPolyphonic="1" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="blank" Bypassed="0" Name="blank">
+    <Nodes>
+      <Node ID="chain" FactoryPath="container.chain" Bypassed="0" Name="chain">
+        <Nodes>
+          <Node ID="split" FactoryPath="container.split" Bypassed="0" Name="split">
+            <Nodes>
+              <Node ID="chain1" FactoryPath="container.chain" Bypassed="0" Name="chain1">
+                <Nodes/>
+                <Parameters/>
+              </Node>
+              <Node ID="chain2" FactoryPath="container.chain" Bypassed="0" Name="chain1">
+                <Nodes>
+                  <Node ID="bitcrush" FactoryPath="fx.bitcrush" Bypassed="0" Name="bitcrush">
+                    <Parameters>
+                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="0.1000000014901161"
+                                 ID="BitDepth" Value="1.700000010430813" DefaultValue="16.0"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Mode" Value="1.0"
+                                 DefaultValue="0.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="oscilloscope" FactoryPath="analyse.oscilloscope" Bypassed="0"
+                        Name="oscilloscope">
+                    <ComplexData>
+                      <DisplayBuffers>
+                        <DisplayBuffer Index="0" EmbeddedData=""/>
+                      </DisplayBuffers>
+                    </ComplexData>
+                    <Parameters/>
+                  </Node>
+                  <Node ID="clear" FactoryPath="math.clear" Bypassed="0" Name="clear">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
+    </Nodes>
+    <Parameters/>
+  </Node>
+</Network>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="OscOut3" AllowPolyphonic="1" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="OscOut3" Bypassed="0" Name="OscOut3">
+    <Nodes>
+      <Node ID="global_send" FactoryPath="routing.global_send" Bypassed="0"
+            Name="global_send" NodeColour="4289882183">
+        <Properties>
+          <Property ID="Connection" Value="OscOut3"/>
+        </Properties>
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+        </Parameters>
+      </Node>
+    </Nodes>
+    <Parameters/>
+  </Node>
+</Network>
