@@ -2,6 +2,9 @@
   "Comb": [
     "AllowPolyphonic"
   ],
+  "hole": [
+    "IsPolyphonic"
+  ],
   "khp": [
     "AllowPolyphonic"
   ],

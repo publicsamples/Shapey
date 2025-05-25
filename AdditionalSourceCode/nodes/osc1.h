@@ -208,9 +208,7 @@ template <int NV> using pma9_t = pma1_t<NV>;
 template <int NV>
 using converter5_mod = parameter::chain<ranges::Identity, 
                                         parameter::plain<core::phasor_fm<NV>, 2>, 
-                                        parameter::plain<core::fm, 2>, 
-                                        parameter::plain<core::phasor_fm<NV>, 2>, 
-                                        parameter::plain<core::fm, 2>>;
+                                        parameter::plain<core::phasor_fm<NV>, 2>>;
 
 template <int NV>
 using converter5_t = control::converter<converter5_mod<NV>, 
@@ -285,21 +283,15 @@ using branch3_t = container::branch<parameter::empty,
                                     chain23_t<NV>>;
 
 template <int NV>
-using converter_mod = parameter::chain<ranges::Identity, 
-                                       parameter::plain<core::phasor_fm<NV>, 2>, 
-                                       parameter::plain<core::fm, 2>>;
-
-template <int NV>
-using converter_t = control::converter<converter_mod<NV>, 
+using converter_t = control::converter<parameter::plain<core::phasor_fm<NV>, 2>, 
                                        conversion_logic::st2pitch>;
 template <int NV>
 using minmax2_t = control::minmax<NV, 
                                   parameter::plain<converter_t<NV>, 0>>;
 
-template <int NV> using minmax1_mod = converter_mod<NV>;
-
 template <int NV>
-using minmax1_t = control::minmax<NV, minmax1_mod<NV>>;
+using minmax1_t = control::minmax<NV, 
+                                  parameter::plain<core::phasor_fm<NV>, 2>>;
 
 template <int NV>
 using peak_mod = parameter::chain<ranges::Identity, 
@@ -313,6 +305,7 @@ using peak_t = wrap::mod<peak_mod<NV>,
 template <int NV>
 using chain20_t = container::chain<parameter::empty, 
                                    wrap::fix<1, branch3_t<NV>>, 
+                                   core::smoother<NV>, 
                                    peak_t<NV>>;
 
 using split7_t = container::split<parameter::empty, 
@@ -735,7 +728,10 @@ template <int NV> using chain3_t = chain1_t<NV>;
 
 template <int NV> using chain2_t = chain1_t<NV>;
 
-template <int NV> using no_midi_t_ = chain1_t<NV>;
+template <int NV>
+using no_midi_t_ = container::chain<parameter::empty, 
+                                    wrap::fix<2, wrap::no_process<math::clear<NV>>>, 
+                                    core::phasor_fm<NV>>;
 
 template <int NV>
 using no_midi_t = wrap::no_midi<no_midi_t_<NV>>;
@@ -745,31 +741,14 @@ using branch1_t = container::branch<parameter::empty,
                                     chain3_t<NV>, 
                                     chain2_t<NV>, 
                                     no_midi_t<NV>>;
-
-using chain14_t = container::chain<parameter::empty, wrap::fix<2, core::fm>>;
-
-using chain15_t = chain14_t;
-
-using chain16_t = chain14_t;
-
-using no_midi1_t_ = chain14_t;
-
-using no_midi1_t = wrap::no_midi<no_midi1_t_>;
-using branch2_t = container::branch<parameter::empty, 
-                                    wrap::fix<2, chain14_t>, 
-                                    chain15_t, 
-                                    chain16_t, 
-                                    no_midi1_t>;
-template <int NV>
-using branch_t = container::branch<parameter::empty, 
-                                   wrap::fix<2, branch1_t<NV>>, 
-                                   branch2_t>;
+using peak1_t = wrap::no_data<core::peak>;
 
 template <int NV>
 using fix8_block_t_ = container::chain<parameter::empty, 
                                        wrap::fix<2, modchain_t<NV>>, 
-                                       branch_t<NV>, 
-                                       core::mono2stereo>;
+                                       branch1_t<NV>, 
+                                       core::mono2stereo, 
+                                       peak1_t>;
 
 template <int NV>
 using fix8_block_t = wrap::fix_block<8, fix8_block_t_<NV>>;
@@ -808,20 +787,15 @@ using pitchmode_0 = parameter::from0To1<osc1_impl::branch1_t<NV>,
                                         0, 
                                         pitchmode_0Range>;
 
-using pitchmode_1 = parameter::from0To1<osc1_impl::branch2_t, 
-                                        0, 
-                                        pitchmode_0Range>;
-
 template <int NV>
-using pitchmode_2 = parameter::from0To1<osc1_impl::branch3_t<NV>, 
+using pitchmode_1 = parameter::from0To1<osc1_impl::branch3_t<NV>, 
                                         0, 
                                         pitchmode_0Range>;
 
 template <int NV>
 using pitchmode = parameter::chain<pitchmode_InputRange, 
                                    pitchmode_0<NV>, 
-                                   pitchmode_1, 
-                                   pitchmode_2<NV>>;
+                                   pitchmode_1<NV>>;
 
 template <int NV>
 using step = parameter::chain<ranges::Identity, 
@@ -919,14 +893,21 @@ using MidiSlotOut_0 = parameter::from0To1<osc1_impl::branch6_t<NV>,
 template <int NV>
 using MidiSlotOut = parameter::chain<MidiSlotOut_InputRange, MidiSlotOut_0<NV>>;
 
+DECLARE_PARAMETER_RANGE_SKEW(BendRange, 
+                             0., 
+                             20000., 
+                             0.231378);
+
+template <int NV>
+using Bend = parameter::from0To1<core::smoother<NV>, 
+                                 0, 
+                                 BendRange>;
+
 template <int NV>
 using div = parameter::plain<osc1_impl::tempo_sync_t<NV>, 
                              1>;
 template <int NV>
 using Input = parameter::plain<osc1_impl::pma2_t<NV>, 2>;
-template <int NV>
-using Shape = parameter::plain<osc1_impl::branch_t<NV>, 
-                               0>;
 template <int NV>
 using InputMod = parameter::plain<osc1_impl::pma2_t<NV>, 1>;
 template <int NV>
@@ -948,7 +929,6 @@ using osc1_t_plist = parameter::list<Pitch<NV>,
                                      pitchmode<NV>, 
                                      step<NV>, 
                                      Input<NV>, 
-                                     Shape<NV>, 
                                      PitchMod<NV>, 
                                      InputMod<NV>, 
                                      OutPut<NV>, 
@@ -961,7 +941,8 @@ using osc1_t_plist = parameter::list<Pitch<NV>,
                                      XfstageInput<NV>, 
                                      MidiSlotIn<NV>, 
                                      XfstageOut<NV>, 
-                                     MidiSlotOut<NV>>;
+                                     MidiSlotOut<NV>, 
+                                     Bend<NV>>;
 }
 
 template <int NV>
@@ -990,7 +971,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 			0x005B, 0x0000, 0x5000, 0x7469, 0x6863, 0x0000, 0xC000, 0x00C1, 
             0xC000, 0x0041, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 
             0x0001, 0x0000, 0x6574, 0x706D, 0x006F, 0x0000, 0x0000, 0x0000, 
-            0x4190, 0x4859, 0x410C, 0x0000, 0x3F80, 0x0000, 0x0000, 0x025B, 
+            0x4190, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x025B, 
             0x0000, 0x6400, 0x7669, 0x0000, 0x8000, 0x003F, 0x0000, 0x0042, 
             0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x0003, 0x0000, 
             0x6970, 0x6374, 0x6D68, 0x646F, 0x0065, 0x0000, 0x3F80, 0x0000, 
@@ -998,37 +979,37 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
             0x0000, 0x7300, 0x6574, 0x0070, 0x0000, 0x0000, 0x0000, 0x3F80, 
             0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x055B, 0x0000, 
             0x4900, 0x706E, 0x7475, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 
-            0x8000, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0006, 0x0000, 
-            0x6853, 0x7061, 0x0065, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
-            0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x075B, 0x0000, 0x5000, 
-            0x7469, 0x6863, 0x6F4D, 0x0064, 0x0000, 0xBF80, 0x0000, 0x3F80, 
-            0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x085B, 0x0000, 
-            0x4900, 0x706E, 0x7475, 0x6F4D, 0x0064, 0x0000, 0xBF80, 0x0000, 
-            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x095B, 
-            0x0000, 0x4F00, 0x7475, 0x7550, 0x0074, 0x0000, 0x0000, 0x0000, 
-            0x3F80, 0xDE9C, 0x3DD8, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0A5B, 
-            0x0000, 0x4F00, 0x7475, 0x6F4D, 0x0064, 0x0000, 0xBF80, 0x0000, 
-            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0B5B, 
-            0x0000, 0x6800, 0x7261, 0x006D, 0x0000, 0x3F80, 0x0000, 0x4180, 
-            0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0C5B, 0x0000, 
-            0x7300, 0x6E79, 0x0063, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
-            0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0D5B, 0x0000, 0x4C00, 
-            0x6F66, 0x6E55, 0x7973, 0x636E, 0x0000, 0x0000, 0x0000, 0x8000, 
-            0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x000E, 
-            0x0000, 0x6658, 0x7473, 0x6761, 0x5065, 0x7469, 0x6863, 0x0000, 
-            0x8000, 0x003F, 0x8000, 0x0040, 0x8000, 0x003F, 0x8000, 0x003F, 
-            0x0000, 0x5B00, 0x000F, 0x0000, 0x694D, 0x6964, 0x6C53, 0x746F, 
-            0x6950, 0x6374, 0x0068, 0x0000, 0x3F80, 0x0000, 0x40E0, 0x0000, 
-            0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x105B, 0x0000, 0x5800, 
-            0x7366, 0x6174, 0x6567, 0x6E49, 0x7570, 0x0074, 0x0000, 0x3F80, 
-            0x0000, 0x4080, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 
-            0x115B, 0x0000, 0x4D00, 0x6469, 0x5369, 0x6F6C, 0x4974, 0x006E, 
-            0x0000, 0x3F80, 0x0000, 0x40E0, 0x0000, 0x3F80, 0x0000, 0x3F80, 
-            0x0000, 0x0000, 0x125B, 0x0000, 0x5800, 0x7366, 0x6174, 0x6567, 
-            0x754F, 0x0074, 0x0000, 0x3F80, 0x0000, 0x4080, 0x0000, 0x3F80, 
-            0x0000, 0x3F80, 0x0000, 0x0000, 0x135B, 0x0000, 0x4D00, 0x6469, 
-            0x5369, 0x6F6C, 0x4F74, 0x7475, 0x0000, 0x8000, 0x003F, 0xE000, 
-            0x0040, 0x8000, 0x003F, 0x8000, 0x003F, 0x0000, 0x0000, 0x0000
+            0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0006, 0x0000, 
+            0x6950, 0x6374, 0x4D68, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 
+            0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0007, 
+            0x0000, 0x6E49, 0x7570, 0x4D74, 0x646F, 0x0000, 0x8000, 0x00BF, 
+            0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 
+            0x0008, 0x0000, 0x754F, 0x5074, 0x7475, 0x0000, 0x0000, 0x0000, 
+            0x8000, 0x9C3F, 0xD8DE, 0x003D, 0x8000, 0x003F, 0x0000, 0x5B00, 
+            0x0009, 0x0000, 0x754F, 0x4D74, 0x646F, 0x0000, 0x8000, 0x00BF, 
+            0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 
+            0x000A, 0x0000, 0x6168, 0x6D72, 0x0000, 0x8000, 0x003F, 0x8000, 
+            0x0041, 0x8000, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x000B, 
+            0x0000, 0x7973, 0x636E, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 
+            0x8000, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x000C, 0x0000, 
+            0x664C, 0x556F, 0x736E, 0x6E79, 0x0063, 0x0000, 0x0000, 0x0000, 
+            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0D5B, 
+            0x0000, 0x5800, 0x7366, 0x6174, 0x6567, 0x6950, 0x6374, 0x0068, 
+            0x0000, 0x3F80, 0x0000, 0x4080, 0x0000, 0x3F80, 0x0000, 0x3F80, 
+            0x0000, 0x0000, 0x0E5B, 0x0000, 0x4D00, 0x6469, 0x5369, 0x6F6C, 
+            0x5074, 0x7469, 0x6863, 0x0000, 0x8000, 0x003F, 0xE000, 0x0040, 
+            0x8000, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x000F, 0x0000, 
+            0x6658, 0x7473, 0x6761, 0x4965, 0x706E, 0x7475, 0x0000, 0x8000, 
+            0x003F, 0x8000, 0x0040, 0x8000, 0x003F, 0x8000, 0x003F, 0x0000, 
+            0x5B00, 0x0010, 0x0000, 0x694D, 0x6964, 0x6C53, 0x746F, 0x6E49, 
+            0x0000, 0x8000, 0x003F, 0xE000, 0x0040, 0x8000, 0x003F, 0x8000, 
+            0x003F, 0x0000, 0x5B00, 0x0011, 0x0000, 0x6658, 0x7473, 0x6761, 
+            0x4F65, 0x7475, 0x0000, 0x8000, 0x003F, 0x8000, 0x0040, 0x8000, 
+            0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0012, 0x0000, 0x694D, 
+            0x6964, 0x6C53, 0x746F, 0x754F, 0x0074, 0x0000, 0x3F80, 0x0000, 
+            0x40E0, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x135B, 
+            0x0000, 0x4200, 0x6E65, 0x0064, 0x0000, 0x0000, 0x0000, 0x3F80, 
+            0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x0000
 		};
 	};
 	
@@ -1107,7 +1088,8 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		auto& chain23 = this->getT(0).getT(0).getT(4).getT(0).getT(3);                   // osc1_impl::chain23_t<NV>
 		auto& minmax = this->getT(0).getT(0).getT(4).getT(0).getT(3).getT(0);            // osc1_impl::minmax_t<NV>
 		auto& pma11 = this->getT(0).getT(0).getT(4).getT(0).getT(3).getT(1);             // osc1_impl::pma11_t<NV>
-		auto& peak = this->getT(0).getT(0).getT(4).getT(1);                              // osc1_impl::peak_t<NV>
+		auto& smoother = this->getT(0).getT(0).getT(4).getT(1);                          // core::smoother<NV>
+		auto& peak = this->getT(0).getT(0).getT(4).getT(2);                              // osc1_impl::peak_t<NV>
 		auto& split7 = this->getT(0).getT(0).getT(5);                                    // osc1_impl::split7_t
 		auto& modchain2 = this->getT(0).getT(1);                                         // osc1_impl::modchain2_t<NV>
 		auto& sliderbank4 = this->getT(0).getT(1).getT(0);                               // osc1_impl::sliderbank4_t<NV>
@@ -1235,26 +1217,18 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		auto& chain12 = this->getT(2).getT(0).getT(0).getT(2);                           // osc1_impl::chain12_t<NV>
 		auto& tempo_sync = this->getT(2).getT(0).getT(0).getT(2).getT(0);                // osc1_impl::tempo_sync_t<NV>
 		auto& converter5 = this->getT(2).getT(0).getT(0).getT(2).getT(1);                // osc1_impl::converter5_t<NV>
-		auto& branch = this->getT(2).getT(1);                                            // osc1_impl::branch_t<NV>
-		auto& branch1 = this->getT(2).getT(1).getT(0);                                   // osc1_impl::branch1_t<NV>
-		auto& chain1 = this->getT(2).getT(1).getT(0).getT(0);                            // osc1_impl::chain1_t<NV>
-		auto& phasor_fm = this->getT(2).getT(1).getT(0).getT(0).getT(0);                 // core::phasor_fm<NV>
-		auto& chain3 = this->getT(2).getT(1).getT(0).getT(1);                            // osc1_impl::chain3_t<NV>
-		auto& phasor_fm4 = this->getT(2).getT(1).getT(0).getT(1).getT(0);                // core::phasor_fm<NV>
-		auto& chain2 = this->getT(2).getT(1).getT(0).getT(2);                            // osc1_impl::chain2_t<NV>
-		auto& phasor_fm3 = this->getT(2).getT(1).getT(0).getT(2).getT(0);                // core::phasor_fm<NV>
-		auto& no_midi = this->getT(2).getT(1).getT(0).getT(3);                           // osc1_impl::no_midi_t<NV>
-		auto& phasor_fm1 = this->getT(2).getT(1).getT(0).getT(3).getT(0);                // core::phasor_fm<NV>
-		auto& branch2 = this->getT(2).getT(1).getT(1);                                   // osc1_impl::branch2_t
-		auto& chain14 = this->getT(2).getT(1).getT(1).getT(0);                           // osc1_impl::chain14_t
-		auto& fm = this->getT(2).getT(1).getT(1).getT(0).getT(0);                        // core::fm
-		auto& chain15 = this->getT(2).getT(1).getT(1).getT(1);                           // osc1_impl::chain15_t
-		auto& fm3 = this->getT(2).getT(1).getT(1).getT(1).getT(0);                       // core::fm
-		auto& chain16 = this->getT(2).getT(1).getT(1).getT(2);                           // osc1_impl::chain16_t
-		auto& fm2 = this->getT(2).getT(1).getT(1).getT(2).getT(0);                       // core::fm
-		auto& no_midi1 = this->getT(2).getT(1).getT(1).getT(3);                          // osc1_impl::no_midi1_t
-		auto& fm1 = this->getT(2).getT(1).getT(1).getT(3).getT(0);                       // core::fm
+		auto& branch1 = this->getT(2).getT(1);                                           // osc1_impl::branch1_t<NV>
+		auto& chain1 = this->getT(2).getT(1).getT(0);                                    // osc1_impl::chain1_t<NV>
+		auto& phasor_fm = this->getT(2).getT(1).getT(0).getT(0);                         // core::phasor_fm<NV>
+		auto& chain3 = this->getT(2).getT(1).getT(1);                                    // osc1_impl::chain3_t<NV>
+		auto& phasor_fm4 = this->getT(2).getT(1).getT(1).getT(0);                        // core::phasor_fm<NV>
+		auto& chain2 = this->getT(2).getT(1).getT(2);                                    // osc1_impl::chain2_t<NV>
+		auto& phasor_fm3 = this->getT(2).getT(1).getT(2).getT(0);                        // core::phasor_fm<NV>
+		auto& no_midi = this->getT(2).getT(1).getT(3);                                   // osc1_impl::no_midi_t<NV>
+		auto& clear1 = this->getT(2).getT(1).getT(3).getT(0);                            // wrap::no_process<math::clear<NV>>
+		auto& phasor_fm1 = this->getT(2).getT(1).getT(3).getT(1);                        // core::phasor_fm<NV>
 		auto& mono2stereo = this->getT(2).getT(2);                                       // core::mono2stereo
+		auto& peak1 = this->getT(2).getT(3);                                             // osc1_impl::peak1_t
 		
 		// Parameter Connections -------------------------------------------------------------------
 		
@@ -1266,8 +1240,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		
 		auto& pitchmode_p = this->getParameterT(3);
 		pitchmode_p.connectT(0, branch1); // pitchmode -> branch1::Index
-		pitchmode_p.connectT(1, branch2); // pitchmode -> branch2::Index
-		pitchmode_p.connectT(2, branch3); // pitchmode -> branch3::Index
+		pitchmode_p.connectT(1, branch3); // pitchmode -> branch3::Index
 		
 		auto& step_p = this->getParameterT(4);
 		step_p.connectT(0, minmax2); // step -> minmax2::Step
@@ -1275,37 +1248,37 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		
 		this->getParameterT(5).connectT(0, pma2); // Input -> pma2::Add
 		
-		this->getParameterT(6).connectT(0, branch); // Shape -> branch::Index
-		
-		auto& PitchMod_p = this->getParameterT(7);
+		auto& PitchMod_p = this->getParameterT(6);
 		PitchMod_p.connectT(0, pma1);  // PitchMod -> pma1::Multiply
 		PitchMod_p.connectT(1, pma9);  // PitchMod -> pma9::Multiply
 		PitchMod_p.connectT(2, pma8);  // PitchMod -> pma8::Multiply
 		PitchMod_p.connectT(3, pma11); // PitchMod -> pma11::Multiply
 		
-		this->getParameterT(8).connectT(0, pma2); // InputMod -> pma2::Multiply
+		this->getParameterT(7).connectT(0, pma2); // InputMod -> pma2::Multiply
 		
-		this->getParameterT(9).connectT(0, pma4); // OutPut -> pma4::Add
+		this->getParameterT(8).connectT(0, pma4); // OutPut -> pma4::Add
 		
-		this->getParameterT(10).connectT(0, pma4); // OutMod -> pma4::Multiply
+		this->getParameterT(9).connectT(0, pma4); // OutMod -> pma4::Multiply
 		
-		this->getParameterT(11).connectT(0, pma9); // harm -> pma9::Add
+		this->getParameterT(10).connectT(0, pma9); // harm -> pma9::Add
 		
-		this->getParameterT(12).connectT(0, tempo_sync); // sync -> tempo_sync::Enabled
+		this->getParameterT(11).connectT(0, tempo_sync); // sync -> tempo_sync::Enabled
 		
-		this->getParameterT(13).connectT(0, minmax); // LfoUnsync -> minmax::Value
+		this->getParameterT(12).connectT(0, minmax); // LfoUnsync -> minmax::Value
 		
-		this->getParameterT(14).connectT(0, event_data_reader14); // XfstagePitch -> event_data_reader14::SlotIndex
+		this->getParameterT(13).connectT(0, event_data_reader14); // XfstagePitch -> event_data_reader14::SlotIndex
 		
-		this->getParameterT(15).connectT(0, branch5); // MidiSlotPitch -> branch5::Index
+		this->getParameterT(14).connectT(0, branch5); // MidiSlotPitch -> branch5::Index
 		
-		this->getParameterT(16).connectT(0, event_data_reader15); // XfstageInput -> event_data_reader15::SlotIndex
+		this->getParameterT(15).connectT(0, event_data_reader15); // XfstageInput -> event_data_reader15::SlotIndex
 		
-		this->getParameterT(17).connectT(0, branch4); // MidiSlotIn -> branch4::Index
+		this->getParameterT(16).connectT(0, branch4); // MidiSlotIn -> branch4::Index
 		
-		this->getParameterT(18).connectT(0, event_data_reader18); // XfstageOut -> event_data_reader18::SlotIndex
+		this->getParameterT(17).connectT(0, event_data_reader18); // XfstageOut -> event_data_reader18::SlotIndex
 		
-		this->getParameterT(19).connectT(0, branch6); // MidiSlotOut -> branch6::Index
+		this->getParameterT(18).connectT(0, branch6); // MidiSlotOut -> branch6::Index
+		
+		this->getParameterT(19).connectT(0, smoother); // Bend -> smoother::SmoothingTime
 		
 		// Modulation Connections ------------------------------------------------------------------
 		
@@ -1334,9 +1307,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		pma1.getWrappedObject().getParameter().connectT(0, add);              // pma1 -> add::Value
 		pma9.getWrappedObject().getParameter().connectT(0, add2);             // pma9 -> add2::Value
 		converter5.getWrappedObject().getParameter().connectT(0, phasor_fm3); // converter5 -> phasor_fm3::FreqRatio
-		converter5.getWrappedObject().getParameter().connectT(1, fm2);        // converter5 -> fm2::FreqMultiplier
-		converter5.getWrappedObject().getParameter().connectT(2, phasor_fm1); // converter5 -> phasor_fm1::FreqRatio
-		converter5.getWrappedObject().getParameter().connectT(3, fm1);        // converter5 -> fm1::FreqMultiplier
+		converter5.getWrappedObject().getParameter().connectT(1, phasor_fm1); // converter5 -> phasor_fm1::FreqRatio
 		tempo_sync.getParameter().connectT(0, converter5);                    // tempo_sync -> converter5::Value
 		pma8.getWrappedObject().getParameter().connectT(0, tempo_sync);       // pma8 -> tempo_sync::Tempo
 		pma11.getWrappedObject().getParameter().connectT(0, tempo_sync);      // pma11 -> tempo_sync::UnsyncedTime
@@ -1346,10 +1317,8 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		peak3.getParameter().connectT(3, pma11);                              // peak3 -> pma11::Value
 		minmax.getWrappedObject().getParameter().connectT(0, pma11);          // minmax -> pma11::Add
 		converter.getWrappedObject().getParameter().connectT(0, phasor_fm);   // converter -> phasor_fm::FreqRatio
-		converter.getWrappedObject().getParameter().connectT(1, fm);          // converter -> fm::FreqMultiplier
 		minmax2.getWrappedObject().getParameter().connectT(0, converter);     // minmax2 -> converter::Value
 		minmax1.getWrappedObject().getParameter().connectT(0, phasor_fm4);    // minmax1 -> phasor_fm4::FreqRatio
-		minmax1.getWrappedObject().getParameter().connectT(1, fm3);           // minmax1 -> fm3::FreqMultiplier
 		peak.getParameter().connectT(0, minmax2);                             // peak -> minmax2::Value
 		peak.getParameter().connectT(1, minmax1);                             // peak -> minmax1::Value
 		auto& sliderbank4_p = sliderbank4.getWrappedObject().getParameter();
@@ -1531,6 +1500,9 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		; // pma11::Value is automated
 		; // pma11::Multiply is automated
 		; // pma11::Add is automated
+		
+		;                              // smoother::SmoothingTime is automated
+		smoother.setParameterT(1, 0.); // core::smoother::DefaultValue
 		
 		sliderbank4.setParameterT(0, 1.); // control::sliderbank::Value
 		
@@ -1736,9 +1708,9 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		; // pma4::Multiply is automated
 		; // pma4::Add is automated
 		
-		;                           // gain::Gain is automated
-		gain.setParameterT(1, 20.); // core::gain::Smoothing
-		gain.setParameterT(2, 0.);  // core::gain::ResetValue
+		;                             // gain::Gain is automated
+		gain.setParameterT(1, 0.);    // core::gain::Smoothing
+		gain.setParameterT(2, -100.); // core::gain::ResetValue
 		
 		;                               // minmax2::Value is automated
 		minmax2.setParameterT(1, -24.); // control::minmax::Minimum
@@ -1763,8 +1735,6 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		
 		; // converter5::Value is automated
 		
-		; // branch::Index is automated
-		
 		; // branch1::Index is automated
 		
 		phasor_fm.setParameterT(0, 1.);   // core::phasor_fm::Gate
@@ -1782,53 +1752,33 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		;                                  // phasor_fm3::FreqRatio is automated
 		phasor_fm3.setParameterT(3, 0.);   // core::phasor_fm::Phase
 		
-		phasor_fm1.setParameterT(0, 1.); // core::phasor_fm::Gate
-		phasor_fm1.setParameterT(1, 0.); // core::phasor_fm::Frequency
-		;                                // phasor_fm1::FreqRatio is automated
-		phasor_fm1.setParameterT(3, 0.); // core::phasor_fm::Phase
+		clear1.setParameterT(0, 0.); // math::clear::Value
 		
-		; // branch2::Index is automated
-		
-		fm.setParameterT(0, 110.); // core::fm::Frequency
-		fm.setParameterT(1, 1.);   // core::fm::Modulator
-		;                          // fm::FreqMultiplier is automated
-		fm.setParameterT(3, 1.);   // core::fm::Gate
-		
-		fm3.setParameterT(0, 110.); // core::fm::Frequency
-		fm3.setParameterT(1, 1.);   // core::fm::Modulator
-		;                           // fm3::FreqMultiplier is automated
-		fm3.setParameterT(3, 1.);   // core::fm::Gate
-		
-		fm2.setParameterT(0, 110.); // core::fm::Frequency
-		fm2.setParameterT(1, 1.);   // core::fm::Modulator
-		;                           // fm2::FreqMultiplier is automated
-		fm2.setParameterT(3, 1.);   // core::fm::Gate
-		
-		fm1.setParameterT(0, 0.); // core::fm::Frequency
-		fm1.setParameterT(1, 1.); // core::fm::Modulator
-		;                         // fm1::FreqMultiplier is automated
-		fm1.setParameterT(3, 1.); // core::fm::Gate
+		phasor_fm1.setParameterT(0, 1.);    // core::phasor_fm::Gate
+		phasor_fm1.setParameterT(1, 725.8); // core::phasor_fm::Frequency
+		;                                   // phasor_fm1::FreqRatio is automated
+		phasor_fm1.setParameterT(3, 0.);    // core::phasor_fm::Phase
 		
 		this->setParameterT(0, 0.);
-		this->setParameterT(1, 8.76766);
+		this->setParameterT(1, 0.);
 		this->setParameterT(2, 1.);
 		this->setParameterT(3, 1.);
 		this->setParameterT(4, 0.);
-		this->setParameterT(5, 1.);
+		this->setParameterT(5, 0.);
 		this->setParameterT(6, 0.);
 		this->setParameterT(7, 0.);
-		this->setParameterT(8, 0.);
-		this->setParameterT(9, 0.105893);
-		this->setParameterT(10, 0.);
+		this->setParameterT(8, 0.105893);
+		this->setParameterT(9, 0.);
+		this->setParameterT(10, 1.);
 		this->setParameterT(11, 1.);
 		this->setParameterT(12, 0.);
-		this->setParameterT(13, 0.);
+		this->setParameterT(13, 1.);
 		this->setParameterT(14, 1.);
 		this->setParameterT(15, 1.);
 		this->setParameterT(16, 1.);
 		this->setParameterT(17, 1.);
 		this->setParameterT(18, 1.);
-		this->setParameterT(19, 1.);
+		this->setParameterT(19, 0.);
 		this->setExternalData({}, -1);
 	}
 	~instance() override
@@ -1867,11 +1817,12 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		
 		this->getT(0).getT(0).getT(0).setExternalData(b, index);         // osc1_impl::sliderbank3_t<NV>
 		this->getT(0).getT(0).getT(2).setExternalData(b, index);         // osc1_impl::peak3_t<NV>
-		this->getT(0).getT(0).getT(4).getT(1).setExternalData(b, index); // osc1_impl::peak_t<NV>
+		this->getT(0).getT(0).getT(4).getT(2).setExternalData(b, index); // osc1_impl::peak_t<NV>
 		this->getT(0).getT(1).getT(0).setExternalData(b, index);         // osc1_impl::sliderbank4_t<NV>
 		this->getT(0).getT(1).getT(2).setExternalData(b, index);         // osc1_impl::peak4_t<NV>
 		this->getT(0).getT(2).getT(0).setExternalData(b, index);         // osc1_impl::sliderbank6_t<NV>
 		this->getT(0).getT(2).getT(2).setExternalData(b, index);         // osc1_impl::peak6_t<NV>
+		this->getT(2).getT(3).setExternalData(b, index);                 // osc1_impl::peak1_t
 	}
 };
 }

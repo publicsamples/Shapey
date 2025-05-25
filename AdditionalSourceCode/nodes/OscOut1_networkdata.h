@@ -13,7 +13,7 @@ struct OscOut1_networkdata: public scriptnode::dll::InterpretedNetworkData
 	}
 	String getNetworkData() const override
 	{
-		return "260.nT6K8C1r.T8A.HsiuLBHqZU.GUIuKBvrJ3jC.FK0dF8YaPzrDuvd..1RIjdCjQyl98MwR07.63K0ZWnyAB8w1rMgibz+TBpQ5wONrcSVCB6ELZrnexMiMJcLZQuANKEG3ffSAJ1.zGk5WuPEA5lRcbI3PfMICOtg9EYEXubQaS3muVF8PZRISYRgCcrDlJ1fNdBa1NfdISNZJ1SFu.B8MH8ipeoVp0lPOrcxX6waVF8LGrkPY50QU52Kg2LkfXRnE.8LZvn2gXWY1dhEf.gAgbc.WJCbbfoCNktiwxQRtBV.+bqEFUeDffyqUXxPAKhxF5+foAhrmFHbAU3qDfExEL+jQQA";
+		return "471.nT6K8CFJDzlC.X5j.UB.qia.UklvxZ6ooPkVpTgbufu.BT9BJA3a++u6mtwKMFc..RY.0.fM.PC.Frp0roxh+r0MbXUu5mrqBEwHVE9NYzsnRbyAeqqr2S04eOFToIFkljBSvpSQBX0MwuyzmDfBNhXzvwBNVvfUrZD6eODHMP2D6iLBZEzkWdMl+ogKfWUk.rNmdhFU4RYek8PsZPQG55I7abfSto8OLWZNNMLqhOX0E7.5z8tjJiPxSKQYnSxgUi9L1TpJg8ZKJ7cylCgOjoHYqaF8qORERJi4Cqy3SO3DebUt7YkFBDsKDGVgTr8m5wqfQxjA6QV6l5YO4weWbdHPdLgzl1uXDcdqJI3eBbEngk6TyPyD.R..4.j.fvTJ6.CklxF.pXUd7OpeTbERpXK1VGm+.F3YdwsWvY9HTZBdFP2CBxJ.1xJXKmHh7RQBlAPIZ6K3zh.S6BsVH7YsmzlYG.TDgLtwZsBiCXwsldZQyY+z3H5k5WF6HeAcodedB95B4PwxrbOcKfoJHVTmWHbjzbFVG1N.y.C3LndnEbYyGqnOWNXBvPE7IDD+dPb.CLmJnMEenPC.I4njVyL2u7WGHBHK6krDA4HFK97xftBfpNv9CftZ";
 	}
 };
 }

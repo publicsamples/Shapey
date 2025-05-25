@@ -35,7 +35,7 @@ template <int NV>
 using tempo_sync_t = wrap::mod<parameter::plain<ramp_t<NV>, 0>, 
                                control::tempo_sync<NV>>;
 using pack_resizer_t = wrap::data<control::pack_resizer, 
-                                  data::external::sliderpack<3>>;
+                                  data::external::sliderpack<0>>;
 
 template <int NV>
 using chain7_t = container::chain<parameter::empty, 
@@ -296,15 +296,13 @@ using split1_t = container::split<parameter::empty,
                                   chain46_t<NV>, 
                                   chain47_t<NV>>;
 
-DECLARE_PARAMETER_RANGE_STEP(pma2_modRange, 
-                             0., 
-                             18., 
-                             1.);
+using cable_table6_t = wrap::data<control::cable_table<parameter::empty>, 
+                                  data::external::table<1>>;
 
 template <int NV>
-using pma2_mod = parameter::from0To1<tempo_sync_t<NV>, 
-                                     0, 
-                                     pma2_modRange>;
+using pma2_mod = parameter::chain<ranges::Identity, 
+                                  parameter::plain<pma1_t<NV>, 2>, 
+                                  parameter::plain<cable_table6_t, 0>>;
 
 template <int NV>
 using pma2_t = control::pma<NV, pma2_mod<NV>>;
@@ -317,7 +315,8 @@ using modchain2_t_ = container::chain<parameter::empty,
                                       wrap::fix<1, sliderbank3_t<NV>>, 
                                       split1_t<NV>, 
                                       peak3_t<NV>, 
-                                      pma2_t<NV>>;
+                                      pma2_t<NV>, 
+                                      cable_table6_t>;
 
 template <int NV>
 using modchain2_t = wrap::control_rate<modchain2_t_<NV>>;
@@ -492,24 +491,16 @@ using split3_t = container::split<parameter::empty,
                                   chain81_t<NV>>;
 
 DECLARE_PARAMETER_RANGE_STEP(pma4_mod_0Range, 
-                             -64., 
-                             64., 
-                             1.);
+                             -24., 
+                             24., 
+                             0.1);
 
 template <int NV>
 using pma4_mod_0 = parameter::from0To1<project::shfiter<NV>, 
                                        0, 
                                        pma4_mod_0Range>;
 
-DECLARE_PARAMETER_RANGE_STEP(pma4_mod_1Range, 
-                             -12., 
-                             12., 
-                             0.1);
-
-template <int NV>
-using pma4_mod_1 = parameter::from0To1<project::ps2<NV>, 
-                                       0, 
-                                       pma4_mod_1Range>;
+template <int NV> using pma4_mod_1 = pma4_mod_0<NV>;
 
 template <int NV>
 using pma4_mod = parameter::chain<ranges::Identity, 
@@ -889,22 +880,13 @@ using split8_t = container::split<parameter::empty,
                                   chain100_t<NV>>;
 
 template <int NV>
-using input_toggle_mod = parameter::chain<ranges::Identity, 
-                                          parameter::plain<project::shfiter<NV>, 1>, 
-                                          parameter::plain<project::shfiter<NV>, 1>, 
-                                          parameter::plain<project::ps2<NV>, 1>>;
+using converter_mod = parameter::chain<ranges::Identity, 
+                                       parameter::plain<project::shfiter<NV>, 1>, 
+                                       parameter::plain<project::ps2<NV>, 1>, 
+                                       parameter::plain<project::shfiter<NV>, 1>>;
 
 template <int NV>
-using input_toggle_t = control::input_toggle<NV, input_toggle_mod<NV>>;
-template <int NV>
-using pma_unscaled_t = control::pma_unscaled<NV, 
-                                             parameter::plain<input_toggle_t<NV>, 1>>;
-template <int NV>
-using peak_unscaled1_t = wrap::mod<parameter::plain<pma_unscaled_t<NV>, 0>, 
-                                   wrap::no_data<core::peak_unscaled>>;
-
-template <int NV>
-using converter_t = control::converter<parameter::plain<input_toggle_t<NV>, 2>, 
+using converter_t = control::converter<converter_mod<NV>, 
                                        conversion_logic::ms2samples>;
 template <int NV>
 using tempo_sync1_t = wrap::mod<parameter::plain<converter_t<NV>, 0>, 
@@ -1016,10 +998,15 @@ template <int NV>
 using cable_table2_t = wrap::data<control::cable_table<cable_table2_mod<NV>>, 
                                   data::embedded::table<cable_table2_t_data>>;
 
+DECLARE_PARAMETER_RANGE_STEP(cable_table3_modRange, 
+                             0., 
+                             18., 
+                             1.);
+
 template <int NV>
 using cable_table3_mod = parameter::from0To1<tempo_sync1_t<NV>, 
                                              0, 
-                                             pma2_modRange>;
+                                             cable_table3_modRange>;
 
 struct cable_table3_t_data
 {
@@ -1125,18 +1112,36 @@ using pma7_mod = parameter::chain<ranges::Identity,
 
 template <int NV>
 using pma7_t = control::pma<NV, pma7_mod<NV>>;
+
+DECLARE_PARAMETER_RANGE_STEP(pma10_modRange, 
+                             0., 
+                             1000., 
+                             0.1);
+
 template <int NV>
-using peak9_t = wrap::mod<parameter::plain<pma7_t<NV>, 0>, 
+using pma10_mod = parameter::from0To1<tempo_sync1_t<NV>, 
+                                      3, 
+                                      pma10_modRange>;
+
+template <int NV>
+using pma10_t = control::pma<NV, pma10_mod<NV>>;
+
+template <int NV>
+using peak9_mod = parameter::chain<ranges::Identity, 
+                                   parameter::plain<pma7_t<NV>, 0>, 
+                                   parameter::plain<pma10_t<NV>, 0>>;
+
+template <int NV>
+using peak9_t = wrap::mod<peak9_mod<NV>, 
                           wrap::no_data<core::peak>>;
 
 template <int NV>
 using split14_t = container::split<parameter::empty, 
-                                   wrap::fix<1, peak_unscaled1_t<NV>>, 
-                                   peak9_t<NV>>;
+                                   wrap::fix<1, peak9_t<NV>>>;
 
 template <int NV>
 using split9_t = container::split<parameter::empty, 
-                                  wrap::fix<1, pma_unscaled_t<NV>>, 
+                                  wrap::fix<1, pma10_t<NV>>, 
                                   pma7_t<NV>>;
 
 template <int NV>
@@ -1313,22 +1318,13 @@ using split7_t = container::split<parameter::empty,
                                   chain92_t<NV>>;
 
 template <int NV>
-using input_toggle1_mod = parameter::chain<ranges::Identity, 
-                                           parameter::plain<project::ps2<NV>, 2>, 
-                                           parameter::plain<project::shfiter<NV>, 2>, 
-                                           parameter::plain<project::shfiter<NV>, 2>>;
+using converter1_mod = parameter::chain<ranges::Identity, 
+                                        parameter::plain<project::ps2<NV>, 2>, 
+                                        parameter::plain<project::shfiter<NV>, 2>, 
+                                        parameter::plain<project::shfiter<NV>, 2>>;
 
 template <int NV>
-using input_toggle1_t = control::input_toggle<NV, input_toggle1_mod<NV>>;
-template <int NV>
-using pma_unscaled1_t = control::pma_unscaled<NV, 
-                                              parameter::plain<input_toggle1_t<NV>, 1>>;
-template <int NV>
-using peak_unscaled_t = wrap::mod<parameter::plain<pma_unscaled1_t<NV>, 0>, 
-                                  wrap::no_data<core::peak_unscaled>>;
-
-template <int NV>
-using converter1_t = control::converter<parameter::plain<input_toggle1_t<NV>, 2>, 
+using converter1_t = control::converter<converter1_mod<NV>, 
                                         conversion_logic::ms2samples>;
 template <int NV>
 using tempo_sync3_t = wrap::mod<parameter::plain<converter1_t<NV>, 0>, 
@@ -1438,7 +1434,7 @@ using cable_table4_t = wrap::data<control::cable_table<cable_table4_mod<NV>>,
 template <int NV>
 using cable_table5_mod = parameter::from0To1<tempo_sync3_t<NV>, 
                                              0, 
-                                             pma2_modRange>;
+                                             cable_table3_modRange>;
 
 struct cable_table5_t_data
 {
@@ -1544,18 +1540,31 @@ using pma9_mod = parameter::chain<ranges::Identity,
 
 template <int NV>
 using pma9_t = control::pma<NV, pma9_mod<NV>>;
+
 template <int NV>
-using peak8_t = wrap::mod<parameter::plain<pma9_t<NV>, 0>, 
+using pma11_mod = parameter::from0To1<tempo_sync3_t<NV>, 
+                                      3, 
+                                      pma10_modRange>;
+
+template <int NV>
+using pma11_t = control::pma<NV, pma11_mod<NV>>;
+
+template <int NV>
+using peak8_mod = parameter::chain<ranges::Identity, 
+                                   parameter::plain<pma9_t<NV>, 0>, 
+                                   parameter::plain<pma11_t<NV>, 0>>;
+
+template <int NV>
+using peak8_t = wrap::mod<peak8_mod<NV>, 
                           wrap::no_data<core::peak>>;
 
 template <int NV>
 using split13_t = container::split<parameter::empty, 
-                                   wrap::fix<1, peak_unscaled_t<NV>>, 
-                                   peak8_t<NV>>;
+                                   wrap::fix<1, peak8_t<NV>>>;
 
 template <int NV>
 using split10_t = container::split<parameter::empty, 
-                                   wrap::fix<1, pma_unscaled1_t<NV>>, 
+                                   wrap::fix<1, pma11_t<NV>>, 
                                    pma9_t<NV>>;
 
 template <int NV>
@@ -1682,8 +1691,7 @@ template <int NV>
 using chain12_t = container::chain<parameter::empty, 
                                    wrap::fix<2, split11_t<NV>>, 
                                    tempo_sync1_t<NV>, 
-                                   converter_t<NV>, 
-                                   input_toggle_t<NV>>;
+                                   converter_t<NV>>;
 
 template <int NV>
 using split12_t = container::split<parameter::empty, 
@@ -1694,29 +1702,33 @@ template <int NV>
 using chain17_t = container::chain<parameter::empty, 
                                    wrap::fix<2, split12_t<NV>>, 
                                    tempo_sync3_t<NV>, 
-                                   converter1_t<NV>, 
-                                   input_toggle1_t<NV>>;
+                                   converter1_t<NV>>;
 
 template <int NV>
 using split5_t = container::split<parameter::empty, 
                                   wrap::fix<2, chain12_t<NV>>, 
                                   chain17_t<NV>>;
-using stereo_cable = cable::block<2>;
 
 template <int NV>
 using chain1_t = container::chain<parameter::empty, 
-                                  wrap::fix<2, routing::receive<stereo_cable>>, 
-                                  math::tanh<NV>, 
-                                  routing::send<stereo_cable>>;
+                                  wrap::fix<2, wrap::no_process<math::tanh<NV>>>>;
+using stereo_cable = cable::block<2>;
 
 template <int NV>
 using chain2_t = container::chain<parameter::empty, 
                                   wrap::fix<2, routing::receive<stereo_cable>>, 
                                   project::shfiter<NV>, 
-                                  math::tanh<NV>, 
                                   routing::send<stereo_cable>>;
 
-template <int NV> using cable_table1_mod = pma4_mod_0<NV>;
+DECLARE_PARAMETER_RANGE_STEP(cable_table1_modRange, 
+                             -64., 
+                             64., 
+                             1.);
+
+template <int NV>
+using cable_table1_mod = parameter::from0To1<project::ps2<NV>, 
+                                             0, 
+                                             cable_table1_modRange>;
 
 struct cable_table1_t_data
 {
@@ -1820,11 +1832,11 @@ using midi4_t = wrap::mod<parameter::plain<cable_table1_t<NV>, 0>,
 
 template <int NV>
 using chain10_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, routing::receive<stereo_cable>>, 
-                                   midi4_t<NV>, 
+                                   wrap::fix<2, midi4_t<NV>>, 
                                    cable_table1_t<NV>, 
-                                   project::shfiter<NV>, 
                                    project::ps2<NV>, 
+                                   project::shfiter<NV>, 
+                                   routing::receive<stereo_cable>, 
                                    routing::send<stereo_cable>>;
 template <int NV>
 using branch_t = container::branch<parameter::empty, 
@@ -1886,6 +1898,22 @@ using quant_0 = parameter::from0To1<files_impl::branch8_t<NV>,
 template <int NV>
 using quant = parameter::chain<quant_InputRange, quant_0<NV>>;
 
+DECLARE_PARAMETER_RANGE(Win_InputRange, 
+                        0., 
+                        1000.);
+
+template <int NV>
+using Win = parameter::chain<Win_InputRange, 
+                             parameter::plain<files_impl::pma10_t<NV>, 2>>;
+
+DECLARE_PARAMETER_RANGE(Xf_InputRange, 
+                        0., 
+                        1000.);
+
+template <int NV>
+using Xf = parameter::chain<Xf_InputRange, 
+                            parameter::plain<files_impl::pma11_t<NV>, 2>>;
+
 DECLARE_PARAMETER_RANGE_STEP(shift_InputRange, 
                              1., 
                              3., 
@@ -1902,6 +1930,14 @@ using shift_0 = parameter::from0To1<files_impl::branch_t<NV>,
 
 template <int NV>
 using shift = parameter::chain<shift_InputRange, shift_0<NV>>;
+
+DECLARE_PARAMETER_RANGE(pitch_InputRange, 
+                        -24., 
+                        24.);
+
+template <int NV>
+using pitch = parameter::chain<pitch_InputRange, 
+                               parameter::plain<files_impl::pma4_t<NV>, 2>>;
 
 DECLARE_PARAMETER_RANGE_STEP(XfStage_InputRange, 
                              1., 
@@ -1920,17 +1956,7 @@ using XfStage_0 = parameter::from0To1<files_impl::event_data_reader13_t<NV>,
 template <int NV>
 using XfStage = parameter::chain<XfStage_InputRange, XfStage_0<NV>>;
 
-DECLARE_PARAMETER_RANGE_STEP(intmodtempo_InputRange, 
-                             0., 
-                             18., 
-                             1.);
-
-template <int NV>
-using intmodtempo = parameter::chain<intmodtempo_InputRange, 
-                                     parameter::plain<files_impl::pma2_t<NV>, 2>>;
-
 using fb = parameter::chain<ranges::Identity, 
-                            parameter::plain<routing::receive<stereo_cable>, 0>, 
                             parameter::plain<routing::receive<stereo_cable>, 0>, 
                             parameter::plain<routing::receive<stereo_cable>, 0>>;
 
@@ -2000,8 +2026,8 @@ using xf3 = parameter::chain<xf3_InputRange, xf3_0<NV>>;
 
 template <int NV>
 using WinSync = parameter::chain<ranges::Identity, 
-                                 parameter::plain<files_impl::input_toggle_t<NV>, 0>, 
-                                 parameter::plain<files_impl::input_toggle1_t<NV>, 0>>;
+                                 parameter::plain<files_impl::tempo_sync1_t<NV>, 2>, 
+                                 parameter::plain<files_impl::tempo_sync3_t<NV>, 2>>;
 
 DECLARE_PARAMETER_RANGE_STEP(WinTempo_InputRange, 
                              -16., 
@@ -2022,14 +2048,9 @@ using XfTempo = parameter::chain<XfTempo_InputRange,
                                  parameter::plain<files_impl::pma9_t<NV>, 2>>;
 
 template <int NV>
-using WinMod = parameter::chain<ranges::Identity, 
-                                parameter::plain<files_impl::pma7_t<NV>, 1>, 
-                                parameter::plain<files_impl::pma_unscaled_t<NV>, 1>>;
-
-template <int NV>
 using XfMod = parameter::chain<ranges::Identity, 
                                parameter::plain<files_impl::pma9_t<NV>, 1>, 
-                               parameter::plain<files_impl::pma_unscaled1_t<NV>, 1>>;
+                               parameter::plain<files_impl::pma11_t<NV>, 1>>;
 
 DECLARE_PARAMETER_RANGE_STEP(xf4_InputRange, 
                              1., 
@@ -2074,17 +2095,9 @@ using mid5 = parameter::chain<mid5_InputRange, mid5_0<NV>>;
 template <int NV>
 using smooth = parameter::plain<core::smoother<NV>, 0>;
 template <int NV>
-using Position = parameter::plain<files_impl::pma1_t<NV>, 2>;
+using Position = parameter::plain<files_impl::pma2_t<NV>, 2>;
 template <int NV>
 using Input = parameter::plain<files_impl::pma3_t<NV>, 2>;
-template <int NV>
-using Win = parameter::plain<files_impl::pma_unscaled_t<NV>, 
-                             2>;
-template <int NV>
-using Xf = parameter::plain<files_impl::pma_unscaled1_t<NV>, 
-                            2>;
-template <int NV>
-using pitch = parameter::plain<files_impl::pma4_t<NV>, 2>;
 template <int NV>
 using Mix = parameter::plain<files_impl::xfader_t<NV>, 
                              0>;
@@ -2101,6 +2114,9 @@ using IntModSteps = parameter::plain<files_impl::pack_resizer_t,
 template <int NV>
 using IntmodOne = parameter::plain<files_impl::ramp_t<NV>, 1>;
 template <int NV>
+using intmodtempo = parameter::plain<files_impl::tempo_sync_t<NV>, 
+                                     0>;
+template <int NV>
 using InmodDiv = parameter::plain<files_impl::tempo_sync_t<NV>, 
                                   1>;
 template <int NV>
@@ -2109,6 +2125,8 @@ using tablestep = parameter::plain<files_impl::branch1_t<NV>,
 template <int NV>
 using UserMode = parameter::plain<files_impl::branch2_t<NV>, 
                                   0>;
+template <int NV>
+using WinMod = parameter::plain<files_impl::pma7_t<NV>, 1>;
 template <int NV>
 using files_t_plist = parameter::list<smooth<NV>, 
                                       quant<NV>, 
@@ -2158,7 +2176,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 	
 	struct metadata
 	{
-		static const int NumTables = 1;
+		static const int NumTables = 2;
 		static const int NumSliderPacks = 6;
 		static const int NumAudioFiles = 2;
 		static const int NumFilters = 0;
@@ -2173,40 +2191,40 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
             0x015B, 0x0000, 0x7100, 0x6175, 0x746E, 0x0000, 0x8000, 0x003F, 
             0x1000, 0x0041, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x5B3F, 
             0x0002, 0x0000, 0x6F50, 0x6973, 0x6974, 0x6E6F, 0x0000, 0x0000, 
-            0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
+            0x0000, 0x8000, 0xDF3F, 0x21F4, 0x003F, 0x8000, 0x003F, 0x0000, 
             0x5B00, 0x0003, 0x0000, 0x6E49, 0x7570, 0x0074, 0x0000, 0x0000, 
-            0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
-            0x045B, 0x0000, 0x5700, 0x6E69, 0x0000, 0x4800, 0x0042, 0x1C40, 
-            0xC946, 0xDA35, 0x0045, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0005, 
-            0x0000, 0x6658, 0x0000, 0x8000, 0x003F, 0x1C40, 0x8D46, 0xE79F, 
-            0x0045, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0006, 0x0000, 0x6873, 
-            0x6669, 0x0074, 0x0000, 0x3F80, 0x0000, 0x4040, 0x0000, 0x4040, 
+            0x0000, 0x3F80, 0xCDEA, 0x3F4E, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x045B, 0x0000, 0x5700, 0x6E69, 0x0000, 0x0000, 0x0000, 0x7A00, 
+            0xAE44, 0x09A7, 0x0044, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0005, 
+            0x0000, 0x6658, 0x0000, 0x0000, 0x0000, 0x7A00, 0xB844, 0x029E, 
+            0x0044, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0006, 0x0000, 0x6873, 
+            0x6669, 0x0074, 0x0000, 0x3F80, 0x0000, 0x4040, 0x0000, 0x4000, 
             0x0000, 0x3F80, 0x0000, 0x3F80, 0x075B, 0x0000, 0x7000, 0x7469, 
-            0x6863, 0x0000, 0x0000, 0x0000, 0x8000, 0x8F3F, 0xF5C2, 0x003E, 
+            0x6863, 0x0000, 0xC000, 0x00C1, 0xC000, 0x0041, 0xC000, 0x0041, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0008, 0x0000, 0x694D, 0x0078, 
-            0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F00, 0x0000, 0x3F80, 
+            0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 
             0x0000, 0x0000, 0x095B, 0x0000, 0x5000, 0x736F, 0x7469, 0x6F69, 
             0x546E, 0x6D65, 0x6F70, 0x6F4D, 0x0064, 0x0000, 0xBF80, 0x0000, 
-            0x3F80, 0xB216, 0xBF4A, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0A5B, 
+            0x3F80, 0xD70A, 0x3EA3, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0A5B, 
             0x0000, 0x5000, 0x7469, 0x6863, 0x6F4D, 0x0064, 0x0000, 0xBF80, 
-            0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x3F80, 0xA6F5, 0xBD27, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x0B5B, 0x0000, 0x4900, 0x706E, 0x7475, 0x6F4D, 0x0064, 0x0000, 
             0xBF80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
             0x0000, 0x0C5B, 0x0000, 0x5800, 0x5366, 0x6174, 0x6567, 0x0000, 
             0x8000, 0x003F, 0x8000, 0x0040, 0x8000, 0x003F, 0x8000, 0x003F, 
             0x8000, 0x5B3F, 0x000D, 0x0000, 0x6E49, 0x4D74, 0x646F, 0x0000, 
-            0x8000, 0x00BF, 0x8000, 0xB23F, 0xF990, 0x003E, 0x8000, 0x003F, 
+            0x8000, 0x00BF, 0x8000, 0xCD3F, 0xCCCC, 0x00BD, 0x8000, 0x003F, 
             0x0000, 0x5B00, 0x000E, 0x0000, 0x6E49, 0x4D74, 0x646F, 0x7453, 
-            0x7065, 0x0073, 0x0000, 0x4080, 0x0000, 0x4280, 0x0000, 0x4080, 
+            0x7065, 0x0073, 0x0000, 0x4080, 0x0000, 0x4280, 0x0000, 0x4180, 
             0x0000, 0x3F80, 0x0000, 0x3F80, 0x0F5B, 0x0000, 0x4900, 0x746E, 
             0x6F6D, 0x4F64, 0x656E, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 
             0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0010, 0x0000, 
             0x6E69, 0x6D74, 0x646F, 0x6574, 0x706D, 0x006F, 0x0000, 0x0000, 
-            0x0000, 0x4190, 0x0000, 0x4100, 0x0000, 0x3F80, 0x0000, 0x3F80, 
+            0x0000, 0x4190, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 
             0x115B, 0x0000, 0x4900, 0x6D6E, 0x646F, 0x6944, 0x0076, 0x0000, 
-            0x3F80, 0x0000, 0x4200, 0x0000, 0x4170, 0x0000, 0x3F80, 0x0000, 
+            0x3F80, 0x0000, 0x4200, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x125B, 0x0000, 0x6600, 0x0062, 0x0000, 0x0000, 0x0000, 
-            0x3F80, 0xE9BD, 0x3E8F, 0x0000, 0x3F80, 0x0000, 0x0000, 0x135B, 
+            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x135B, 
             0x0000, 0x7400, 0x6261, 0x656C, 0x7473, 0x7065, 0x0000, 0x0000, 
             0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
             0x5B00, 0x0014, 0x0000, 0x694D, 0x6964, 0x0031, 0x0000, 0x3F80, 
@@ -2224,11 +2242,11 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
             0x6E69, 0x7953, 0x636E, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 
             0x0000, 0x0000, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001B, 0x0000, 
             0x6957, 0x546E, 0x6D65, 0x6F70, 0x0000, 0x8000, 0x00C1, 0x9000, 
-            0x0041, 0x9000, 0x0041, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001C, 
+            0x0041, 0x0000, 0x00C0, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001C, 
             0x0000, 0x6658, 0x6554, 0x706D, 0x006F, 0x0000, 0xC180, 0x0000, 
-            0x4190, 0x0000, 0xC0C0, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x1D5B, 
+            0x4190, 0x0000, 0x4110, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x1D5B, 
             0x0000, 0x5700, 0x6E69, 0x6F4D, 0x0064, 0x0000, 0xBF80, 0x0000, 
-            0x3F80, 0x8937, 0x3A81, 0x0000, 0x3F80, 0x0000, 0x0000, 0x1E5B, 
+            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x1E5B, 
             0x0000, 0x5800, 0x4D66, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 
             0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x001F, 
             0x0000, 0x6678, 0x0034, 0x0000, 0x3F80, 0x0000, 0x4080, 0x0000, 
@@ -2337,6 +2355,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		auto& gain34 = this->getT(0).getT(0).getT(1).getT(1).getT(7).getT(1);               // core::gain<NV>
 		auto& peak3 = this->getT(0).getT(0).getT(1).getT(2);                                // files_impl::peak3_t<NV>
 		auto& pma2 = this->getT(0).getT(0).getT(1).getT(3);                                 // files_impl::pma2_t<NV>
+		auto& cable_table6 = this->getT(0).getT(0).getT(1).getT(4);                         // files_impl::cable_table6_t
 		auto& modchain4 = this->getT(0).getT(0).getT(2);                                    // files_impl::modchain4_t<NV>
 		auto& sliderbank7 = this->getT(0).getT(0).getT(2).getT(0);                          // files_impl::sliderbank7_t<NV>
 		auto& split3 = this->getT(0).getT(0).getT(2).getT(1);                               // files_impl::split3_t<NV>
@@ -2549,10 +2568,9 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
                        getT(7).getT(0).getT(6).getT(1);
 		auto& gain62 = this->getT(0).getT(0).getT(4).getT(1).getT(7).getT(1);               // core::gain<NV>
 		auto& split14 = this->getT(0).getT(0).getT(4).getT(2);                              // files_impl::split14_t<NV>
-		auto& peak_unscaled1 = this->getT(0).getT(0).getT(4).getT(2).getT(0);               // files_impl::peak_unscaled1_t<NV>
-		auto& peak9 = this->getT(0).getT(0).getT(4).getT(2).getT(1);                        // files_impl::peak9_t<NV>
+		auto& peak9 = this->getT(0).getT(0).getT(4).getT(2).getT(0);                        // files_impl::peak9_t<NV>
 		auto& split9 = this->getT(0).getT(0).getT(4).getT(3);                               // files_impl::split9_t<NV>
-		auto& pma_unscaled = this->getT(0).getT(0).getT(4).getT(3).getT(0);                 // files_impl::pma_unscaled_t<NV>
+		auto& pma10 = this->getT(0).getT(0).getT(4).getT(3).getT(0);                        // files_impl::pma10_t<NV>
 		auto& pma7 = this->getT(0).getT(0).getT(4).getT(3).getT(1);                         // files_impl::pma7_t<NV>
 		auto& modchain5 = this->getT(0).getT(0).getT(5);                                    // files_impl::modchain5_t<NV>
 		auto& sliderbank8 = this->getT(0).getT(0).getT(5).getT(0);                          // files_impl::sliderbank8_t<NV>
@@ -2624,10 +2642,9 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
                       getT(7).getT(0).getT(6).getT(1);
 		auto& gain59 = this->getT(0).getT(0).getT(5).getT(1).getT(7).getT(1);               // core::gain<NV>
 		auto& split13 = this->getT(0).getT(0).getT(5).getT(2);                              // files_impl::split13_t<NV>
-		auto& peak_unscaled = this->getT(0).getT(0).getT(5).getT(2).getT(0);                // files_impl::peak_unscaled_t<NV>
-		auto& peak8 = this->getT(0).getT(0).getT(5).getT(2).getT(1);                        // files_impl::peak8_t<NV>
+		auto& peak8 = this->getT(0).getT(0).getT(5).getT(2).getT(0);                        // files_impl::peak8_t<NV>
 		auto& split10 = this->getT(0).getT(0).getT(5).getT(3);                              // files_impl::split10_t<NV>
-		auto& pma_unscaled1 = this->getT(0).getT(0).getT(5).getT(3).getT(0);                // files_impl::pma_unscaled1_t<NV>
+		auto& pma11 = this->getT(0).getT(0).getT(5).getT(3).getT(0);                        // files_impl::pma11_t<NV>
 		auto& pma9 = this->getT(0).getT(0).getT(5).getT(3).getT(1);                         // files_impl::pma9_t<NV>
 		auto& chain4 = this->getT(0).getT(1);                                               // files_impl::chain4_t<NV>
 		auto& xfader = this->getT(0).getT(1).getT(0);                                       // files_impl::xfader_t<NV>
@@ -2733,8 +2750,6 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
                             getT(0).getT(5).getT(0).getT(1);
 		auto& converter = this->getT(0).getT(1).getT(1).getT(1).                       // files_impl::converter_t<NV>
                           getT(0).getT(5).getT(0).getT(2);
-		auto& input_toggle = this->getT(0).getT(1).getT(1).getT(1).                    // files_impl::input_toggle_t<NV>
-                             getT(0).getT(5).getT(0).getT(3);
 		auto& chain17 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(5).getT(1); // files_impl::chain17_t<NV>
 		auto& split12 = this->getT(0).getT(1).getT(1).getT(1).                         // files_impl::split12_t<NV>
                         getT(0).getT(5).getT(1).getT(0);
@@ -2748,38 +2763,30 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
                             getT(0).getT(5).getT(1).getT(1);
 		auto& converter1 = this->getT(0).getT(1).getT(1).getT(1).                      // files_impl::converter1_t<NV>
                            getT(0).getT(5).getT(1).getT(2);
-		auto& input_toggle1 = this->getT(0).getT(1).getT(1).getT(1).                   // files_impl::input_toggle1_t<NV>
-                              getT(0).getT(5).getT(1).getT(3);
 		auto& branch = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(6);          // files_impl::branch_t<NV>
 		auto& chain1 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(6).getT(0);  // files_impl::chain1_t<NV>
-		auto& receive2 = this->getT(0).getT(1).getT(1).getT(1).                        // routing::receive<stereo_cable>
-                         getT(0).getT(6).getT(0).getT(0);
-		auto& tanh1 = this->getT(0).getT(1).getT(1).getT(1).                           // math::tanh<NV>
-                      getT(0).getT(6).getT(0).getT(1);
-		auto& send2 = this->getT(0).getT(1).getT(1).getT(1).                           // routing::send<stereo_cable>
-                      getT(0).getT(6).getT(0).getT(2);
+		auto& tanh1 = this->getT(0).getT(1).getT(1).getT(1).                           // wrap::no_process<math::tanh<NV>>
+                      getT(0).getT(6).getT(0).getT(0);
 		auto& chain2 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(6).getT(1);  // files_impl::chain2_t<NV>
-		auto& receive1 = this->getT(0).getT(1).getT(1).getT(1).                        // routing::receive<stereo_cable>
-                         getT(0).getT(6).getT(1).getT(0);
+		auto& receive = this->getT(0).getT(1).getT(1).getT(1).                         // routing::receive<stereo_cable>
+                        getT(0).getT(6).getT(1).getT(0);
 		auto& faust = this->getT(0).getT(1).getT(1).getT(1).                           // project::shfiter<NV>
                       getT(0).getT(6).getT(1).getT(1);
-		auto& tanh = this->getT(0).getT(1).getT(1).getT(1).                            // math::tanh<NV>
+		auto& send = this->getT(0).getT(1).getT(1).getT(1).                            // routing::send<stereo_cable>
                      getT(0).getT(6).getT(1).getT(2);
-		auto& send1 = this->getT(0).getT(1).getT(1).getT(1).                           // routing::send<stereo_cable>
-                      getT(0).getT(6).getT(1).getT(3);
 		auto& chain10 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(6).getT(2); // files_impl::chain10_t<NV>
-		auto& receive = this->getT(0).getT(1).getT(1).getT(1).                         // routing::receive<stereo_cable>
-                        getT(0).getT(6).getT(2).getT(0);
-		auto& midi4 = this->getT(0).getT(1).getT(1).getT(1).         // files_impl::midi4_t<NV>
-                      getT(0).getT(6).getT(2).getT(1);
+		auto& midi4 = this->getT(0).getT(1).getT(1).getT(1).                           // files_impl::midi4_t<NV>
+                      getT(0).getT(6).getT(2).getT(0);
 		auto& cable_table1 = this->getT(0).getT(1).getT(1).getT(1).  // files_impl::cable_table1_t<NV>
-                             getT(0).getT(6).getT(2).getT(2);
-		auto& faust1 = this->getT(0).getT(1).getT(1).getT(1).        // project::shfiter<NV>
+                             getT(0).getT(6).getT(2).getT(1);
+		auto& faust1 = this->getT(0).getT(1).getT(1).getT(1).        // project::ps2<NV>
+                       getT(0).getT(6).getT(2).getT(2);
+		auto& faust2 = this->getT(0).getT(1).getT(1).getT(1).        // project::shfiter<NV>
                        getT(0).getT(6).getT(2).getT(3);
-		auto& faust2 = this->getT(0).getT(1).getT(1).getT(1).        // project::ps2<NV>
-                       getT(0).getT(6).getT(2).getT(4);
-		auto& send = this->getT(0).getT(1).getT(1).getT(1).          // routing::send<stereo_cable>
-                     getT(0).getT(6).getT(2).getT(5);
+		auto& receive1 = this->getT(0).getT(1).getT(1).getT(1).      // routing::receive<stereo_cable>
+                         getT(0).getT(6).getT(2).getT(4);
+		auto& send1 = this->getT(0).getT(1).getT(1).getT(1).         // routing::send<stereo_cable>
+                      getT(0).getT(6).getT(2).getT(5);
 		auto& gain2 = this->getT(0).getT(1).getT(1).getT(1).getT(1); // core::gain<NV>
 		
 		// Parameter Connections -------------------------------------------------------------------
@@ -2788,13 +2795,13 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		
 		this->getParameterT(1).connectT(0, branch8); // quant -> branch8::Index
 		
-		this->getParameterT(2).connectT(0, pma1); // Position -> pma1::Add
+		this->getParameterT(2).connectT(0, pma2); // Position -> pma2::Add
 		
 		this->getParameterT(3).connectT(0, pma3); // Input -> pma3::Add
 		
-		this->getParameterT(4).connectT(0, pma_unscaled); // Win -> pma_unscaled::Add
+		this->getParameterT(4).connectT(0, pma10); // Win -> pma10::Add
 		
-		this->getParameterT(5).connectT(0, pma_unscaled1); // Xf -> pma_unscaled1::Add
+		this->getParameterT(5).connectT(0, pma11); // Xf -> pma11::Add
 		
 		this->getParameterT(6).connectT(0, branch); // shift -> branch::Index
 		
@@ -2816,14 +2823,13 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		
 		this->getParameterT(15).connectT(0, ramp); // IntmodOne -> ramp::LoopStart
 		
-		this->getParameterT(16).connectT(0, pma2); // intmodtempo -> pma2::Add
+		this->getParameterT(16).connectT(0, tempo_sync); // intmodtempo -> tempo_sync::Tempo
 		
 		this->getParameterT(17).connectT(0, tempo_sync); // InmodDiv -> tempo_sync::Multiplier
 		
 		auto& fb_p = this->getParameterT(18);
 		fb_p.connectT(0, receive);  // fb -> receive::Feedback
-		fb_p.connectT(1, receive2); // fb -> receive2::Feedback
-		fb_p.connectT(2, receive1); // fb -> receive1::Feedback
+		fb_p.connectT(1, receive1); // fb -> receive1::Feedback
 		
 		this->getParameterT(19).connectT(0, branch1); // tablestep -> branch1::Index
 		
@@ -2840,20 +2846,18 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		this->getParameterT(25).connectT(0, branch2); // UserMode -> branch2::Index
 		
 		auto& WinSync_p = this->getParameterT(26);
-		WinSync_p.connectT(0, input_toggle);  // WinSync -> input_toggle::Input
-		WinSync_p.connectT(1, input_toggle1); // WinSync -> input_toggle1::Input
+		WinSync_p.connectT(0, tempo_sync1); // WinSync -> tempo_sync1::Enabled
+		WinSync_p.connectT(1, tempo_sync3); // WinSync -> tempo_sync3::Enabled
 		
 		this->getParameterT(27).connectT(0, pma7); // WinTempo -> pma7::Add
 		
 		this->getParameterT(28).connectT(0, pma9); // XfTempo -> pma9::Add
 		
-		auto& WinMod_p = this->getParameterT(29);
-		WinMod_p.connectT(0, pma7);         // WinMod -> pma7::Multiply
-		WinMod_p.connectT(1, pma_unscaled); // WinMod -> pma_unscaled::Multiply
+		this->getParameterT(29).connectT(0, pma7); // WinMod -> pma7::Multiply
 		
 		auto& XfMod_p = this->getParameterT(30);
-		XfMod_p.connectT(0, pma9);          // XfMod -> pma9::Multiply
-		XfMod_p.connectT(1, pma_unscaled1); // XfMod -> pma_unscaled1::Multiply
+		XfMod_p.connectT(0, pma9);  // XfMod -> pma9::Multiply
+		XfMod_p.connectT(1, pma11); // XfMod -> pma11::Multiply
 		
 		this->getParameterT(31).connectT(0, event_data_reader27); // xf4 -> event_data_reader27::SlotIndex
 		
@@ -2911,7 +2915,8 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		midi7.getParameter().connectT(0, add64);                             // midi7 -> add64::Value
 		midi8.getParameter().connectT(0, add65);                             // midi8 -> add65::Value
 		midi9.getParameter().connectT(0, add66);                             // midi9 -> add66::Value
-		pma2.getWrappedObject().getParameter().connectT(0, tempo_sync);      // pma2 -> tempo_sync::Tempo
+		pma2.getWrappedObject().getParameter().connectT(0, pma1);            // pma2 -> pma1::Add
+		pma2.getWrappedObject().getParameter().connectT(1, cable_table6);    // pma2 -> cable_table6::Value
 		peak3.getParameter().connectT(0, pma2);                              // peak3 -> pma2::Value
 		auto& sliderbank7_p = sliderbank7.getWrappedObject().getParameter();
 		sliderbank7_p.getParameterT(0).connectT(0, gain21);                  // sliderbank7 -> gain21::Gain
@@ -2936,8 +2941,8 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		midi10.getParameter().connectT(0, add71);                            // midi10 -> add71::Value
 		midi11.getParameter().connectT(0, add72);                            // midi11 -> add72::Value
 		midi12.getParameter().connectT(0, add73);                            // midi12 -> add73::Value
-		pma4.getWrappedObject().getParameter().connectT(0, faust);           // pma4 -> faust::shiftfreq
-		pma4.getWrappedObject().getParameter().connectT(1, faust2);          // pma4 -> faust2::shiftfreq
+		pma4.getWrappedObject().getParameter().connectT(0, faust);           // pma4 -> faust::shiftnote
+		pma4.getWrappedObject().getParameter().connectT(1, faust2);          // pma4 -> faust2::shiftnote
 		peak7.getParameter().connectT(0, pma4);                              // peak7 -> pma4::Value
 		auto& sliderbank6_p = sliderbank6.getWrappedObject().getParameter();
 		sliderbank6_p.getParameterT(0).connectT(0, gain17);                  // sliderbank6 -> gain17::Gain
@@ -2964,73 +2969,71 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		pma3.getWrappedObject().getParameter().connectT(0, gain3);           // pma3 -> gain3::Gain
 		peak6.getParameter().connectT(0, pma3);                              // peak6 -> pma3::Value
 		auto& sliderbank9_p = sliderbank9.getWrappedObject().getParameter();
-		sliderbank9_p.getParameterT(0).connectT(0, gain36);                       // sliderbank9 -> gain36::Gain
-		sliderbank9_p.getParameterT(1).connectT(0, gain37);                       // sliderbank9 -> gain37::Gain
-		sliderbank9_p.getParameterT(2).connectT(0, gain38);                       // sliderbank9 -> gain38::Gain
-		sliderbank9_p.getParameterT(3).connectT(0, gain39);                       // sliderbank9 -> gain39::Gain
-		sliderbank9_p.getParameterT(4).connectT(0, gain60);                       // sliderbank9 -> gain60::Gain
-		sliderbank9_p.getParameterT(5).connectT(0, gain40);                       // sliderbank9 -> gain40::Gain
-		sliderbank9_p.getParameterT(6).connectT(0, gain61);                       // sliderbank9 -> gain61::Gain
-		sliderbank9_p.getParameterT(7).connectT(0, gain62);                       // sliderbank9 -> gain62::Gain
-		global_cable7.getWrappedObject().getParameter().connectT(0, add13);       // global_cable7 -> add13::Value
-		global_cable14.getWrappedObject().getParameter().connectT(0, add91);      // global_cable14 -> add91::Value
-		global_cable23.getWrappedObject().getParameter().connectT(0, add14);      // global_cable23 -> add14::Value
-		event_data_reader7.getParameter().connectT(0, add92);                     // event_data_reader7 -> add92::Value
-		event_data_reader15.getParameter().connectT(0, add93);                    // event_data_reader15 -> add93::Value
-		event_data_reader26.getParameter().connectT(0, add94);                    // event_data_reader26 -> add94::Value
-		midi_cc26.getWrappedObject().getParameter().connectT(0, add96);           // midi_cc26 -> add96::Value
-		midi_cc27.getWrappedObject().getParameter().connectT(0, add97);           // midi_cc27 -> add97::Value
-		midi_cc28.getWrappedObject().getParameter().connectT(0, add98);           // midi_cc28 -> add98::Value
-		midi_cc29.getWrappedObject().getParameter().connectT(0, add99);           // midi_cc29 -> add99::Value
-		midi19.getParameter().connectT(0, add100);                                // midi19 -> add100::Value
-		midi20.getParameter().connectT(0, add101);                                // midi20 -> add101::Value
-		midi21.getParameter().connectT(0, add102);                                // midi21 -> add102::Value
-		input_toggle.getWrappedObject().getParameter().connectT(0, faust);        // input_toggle -> faust::windowsamples
-		input_toggle.getWrappedObject().getParameter().connectT(1, faust1);       // input_toggle -> faust1::windowsamples
-		input_toggle.getWrappedObject().getParameter().connectT(2, faust2);       // input_toggle -> faust2::windowsamples
-		pma_unscaled.getWrappedObject().getParameter().connectT(0, input_toggle); // pma_unscaled -> input_toggle::Value1
-		peak_unscaled1.getParameter().connectT(0, pma_unscaled);                  // peak_unscaled1 -> pma_unscaled::Value
-		converter.getWrappedObject().getParameter().connectT(0, input_toggle);    // converter -> input_toggle::Value2
-		tempo_sync1.getParameter().connectT(0, converter);                        // tempo_sync1 -> converter::Value
-		cable_table2.getWrappedObject().getParameter().connectT(0, tempo_sync1);  // cable_table2 -> tempo_sync1::Multiplier
-		cable_table3.getWrappedObject().getParameter().connectT(0, tempo_sync1);  // cable_table3 -> tempo_sync1::Tempo
-		pma7.getWrappedObject().getParameter().connectT(0, cable_table2);         // pma7 -> cable_table2::Value
-		pma7.getWrappedObject().getParameter().connectT(1, cable_table3);         // pma7 -> cable_table3::Value
-		peak9.getParameter().connectT(0, pma7);                                   // peak9 -> pma7::Value
+		sliderbank9_p.getParameterT(0).connectT(0, gain36);                      // sliderbank9 -> gain36::Gain
+		sliderbank9_p.getParameterT(1).connectT(0, gain37);                      // sliderbank9 -> gain37::Gain
+		sliderbank9_p.getParameterT(2).connectT(0, gain38);                      // sliderbank9 -> gain38::Gain
+		sliderbank9_p.getParameterT(3).connectT(0, gain39);                      // sliderbank9 -> gain39::Gain
+		sliderbank9_p.getParameterT(4).connectT(0, gain60);                      // sliderbank9 -> gain60::Gain
+		sliderbank9_p.getParameterT(5).connectT(0, gain40);                      // sliderbank9 -> gain40::Gain
+		sliderbank9_p.getParameterT(6).connectT(0, gain61);                      // sliderbank9 -> gain61::Gain
+		sliderbank9_p.getParameterT(7).connectT(0, gain62);                      // sliderbank9 -> gain62::Gain
+		global_cable7.getWrappedObject().getParameter().connectT(0, add13);      // global_cable7 -> add13::Value
+		global_cable14.getWrappedObject().getParameter().connectT(0, add91);     // global_cable14 -> add91::Value
+		global_cable23.getWrappedObject().getParameter().connectT(0, add14);     // global_cable23 -> add14::Value
+		event_data_reader7.getParameter().connectT(0, add92);                    // event_data_reader7 -> add92::Value
+		event_data_reader15.getParameter().connectT(0, add93);                   // event_data_reader15 -> add93::Value
+		event_data_reader26.getParameter().connectT(0, add94);                   // event_data_reader26 -> add94::Value
+		midi_cc26.getWrappedObject().getParameter().connectT(0, add96);          // midi_cc26 -> add96::Value
+		midi_cc27.getWrappedObject().getParameter().connectT(0, add97);          // midi_cc27 -> add97::Value
+		midi_cc28.getWrappedObject().getParameter().connectT(0, add98);          // midi_cc28 -> add98::Value
+		midi_cc29.getWrappedObject().getParameter().connectT(0, add99);          // midi_cc29 -> add99::Value
+		midi19.getParameter().connectT(0, add100);                               // midi19 -> add100::Value
+		midi20.getParameter().connectT(0, add101);                               // midi20 -> add101::Value
+		midi21.getParameter().connectT(0, add102);                               // midi21 -> add102::Value
+		converter.getWrappedObject().getParameter().connectT(0, faust);          // converter -> faust::windowsamples
+		converter.getWrappedObject().getParameter().connectT(1, faust1);         // converter -> faust1::windowsamples
+		converter.getWrappedObject().getParameter().connectT(2, faust2);         // converter -> faust2::windowsamples
+		tempo_sync1.getParameter().connectT(0, converter);                       // tempo_sync1 -> converter::Value
+		cable_table2.getWrappedObject().getParameter().connectT(0, tempo_sync1); // cable_table2 -> tempo_sync1::Multiplier
+		cable_table3.getWrappedObject().getParameter().connectT(0, tempo_sync1); // cable_table3 -> tempo_sync1::Tempo
+		pma7.getWrappedObject().getParameter().connectT(0, cable_table2);        // pma7 -> cable_table2::Value
+		pma7.getWrappedObject().getParameter().connectT(1, cable_table3);        // pma7 -> cable_table3::Value
+		pma10.getWrappedObject().getParameter().connectT(0, tempo_sync1);        // pma10 -> tempo_sync1::UnsyncedTime
+		peak9.getParameter().connectT(0, pma7);                                  // peak9 -> pma7::Value
+		peak9.getParameter().connectT(1, pma10);                                 // peak9 -> pma10::Value
 		auto& sliderbank8_p = sliderbank8.getWrappedObject().getParameter();
-		sliderbank8_p.getParameterT(0).connectT(0, gain25);                         // sliderbank8 -> gain25::Gain
-		sliderbank8_p.getParameterT(1).connectT(0, gain29);                         // sliderbank8 -> gain29::Gain
-		sliderbank8_p.getParameterT(2).connectT(0, gain30);                         // sliderbank8 -> gain30::Gain
-		sliderbank8_p.getParameterT(3).connectT(0, gain31);                         // sliderbank8 -> gain31::Gain
-		sliderbank8_p.getParameterT(4).connectT(0, gain57);                         // sliderbank8 -> gain57::Gain
-		sliderbank8_p.getParameterT(5).connectT(0, gain35);                         // sliderbank8 -> gain35::Gain
-		sliderbank8_p.getParameterT(6).connectT(0, gain58);                         // sliderbank8 -> gain58::Gain
-		sliderbank8_p.getParameterT(7).connectT(0, gain59);                         // sliderbank8 -> gain59::Gain
-		global_cable6.getWrappedObject().getParameter().connectT(0, add11);         // global_cable6 -> add11::Value
-		global_cable13.getWrappedObject().getParameter().connectT(0, add53);        // global_cable13 -> add53::Value
-		global_cable22.getWrappedObject().getParameter().connectT(0, add12);        // global_cable22 -> add12::Value
-		event_data_reader6.getParameter().connectT(0, add59);                       // event_data_reader6 -> add59::Value
-		event_data_reader14.getParameter().connectT(0, add81);                      // event_data_reader14 -> add81::Value
-		event_data_reader24.getParameter().connectT(0, add82);                      // event_data_reader24 -> add82::Value
-		midi_cc22.getWrappedObject().getParameter().connectT(0, add84);             // midi_cc22 -> add84::Value
-		midi_cc23.getWrappedObject().getParameter().connectT(0, add85);             // midi_cc23 -> add85::Value
-		midi_cc24.getWrappedObject().getParameter().connectT(0, add86);             // midi_cc24 -> add86::Value
-		midi_cc25.getWrappedObject().getParameter().connectT(0, add87);             // midi_cc25 -> add87::Value
-		midi16.getParameter().connectT(0, add88);                                   // midi16 -> add88::Value
-		midi17.getParameter().connectT(0, add89);                                   // midi17 -> add89::Value
-		midi18.getParameter().connectT(0, add90);                                   // midi18 -> add90::Value
-		input_toggle1.getWrappedObject().getParameter().connectT(0, faust2);        // input_toggle1 -> faust2::xfadesamples
-		input_toggle1.getWrappedObject().getParameter().connectT(1, faust1);        // input_toggle1 -> faust1::xfadesamples
-		input_toggle1.getWrappedObject().getParameter().connectT(2, faust);         // input_toggle1 -> faust::xfadesamples
-		pma_unscaled1.getWrappedObject().getParameter().connectT(0, input_toggle1); // pma_unscaled1 -> input_toggle1::Value1
-		peak_unscaled.getParameter().connectT(0, pma_unscaled1);                    // peak_unscaled -> pma_unscaled1::Value
-		converter1.getWrappedObject().getParameter().connectT(0, input_toggle1);    // converter1 -> input_toggle1::Value2
-		tempo_sync3.getParameter().connectT(0, converter1);                         // tempo_sync3 -> converter1::Value
-		cable_table4.getWrappedObject().getParameter().connectT(0, tempo_sync3);    // cable_table4 -> tempo_sync3::Multiplier
-		cable_table5.getWrappedObject().getParameter().connectT(0, tempo_sync3);    // cable_table5 -> tempo_sync3::Tempo
-		pma9.getWrappedObject().getParameter().connectT(0, cable_table4);           // pma9 -> cable_table4::Value
-		pma9.getWrappedObject().getParameter().connectT(1, cable_table5);           // pma9 -> cable_table5::Value
-		peak8.getParameter().connectT(0, pma9);                                     // peak8 -> pma9::Value
+		sliderbank8_p.getParameterT(0).connectT(0, gain25);                      // sliderbank8 -> gain25::Gain
+		sliderbank8_p.getParameterT(1).connectT(0, gain29);                      // sliderbank8 -> gain29::Gain
+		sliderbank8_p.getParameterT(2).connectT(0, gain30);                      // sliderbank8 -> gain30::Gain
+		sliderbank8_p.getParameterT(3).connectT(0, gain31);                      // sliderbank8 -> gain31::Gain
+		sliderbank8_p.getParameterT(4).connectT(0, gain57);                      // sliderbank8 -> gain57::Gain
+		sliderbank8_p.getParameterT(5).connectT(0, gain35);                      // sliderbank8 -> gain35::Gain
+		sliderbank8_p.getParameterT(6).connectT(0, gain58);                      // sliderbank8 -> gain58::Gain
+		sliderbank8_p.getParameterT(7).connectT(0, gain59);                      // sliderbank8 -> gain59::Gain
+		global_cable6.getWrappedObject().getParameter().connectT(0, add11);      // global_cable6 -> add11::Value
+		global_cable13.getWrappedObject().getParameter().connectT(0, add53);     // global_cable13 -> add53::Value
+		global_cable22.getWrappedObject().getParameter().connectT(0, add12);     // global_cable22 -> add12::Value
+		event_data_reader6.getParameter().connectT(0, add59);                    // event_data_reader6 -> add59::Value
+		event_data_reader14.getParameter().connectT(0, add81);                   // event_data_reader14 -> add81::Value
+		event_data_reader24.getParameter().connectT(0, add82);                   // event_data_reader24 -> add82::Value
+		midi_cc22.getWrappedObject().getParameter().connectT(0, add84);          // midi_cc22 -> add84::Value
+		midi_cc23.getWrappedObject().getParameter().connectT(0, add85);          // midi_cc23 -> add85::Value
+		midi_cc24.getWrappedObject().getParameter().connectT(0, add86);          // midi_cc24 -> add86::Value
+		midi_cc25.getWrappedObject().getParameter().connectT(0, add87);          // midi_cc25 -> add87::Value
+		midi16.getParameter().connectT(0, add88);                                // midi16 -> add88::Value
+		midi17.getParameter().connectT(0, add89);                                // midi17 -> add89::Value
+		midi18.getParameter().connectT(0, add90);                                // midi18 -> add90::Value
+		converter1.getWrappedObject().getParameter().connectT(0, faust1);        // converter1 -> faust1::xfadesamples
+		converter1.getWrappedObject().getParameter().connectT(1, faust2);        // converter1 -> faust2::xfadesamples
+		converter1.getWrappedObject().getParameter().connectT(2, faust);         // converter1 -> faust::xfadesamples
+		tempo_sync3.getParameter().connectT(0, converter1);                      // tempo_sync3 -> converter1::Value
+		cable_table4.getWrappedObject().getParameter().connectT(0, tempo_sync3); // cable_table4 -> tempo_sync3::Multiplier
+		cable_table5.getWrappedObject().getParameter().connectT(0, tempo_sync3); // cable_table5 -> tempo_sync3::Tempo
+		pma9.getWrappedObject().getParameter().connectT(0, cable_table4);        // pma9 -> cable_table4::Value
+		pma9.getWrappedObject().getParameter().connectT(1, cable_table5);        // pma9 -> cable_table5::Value
+		pma11.getWrappedObject().getParameter().connectT(0, tempo_sync3);        // pma11 -> tempo_sync3::UnsyncedTime
+		peak8.getParameter().connectT(0, pma9);                                  // peak8 -> pma9::Value
+		peak8.getParameter().connectT(1, pma11);                                 // peak8 -> pma11::Value
 		auto& xfader_p = xfader.getWrappedObject().getParameter();
 		xfader_p.getParameterT(0).connectT(0, gain1);                       // xfader -> gain1::Gain
 		xfader_p.getParameterT(1).connectT(0, gain2);                       // xfader -> gain2::Gain
@@ -3040,9 +3043,8 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		
 		// Send Connections ------------------------------------------------------------------------
 		
-		send2.connect(receive2);
-		send1.connect(receive1);
 		send.connect(receive);
+		send1.connect(receive1);
 		
 		// Default Values --------------------------------------------------------------------------
 		
@@ -3178,6 +3180,8 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		; // pma2::Value is automated
 		; // pma2::Multiply is automated
 		; // pma2::Add is automated
+		
+		; // cable_table6::Value is automated
 		
 		sliderbank7.setParameterT(0, 1.); // control::sliderbank::Value
 		
@@ -3481,9 +3485,9 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		gain62.setParameterT(1, 20.); // core::gain::Smoothing
 		gain62.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		; // pma_unscaled::Value is automated
-		; // pma_unscaled::Multiply is automated
-		; // pma_unscaled::Add is automated
+		;                           // pma10::Value is automated
+		pma10.setParameterT(1, 1.); // control::pma::Multiply
+		;                           // pma10::Add is automated
 		
 		; // pma7::Value is automated
 		; // pma7::Multiply is automated
@@ -3587,9 +3591,9 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		gain59.setParameterT(1, 20.); // core::gain::Smoothing
 		gain59.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		; // pma_unscaled1::Value is automated
-		; // pma_unscaled1::Multiply is automated
-		; // pma_unscaled1::Add is automated
+		; // pma11::Value is automated
+		; // pma11::Multiply is automated
+		; // pma11::Add is automated
 		
 		; // pma9::Value is automated
 		; // pma9::Multiply is automated
@@ -3599,10 +3603,10 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		
 		;                             // gain1::Gain is automated
 		gain1.setParameterT(1, 0.4);  // core::gain::Smoothing
-		gain1.setParameterT(2, -23.); // core::gain::ResetValue
+		gain1.setParameterT(2, -24.); // core::gain::ResetValue
 		
 		;                              // gain3::Gain is automated
-		gain3.setParameterT(1, 2.5);   // core::gain::Smoothing
+		gain3.setParameterT(1, 0.);    // core::gain::Smoothing
 		gain3.setParameterT(2, -100.); // core::gain::ResetValue
 		
 		; // branch8::Index is automated
@@ -3702,47 +3706,33 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		
 		; // cable_table3::Value is automated
 		
-		;                                   // tempo_sync1::Tempo is automated
-		;                                   // tempo_sync1::Multiplier is automated
-		tempo_sync1.setParameterT(2, 1.);   // control::tempo_sync::Enabled
-		tempo_sync1.setParameterT(3, 200.); // control::tempo_sync::UnsyncedTime
+		; // tempo_sync1::Tempo is automated
+		; // tempo_sync1::Multiplier is automated
+		; // tempo_sync1::Enabled is automated
+		; // tempo_sync1::UnsyncedTime is automated
 		
 		; // converter::Value is automated
-		
-		; // input_toggle::Input is automated
-		; // input_toggle::Value1 is automated
-		; // input_toggle::Value2 is automated
 		
 		; // cable_table4::Value is automated
 		
 		; // cable_table5::Value is automated
 		
-		;                                   // tempo_sync3::Tempo is automated
-		;                                   // tempo_sync3::Multiplier is automated
-		tempo_sync3.setParameterT(2, 1.);   // control::tempo_sync::Enabled
-		tempo_sync3.setParameterT(3, 200.); // control::tempo_sync::UnsyncedTime
+		; // tempo_sync3::Tempo is automated
+		; // tempo_sync3::Multiplier is automated
+		; // tempo_sync3::Enabled is automated
+		; // tempo_sync3::UnsyncedTime is automated
 		
 		; // converter1::Value is automated
 		
-		; // input_toggle1::Input is automated
-		; // input_toggle1::Value1 is automated
-		; // input_toggle1::Value2 is automated
-		
 		; // branch::Index is automated
-		
-		; // receive2::Feedback is automated
 		
 		tanh1.setParameterT(0, 0.733733); // math::tanh::Value
 		
-		; // receive1::Feedback is automated
+		; // receive::Feedback is automated
 		
-		; // faust::shiftfreq is automated
+		; // faust::shiftnote is automated
 		; // faust::windowsamples is automated
 		; // faust::xfadesamples is automated
-		
-		tanh.setParameterT(0, 0.737539); // math::tanh::Value
-		
-		; // receive::Feedback is automated
 		
 		; // cable_table1::Value is automated
 		
@@ -3750,33 +3740,35 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		; // faust1::windowsamples is automated
 		; // faust1::xfadesamples is automated
 		
-		; // faust2::shiftfreq is automated
+		; // faust2::shiftnote is automated
 		; // faust2::windowsamples is automated
 		; // faust2::xfadesamples is automated
 		
+		; // receive1::Feedback is automated
+		
 		;                             // gain2::Gain is automated
-		gain2.setParameterT(1, 0.2);  // core::gain::Smoothing
-		gain2.setParameterT(2, -30.); // core::gain::ResetValue
+		gain2.setParameterT(1, 1.8);  // core::gain::Smoothing
+		gain2.setParameterT(2, -11.); // core::gain::ResetValue
 		
 		this->setParameterT(0, 0.);
 		this->setParameterT(1, 1.);
-		this->setParameterT(2, 0.);
-		this->setParameterT(3, 0.);
-		this->setParameterT(4, 6982.72);
-		this->setParameterT(5, 7411.94);
-		this->setParameterT(6, 3.);
-		this->setParameterT(7, 0.48);
-		this->setParameterT(8, 0.5);
-		this->setParameterT(9, -0.79178);
-		this->setParameterT(10, 0.);
+		this->setParameterT(2, 0.632643);
+		this->setParameterT(3, 0.807829);
+		this->setParameterT(4, 550.62);
+		this->setParameterT(5, 522.48);
+		this->setParameterT(6, 2.);
+		this->setParameterT(7, 24.);
+		this->setParameterT(8, 1.);
+		this->setParameterT(9, 0.32);
+		this->setParameterT(10, -0.0409307);
 		this->setParameterT(11, 0.);
 		this->setParameterT(12, 1.);
-		this->setParameterT(13, 0.487432);
-		this->setParameterT(14, 4.);
+		this->setParameterT(13, -0.1);
+		this->setParameterT(14, 16.);
 		this->setParameterT(15, 0.);
-		this->setParameterT(16, 8.);
-		this->setParameterT(17, 15.);
-		this->setParameterT(18, 0.28108);
+		this->setParameterT(16, 0.);
+		this->setParameterT(17, 1.);
+		this->setParameterT(18, 0.);
 		this->setParameterT(19, 0.);
 		this->setParameterT(20, 1.);
 		this->setParameterT(21, 1.);
@@ -3785,9 +3777,9 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		this->setParameterT(24, 1.);
 		this->setParameterT(25, 0.);
 		this->setParameterT(26, 0.);
-		this->setParameterT(27, 18.);
-		this->setParameterT(28, -6.);
-		this->setParameterT(29, 0.000988281);
+		this->setParameterT(27, -2.);
+		this->setParameterT(28, 9.);
+		this->setParameterT(29, 0.);
 		this->setParameterT(30, 0.);
 		this->setParameterT(31, 3.);
 		this->setParameterT(32, 1.);
@@ -3842,16 +3834,15 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		this->getT(0).getT(0).getT(0).getT(0).getT(6).setExternalData(b, index);                 // files_impl::peak1_t<NV>
 		this->getT(0).getT(0).getT(1).getT(0).setExternalData(b, index);                         // files_impl::sliderbank3_t<NV>
 		this->getT(0).getT(0).getT(1).getT(2).setExternalData(b, index);                         // files_impl::peak3_t<NV>
+		this->getT(0).getT(0).getT(1).getT(4).setExternalData(b, index);                         // files_impl::cable_table6_t
 		this->getT(0).getT(0).getT(2).getT(0).setExternalData(b, index);                         // files_impl::sliderbank7_t<NV>
 		this->getT(0).getT(0).getT(2).getT(2).setExternalData(b, index);                         // files_impl::peak7_t<NV>
 		this->getT(0).getT(0).getT(3).getT(0).setExternalData(b, index);                         // files_impl::sliderbank6_t<NV>
 		this->getT(0).getT(0).getT(3).getT(2).setExternalData(b, index);                         // files_impl::peak6_t<NV>
 		this->getT(0).getT(0).getT(4).getT(0).setExternalData(b, index);                         // files_impl::sliderbank9_t<NV>
-		this->getT(0).getT(0).getT(4).getT(2).getT(0).setExternalData(b, index);                 // files_impl::peak_unscaled1_t<NV>
-		this->getT(0).getT(0).getT(4).getT(2).getT(1).setExternalData(b, index);                 // files_impl::peak9_t<NV>
+		this->getT(0).getT(0).getT(4).getT(2).getT(0).setExternalData(b, index);                 // files_impl::peak9_t<NV>
 		this->getT(0).getT(0).getT(5).getT(0).setExternalData(b, index);                         // files_impl::sliderbank8_t<NV>
-		this->getT(0).getT(0).getT(5).getT(2).getT(0).setExternalData(b, index);                 // files_impl::peak_unscaled_t<NV>
-		this->getT(0).getT(0).getT(5).getT(2).getT(1).setExternalData(b, index);                 // files_impl::peak8_t<NV>
+		this->getT(0).getT(0).getT(5).getT(2).getT(0).setExternalData(b, index);                 // files_impl::peak8_t<NV>
 		this->getT(0).getT(1).getT(1).getT(1).                                                   // files_impl::peak_t<NV>
         getT(0).getT(1).getT(1).getT(0).
         getT(1).setExternalData(b, index);
@@ -3870,7 +3861,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
         getT(0).getT(5).getT(1).getT(0).
         getT(1).setExternalData(b, index);
 		this->getT(0).getT(1).getT(1).getT(1).  // files_impl::cable_table1_t<NV>
-        getT(0).getT(6).getT(2).getT(2).setExternalData(b, index);
+        getT(0).getT(6).getT(2).getT(1).setExternalData(b, index);
 	}
 };
 }

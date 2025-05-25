@@ -17,7 +17,7 @@ KnobLaf2.registerFunction("drawRotarySlider", function(g, obj)
 
 	g.setColour(obj.bgColour);
 
-	var radius = 65 - obj.clicked;
+	var radius = 55 - obj.clicked;
 
 //	g.fillEllipse(Rect.translated(Rect.withSizeKeepingCentre(obj.area, radius + 2, radius +2), 0, 2));
 //	g.fillEllipse(Rect.translated(Rect.withSizeKeepingCentre(obj.area, radius + 2, radius +2), 0, 3));
@@ -83,17 +83,65 @@ KnobLaf2.registerFunction("drawRotarySlider", function(g, obj)
 
 
 const var BigKnbs = [Content.getComponent("FilePos1"),
-                     Content.getComponent("XfParamB2"),
-                     Content.getComponent("XfParamA2"),
-                     Content.getComponent("Pitch1"),
-                     Content.getComponent("Harm1"),
-                     Content.getComponent("Tempo1"),
-                     Content.getComponent("Tempo1"),
-                     Content.getComponent("FileIn1"),
-                     Content.getComponent("OscShapeInput1")];
+Content.getComponent("XfParamB2"),
+Content.getComponent("XfParamA2"),
+Content.getComponent("Pitch1"),
+Content.getComponent("Harm1"),
+Content.getComponent("Tempo1"),
+Content.getComponent("FilterQ1"),
+Content.getComponent("Input1"),
+Content.getComponent("Width1"),
+Content.getComponent("Tempo1"),
+Content.getComponent("FileIn1"),
+Content.getComponent("OscShapeInput1"),
+Content.getComponent("FilePos2"),
+Content.getComponent("XfParamB3"),
+Content.getComponent("XfParamA3"),
+Content.getComponent("Pitch2"),
+Content.getComponent("Harm2"),
+Content.getComponent("Tempo2"),
+Content.getComponent("FilterQ2"),
+Content.getComponent("Input2"),
+Content.getComponent("Width2"),
+Content.getComponent("Tempo2"),
+Content.getComponent("FileIn2"),
+Content.getComponent("OscShapeInput2"),
+Content.getComponent("FilePos3"),
+Content.getComponent("XfParamB4"),
+Content.getComponent("XfParamA4"),
+Content.getComponent("Pitch3"),
+Content.getComponent("Harm3"),
+Content.getComponent("Tempo3"),
+Content.getComponent("FilterQ3"),
+Content.getComponent("Input3"),
+Content.getComponent("Width3"),
+Content.getComponent("Tempo3"),
+Content.getComponent("FileIn3"),
+Content.getComponent("OscShapeInput3"),
+Content.getComponent("FilePos4"),
+Content.getComponent("XfParamB5"),
+Content.getComponent("XfParamA5"),
+Content.getComponent("Pitch4"),
+Content.getComponent("Harm4"),
+Content.getComponent("Tempo4"),
+Content.getComponent("FilterQ4"),
+Content.getComponent("Input4"),
+Content.getComponent("Width4"),
+Content.getComponent("Tempo4"),
+Content.getComponent("FileIn4"),
+Content.getComponent("OscShapeInput4")];
 
 
 for(s in BigKnbs)
       s.setLocalLookAndFeel(KnobLaf2);
       
+const var LfoKnbs = [Content.getComponent("LfoDiv3"),
+                     Content.getComponent("LfoTempo3"),
+                     Content.getComponent("LfoDiv2"),
+                     Content.getComponent("LfoTempo2"),
+                     Content.getComponent("LfoDiv1"),
+                     Content.getComponent("LfoTempo1")];
+ 
       
+  for(s in LfoKnbs)
+        s.setLocalLookAndFeel(KnobLaf2);    

@@ -569,6 +569,14 @@
                       <Parameter MinValue="0.0" MaxValue="3" StepSize="1.0" ID="Index" Automated="1"/>
                     </Parameters>
                   </Node>
+                  <Node ID="smoother" FactoryPath="core.smoother" Bypassed="0" Name="smoother">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="20000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.2313782125711441" ID="SmoothingTime" DefaultValue="100.0"
+                                 Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
+                    </Parameters>
+                  </Node>
                   <Node ID="peak" FactoryPath="core.peak" Bypassed="0" Name="peak">
                     <ModulationTargets>
                       <Connection NodeId="minmax2" ParameterId="Value"/>
@@ -1537,9 +1545,10 @@
           <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
                      SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
           <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                     SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                     SkewFactor="0.3010300099849701" ID="Smoothing" Value="0.0" DefaultValue="20.0"/>
           <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                     SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+                     SkewFactor="5.422270774841309" ID="ResetValue" Value="-100.0"
+                     DefaultValue="0.0"/>
         </Parameters>
       </Node>
       <Node ID="fix8_block" FactoryPath="container.fix8_block" Bypassed="0"
@@ -1571,7 +1580,6 @@
                         </Properties>
                         <ModulationTargets>
                           <Connection NodeId="phasor_fm" ParameterId="Freq Ratio"/>
-                          <Connection NodeId="fm" ParameterId="FreqMultiplier"/>
                         </ModulationTargets>
                         <Parameters>
                           <Parameter MinValue="-24.0" MaxValue="24.0" StepSize="1.0" ID="Value" Automated="1"/>
@@ -1585,7 +1593,6 @@
                       <Node ID="minmax1" FactoryPath="control.minmax" Bypassed="0" Name="minmax1">
                         <ModulationTargets>
                           <Connection NodeId="phasor_fm4" ParameterId="Freq Ratio"/>
-                          <Connection NodeId="fm3" ParameterId="FreqMultiplier"/>
                         </ModulationTargets>
                         <Parameters>
                           <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="0.0" Automated="1"/>
@@ -1627,9 +1634,7 @@
                         </Properties>
                         <ModulationTargets>
                           <Connection NodeId="phasor_fm3" ParameterId="Freq Ratio"/>
-                          <Connection NodeId="fm2" ParameterId="FreqMultiplier"/>
                           <Connection NodeId="phasor_fm1" ParameterId="Freq Ratio"/>
-                          <Connection NodeId="fm1" ParameterId="FreqMultiplier"/>
                         </ModulationTargets>
                         <Parameters>
                           <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="1.0" ID="Value" Automated="1"/>
@@ -1644,160 +1649,94 @@
             </Nodes>
             <Parameters/>
           </Node>
-          <Node ID="branch" FactoryPath="container.branch" Bypassed="0" Name="branch"
+          <Node ID="branch1" FactoryPath="container.branch" Bypassed="0" Name="branch1"
                 ShowParameters="1">
             <Nodes>
-              <Node ID="branch1" FactoryPath="container.branch" Bypassed="0" Name="branch1"
-                    ShowParameters="1">
+              <Node ID="chain1" FactoryPath="container.chain" Bypassed="0" Name="chain1">
                 <Nodes>
-                  <Node ID="chain1" FactoryPath="container.chain" Bypassed="0" Name="chain1">
-                    <Nodes>
-                      <Node ID="phasor_fm" FactoryPath="core.phasor_fm" Bypassed="0" Name="phasor_fm">
-                        <Parameters>
-                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
-                          <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="0.1000000014901161"
-                                     SkewFactor="0.2299045622348785" ID="Frequency" Value="110.0000013411045"
-                                     DefaultValue="220.0"/>
-                          <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Freq Ratio"
-                                     DefaultValue="1.0" Automated="1"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Phase" Value="0.0"/>
-                        </Parameters>
-                      </Node>
-                    </Nodes>
-                    <Parameters/>
-                  </Node>
-                  <Node ID="chain3" FactoryPath="container.chain" Bypassed="0" Name="chain1">
-                    <Nodes>
-                      <Node ID="phasor_fm4" FactoryPath="core.phasor_fm" Bypassed="0" Name="phasor_fm">
-                        <Parameters>
-                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
-                          <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="0.1000000014901161"
-                                     SkewFactor="0.2299045622348785" ID="Frequency" Value="167.6000021994114"
-                                     DefaultValue="220.0"/>
-                          <Parameter MinValue="1.0" MaxValue="16.0" StepSize="0" ID="Freq Ratio" DefaultValue="1.0"
-                                     Automated="1"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Phase" Value="0.0"/>
-                        </Parameters>
-                      </Node>
-                    </Nodes>
-                    <Parameters/>
-                  </Node>
-                  <Node ID="chain2" FactoryPath="container.chain" Bypassed="0" Name="chain1">
-                    <Nodes>
-                      <Node ID="phasor_fm3" FactoryPath="core.phasor_fm" Bypassed="0" Name="phasor_fm">
-                        <Parameters>
-                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
-                          <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="0.1000000014901161"
-                                     SkewFactor="0.2299045622348785" ID="Frequency" Value="110.0000013411045"
-                                     DefaultValue="220.0"/>
-                          <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Freq Ratio"
-                                     DefaultValue="1.0" Automated="1"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Phase" Value="0.0"/>
-                        </Parameters>
-                      </Node>
-                    </Nodes>
-                    <Parameters/>
-                  </Node>
-                  <Node ID="no_midi" FactoryPath="container.no_midi" Bypassed="0" Name="no_midi">
-                    <Nodes>
-                      <Node ID="phasor_fm1" FactoryPath="core.phasor_fm" Bypassed="0" Name="phasor_fm">
-                        <Parameters>
-                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
-                          <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="0.1000000014901161"
-                                     SkewFactor="0.2299045622348785" ID="Frequency" DefaultValue="220.0"/>
-                          <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Freq Ratio"
-                                     DefaultValue="1.0" Automated="1"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Phase" Value="0.0"/>
-                        </Parameters>
-                      </Node>
-                    </Nodes>
-                    <Parameters/>
+                  <Node ID="phasor_fm" FactoryPath="core.phasor_fm" Bypassed="0" Name="phasor_fm">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.2299045622348785" ID="Frequency" Value="110.0000013411045"
+                                 DefaultValue="220.0"/>
+                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Freq Ratio"
+                                 DefaultValue="1.0" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Phase" Value="0.0"/>
+                    </Parameters>
                   </Node>
                 </Nodes>
-                <Parameters>
-                  <Parameter MinValue="0.0" MaxValue="3" StepSize="1.0" ID="Index" DefaultValue="0.0"
-                             Automated="1"/>
-                </Parameters>
+                <Parameters/>
               </Node>
-              <Node ID="branch2" FactoryPath="container.branch" Bypassed="0" Name="branch1"
-                    ShowParameters="1">
+              <Node ID="chain3" FactoryPath="container.chain" Bypassed="0" Name="chain1">
                 <Nodes>
-                  <Node ID="chain14" FactoryPath="container.chain" Bypassed="0" Name="chain1">
-                    <Nodes>
-                      <Node ID="fm" FactoryPath="core.fm" Bypassed="0" Name="fm">
-                        <Parameters>
-                          <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="0.1000000014901161"
-                                     SkewFactor="0.2299045622348785" ID="Frequency" Value="110.0000013411045"
-                                     DefaultValue="20.0"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Modulator" Value="1.0" DefaultValue="0.0"/>
-                          <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="FreqMultiplier"
-                                     DefaultValue="1.0" Automated="1"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
-                        </Parameters>
-                      </Node>
-                    </Nodes>
-                    <Parameters/>
-                  </Node>
-                  <Node ID="chain15" FactoryPath="container.chain" Bypassed="0" Name="chain1">
-                    <Nodes>
-                      <Node ID="fm3" FactoryPath="core.fm" Bypassed="0" Name="fm">
-                        <Parameters>
-                          <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="0.1000000014901161"
-                                     SkewFactor="0.2299045622348785" ID="Frequency" Value="110.0000013411045"
-                                     DefaultValue="20.0"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Modulator" Value="1.0" DefaultValue="0.0"/>
-                          <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="FreqMultiplier"
-                                     DefaultValue="1.0" Automated="1"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
-                        </Parameters>
-                      </Node>
-                    </Nodes>
-                    <Parameters/>
-                  </Node>
-                  <Node ID="chain16" FactoryPath="container.chain" Bypassed="0" Name="chain1">
-                    <Nodes>
-                      <Node ID="fm2" FactoryPath="core.fm" Bypassed="0" Name="fm">
-                        <Parameters>
-                          <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="0.1000000014901161"
-                                     SkewFactor="0.2299045622348785" ID="Frequency" Value="110.0000013411045"
-                                     DefaultValue="20.0"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Modulator" Value="1.0" DefaultValue="0.0"/>
-                          <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="FreqMultiplier"
-                                     DefaultValue="1.0" Automated="1"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
-                        </Parameters>
-                      </Node>
-                    </Nodes>
-                    <Parameters/>
-                  </Node>
-                  <Node ID="no_midi1" FactoryPath="container.no_midi" Bypassed="0" Name="no_midi">
-                    <Nodes>
-                      <Node ID="fm1" FactoryPath="core.fm" Bypassed="0" Name="fm">
-                        <Parameters>
-                          <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="0.1000000014901161"
-                                     SkewFactor="0.2299045622348785" ID="Frequency" DefaultValue="20.0"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Modulator" Value="1.0" DefaultValue="0.0"/>
-                          <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="FreqMultiplier"
-                                     DefaultValue="1.0" Automated="1"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
-                        </Parameters>
-                      </Node>
-                    </Nodes>
-                    <Parameters/>
+                  <Node ID="phasor_fm4" FactoryPath="core.phasor_fm" Bypassed="0" Name="phasor_fm">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.2299045622348785" ID="Frequency" Value="167.6000021994114"
+                                 DefaultValue="220.0"/>
+                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="0" ID="Freq Ratio" DefaultValue="1.0"
+                                 Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Phase" Value="0.0"/>
+                    </Parameters>
                   </Node>
                 </Nodes>
-                <Parameters>
-                  <Parameter MinValue="0.0" MaxValue="3" StepSize="1.0" ID="Index" DefaultValue="0.0"
-                             Automated="1"/>
-                </Parameters>
+                <Parameters/>
+              </Node>
+              <Node ID="chain2" FactoryPath="container.chain" Bypassed="0" Name="chain1">
+                <Nodes>
+                  <Node ID="phasor_fm3" FactoryPath="core.phasor_fm" Bypassed="0" Name="phasor_fm">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
+                      <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.2299045622348785" ID="Frequency" Value="110.0000013411045"
+                                 DefaultValue="220.0"/>
+                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Freq Ratio"
+                                 DefaultValue="1.0" Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Phase" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="no_midi" FactoryPath="container.no_midi" Bypassed="0" Name="no_midi">
+                <Nodes>
+                  <Node ID="clear1" FactoryPath="math.clear" Bypassed="1" Name="clear1">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                  <Node ID="phasor_fm1" FactoryPath="core.phasor_fm" Bypassed="0" Name="phasor_fm">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
+                      <Parameter MinValue="0.0" MaxValue="20000.0" StepSize="0.1000000014901161"
+                                 SkewFactor="0.2299045622348785" ID="Frequency" DefaultValue="220.0"
+                                 Value="725.8000108152627"/>
+                      <Parameter MinValue="0.0" MaxValue="10.0" ID="Freq Ratio" DefaultValue="1.0"
+                                 Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Phase" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters/>
               </Node>
             </Nodes>
             <Parameters>
-              <Parameter MinValue="0.0" MaxValue="1" StepSize="1.0" ID="Index" Automated="1"/>
+              <Parameter MinValue="0.0" MaxValue="3" StepSize="1.0" ID="Index" DefaultValue="0.0"
+                         Automated="1"/>
             </Parameters>
           </Node>
           <Node ID="mono2stereo" FactoryPath="core.mono2stereo" Bypassed="0"
                 Name="mono2stereo">
+            <Parameters/>
+          </Node>
+          <Node ID="peak1" FactoryPath="core.peak" Bypassed="0" Name="peak1">
+            <ComplexData>
+              <DisplayBuffers>
+                <DisplayBuffer Index="-1"/>
+              </DisplayBuffers>
+            </ComplexData>
             <Parameters/>
           </Node>
         </Nodes>
@@ -1810,8 +1749,7 @@
           <Connection NodeId="pma1" ParameterId="Add"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="18.0" ID="tempo" Value="8.767663043478262"
-                 DefaultValue="0.0">
+      <Parameter MinValue="0.0" MaxValue="18.0" ID="tempo" Value="0.0">
         <Connections>
           <Connection NodeId="pma8" ParameterId="Add"/>
         </Connections>
@@ -1826,7 +1764,6 @@
                  StepSize="1.0">
         <Connections>
           <Connection NodeId="branch1" ParameterId="Index"/>
-          <Connection NodeId="branch2" ParameterId="Index"/>
           <Connection NodeId="branch3" ParameterId="Index"/>
         </Connections>
       </Parameter>
@@ -1836,14 +1773,9 @@
           <Connection NodeId="minmax1" ParameterId="Step"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Input" Value="1.0" DefaultValue="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="Input" Value="0.0">
         <Connections>
           <Connection NodeId="pma2" ParameterId="Add"/>
-        </Connections>
-      </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Shape" Value="0.0" StepSize="1.0">
-        <Connections>
-          <Connection NodeId="branch" ParameterId="Index"/>
         </Connections>
       </Parameter>
       <Parameter MinValue="-1.0" MaxValue="1.0" ID="PitchMod" Value="0.0">
@@ -1875,7 +1807,7 @@
           <Connection NodeId="pma9" ParameterId="Add"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="sync" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="sync" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="tempo_sync" ParameterId="Enabled"/>
         </Connections>
@@ -1914,6 +1846,11 @@
       <Parameter MinValue="1.0" MaxValue="7.0" ID="MidiSlotOut" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="branch6" ParameterId="Index"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="Bend" Value="0.0">
+        <Connections>
+          <Connection NodeId="smoother" ParameterId="SmoothingTime"/>
         </Connections>
       </Parameter>
     </Parameters>

@@ -207,11 +207,23 @@ template <int NV> using xfader_c2 = sliderbank_c0<NV>;
 
 template <int NV> using xfader_c3 = sliderbank_c0<NV>;
 
+template <int NV> using xfader_c4 = sliderbank_c0<NV>;
+
+template <int NV> using xfader_c5 = sliderbank_c0<NV>;
+
+template <int NV> using xfader_c6 = sliderbank_c0<NV>;
+
+template <int NV> using xfader_c7 = sliderbank_c0<NV>;
+
 template <int NV>
 using xfader_multimod = parameter::list<xfader_c0<NV>, 
                                         xfader_c1<NV>, 
                                         xfader_c2<NV>, 
-                                        xfader_c3<NV>>;
+                                        xfader_c3<NV>, 
+                                        xfader_c4<NV>, 
+                                        xfader_c5<NV>, 
+                                        xfader_c6<NV>, 
+                                        xfader_c7<NV>>;
 
 template <int NV>
 using xfader_t = control::xfader<xfader_multimod<NV>, faders::linear>;
@@ -398,6 +410,19 @@ using split5_t = container::split<parameter::empty,
                                   chain32_t<NV>, 
                                   chain33_t<NV>>;
 
+namespace custom
+{
+
+struct expr4
+{
+	static float op(float input, float value)
+	{
+		return (1.0 - value) * input + value * Math.tan(Math.PI * 4.0 * value * input);
+		;
+	}
+};
+}
+
 DECLARE_PARAMETER_RANGE(pma4_mod_0Range, 
                         0.5, 
                         1.);
@@ -417,11 +442,19 @@ using pma4_mod_1 = parameter::from0To1<core::gain<NV>,
                                        0, 
                                        pma4_mod_1Range>;
 
-template <int NV> using pma4_mod_2 = pma4_mod_0<NV>;
-
-DECLARE_PARAMETER_RANGE_STEP(pma4_mod_3Range, 
+DECLARE_PARAMETER_RANGE_STEP(pma4_mod_2Range, 
                              -20., 
                              24., 
+                             0.1);
+
+template <int NV>
+using pma4_mod_2 = parameter::from0To1<core::gain<NV>, 
+                                       0, 
+                                       pma4_mod_2Range>;
+
+DECLARE_PARAMETER_RANGE_STEP(pma4_mod_3Range, 
+                             -12., 
+                             12., 
                              0.1);
 
 template <int NV>
@@ -429,12 +462,42 @@ using pma4_mod_3 = parameter::from0To1<core::gain<NV>,
                                        0, 
                                        pma4_mod_3Range>;
 
+template <int NV> using pma4_mod_4 = pma4_mod_3<NV>;
+
+template <int NV> using pma4_mod_5 = pma4_mod_3<NV>;
+
+template <int NV> using pma4_mod_6 = pma4_mod_3<NV>;
+
+DECLARE_PARAMETER_RANGE(pma4_mod_7Range, 
+                        0.11, 
+                        1.);
+
+template <int NV>
+using pma4_mod_7 = parameter::from0To1<math::expr<NV, custom::expr4>, 
+                                       0, 
+                                       pma4_mod_7Range>;
+
+DECLARE_PARAMETER_RANGE_STEP(pma4_mod_8Range, 
+                             -24., 
+                             0., 
+                             0.1);
+
+template <int NV>
+using pma4_mod_8 = parameter::from0To1<core::gain<NV>, 
+                                       0, 
+                                       pma4_mod_8Range>;
+
 template <int NV>
 using pma4_mod = parameter::chain<ranges::Identity, 
                                   pma4_mod_0<NV>, 
                                   pma4_mod_1<NV>, 
                                   pma4_mod_2<NV>, 
-                                  pma4_mod_3<NV>>;
+                                  pma4_mod_3<NV>, 
+                                  pma4_mod_4<NV>, 
+                                  pma4_mod_5<NV>, 
+                                  pma4_mod_6<NV>, 
+                                  pma4_mod_7<NV>, 
+                                  pma4_mod_8<NV>>;
 
 template <int NV>
 using pma4_t = control::pma<NV, pma4_mod<NV>>;
@@ -446,8 +509,7 @@ template <int NV>
 using chain25_t = container::chain<parameter::empty, 
                                    wrap::fix<1, sliderbank2_t<NV>>, 
                                    split5_t<NV>, 
-                                   peak2_t<NV>, 
-                                   pma4_t<NV>>;
+                                   peak2_t<NV>>;
 
 template <int NV> using sliderbank1_c0 = sliderbank_c0<NV>;
 
@@ -661,8 +723,73 @@ using chain9_t = container::chain<parameter::empty,
 
 template <int NV>
 using chain11_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, math::pi<NV>>, 
+                                   wrap::fix<2, core::gain<NV>>, 
+                                   math::pi<NV>, 
                                    math::fmod<NV>, 
+                                   core::gain<NV>>;
+
+template <int NV>
+using chain65_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, core::gain<NV>>, 
+                                   math::expr<NV, custom::expr4>, 
+                                   math::sin<NV>, 
+                                   core::gain<NV>>;
+namespace custom
+{
+
+struct expr1
+{
+	static float op(float input, float value)
+	{
+		return input * Math.sin(Math.PI * 12.0 * value * input) * (2 - Math.PI);;
+	}
+};
+}
+
+template <int NV>
+using chain7_t = container::chain<parameter::empty, 
+                                  wrap::fix<2, math::sin<NV>>, 
+                                  core::gain<NV>, 
+                                  math::expr<NV, custom::expr1>, 
+                                  core::gain<NV>>;
+namespace custom
+{
+
+struct expr2
+{
+	static float op(float input, float value)
+	{
+		return input * Math.sin(Math.PI * 12.0 * value * input) * (2 - Math.PI);;
+	}
+};
+}
+
+template <int NV>
+using chain56_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, math::pi<NV>>, 
+                                   wrap::no_process<math::sin<NV>>, 
+                                   core::gain<NV>, 
+                                   math::expr<NV, custom::expr2>, 
+                                   math::sin<NV>, 
+                                   core::gain<NV>>;
+namespace custom
+{
+
+struct expr3
+{
+	static float op(float input, float value)
+	{
+		return input * Math.sinh(Math.PI * 4.0 * value * input) * (1 - Math.PI);;
+	}
+};
+}
+
+template <int NV>
+using chain66_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, core::gain<NV>>, 
+                                   math::expr<NV, custom::expr3>, 
+                                   math::pi<NV>, 
+                                   math::sin<NV>, 
                                    core::gain<NV>>;
 using table4_t = wrap::data<math::table, 
                             data::external::table<0>>;
@@ -679,12 +806,17 @@ using split_t = container::split<parameter::empty,
                                  wrap::fix<2, chain_t<NV>>, 
                                  chain9_t<NV>, 
                                  chain11_t<NV>, 
+                                 chain65_t<NV>, 
+                                 chain7_t<NV>, 
+                                 chain56_t<NV>, 
+                                 chain66_t<NV>, 
                                  chain13_t<NV>>;
 
 template <int NV>
 using chain2_t = container::chain<parameter::empty, 
                                   wrap::fix<2, modchain_t<NV>>, 
                                   xfader_t<NV>, 
+                                  pma4_t<NV>, 
                                   split_t<NV>, 
                                   core::gain<NV>, 
                                   filters::one_pole<NV>>;
@@ -692,6 +824,14 @@ using chain2_t = container::chain<parameter::empty,
 namespace oscshaper_t_parameters
 {
 // Parameter list for oscshaper_impl::oscshaper_t --------------------------------------------------
+
+DECLARE_PARAMETER_RANGE(shaper_InputRange, 
+                        1., 
+                        8.);
+
+template <int NV>
+using shaper = parameter::chain<shaper_InputRange, 
+                                parameter::plain<oscshaper_impl::pma_t<NV>, 2>>;
 
 DECLARE_PARAMETER_RANGE_STEP(XfStage_InputRange, 
                              1., 
@@ -771,9 +911,6 @@ template <int NV>
 using midi3 = parameter::chain<midi3_InputRange, midi3_0<NV>>;
 
 template <int NV>
-using shaper = parameter::plain<oscshaper_impl::pma_t<NV>, 
-                                2>;
-template <int NV>
 using width = parameter::plain<oscshaper_impl::pma4_t<NV>, 
                                2>;
 template <int NV>
@@ -824,22 +961,22 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		SNEX_METADATA_NUM_CHANNELS(2);
 		SNEX_METADATA_ENCODED_PARAMETERS(190)
 		{
-			0x005B, 0x0000, 0x7300, 0x6168, 0x6570, 0x0072, 0x0000, 0x0000, 
-            0x0000, 0x3F80, 0xCDEA, 0x3F63, 0x0000, 0x3F80, 0x0000, 0x0000, 
+			0x005B, 0x0000, 0x7300, 0x6168, 0x6570, 0x0072, 0x0000, 0x3F80, 
+            0x0000, 0x4100, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x015B, 0x0000, 0x7700, 0x6469, 0x6874, 0x0000, 0x0000, 0x0000, 
-            0x8000, 0x863F, 0xA12C, 0x003E, 0x8000, 0x003F, 0x0000, 0x5B00, 
+            0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 
             0x0002, 0x0000, 0x756F, 0x0074, 0x0000, 0x0000, 0x0000, 0x3F80, 
-            0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x035B, 0x0000, 
+            0xD70A, 0x3EA3, 0x0000, 0x3F80, 0x0000, 0x0000, 0x035B, 0x0000, 
             0x7300, 0x6168, 0x6570, 0x6F6D, 0x0064, 0x0000, 0xBF80, 0x0000, 
-            0x3F80, 0xF4DF, 0xBDCE, 0x0000, 0x3F80, 0x0000, 0x0000, 0x045B, 
+            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x045B, 
             0x0000, 0x7700, 0x6469, 0x6874, 0x6F6D, 0x0064, 0x0000, 0xBF80, 
-            0x0000, 0x3F80, 0x6666, 0x3CE6, 0x0000, 0x3F80, 0x0000, 0x0000, 
-            0x055B, 0x0000, 0x6F00, 0x7475, 0x6F6D, 0x0064, 0x0000, 0xBF80, 
             0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x055B, 0x0000, 0x6F00, 0x7475, 0x6F6D, 0x0064, 0x0000, 0xBF80, 
+            0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x065B, 0x0000, 0x5800, 0x5366, 0x6174, 0x6567, 0x0000, 0x8000, 
             0x003F, 0x8000, 0x0040, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 
             0x5B3F, 0x0007, 0x0000, 0x694D, 0x6964, 0x0031, 0x0000, 0x3F80, 
-            0x0000, 0x40E0, 0x0000, 0x4000, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x40E0, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x085B, 0x0000, 0x7800, 0x3266, 0x0000, 0x8000, 0x003F, 0x8000, 
             0x0040, 0x8000, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0009, 
             0x0000, 0x6678, 0x0033, 0x0000, 0x3F80, 0x0000, 0x4080, 0x0000, 
@@ -1041,7 +1178,6 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
                       getT(1);
 		auto& gain31 = this->getT(0).getT(0).getT(0).getT(1).getT(1).getT(7).getT(1);              // core::gain<NV>
 		auto& peak2 = this->getT(0).getT(0).getT(0).getT(1).getT(2);                               // oscshaper_impl::peak2_t<NV>
-		auto& pma4 = this->getT(0).getT(0).getT(0).getT(1).getT(3);                                // oscshaper_impl::pma4_t<NV>
 		auto& chain16 = this->getT(0).getT(0).getT(0).getT(2);                                     // oscshaper_impl::chain16_t<NV>
 		auto& sliderbank1 = this->getT(0).getT(0).getT(0).getT(2).getT(0);                         // oscshaper_impl::sliderbank1_t<NV>
 		auto& split4 = this->getT(0).getT(0).getT(0).getT(2).getT(1);                              // oscshaper_impl::split4_t<NV>
@@ -1135,27 +1271,52 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		auto& peak1 = this->getT(0).getT(0).getT(0).getT(2).getT(2);                  // oscshaper_impl::peak1_t<NV>
 		auto& pma3 = this->getT(0).getT(0).getT(0).getT(2).getT(3);                   // oscshaper_impl::pma3_t<NV>
 		auto& xfader = this->getT(0).getT(1);                                         // oscshaper_impl::xfader_t<NV>
-		auto& split = this->getT(0).getT(2);                                          // oscshaper_impl::split_t<NV>
-		auto& chain = this->getT(0).getT(2).getT(0);                                  // oscshaper_impl::chain_t<NV>
-		auto& pi1 = this->getT(0).getT(2).getT(0).getT(0);                            // math::pi<NV>
-		auto& sin3 = this->getT(0).getT(2).getT(0).getT(1);                           // math::sin<NV>
-		auto& gain11 = this->getT(0).getT(2).getT(0).getT(2);                         // core::gain<NV>
-		auto& chain9 = this->getT(0).getT(2).getT(1);                                 // oscshaper_impl::chain9_t<NV>
-		auto& gain16 = this->getT(0).getT(2).getT(1).getT(0);                         // core::gain<NV>
-		auto& pi4 = this->getT(0).getT(2).getT(1).getT(1);                            // math::pi<NV>
-		auto& rect1 = this->getT(0).getT(2).getT(1).getT(2);                          // math::rect<NV>
-		auto& gain13 = this->getT(0).getT(2).getT(1).getT(3);                         // core::gain<NV>
-		auto& chain11 = this->getT(0).getT(2).getT(2);                                // oscshaper_impl::chain11_t<NV>
-		auto& pi5 = this->getT(0).getT(2).getT(2).getT(0);                            // math::pi<NV>
-		auto& fmod1 = this->getT(0).getT(2).getT(2).getT(1);                          // math::fmod<NV>
-		auto& gain15 = this->getT(0).getT(2).getT(2).getT(2);                         // core::gain<NV>
-		auto& chain13 = this->getT(0).getT(2).getT(3);                                // oscshaper_impl::chain13_t<NV>
-		auto& gain14 = this->getT(0).getT(2).getT(3).getT(0);                         // core::gain<NV>
-		auto& pi6 = this->getT(0).getT(2).getT(3).getT(1);                            // math::pi<NV>
-		auto& table4 = this->getT(0).getT(2).getT(3).getT(2);                         // oscshaper_impl::table4_t
-		auto& gain26 = this->getT(0).getT(2).getT(3).getT(3);                         // core::gain<NV>
-		auto& gain1 = this->getT(0).getT(3);                                          // core::gain<NV>
-		auto& one_pole = this->getT(0).getT(4);                                       // filters::one_pole<NV>
+		auto& pma4 = this->getT(0).getT(2);                                           // oscshaper_impl::pma4_t<NV>
+		auto& split = this->getT(0).getT(3);                                          // oscshaper_impl::split_t<NV>
+		auto& chain = this->getT(0).getT(3).getT(0);                                  // oscshaper_impl::chain_t<NV>
+		auto& pi1 = this->getT(0).getT(3).getT(0).getT(0);                            // math::pi<NV>
+		auto& sin3 = this->getT(0).getT(3).getT(0).getT(1);                           // math::sin<NV>
+		auto& gain11 = this->getT(0).getT(3).getT(0).getT(2);                         // core::gain<NV>
+		auto& chain9 = this->getT(0).getT(3).getT(1);                                 // oscshaper_impl::chain9_t<NV>
+		auto& gain16 = this->getT(0).getT(3).getT(1).getT(0);                         // core::gain<NV>
+		auto& pi4 = this->getT(0).getT(3).getT(1).getT(1);                            // math::pi<NV>
+		auto& rect1 = this->getT(0).getT(3).getT(1).getT(2);                          // math::rect<NV>
+		auto& gain13 = this->getT(0).getT(3).getT(1).getT(3);                         // core::gain<NV>
+		auto& chain11 = this->getT(0).getT(3).getT(2);                                // oscshaper_impl::chain11_t<NV>
+		auto& gain37 = this->getT(0).getT(3).getT(2).getT(0);                         // core::gain<NV>
+		auto& pi5 = this->getT(0).getT(3).getT(2).getT(1);                            // math::pi<NV>
+		auto& fmod2 = this->getT(0).getT(3).getT(2).getT(2);                          // math::fmod<NV>
+		auto& gain15 = this->getT(0).getT(3).getT(2).getT(3);                         // core::gain<NV>
+		auto& chain65 = this->getT(0).getT(3).getT(3);                                // oscshaper_impl::chain65_t<NV>
+		auto& gain44 = this->getT(0).getT(3).getT(3).getT(0);                         // core::gain<NV>
+		auto& expr4 = this->getT(0).getT(3).getT(3).getT(1);                          // math::expr<NV, custom::expr4>
+		auto& sin5 = this->getT(0).getT(3).getT(3).getT(2);                           // math::sin<NV>
+		auto& gain45 = this->getT(0).getT(3).getT(3).getT(3);                         // core::gain<NV>
+		auto& chain7 = this->getT(0).getT(3).getT(4);                                 // oscshaper_impl::chain7_t<NV>
+		auto& sin = this->getT(0).getT(3).getT(4).getT(0);                            // math::sin<NV>
+		auto& gain35 = this->getT(0).getT(3).getT(4).getT(1);                         // core::gain<NV>
+		auto& expr1 = this->getT(0).getT(3).getT(4).getT(2);                          // math::expr<NV, custom::expr1>
+		auto& gain2 = this->getT(0).getT(3).getT(4).getT(3);                          // core::gain<NV>
+		auto& chain56 = this->getT(0).getT(3).getT(5);                                // oscshaper_impl::chain56_t<NV>
+		auto& pi2 = this->getT(0).getT(3).getT(5).getT(0);                            // math::pi<NV>
+		auto& sin1 = this->getT(0).getT(3).getT(5).getT(1);                           // wrap::no_process<math::sin<NV>>
+		auto& gain36 = this->getT(0).getT(3).getT(5).getT(2);                         // core::gain<NV>
+		auto& expr2 = this->getT(0).getT(3).getT(5).getT(3);                          // math::expr<NV, custom::expr2>
+		auto& sin2 = this->getT(0).getT(3).getT(5).getT(4);                           // math::sin<NV>
+		auto& gain33 = this->getT(0).getT(3).getT(5).getT(5);                         // core::gain<NV>
+		auto& chain66 = this->getT(0).getT(3).getT(6);                                // oscshaper_impl::chain66_t<NV>
+		auto& gain43 = this->getT(0).getT(3).getT(6).getT(0);                         // core::gain<NV>
+		auto& expr3 = this->getT(0).getT(3).getT(6).getT(1);                          // math::expr<NV, custom::expr3>
+		auto& pi8 = this->getT(0).getT(3).getT(6).getT(2);                            // math::pi<NV>
+		auto& sin9 = this->getT(0).getT(3).getT(6).getT(3);                           // math::sin<NV>
+		auto& gain46 = this->getT(0).getT(3).getT(6).getT(4);                         // core::gain<NV>
+		auto& chain13 = this->getT(0).getT(3).getT(7);                                // oscshaper_impl::chain13_t<NV>
+		auto& gain14 = this->getT(0).getT(3).getT(7).getT(0);                         // core::gain<NV>
+		auto& pi6 = this->getT(0).getT(3).getT(7).getT(1);                            // math::pi<NV>
+		auto& table4 = this->getT(0).getT(3).getT(7).getT(2);                         // oscshaper_impl::table4_t
+		auto& gain26 = this->getT(0).getT(3).getT(7).getT(3);                         // core::gain<NV>
+		auto& gain1 = this->getT(0).getT(4);                                          // core::gain<NV>
+		auto& one_pole = this->getT(0).getT(5);                                       // filters::one_pole<NV>
 		
 		// Parameter Connections -------------------------------------------------------------------
 		
@@ -1211,7 +1372,11 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		xfader_p.getParameterT(0).connectT(0, gain11);             // xfader -> gain11::Gain
 		xfader_p.getParameterT(1).connectT(0, gain13);             // xfader -> gain13::Gain
 		xfader_p.getParameterT(2).connectT(0, gain15);             // xfader -> gain15::Gain
-		xfader_p.getParameterT(3).connectT(0, gain26);             // xfader -> gain26::Gain
+		xfader_p.getParameterT(3).connectT(0, gain45);             // xfader -> gain45::Gain
+		xfader_p.getParameterT(4).connectT(0, gain2);              // xfader -> gain2::Gain
+		xfader_p.getParameterT(5).connectT(0, gain33);             // xfader -> gain33::Gain
+		xfader_p.getParameterT(6).connectT(0, gain46);             // xfader -> gain46::Gain
+		xfader_p.getParameterT(7).connectT(0, gain26);             // xfader -> gain26::Gain
 		pma.getWrappedObject().getParameter().connectT(0, xfader); // pma -> xfader::Value
 		peak.getParameter().connectT(0, pma);                      // peak -> pma::Value
 		auto& sliderbank2_p = sliderbank2.getWrappedObject().getParameter();
@@ -1239,8 +1404,13 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		midi11.getParameter().connectT(0, add63);                           // midi11 -> add63::Value
 		pma4.getWrappedObject().getParameter().connectT(0, pi1);            // pma4 -> pi1::Value
 		pma4.getWrappedObject().getParameter().connectT(1, gain16);         // pma4 -> gain16::Gain
-		pma4.getWrappedObject().getParameter().connectT(2, pi5);            // pma4 -> pi5::Value
-		pma4.getWrappedObject().getParameter().connectT(3, gain14);         // pma4 -> gain14::Gain
+		pma4.getWrappedObject().getParameter().connectT(2, gain14);         // pma4 -> gain14::Gain
+		pma4.getWrappedObject().getParameter().connectT(3, gain35);         // pma4 -> gain35::Gain
+		pma4.getWrappedObject().getParameter().connectT(4, gain36);         // pma4 -> gain36::Gain
+		pma4.getWrappedObject().getParameter().connectT(5, gain37);         // pma4 -> gain37::Gain
+		pma4.getWrappedObject().getParameter().connectT(6, gain44);         // pma4 -> gain44::Gain
+		pma4.getWrappedObject().getParameter().connectT(7, expr4);          // pma4 -> expr4::Value
+		pma4.getWrappedObject().getParameter().connectT(8, gain43);         // pma4 -> gain43::Gain
 		peak2.getParameter().connectT(0, pma4);                             // peak2 -> pma4::Value
 		auto& sliderbank1_p = sliderbank1.getWrappedObject().getParameter();
 		sliderbank1_p.getParameterT(0).connectT(0, gain10);                 // sliderbank1 -> gain10::Gain
@@ -1470,10 +1640,6 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		gain31.setParameterT(1, 20.); // core::gain::Smoothing
 		gain31.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		; // pma4::Value is automated
-		; // pma4::Multiply is automated
-		; // pma4::Add is automated
-		
 		sliderbank1.setParameterT(0, 1.); // control::sliderbank::Value
 		
 		global_cable4.setParameterT(0, 1.); // routing::global_cable::Value
@@ -1578,33 +1744,95 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		
 		; // xfader::Value is automated
 		
+		; // pma4::Value is automated
+		; // pma4::Multiply is automated
+		; // pma4::Add is automated
+		
 		; // pi1::Value is automated
 		
 		sin3.setParameterT(0, 1.); // math::sin::Value
 		
-		;                              // gain11::Gain is automated
-		gain11.setParameterT(1, 20.);  // core::gain::Smoothing
-		gain11.setParameterT(2, -11.); // core::gain::ResetValue
+		;                               // gain11::Gain is automated
+		gain11.setParameterT(1, 0.);    // core::gain::Smoothing
+		gain11.setParameterT(2, -100.); // core::gain::ResetValue
 		
 		;                              // gain16::Gain is automated
-		gain16.setParameterT(1, 20.);  // core::gain::Smoothing
+		gain16.setParameterT(1, 20.2); // core::gain::Smoothing
 		gain16.setParameterT(2, -12.); // core::gain::ResetValue
 		
 		pi4.setParameterT(0, 1.); // math::pi::Value
 		
 		rect1.setParameterT(0, 1.); // math::rect::Value
 		
-		;                              // gain13::Gain is automated
-		gain13.setParameterT(1, 20.);  // core::gain::Smoothing
-		gain13.setParameterT(2, -11.); // core::gain::ResetValue
+		;                               // gain13::Gain is automated
+		gain13.setParameterT(1, 20.);   // core::gain::Smoothing
+		gain13.setParameterT(2, -100.); // core::gain::ResetValue
 		
-		; // pi5::Value is automated
+		;                             // gain37::Gain is automated
+		gain37.setParameterT(1, 20.); // core::gain::Smoothing
+		gain37.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		fmod1.setParameterT(0, 0.0450156); // math::fmod::Value
+		pi5.setParameterT(0, 1.); // math::pi::Value
 		
-		;                              // gain15::Gain is automated
-		gain15.setParameterT(1, 20.);  // core::gain::Smoothing
-		gain15.setParameterT(2, -8.8); // core::gain::ResetValue
+		fmod2.setParameterT(0, 1.); // math::fmod::Value
+		
+		;                               // gain15::Gain is automated
+		gain15.setParameterT(1, 0.);    // core::gain::Smoothing
+		gain15.setParameterT(2, -100.); // core::gain::ResetValue
+		
+		;                              // gain44::Gain is automated
+		gain44.setParameterT(1, 7);    // core::gain::Smoothing
+		gain44.setParameterT(2, -12.); // core::gain::ResetValue
+		
+		; // expr4::Value is automated
+		
+		sin5.setParameterT(0, 1.); // math::sin::Value
+		
+		;                               // gain45::Gain is automated
+		gain45.setParameterT(1, 0.);    // core::gain::Smoothing
+		gain45.setParameterT(2, -100.); // core::gain::ResetValue
+		
+		sin.setParameterT(0, 1.); // math::sin::Value
+		
+		;                              // gain35::Gain is automated
+		gain35.setParameterT(1, 20.);  // core::gain::Smoothing
+		gain35.setParameterT(2, -12.); // core::gain::ResetValue
+		
+		expr1.setParameterT(0, 1.); // math::expr::Value
+		
+		;                              // gain2::Gain is automated
+		gain2.setParameterT(1, 0.);    // core::gain::Smoothing
+		gain2.setParameterT(2, -100.); // core::gain::ResetValue
+		
+		pi2.setParameterT(0, 0.465825); // math::pi::Value
+		
+		sin1.setParameterT(0, 1.); // math::sin::Value
+		
+		;                              // gain36::Gain is automated
+		gain36.setParameterT(1, 20.);  // core::gain::Smoothing
+		gain36.setParameterT(2, -12.); // core::gain::ResetValue
+		
+		expr2.setParameterT(0, 0.367733); // math::expr::Value
+		
+		sin2.setParameterT(0, 1.); // math::sin::Value
+		
+		;                               // gain33::Gain is automated
+		gain33.setParameterT(1, 0.);    // core::gain::Smoothing
+		gain33.setParameterT(2, -100.); // core::gain::ResetValue
+		
+		;                              // gain43::Gain is automated
+		gain43.setParameterT(1, 8.7);  // core::gain::Smoothing
+		gain43.setParameterT(2, -12.); // core::gain::ResetValue
+		
+		expr3.setParameterT(0, 1.); // math::expr::Value
+		
+		pi8.setParameterT(0, 1.); // math::pi::Value
+		
+		sin9.setParameterT(0, 1.); // math::sin::Value
+		
+		;                               // gain46::Gain is automated
+		gain46.setParameterT(1, 0.);    // core::gain::Smoothing
+		gain46.setParameterT(2, -100.); // core::gain::ResetValue
 		
 		;                              // gain14::Gain is automated
 		gain14.setParameterT(1, 10.8); // core::gain::Smoothing
@@ -1627,14 +1855,14 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		one_pole.setParameterT(4, 1.);      // filters::one_pole::Mode
 		one_pole.setParameterT(5, 1.);      // filters::one_pole::Enabled
 		
-		this->setParameterT(0, 0.889861);
-		this->setParameterT(1, 0.314793);
-		this->setParameterT(2, 1.);
-		this->setParameterT(3, -0.101053);
-		this->setParameterT(4, 0.028125);
-		this->setParameterT(5, 1.);
+		this->setParameterT(0, 1.);
+		this->setParameterT(1, 0.);
+		this->setParameterT(2, 0.32);
+		this->setParameterT(3, 0.);
+		this->setParameterT(4, 1.);
+		this->setParameterT(5, 0.);
 		this->setParameterT(6, 1.);
-		this->setParameterT(7, 2.);
+		this->setParameterT(7, 1.);
 		this->setParameterT(8, 1.);
 		this->setParameterT(9, 1.);
 		this->setParameterT(10, 1.);
@@ -1681,7 +1909,7 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		this->getT(0).getT(0).getT(0).getT(1).getT(2).setExternalData(b, index); // oscshaper_impl::peak2_t<NV>
 		this->getT(0).getT(0).getT(0).getT(2).getT(0).setExternalData(b, index); // oscshaper_impl::sliderbank1_t<NV>
 		this->getT(0).getT(0).getT(0).getT(2).getT(2).setExternalData(b, index); // oscshaper_impl::peak1_t<NV>
-		this->getT(0).getT(2).getT(3).getT(2).setExternalData(b, index);         // oscshaper_impl::table4_t
+		this->getT(0).getT(3).getT(7).getT(2).setExternalData(b, index);         // oscshaper_impl::table4_t
 	}
 };
 }

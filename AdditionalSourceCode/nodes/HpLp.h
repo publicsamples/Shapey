@@ -1128,17 +1128,17 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		SNEX_METADATA_ENCODED_PARAMETERS(238)
 		{
 			0x005B, 0x0000, 0x5400, 0x6172, 0x736E, 0x6F66, 0x6D72, 0x694D, 
-            0x0078, 0x0000, 0x0000, 0x0000, 0x3F80, 0x8F5C, 0x3F02, 0x0000, 
+            0x0078, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x015B, 0x0000, 0x5400, 0x6172, 0x736E, 
-            0x6F66, 0x6D72, 0x0041, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
-            0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x025B, 0x0000, 0x5400, 
+            0x6F66, 0x6D72, 0x0041, 0x0000, 0x0000, 0x0000, 0x3F80, 0xD37A, 
+            0x3F17, 0x0000, 0x3F80, 0x0000, 0x0000, 0x025B, 0x0000, 0x5400, 
             0x6172, 0x736E, 0x6F66, 0x6D72, 0x0042, 0x0000, 0x0000, 0x0000, 
-            0x3F80, 0x9BD3, 0x3D66, 0x0000, 0x3F80, 0x0000, 0x0000, 0x035B, 
+            0x3F80, 0xA6F5, 0x3EAC, 0x0000, 0x3F80, 0x0000, 0x0000, 0x035B, 
             0x0000, 0x4D00, 0x646F, 0x0065, 0x0000, 0x0000, 0x0000, 0x3F80, 
-            0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x045B, 0x0000, 
-            0x5100, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 0x8000, 0x003F, 
+            0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x045B, 0x0000, 
+            0x5100, 0x0000, 0x0000, 0x0000, 0x8000, 0xD33F, 0x0B1B, 0x003F, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0005, 0x0000, 0x7974, 0x6570, 
-            0x0000, 0x8000, 0x003F, 0x4000, 0x0040, 0x4000, 0x0040, 0x8000, 
+            0x0000, 0x8000, 0x003F, 0x4000, 0x0040, 0x0000, 0x0040, 0x8000, 
             0x003F, 0x8000, 0x5B3F, 0x0006, 0x0000, 0x694D, 0x4D78, 0x646F, 
             0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 
             0x003F, 0x0000, 0x5B00, 0x0007, 0x0000, 0x6D41, 0x646F, 0x0000, 
@@ -1861,9 +1861,9 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		
 		; // cable_table::Value is automated
 		
-		;                           // gain::Gain is automated
-		gain.setParameterT(1, 20.); // core::gain::Smoothing
-		gain.setParameterT(2, 0.);  // core::gain::ResetValue
+		;                            // gain::Gain is automated
+		gain.setParameterT(1, 20.);  // core::gain::Smoothing
+		gain.setParameterT(2, -24.); // core::gain::ResetValue
 		
 		; // branch::Index is automated
 		
@@ -1917,7 +1917,7 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		;                               // svf_eq2::Q is automated
 		;                               // svf_eq2::Gain is automated
 		svf_eq2.setParameterT(3, 0.01); // filters::svf_eq::Smoothing
-		svf_eq2.setParameterT(4, 0.);   // filters::svf_eq::Mode
+		svf_eq2.setParameterT(4, 2.);   // filters::svf_eq::Mode
 		svf_eq2.setParameterT(5, 1.);   // filters::svf_eq::Enabled
 		
 		;                                     // svf_eq3::Frequency is automated
@@ -1955,16 +1955,16 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		
 		tanh1.setParameterT(0, 0.106592); // math::tanh::Value
 		
-		;                            // gain1::Gain is automated
-		gain1.setParameterT(1, 20.); // core::gain::Smoothing
-		gain1.setParameterT(2, 0.);  // core::gain::ResetValue
+		;                              // gain1::Gain is automated
+		gain1.setParameterT(1, 17.1);  // core::gain::Smoothing
+		gain1.setParameterT(2, -100.); // core::gain::ResetValue
 		
-		this->setParameterT(0, 0.51);
-		this->setParameterT(1, 0.);
-		this->setParameterT(2, 0.056301);
-		this->setParameterT(3, 1.);
-		this->setParameterT(4, 1.);
-		this->setParameterT(5, 3.);
+		this->setParameterT(0, 1.);
+		this->setParameterT(1, 0.593071);
+		this->setParameterT(2, 0.337211);
+		this->setParameterT(3, 0.);
+		this->setParameterT(4, 0.543393);
+		this->setParameterT(5, 2.);
 		this->setParameterT(6, 0.);
 		this->setParameterT(7, -0.028125);
 		this->setParameterT(8, 0.);

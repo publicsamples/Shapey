@@ -12,6 +12,42 @@
           <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
         </Parameters>
       </Node>
+      <Node ID="split" FactoryPath="container.split" Bypassed="0" Name="split">
+        <Nodes>
+          <Node ID="chain2" FactoryPath="container.chain" Bypassed="0" Name="chain">
+            <Nodes>
+              <Node ID="dynamic_blocksize" FactoryPath="container.dynamic_blocksize"
+                    Bypassed="0" Name="dynamic_blocksize" ShowParameters="1">
+                <Nodes>
+                  <Node ID="peak1" FactoryPath="core.peak" Bypassed="0" Name="peak1">
+                    <ComplexData>
+                      <DisplayBuffers>
+                        <DisplayBuffer Index="1"/>
+                      </DisplayBuffers>
+                    </ComplexData>
+                    <Parameters/>
+                  </Node>
+                  <Node ID="clear1" FactoryPath="math.clear" Bypassed="0" Name="clear1">
+                    <Parameters>
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                    </Parameters>
+                  </Node>
+                </Nodes>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="7.0" StepSize="1.0" ID="BlockSize" Value="0.0"
+                             DefaultValue="4.0"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="chain1" FactoryPath="container.chain" Bypassed="0" Name="chain">
+            <Nodes/>
+            <Parameters/>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
     </Nodes>
     <Parameters/>
   </Node>

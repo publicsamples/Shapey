@@ -1,0 +1,20 @@
+namespace project
+{
+
+struct VoiceTrig1_networkdata: public scriptnode::dll::InterpretedNetworkData
+{
+	String getId() const override
+	{
+		return "VoiceTrig1";
+	}
+	bool isModNode() const override
+	{
+		return false;
+	}
+	String getNetworkData() const override
+	{
+		return "757.nT6K8ClMJz0E.XUmbYB.Qaa...8ZKcJjqNp4jCntf3RZFY6RsVX1scspppfNbT6yRNZko.E.QAvT.3YwbzbqNyNAcLr9JzC6EOIpOicc9O1f1dQsqBQ+5qk.Rac3mo0VoINRameDi5bVG+nsu37u3Jj7qz3kRKq6SjtwewmCKosWndzVLnuFUOS.XXITbQ6EJ2FQMWdUSEGGApwrdlr4LiX31BY2vQ5713F3GodEjh5Uuq1KqlxPpmOmODNp9GZuY9wZKyfOFI4SO3MCg04ur7ZDBKFuWZQmJfhA87STyuABsvDvtZa80LKLDwtDXHsEjCmTXT2imrGB0xKr3kt1W.4xKKLd8UmljS2IbDeVAWfihyM4vBtClllbL.7zBcoE8LBNfo1iegApGkWwpLKGxiUpe8zJJUZPgFp3PkIKPyd4CgzmYrl8TdwpnNLJ0zQ1V7xObAsVSxh1t7wQp8DbTk1UMW+SAO.jHObzbCvQYDqudRwBLwgOFu1vqJXIqL.fmhZrAIYfYloQPPGAfA.fHapNBEHCii..VL.dFFSYDHEUPvD.AHfHRaaCPPKHFIhXBjXbUOf3YHNRw5TVBqbLbjBEvUIlxAjtEBNUPUS37h1JL.vhsKOKqF1rnync34V8EAacWxqRIOGjkDkhX3aNECMtmAqjTYoehiD5BwU+CnLghODoNDWWJ2S1Mx5FdaBt4aNVp61DM56n+k7hxsqDs7Vtqw2fXWaTVQ3Ps6Sg0vvv8tIyhmYpl642nG0UG82uPHcM1yoRzvp2TCp1AzvSwabF0xLMwcDrqf6J6EkZZFSa34QTi3xt6qsy.hSxNCgQjKsiuuVhQgHXECzaD2RzVI.SfCXrlmWOF9I0uPfc1ImKz4637bq7Gu+Py2NeXAh6S6Y+XtIxnIhUjT9Fvcqu18sh3Cf9DscilAvcnRfgLzpkWjDZATUhWZACAAiTuAnAZoe2xqCayNQdNxz0TcT73e++QbaNJ2IyQ9fadTDNutd26930C.";
+	}
+};
+}
+

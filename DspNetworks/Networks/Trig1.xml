@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="Trig1" Version="0.0.0" AllowPolyphonic="1">
+  <Node FactoryPath="container.chain" ID="Trig1" Bypassed="0" Name="Trig1">
+    <Nodes>
+      <Node ID="fix8_block" FactoryPath="container.fix8_block" Bypassed="1"
+            Name="fix8_block">
+        <Nodes>
+          <Node ID="clock_ramp" FactoryPath="core.clock_ramp" Bypassed="0" Name="clock_ramp">
+            <ModulationTargets>
+              <Connection NodeId="cable_pack" ParameterId="Value"/>
+            </ModulationTargets>
+            <ComplexData>
+              <DisplayBuffers>
+                <DisplayBuffer Index="-1"/>
+              </DisplayBuffers>
+            </ComplexData>
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="18.0" StepSize="1.0" ID="Tempo" Value="0.0"
+                         DefaultValue="5.0"/>
+              <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Multiplier"
+                         Value="4.0" DefaultValue="1.0"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="AddToSignal"
+                         Value="0.0"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="UpdateMode"
+                         Value="1.0"/>
+              <Parameter MinValue="0.0" MaxValue="2.0" StepSize="1.0" ID="Inactive" Value="0.0"/>
+            </Parameters>
+          </Node>
+          <Node ID="clock_ramp1" FactoryPath="core.clock_ramp" Bypassed="0" Name="clock_ramp">
+            <ModulationTargets>
+              <Connection NodeId="ramp" ParameterId="PeriodTime"/>
+            </ModulationTargets>
+            <ComplexData>
+              <DisplayBuffers>
+                <DisplayBuffer Index="-1"/>
+              </DisplayBuffers>
+            </ComplexData>
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="18.0" StepSize="1.0" ID="Tempo" Value="5.0"/>
+              <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Multiplier"
+                         Value="2.0" DefaultValue="1.0"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="AddToSignal"
+                         Value="0.0"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="UpdateMode"
+                         Value="1.0"/>
+              <Parameter MinValue="0.0" MaxValue="2.0" StepSize="1.0" ID="Inactive" Value="0.0"/>
+            </Parameters>
+          </Node>
+          <Node ID="ramp" FactoryPath="core.ramp" Bypassed="0" Name="ramp">
+            <ComplexData>
+              <DisplayBuffers>
+                <DisplayBuffer Index="-1"/>
+              </DisplayBuffers>
+            </ComplexData>
+            <Parameters>
+              <Parameter MinValue="0.1000000014901161" MaxValue="1000.0" StepSize="0.1000000014901161"
+                         ID="PeriodTime" DefaultValue="100.0" Automated="1"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="LoopStart" Value="0.0"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Gate" Value="1.0"/>
+            </Parameters>
+          </Node>
+          <Node ID="peak1" FactoryPath="core.peak" Bypassed="1" Name="peak1">
+            <ComplexData>
+              <DisplayBuffers>
+                <DisplayBuffer Index="-1"/>
+              </DisplayBuffers>
+            </ComplexData>
+            <Parameters/>
+          </Node>
+          <Node ID="rect1" FactoryPath="math.rect" Bypassed="0" Name="rect1">
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+            </Parameters>
+          </Node>
+          <Node ID="peak2" FactoryPath="core.peak" Bypassed="0" Name="peak2">
+            <ModulationTargets>
+              <Connection NodeId="add" ParameterId="Value"/>
+            </ModulationTargets>
+            <ComplexData>
+              <DisplayBuffers>
+                <DisplayBuffer Index="-1"/>
+              </DisplayBuffers>
+            </ComplexData>
+            <Parameters/>
+          </Node>
+          <Node ID="clear" FactoryPath="math.clear" Bypassed="0" Name="clear">
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+            </Parameters>
+          </Node>
+          <Node ID="cable_pack" FactoryPath="control.cable_pack" Bypassed="0"
+                Name="cable_pack">
+            <ComplexData>
+              <SliderPacks>
+                <SliderPack Index="0"/>
+              </SliderPacks>
+            </ComplexData>
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+            </Parameters>
+            <ModulationTargets>
+              <Connection NodeId="gain" ParameterId="Gain"/>
+            </ModulationTargets>
+          </Node>
+          <Node ID="add" FactoryPath="math.add" Bypassed="0" Name="add">
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+            </Parameters>
+          </Node>
+          <Node ID="gain" FactoryPath="core.gain" Bypassed="0" Name="gain">
+            <Parameters>
+              <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                         SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
+              <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                         SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+              <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                         SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+            </Parameters>
+          </Node>
+          <Node ID="rect" FactoryPath="math.rect" Bypassed="0" Name="rect">
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+            </Parameters>
+          </Node>
+          <Node ID="peak" FactoryPath="core.peak" Bypassed="0" Name="peak">
+            <ModulationTargets>
+              <Connection NodeId="global_cable" ParameterId="Value"/>
+            </ModulationTargets>
+            <ComplexData>
+              <DisplayBuffers>
+                <DisplayBuffer Index="-1"/>
+              </DisplayBuffers>
+            </ComplexData>
+            <Parameters/>
+          </Node>
+          <Node ID="global_cable" FactoryPath="routing.global_cable" Bypassed="0"
+                Name="global_cable" NodeColour="4289874096">
+            <Properties>
+              <Property ID="Connection" Value="trig1"/>
+            </Properties>
+            <Parameters>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+            </Parameters>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
+    </Nodes>
+    <Parameters/>
+  </Node>
+</Network>

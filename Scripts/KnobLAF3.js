@@ -17,7 +17,7 @@ KnobLaf3.registerFunction("drawRotarySlider", function(g, obj)
 
 	g.setColour(obj.bgColour);
 
-	var radius = 100 - obj.clicked;
+	var radius = 80 - obj.clicked;
 
 //	g.fillEllipse(Rect.translated(Rect.withSizeKeepingCentre(obj.area, radius + 2, radius +2), 0, 2));
 //	g.fillEllipse(Rect.translated(Rect.withSizeKeepingCentre(obj.area, radius + 2, radius +2), 0, 3));
@@ -82,6 +82,8 @@ KnobLaf3.registerFunction("drawRotarySlider", function(g, obj)
 
 
 const var OscShapeInput1 = Content.getComponent("OscShapeInput1").setLocalLookAndFeel(KnobLaf3);;
-
+const var OscShapeInput2 = Content.getComponent("OscShapeInput2").setLocalLookAndFeel(KnobLaf3);;
+const var OscShapeInput3 = Content.getComponent("OscShapeInput3").setLocalLookAndFeel(KnobLaf3);;
+const var OscShapeInput4 = Content.getComponent("OscShapeInput4").setLocalLookAndFeel(KnobLaf3);;
 
       

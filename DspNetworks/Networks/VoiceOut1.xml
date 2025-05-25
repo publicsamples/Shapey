@@ -18,9 +18,16 @@
           <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
                      SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
           <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                     SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                     SkewFactor="0.3010300099849701" ID="Smoothing" Value="0.1000000014901161"
+                     DefaultValue="20.0"/>
           <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
                      SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
+        </Parameters>
+      </Node>
+      <Node ID="jpanner" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+        <Parameters>
+          <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+          <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
         </Parameters>
       </Node>
     </Nodes>
@@ -28,6 +35,12 @@
       <Parameter ID="vol" MinValue="0.0" MaxValue="1.0" Value="1.0">
         <Connections>
           <Connection NodeId="gain" ParameterId="Gain"/>
+        </Connections>
+      </Parameter>
+      <Parameter ID="pan" MinValue="-1.0" MaxValue="1.0" Value="0.02759375000000008"
+                 DefaultValue="1.0">
+        <Connections>
+          <Connection NodeId="jpanner" ParameterId="Pan"/>
         </Connections>
       </Parameter>
     </Parameters>

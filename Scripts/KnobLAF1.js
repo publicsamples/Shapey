@@ -17,7 +17,7 @@ KnobLaf.registerFunction("drawRotarySlider", function(g, obj)
 
 	g.setColour(0x00000000);
 
-	var radius = 40 - obj.clicked;
+	var radius = 35 - obj.clicked;
 
 	g.fillEllipse(Rect.translated(Rect.withSizeKeepingCentre(obj.area, radius + 2, radius +2), 0, 2));
 	g.fillEllipse(Rect.translated(Rect.withSizeKeepingCentre(obj.area, radius + 2, radius +2), 0, 3));
@@ -104,14 +104,38 @@ const var UserShape1 = Content.getComponent("UserShape1").setLocalLookAndFeel(Kn
 const var OscKnobs = [Content.getComponent("Step1"),
                       Content.getComponent("FmIn1"), 
                       Content.getComponent("HarmStep1"), 
-                      Content.getComponent("Div1"), 
-                      Content.getComponent("Input1"),
-                      Content.getComponent("Width1"),
+                      Content.getComponent("Div1"),
                       Content.getComponent("PitchMod1"),
                       Content.getComponent("InputMod1"),
                       Content.getComponent("WidthMod1"),
                       Content.getComponent("OutMod1"),
-                      Content.getComponent("ShapeMod1")];
+                      Content.getComponent("ShapeMod1"),
+                	  Content.getComponent("Step2"),
+                      Content.getComponent("FmIn2"), 
+                      Content.getComponent("HarmStep2"), 
+                      Content.getComponent("Div2"),
+                      Content.getComponent("PitchMod2"),
+                      Content.getComponent("InputMod2"),
+                      Content.getComponent("WidthMod2"),
+                      Content.getComponent("OutMod2"),
+                	  Content.getComponent("Step3"),
+                      Content.getComponent("FmIn3"), 
+                      Content.getComponent("HarmStep3"), 
+                      Content.getComponent("Div3"),
+                      Content.getComponent("PitchMod3"),
+                      Content.getComponent("InputMod3"),
+                      Content.getComponent("WidthMod3"),
+                      Content.getComponent("OutMod3"),
+                      Content.getComponent("ShapeMod3"),
+                	  Content.getComponent("Step4"),
+                      Content.getComponent("FmIn4"), 
+                      Content.getComponent("HarmStep4"), 
+                      Content.getComponent("Div4"),
+                      Content.getComponent("PitchMod4"),
+                      Content.getComponent("InputMod4"),
+                      Content.getComponent("WidthMod4"),
+                      Content.getComponent("OutMod4"),
+                      Content.getComponent("ShapeMod4")];
 
 
 
@@ -128,21 +152,116 @@ const var ShpKnbs = [Content.getComponent("FileSmooth1"),
                      Content.getComponent("Feed1"),
                      Content.getComponent("FileTempoMod1"),
                      Content.getComponent("FilePitchMod1"),
+                     Content.getComponent("WinMod1"),
+                     Content.getComponent("WinXfMod1"),
                      Content.getComponent("FileInMod1"),
                      Content.getComponent("PosModTempo1"),
                      Content.getComponent("PosModDiv1"),
-                     Content.getComponent("PosMod1")];
+                     Content.getComponent("PosMod1"),
+                Content.getComponent("FileSmooth2"),
+                Content.getComponent("FileMix2"),
+                Content.getComponent("FilePitch2"),
+                Content.getComponent("FileWin2"),
+                Content.getComponent("FileXf2"),
+                Content.getComponent("FileWinTempo2"),
+                Content.getComponent("FileXfTempo2"),
+                Content.getComponent("Feed2"),
+                Content.getComponent("FileTempoMod2"),
+                Content.getComponent("FilePitchMod2"),
+                Content.getComponent("WinMod2"),
+                Content.getComponent("WinXfMod2"),
+                Content.getComponent("FileInMod2"),
+                Content.getComponent("PosModTempo2"),
+                Content.getComponent("PosModDiv2"),
+                Content.getComponent("PosMod2"),
+                Content.getComponent("FileSmooth3"),
+                Content.getComponent("FileMix3"),
+                Content.getComponent("FilePitch3"),
+                Content.getComponent("FileWin3"),
+                Content.getComponent("FileXf3"),
+                Content.getComponent("FileWinTempo3"),
+                Content.getComponent("FileXfTempo3"),
+                Content.getComponent("Feed3"),
+                Content.getComponent("FileTempoMod3"),
+                Content.getComponent("FilePitchMod3"),
+                Content.getComponent("WinMod3"),
+                Content.getComponent("WinXfMod3"),
+                Content.getComponent("FileInMod3"),
+                Content.getComponent("PosModTempo3"),
+                Content.getComponent("PosModDiv3"),
+                Content.getComponent("PosMod3"),
+                Content.getComponent("FileSmooth4"),
+                Content.getComponent("FileMix4"),
+                Content.getComponent("FilePitch4"),
+                Content.getComponent("FileWin4"),
+                Content.getComponent("FileXf4"),
+                Content.getComponent("FileWinTempo4"),
+                Content.getComponent("FileXfTempo4"),
+                Content.getComponent("Feed4"),
+                Content.getComponent("FileTempoMod4"),
+                Content.getComponent("FilePitchMod4"),
+                Content.getComponent("WinMod4"),
+                Content.getComponent("WinXfMod4"),
+                Content.getComponent("FileInMod4"),
+                Content.getComponent("PosModTempo4"),
+                Content.getComponent("PosModDiv4"),
+                Content.getComponent("PosMod4")];
 
  for(s in ShpKnbs)
        s.setLocalLookAndFeel(KnobLaf);     
        
 const var FltrKnbs = [Content.getComponent("FxMix2"),
-                      Content.getComponent("XfParamB3"),
+                      Content.getComponent("VcaPan1"),
+                      Content.getComponent("VcaGain1"),
                       Content.getComponent("FilterMixMod3"),
                       Content.getComponent("FilterMixMod2"),                   
-                      Content.getComponent("FilterMixMod1")];
+                      Content.getComponent("FilterMixMod1"),
+					  Content.getComponent("FxMix3"),
+                      Content.getComponent("VcaPan2"),
+                      Content.getComponent("VcaGain2"),
+                      Content.getComponent("FilterMixMod6"),
+                      Content.getComponent("FilterMixMod5"),                   
+                      Content.getComponent("FilterMixMod4"),
+         			  Content.getComponent("FxMix4"),
+                      Content.getComponent("VcaPan3"),
+                      Content.getComponent("VcaGain3"),
+                      Content.getComponent("FilterMixMod9"),
+                      Content.getComponent("FilterMixMod8"),                   
+                      Content.getComponent("FilterMixMod7"),
+					  Content.getComponent("FxMix5"),
+                      Content.getComponent("VcaPan4"),
+                      Content.getComponent("VcaGain4"),
+                      Content.getComponent("FilterMixMod12"),
+                      Content.getComponent("FilterMixMod11"),                   
+                      Content.getComponent("FilterMixMod10")];
 
 for(s in FltrKnbs)
       s.setLocalLookAndFeel(KnobLaf);  
+      
+const var SeqCont1 = [Content.getComponent("SeqTempoMod1"),
+Content.getComponent("ClockTempo1"),
+Content.getComponent("SeqDivMod1"),
+Content.getComponent("SeqTempo1"),
+Content.getComponent("SeqTempoMod2"),
+Content.getComponent("ClockTempo2"),
+Content.getComponent("SeqDivMod2"),
+Content.getComponent("SeqTempo2"),
+Content.getComponent("SeqTempoMod3"),
+Content.getComponent("ClockTempo3"),
+Content.getComponent("SeqDivMod3"),
+Content.getComponent("SeqTempo3"),
+Content.getComponent("SeqTempoMod4"),
+Content.getComponent("ClockTempo4"),
+Content.getComponent("SeqDivMod4"),
+Content.getComponent("SeqTempo4")];
+
+
+
+for(s in SeqCont1)
+      s.setLocalLookAndFeel(KnobLaf);  
+
+
+
+ 
 
       
