@@ -470,10 +470,10 @@
                           <Connection NodeId="xfader" ParameterId="Value"/>
                         </ModulationTargets>
                         <Parameters>
-                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value"/>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
                           <Parameter MinValue="-1.0" MaxValue="1.0" ID="Multiply" DefaultValue="1.0"
                                      Automated="1"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Add"/>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Add" Automated="1"/>
                         </Parameters>
                       </Node>
                     </Nodes>
