@@ -37,7 +37,7 @@
           <Connection NodeId="gain" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter ID="pan" MinValue="-1.0" MaxValue="1.0" Value="-0.08109374999999996"
+      <Parameter ID="pan" MinValue="-1.0" MaxValue="1.0" Value="0.2599999904632568"
                  DefaultValue="1.0">
         <Connections>
           <Connection NodeId="jpanner" ParameterId="Pan"/>

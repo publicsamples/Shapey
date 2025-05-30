@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Node ID="fix8_block" FactoryPath="container.fix8_block" Bypassed="0"
+      Name="fix8_block">
+  <Nodes>
+    <Node ID="phasor4" FactoryPath="core.phasor" Bypassed="0" Name="phasor1"
+          NodeColour="0" Comment="">
+      <Properties/>
+      <Parameters>
+        <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0" SkewFactor="1.0" ID="Gate"
+                   Value="1.0" DefaultValue="1.0" Automated="0"/>
+        <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="0.1000000014901161"
+                   SkewFactor="0.2299045622348785" ID="Frequency" Value="110.0000013411045"
+                   DefaultValue="220.0" Automated="0"/>
+        <Parameter MinValue="0.0" MaxValue="16.0" StepSize="1.0" SkewFactor="1.0"
+                   ID="Freq Ratio" Value="6.0" DefaultValue="1.0"/>
+        <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.0" SkewFactor="1.0"
+                   ID="Phase" Value="0.0" DefaultValue="0.0"/>
+      </Parameters>
+    </Node>
+    <Node ID="ramp" FactoryPath="core.ramp" Bypassed="1" Name="ramp" NodeColour="0"
+          Comment="">
+      <Properties/>
+      <ModulationTargets/>
+      <ComplexData>
+        <DisplayBuffers>
+          <DisplayBuffer Index="-1" EmbeddedData="-1"/>
+        </DisplayBuffers>
+      </ComplexData>
+      <Parameters>
+        <Parameter MinValue="0.1000000014901161" MaxValue="1000.0" StepSize="0.1000000014901161"
+                   SkewFactor="1.0" ID="PeriodTime" Value="829.300012357533" DefaultValue="100.0"/>
+        <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.0" SkewFactor="1.0"
+                   ID="LoopStart" Value="0.0" DefaultValue="0.0"/>
+        <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.0" SkewFactor="1.0"
+                   ID="Gate" Value="1.0" DefaultValue="1.0"/>
+      </Parameters>
+    </Node>
+    <Node ID="rect" FactoryPath="math.rect" Bypassed="0" Name="rect" NodeColour="0"
+          Comment="">
+      <Properties/>
+      <Parameters>
+        <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.0" SkewFactor="1.0"
+                   ID="Value" Value="0.0" DefaultValue="0.0"/>
+      </Parameters>
+    </Node>
+    <Node ID="peak" FactoryPath="core.peak" Bypassed="0" Name="peak" NodeColour="0"
+          Comment="">
+      <Properties/>
+      <ModulationTargets>
+        <Connection NodeId="logic_op" ParameterId="Left"/>
+      </ModulationTargets>
+      <ComplexData>
+        <DisplayBuffers>
+          <DisplayBuffer Index="-1" EmbeddedData="-1"/>
+        </DisplayBuffers>
+      </ComplexData>
+      <Parameters/>
+    </Node>
+    <Node ID="clear1" FactoryPath="math.clear" Bypassed="1" Name="clear1"
+          NodeColour="0" Comment="">
+      <Properties/>
+      <Parameters>
+        <Parameter MinValue="0.0" MaxValue="1.0" StepSize="0.0" SkewFactor="1.0"
+                   ID="Value" Value="0.0" DefaultValue="0.0"/>
+      </Parameters>
+    </Node>
+  </Nodes>
+  <Parameters/>
+</Node>

@@ -143,7 +143,7 @@ struct _klp2 final : public ::faust::dsp {
 		float fSlow5 = 1.0f / fSlow1;
 		for (int i0 = 0; i0 < count; i0 = i0 + 1) {
 			iVec0[0] = 1;
-			iRec0[0] = iSlow3 * (1 - iVec0[1]) + iRec0[1] + 2;
+			iRec0[0] = iRec0[1] + iSlow3 * (1 - iVec0[1]) + 2;
 			int iTemp0 = iRec0[0] & iSlow4;
 			float fTemp1 = float(iTemp0);
 			float fTemp2 = float(input0[i0]);

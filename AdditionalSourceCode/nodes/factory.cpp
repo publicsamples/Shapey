@@ -25,7 +25,7 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 	Factory()
 	{
 		TempoSyncer::initTempoData();
-		// Node registrations ---------------------------------------------------------------------
+		// Node registrations ----------------------------------------------------------------------
 		
 		registerPolyNode<project::shfiter<1>, project::shfiter<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::psfine<1>, scriptnode::wrap::illegal_poly<project::psfine<1>>>();
@@ -39,6 +39,8 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		registerPolyNode<project::files<1>, project::files<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::HpLp<1>, project::HpLp<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::lfo<1>, wrap::illegal_poly<project::lfo<1>>>();
+		registerPolyNode<project::NoteSelector<1>, wrap::illegal_poly<project::NoteSelector<1>>>();
+		registerPolyNode<project::NoteSelector2<1>, wrap::illegal_poly<project::NoteSelector2<1>>>();
 		registerPolyNode<project::osc1<1>, project::osc1<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::oscshaper<1>, project::oscshaper<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::shift<1>, project::shift<NUM_POLYPHONIC_VOICES>>();
@@ -47,16 +49,29 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		registerDataNode<project::blank_networkdata>();
 		registerDataNode<project::_networkdata>();
 		registerDataNode<project::env_networkdata>();
+		registerDataNode<project::Envelope_networkdata>();
+		registerDataNode<project::Envelope2_networkdata>();
+		registerDataNode<project::Envelope3_networkdata>();
+		registerDataNode<project::_networkdata>();
+		registerDataNode<project::FileOut1_networkdata>();
 		registerDataNode<project::Fold_networkdata>();
 		registerDataNode<project::fx_networkdata>();
+		registerDataNode<project::GateSeq1_networkdata>();
 		registerDataNode<project::in2_networkdata>();
 		registerDataNode<project::input_networkdata>();
 		registerDataNode<project::Input3_networkdata>();
 		registerDataNode<project::Input4_networkdata>();
 		registerDataNode<project::_networkdata>();
+		registerDataNode<project::lfo2_networkdata>();
+		registerDataNode<project::lfo3_networkdata>();
+		registerDataNode<project::lfo4_networkdata>();
 		registerDataNode<project::Lfos_networkdata>();
+		registerDataNode<project::Md2nte2_networkdata>();
 		registerDataNode<project::mix_networkdata>();
+		registerDataNode<project::mod_networkdata>();
 		registerDataNode<project::ModOut1_networkdata>();
+		registerDataNode<project::modtest1_networkdata>();
+		registerDataNode<project::ModToNote_networkdata>();
 		registerDataNode<project::OscOut1_networkdata>();
 		registerDataNode<project::OscOut2_networkdata>();
 		registerDataNode<project::OscOut3_networkdata>();
@@ -77,7 +92,10 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		registerDataNode<project::send7_networkdata>();
 		registerDataNode<project::ShaperMod_networkdata>();
 		registerDataNode<project::Step_networkdata>();
+		registerDataNode<project::subby_networkdata>();
+		registerDataNode<project::subs_networkdata>();
 		registerDataNode<project::Trig1_networkdata>();
+		registerDataNode<project::VcaAdsr_networkdata>();
 		registerDataNode<project::voice_networkdata>();
 		registerDataNode<project::VoiceOut1_networkdata>();
 		registerDataNode<project::VoiceOut2_networkdata>();

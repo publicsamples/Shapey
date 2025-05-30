@@ -161,9 +161,9 @@ struct _klp final : public ::faust::dsp {
 			float fTemp1 = fSlow5 * (fRec3[1] + fSlow6 * (fSlow0 * fTemp0 + fSlow7 * fRec1[1] - fRec2[1])) - fRec1[1];
 			float fTemp2 = fRec1[1] + fSlow2 * fTemp1;
 			float fRec0 = fTemp2;
-			fRec1[0] = fSlow8 * fTemp1 + fRec1[1];
-			fRec2[0] = fSlow8 * (fSlow9 * fTemp2 - fRec2[1]) + fRec2[1];
-			fRec3[0] = fSlow8 * fTemp0 + fRec3[1];
+			fRec1[0] = fRec1[1] + fSlow8 * fTemp1;
+			fRec2[0] = fRec2[1] + fSlow8 * (fSlow9 * fTemp2 - fRec2[1]);
+			fRec3[0] = fRec3[1] + fSlow8 * fTemp0;
 			output0[i0] = FAUSTFLOAT(fRec0);
 			float fTemp3 = float(input1[i0]) - fRec7[1];
 			float fTemp4 = fSlow5 * (fRec7[1] + fSlow6 * (fSlow0 * fTemp3 + fSlow7 * fRec5[1] - fRec6[1])) - fRec5[1];

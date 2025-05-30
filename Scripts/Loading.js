@@ -1,3 +1,15 @@
+
+//File Manager 
+ 
+
+inline function onFolderSelect1Control(component, value)
+{
+	FilePanel.showControl(value-1);
+};
+
+Content.getComponent("FolderSelect1").setControlCallback(onFolderSelect1Control);
+
+
 const var allList = [];
 const var allIds = [];
 

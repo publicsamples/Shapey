@@ -6,7 +6,7 @@ const var Osc4Mods =[];
 
 for (i = 0; i < 5; i++)
 {
-    Osc4Mods[i] = Content.getComponent("OsModRoute"+(i+15));
+    Osc4Mods[i] = Content.getComponent("OsModRouteD"+(i+1));
 
 } 
 
@@ -20,17 +20,31 @@ Content.getComponent("OscModRoutPage4").setControlCallback(onOscModRoutPage4Cont
 
 const var File4Mods =[];
 
-for (i = 0; i < 6; i++)
+for (i = 0; i < 9; i++)
 {
-    File4Mods[i] = Content.getComponent("flModRouteA"+(i+18));
+    File4Mods[i] = Content.getComponent("flModRouteD"+(i+1));
 
 } 
 
+const var ModLabels4 = [Content.getComponent("FileModLabel4"),
+                        Content.getComponent("ModLabelsFile4")];
+
+         
 
 inline function onfileModRoutPage4Control(component, value)
 {
  for (i = 0; i < File4Mods.length; i++)
         File4Mods[i].showControl(value - 1 == i);
+        
+        
+        if (value == 1){
+               	 for(s in ModLabels4)
+                      s.showControl(0);
+               	}
+                 else {
+               	   for(s in ModLabels4)
+                      s.showControl(1); 
+                 }
 };
 
 Content.getComponent("fileModRoutPage4").setControlCallback(onfileModRoutPage4Control);
@@ -39,7 +53,7 @@ const var Filter4Mods =[];
 
 for (i = 0; i < 3; i++)
 {
-    Filter4Mods[i] = Content.getComponent("fModRouteA"+(i+10));
+    Filter4Mods[i] = Content.getComponent("fModRouteD"+(i+1));
 
 } 
 
@@ -163,8 +177,8 @@ inline function onWinSync4Control(component, value)
 
 Content.getComponent("WinSync4").setControlCallback(onWinSync4Control);
 
-const var CutLabel10 = Content.getComponent("CutLabel10");
-const var CutLabel11 = Content.getComponent("CutLabel11");
+const var CutLabel7 = Content.getComponent("CutLabel7");
+const var CutLabel8 = Content.getComponent("CutLabel8");
 const var CutLabel12 = Content.getComponent("CutLabel12");
 
 
@@ -173,28 +187,22 @@ inline function onFilterType4Control(component, value)
 	Filter1.setAttribute(Filter1.type, value);
 
 	if (value == 1){
-		CutLabel4.setValue("Low Pass");
-		CutLabel5.setValue("High Pass");
-		CutLabel6.setValue("Serial/ Paralel");
+		CutLabel7.setValue("Low Pass");
+		CutLabel8.setValue("High Pass");
+		CutLabel12.setValue("Serial/ Paralel");
 	}
 	
-	if (value == 4){
-			CutLabel4.setValue("Low Shelf");
-			CutLabel5.setValue("High Shelf");
-			CutLabel6.setValue("Serial/ Paralel");
+	if (value == 2){
+			CutLabel7.setValue("Low Shelf");
+			CutLabel8.setValue("High Shelf");
+			CutLabel12.setValue("Serial/ Paralel");
 		}
+
 		
-	
-	if (value == 4){
-		CutLabel4.setValue("Low Pass");
-		CutLabel5.setValue("High Pass");
-		CutLabel6.setValue("Serial/ Paralel");
-		}	
-		
-	if (value == 4){
-			CutLabel4.setValue("Comb Freq");
-			CutLabel5.setValue("Low Pass");
-			CutLabel6.setValue("FFWD/ Allpass");
+	if (value == 3){
+			CutLabel7.setValue("Freq");
+			CutLabel8.setValue("Low Pass");
+			CutLabel12.setValue("FFWD/ Allpass");
 			}		
 	
 };

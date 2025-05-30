@@ -65,7 +65,8 @@
                   <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
                 </Parameters>
               </Node>
-              <Node ID="split3" FactoryPath="container.split" Bypassed="0" Name="split1">
+              <Node ID="split3" FactoryPath="container.split" Bypassed="0" Name="split1"
+                    Folded="1">
                 <Nodes>
                   <Node ID="chain39" FactoryPath="container.chain" Bypassed="0" Name="chain39">
                     <Nodes>
@@ -165,15 +166,16 @@
                   </Node>
                   <Node ID="chain42" FactoryPath="container.chain" Bypassed="0" Name="chain39">
                     <Nodes>
-                      <Node ID="event_data_reader3" FactoryPath="routing.event_data_reader"
-                            Bypassed="0" Name="event_data_reader3">
+                      <Node ID="global_cable14" FactoryPath="routing.global_cable" Bypassed="0"
+                            Name="global_cable3" NodeColour="4282882738">
+                        <Properties>
+                          <Property ID="Connection" Value="LFO4"/>
+                        </Properties>
                         <ModulationTargets>
                           <Connection NodeId="add27" ParameterId="Value"/>
                         </ModulationTargets>
                         <Parameters>
-                          <Parameter MinValue="0.0" MaxValue="16.0" StepSize="1.0" ID="SlotIndex"
-                                     Value="0.0"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Static" Value="0.0"/>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
                         </Parameters>
                       </Node>
                       <Node ID="add27" FactoryPath="math.add" Bypassed="0" Name="add4">
@@ -758,15 +760,16 @@
                   </Node>
                   <Node ID="chain50" FactoryPath="container.chain" Bypassed="0" Name="chain39">
                     <Nodes>
-                      <Node ID="event_data_reader4" FactoryPath="routing.event_data_reader"
-                            Bypassed="0" Name="event_data_reader3">
+                      <Node ID="global_cable25" FactoryPath="routing.global_cable" Bypassed="0"
+                            Name="global_cable9" NodeColour="4282882738">
+                        <Properties>
+                          <Property ID="Connection" Value="LFO4"/>
+                        </Properties>
                         <ModulationTargets>
                           <Connection NodeId="add33" ParameterId="Value"/>
                         </ModulationTargets>
                         <Parameters>
-                          <Parameter MinValue="0.0" MaxValue="16.0" StepSize="1.0" ID="SlotIndex"
-                                     Value="0.0"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Static" Value="0.0"/>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
                         </Parameters>
                       </Node>
                       <Node ID="add33" FactoryPath="math.add" Bypassed="0" Name="add4">
@@ -1227,15 +1230,16 @@
                   </Node>
                   <Node ID="chain66" FactoryPath="container.chain" Bypassed="0" Name="chain39">
                     <Nodes>
-                      <Node ID="event_data_reader6" FactoryPath="routing.event_data_reader"
-                            Bypassed="0" Name="event_data_reader3">
+                      <Node ID="global_cable26" FactoryPath="routing.global_cable" Bypassed="0"
+                            Name="global_cable9" NodeColour="4282882738">
+                        <Properties>
+                          <Property ID="Connection" Value="LFO4"/>
+                        </Properties>
                         <ModulationTargets>
                           <Connection NodeId="add45" ParameterId="Value"/>
                         </ModulationTargets>
                         <Parameters>
-                          <Parameter MinValue="0.0" MaxValue="16.0" StepSize="1.0" ID="SlotIndex"
-                                     Value="0.0"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Static" Value="0.0"/>
+                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
                         </Parameters>
                       </Node>
                       <Node ID="add45" FactoryPath="math.add" Bypassed="0" Name="add4">
@@ -1633,8 +1637,8 @@
                           <Property ID="Mode" Value="Ms2Freq"/>
                         </Properties>
                         <ModulationTargets>
+                          <Connection NodeId="phasor_fm1" ParameterId="Frequency"/>
                           <Connection NodeId="phasor_fm3" ParameterId="Freq Ratio"/>
-                          <Connection NodeId="phasor_fm1" ParameterId="Freq Ratio"/>
                         </ModulationTargets>
                         <Parameters>
                           <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="1.0" ID="Value" Automated="1"/>
@@ -1692,7 +1696,7 @@
                       <Parameter MinValue="20.0" MaxValue="20000.0" StepSize="0.1000000014901161"
                                  SkewFactor="0.2299045622348785" ID="Frequency" Value="110.0000013411045"
                                  DefaultValue="220.0"/>
-                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Freq Ratio"
+                      <Parameter MinValue="0.0" MaxValue="16.0" StepSize="1.0" ID="Freq Ratio"
                                  DefaultValue="1.0" Automated="1"/>
                       <Parameter MinValue="0.0" MaxValue="1.0" ID="Phase" Value="0.0"/>
                     </Parameters>
@@ -1712,9 +1716,9 @@
                       <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Gate" Value="1.0"/>
                       <Parameter MinValue="0.0" MaxValue="20000.0" StepSize="0.1000000014901161"
                                  SkewFactor="0.2299045622348785" ID="Frequency" DefaultValue="220.0"
-                                 Value="725.8000108152627"/>
-                      <Parameter MinValue="0.0" MaxValue="10.0" ID="Freq Ratio" DefaultValue="1.0"
                                  Automated="1"/>
+                      <Parameter MinValue="0.0" MaxValue="10.0" ID="Freq Ratio" DefaultValue="1.0"
+                                 Value="0.0"/>
                       <Parameter MinValue="0.0" MaxValue="1.0" ID="Phase" Value="0.0"/>
                     </Parameters>
                   </Node>
@@ -1767,7 +1771,7 @@
           <Connection NodeId="branch3" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="step" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="step" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="minmax2" ParameterId="Step"/>
           <Connection NodeId="minmax1" ParameterId="Step"/>

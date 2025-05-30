@@ -85,18 +85,21 @@ using chain40_t = container::chain<parameter::empty,
                                    wrap::fix<1, global_cable10_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
+using global_cable19_t_index = runtime_target::indexers::fix_hash<2333887>;
 
 template <int NV>
-using event_data_reader3_t = wrap::mod<parameter::plain<math::add<NV>, 0>, 
-                                       routing::event_data_reader<NV>>;
+using global_cable19_t = routing::global_cable<global_cable19_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
 
 template <int NV>
 using chain42_t = container::chain<parameter::empty, 
-                                   wrap::fix<1, event_data_reader3_t<NV>>, 
+                                   wrap::fix<1, global_cable19_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader11_t = event_data_reader3_t<NV>;
+template <int NV>
+using event_data_reader11_t = wrap::mod<parameter::plain<math::add<NV>, 0>, 
+                                        routing::event_data_reader<NV>>;
 
 template <int NV>
 using chain44_t = container::chain<parameter::empty, 
@@ -104,7 +107,7 @@ using chain44_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader10_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader10_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain45_t = container::chain<parameter::empty, 
@@ -112,7 +115,7 @@ using chain45_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader12_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader12_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain46_t = container::chain<parameter::empty, 
@@ -207,7 +210,7 @@ template <int NV>
 using xfader_multimod = parameter::list<xfader_c0<NV>, xfader_c1<NV>>;
 
 template <int NV>
-using xfader_t = control::xfader<xfader_multimod<NV>, faders::overlap>;
+using xfader_t = control::xfader<xfader_multimod<NV>, faders::linear>;
 template <int NV>
 using pma1_t = control::pma<NV, 
                             parameter::plain<xfader_t<NV>, 0>>;
@@ -287,16 +290,19 @@ using chain49_t = container::chain<parameter::empty,
                                    wrap::fix<1, global_cable14_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
+using global_cable17_t_index = global_cable19_t_index;
 
-template <int NV> using event_data_reader6_t = event_data_reader3_t<NV>;
+template <int NV>
+using global_cable17_t = routing::global_cable<global_cable17_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
 
 template <int NV>
 using chain50_t = container::chain<parameter::empty, 
-                                   wrap::fix<1, event_data_reader6_t<NV>>, 
+                                   wrap::fix<1, global_cable17_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader13_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader13_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain51_t = container::chain<parameter::empty, 
@@ -304,7 +310,7 @@ using chain51_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader14_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader14_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain52_t = container::chain<parameter::empty, 
@@ -312,7 +318,7 @@ using chain52_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader17_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader17_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain53_t = container::chain<parameter::empty, 
@@ -611,16 +617,19 @@ using chain57_t = container::chain<parameter::empty,
                                    wrap::fix<1, global_cable16_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
+using global_cable18_t_index = global_cable19_t_index;
 
-template <int NV> using event_data_reader7_t = event_data_reader3_t<NV>;
+template <int NV>
+using global_cable18_t = routing::global_cable<global_cable18_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
 
 template <int NV>
 using chain58_t = container::chain<parameter::empty, 
-                                   wrap::fix<1, event_data_reader7_t<NV>>, 
+                                   wrap::fix<1, global_cable18_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader15_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader15_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain59_t = container::chain<parameter::empty, 
@@ -628,7 +637,7 @@ using chain59_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader16_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader16_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain60_t = container::chain<parameter::empty, 
@@ -866,16 +875,8 @@ using split_t = container::split<parameter::empty,
 
 template <int NV>
 using chain_t = container::chain<parameter::empty, 
-                                 wrap::fix<2, xfader_t<NV>>, 
-                                 cable_table_t<NV>, 
+                                 wrap::fix<2, cable_table_t<NV>>, 
                                  split_t<NV>>;
-
-template <int NV>
-using frame2_block_t_ = container::chain<parameter::empty, 
-                                         wrap::fix<2, chain_t<NV>>>;
-
-template <int NV>
-using frame2_block_t = wrap::frame<2, frame2_block_t_<NV>>;
 
 namespace HpLp_t_parameters
 {
@@ -1108,7 +1109,8 @@ using HpLp_t_plist = parameter::list<TransformMix<NV>,
 template <int NV>
 using HpLp_t_ = container::chain<HpLp_t_parameters::HpLp_t_plist<NV>, 
                                  wrap::fix<2, split6_t<NV>>, 
-                                 frame2_block_t<NV>>;
+                                 xfader_t<NV>, 
+                                 chain_t<NV>>;
 
 // =================================| Root node initialiser class |=================================
 
@@ -1130,19 +1132,19 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 			0x005B, 0x0000, 0x5400, 0x6172, 0x736E, 0x6F66, 0x6D72, 0x694D, 
             0x0078, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x015B, 0x0000, 0x5400, 0x6172, 0x736E, 
-            0x6F66, 0x6D72, 0x0041, 0x0000, 0x0000, 0x0000, 0x3F80, 0xD37A, 
-            0x3F17, 0x0000, 0x3F80, 0x0000, 0x0000, 0x025B, 0x0000, 0x5400, 
+            0x6F66, 0x6D72, 0x0041, 0x0000, 0x0000, 0x0000, 0x3F80, 0x2164, 
+            0x3E4B, 0x0000, 0x3F80, 0x0000, 0x0000, 0x025B, 0x0000, 0x5400, 
             0x6172, 0x736E, 0x6F66, 0x6D72, 0x0042, 0x0000, 0x0000, 0x0000, 
-            0x3F80, 0xA6F5, 0x3EAC, 0x0000, 0x3F80, 0x0000, 0x0000, 0x035B, 
+            0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x035B, 
             0x0000, 0x4D00, 0x646F, 0x0065, 0x0000, 0x0000, 0x0000, 0x3F80, 
             0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x045B, 0x0000, 
-            0x5100, 0x0000, 0x0000, 0x0000, 0x8000, 0xD33F, 0x0B1B, 0x003F, 
+            0x5100, 0x0000, 0x0000, 0x0000, 0x8000, 0x9C3F, 0x40DE, 0x003E, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0005, 0x0000, 0x7974, 0x6570, 
-            0x0000, 0x8000, 0x003F, 0x4000, 0x0040, 0x0000, 0x0040, 0x8000, 
+            0x0000, 0x8000, 0x003F, 0x4000, 0x0040, 0x8000, 0x003F, 0x8000, 
             0x003F, 0x8000, 0x5B3F, 0x0006, 0x0000, 0x694D, 0x4D78, 0x646F, 
             0x0000, 0x8000, 0x00BF, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 
             0x003F, 0x0000, 0x5B00, 0x0007, 0x0000, 0x6D41, 0x646F, 0x0000, 
-            0x8000, 0x00BF, 0x8000, 0x663F, 0xE666, 0x00BC, 0x8000, 0x003F, 
+            0x8000, 0x00BF, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 
             0x0000, 0x5B00, 0x0008, 0x0000, 0x6D62, 0x646F, 0x0000, 0x8000, 
             0x00BF, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
             0x5B00, 0x0009, 0x0000, 0x6658, 0x7453, 0x6761, 0x0065, 0x0000, 
@@ -1181,7 +1183,7 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		auto& add5 = this->getT(0).getT(0).getT(1).getT(2).getT(1);                      // math::add<NV>
 		auto& gain14 = this->getT(0).getT(0).getT(1).getT(2).getT(2);                    // core::gain<NV>
 		auto& chain42 = this->getT(0).getT(0).getT(1).getT(3);                           // HpLp_impl::chain42_t<NV>
-		auto& event_data_reader3 = this->getT(0).getT(0).getT(1).getT(3).getT(0);        // HpLp_impl::event_data_reader3_t<NV>
+		auto& global_cable19 = this->getT(0).getT(0).getT(1).getT(3).getT(0);            // HpLp_impl::global_cable19_t<NV>
 		auto& add27 = this->getT(0).getT(0).getT(1).getT(3).getT(1);                     // math::add<NV>
 		auto& gain16 = this->getT(0).getT(0).getT(1).getT(3).getT(2);                    // core::gain<NV>
 		auto& chain44 = this->getT(0).getT(0).getT(1).getT(4);                           // HpLp_impl::chain44_t<NV>
@@ -1238,7 +1240,7 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		auto& add11 = this->getT(0).getT(1).getT(1).getT(2).getT(1);                     // math::add<NV>
 		auto& gain30 = this->getT(0).getT(1).getT(1).getT(2).getT(2);                    // core::gain<NV>
 		auto& chain50 = this->getT(0).getT(1).getT(1).getT(3);                           // HpLp_impl::chain50_t<NV>
-		auto& event_data_reader6 = this->getT(0).getT(1).getT(1).getT(3).getT(0);        // HpLp_impl::event_data_reader6_t<NV>
+		auto& global_cable17 = this->getT(0).getT(1).getT(1).getT(3).getT(0);            // HpLp_impl::global_cable17_t<NV>
 		auto& add33 = this->getT(0).getT(1).getT(1).getT(3).getT(1);                     // math::add<NV>
 		auto& gain31 = this->getT(0).getT(1).getT(1).getT(3).getT(2);                    // core::gain<NV>
 		auto& chain51 = this->getT(0).getT(1).getT(1).getT(4);                           // HpLp_impl::chain51_t<NV>
@@ -1295,7 +1297,7 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		auto& add13 = this->getT(0).getT(2).getT(1).getT(2).getT(1);                     // math::add<NV>
 		auto& gain41 = this->getT(0).getT(2).getT(1).getT(2).getT(2);                    // core::gain<NV>
 		auto& chain58 = this->getT(0).getT(2).getT(1).getT(3);                           // HpLp_impl::chain58_t<NV>
-		auto& event_data_reader7 = this->getT(0).getT(2).getT(1).getT(3).getT(0);        // HpLp_impl::event_data_reader7_t<NV>
+		auto& global_cable18 = this->getT(0).getT(2).getT(1).getT(3).getT(0);            // HpLp_impl::global_cable18_t<NV>
 		auto& add39 = this->getT(0).getT(2).getT(1).getT(3).getT(1);                     // math::add<NV>
 		auto& gain42 = this->getT(0).getT(2).getT(1).getT(3).getT(2);                    // core::gain<NV>
 		auto& chain59 = this->getT(0).getT(2).getT(1).getT(4);                           // HpLp_impl::chain59_t<NV>
@@ -1336,76 +1338,61 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		auto& gain46 = this->getT(0).getT(2).getT(1).getT(7).getT(1);                    // core::gain<NV>
 		auto& peak5 = this->getT(0).getT(2).getT(2);                                     // HpLp_impl::peak5_t<NV>
 		auto& pma5 = this->getT(0).getT(2).getT(3);                                      // HpLp_impl::pma5_t<NV>
-		auto& frame2_block = this->getT(1);                                              // HpLp_impl::frame2_block_t<NV>
-		auto& chain = this->getT(1).getT(0);                                             // HpLp_impl::chain_t<NV>
-		auto& xfader = this->getT(1).getT(0).getT(0);                                    // HpLp_impl::xfader_t<NV>
-		auto& cable_table = this->getT(1).getT(0).getT(1);                               // HpLp_impl::cable_table_t<NV>
-		auto& split = this->getT(1).getT(0).getT(2);                                     // HpLp_impl::split_t<NV>
-		auto& chain1 = this->getT(1).getT(0).getT(2).getT(0);                            // HpLp_impl::chain1_t<NV>
-		auto& gain = this->getT(1).getT(0).getT(2).getT(0).getT(0);                      // core::gain<NV>
-		auto& chain2 = this->getT(1).getT(0).getT(2).getT(1);                            // HpLp_impl::chain2_t<NV>
-		auto& branch = this->getT(1).getT(0).getT(2).getT(1).getT(0);                    // HpLp_impl::branch_t<NV>
-		auto& branch20 = this->getT(1).getT(0).getT(2).getT(1).getT(0).getT(0);          // HpLp_impl::branch20_t<NV>
-		auto& chain164 = this->getT(1).getT(0).getT(2).getT(1).getT(0).getT(0).getT(0);  // HpLp_impl::chain164_t<NV>
-		auto& no_midi1 = this->getT(1).getT(0).getT(2).getT(1).                          // HpLp_impl::no_midi1_t<NV>
-                         getT(0).getT(0).getT(0).getT(0);
-		auto& ladder1 = this->getT(1).getT(0).getT(2).getT(1).                          // filters::ladder<NV>
-                        getT(0).getT(0).getT(0).getT(0).
-                        getT(0);
-		auto& svf = this->getT(1).getT(0).getT(2).getT(1).                              // filters::svf<NV>
-                    getT(0).getT(0).getT(0).getT(0).
-                    getT(1);
-		auto& chain186 = this->getT(1).getT(0).getT(2).getT(1).getT(0).getT(0).getT(1); // HpLp_impl::chain186_t<NV>
-		auto& split8 = this->getT(1).getT(0).getT(2).getT(1).                           // HpLp_impl::split8_t<NV>
-                       getT(0).getT(0).getT(1).getT(0);
-		auto& ladder2 = this->getT(1).getT(0).getT(2).getT(1).                          // filters::ladder<NV>
-                        getT(0).getT(0).getT(1).getT(0).
-                        getT(0);
-		auto& svf1 = this->getT(1).getT(0).getT(2).getT(1).                             // filters::svf<NV>
-                     getT(0).getT(0).getT(1).getT(0).
-                     getT(1);
-		auto& branch21 = this->getT(1).getT(0).getT(2).getT(1).getT(0).getT(1);         // HpLp_impl::branch21_t<NV>
-		auto& chain165 = this->getT(1).getT(0).getT(2).getT(1).getT(0).getT(1).getT(0); // HpLp_impl::chain165_t<NV>
-		auto& no_midi2 = this->getT(1).getT(0).getT(2).getT(1).                         // HpLp_impl::no_midi2_t<NV>
-                         getT(0).getT(1).getT(0).getT(0);
-		auto& svf_eq1 = this->getT(1).getT(0).getT(2).getT(1).                          // filters::svf_eq<NV>
-                        getT(0).getT(1).getT(0).getT(0).
-                        getT(0);
-		auto& svf_eq = this->getT(1).getT(0).getT(2).getT(1).                           // filters::svf_eq<NV>
-                       getT(0).getT(1).getT(0).getT(0).
-                       getT(1);
-		auto& chain187 = this->getT(1).getT(0).getT(2).getT(1).getT(0).getT(1).getT(1); // HpLp_impl::chain187_t<NV>
-		auto& split9 = this->getT(1).getT(0).getT(2).getT(1).                           // HpLp_impl::split9_t<NV>
-                       getT(0).getT(1).getT(1).getT(0);
-		auto& svf_eq2 = this->getT(1).getT(0).getT(2).getT(1).                          // filters::svf_eq<NV>
-                        getT(0).getT(1).getT(1).getT(0).
-                        getT(0);
-		auto& svf_eq3 = this->getT(1).getT(0).getT(2).getT(1).                          // filters::svf_eq<NV>
-                        getT(0).getT(1).getT(1).getT(0).
-                        getT(1);
-		auto& branch22 = this->getT(1).getT(0).getT(2).getT(1).getT(0).getT(2);         // HpLp_impl::branch22_t<NV>
-		auto& chain166 = this->getT(1).getT(0).getT(2).getT(1).getT(0).getT(2).getT(0); // HpLp_impl::chain166_t<NV>
-		auto& no_midi3 = this->getT(1).getT(0).getT(2).getT(1).                         // HpLp_impl::no_midi3_t<NV>
-                         getT(0).getT(2).getT(0).getT(0);
-		auto& faust4 = this->getT(1).getT(0).getT(2).getT(1).                           // project::Comb<NV>
-                       getT(0).getT(2).getT(0).getT(0).
-                       getT(0);
-		auto& one_pole = this->getT(1).getT(0).getT(2).getT(1).                         // filters::one_pole<NV>
-                         getT(0).getT(2).getT(0).getT(0).
-                         getT(1);
-		auto& chain188 = this->getT(1).getT(0).getT(2).getT(1).getT(0).getT(2).getT(1); // HpLp_impl::chain188_t<NV>
-		auto& split10 = this->getT(1).getT(0).getT(2).getT(1).                          // HpLp_impl::split10_t<NV>
-                        getT(0).getT(2).getT(1).getT(0);
-		auto& chain4 = this->getT(1).getT(0).getT(2).getT(1).             // HpLp_impl::chain4_t<NV>
-                       getT(0).getT(2).getT(1).getT(0).
-                       getT(0);
-		auto& allpass1 = this->getT(1).getT(0).getT(2).getT(1).getT(0).   // filters::allpass<NV>
-                         getT(2).getT(1).getT(0).getT(0).getT(0);
-		auto& one_pole1 = this->getT(1).getT(0).getT(2).getT(1).getT(0).  // filters::one_pole<NV>
-                          getT(2).getT(1).getT(0).getT(0).getT(1);
-		auto& tanh1 = this->getT(1).getT(0).getT(2).getT(1).getT(0).  // wrap::no_process<math::tanh<NV>>
-                      getT(2).getT(1).getT(0).getT(0).getT(2);
-		auto& gain1 = this->getT(1).getT(0).getT(2).getT(1).getT(1); // core::gain<NV>
+		auto& xfader = this->getT(1);                                                    // HpLp_impl::xfader_t<NV>
+		auto& chain = this->getT(2);                                                     // HpLp_impl::chain_t<NV>
+		auto& cable_table = this->getT(2).getT(0);                                       // HpLp_impl::cable_table_t<NV>
+		auto& split = this->getT(2).getT(1);                                             // HpLp_impl::split_t<NV>
+		auto& chain1 = this->getT(2).getT(1).getT(0);                                    // HpLp_impl::chain1_t<NV>
+		auto& gain = this->getT(2).getT(1).getT(0).getT(0);                              // core::gain<NV>
+		auto& chain2 = this->getT(2).getT(1).getT(1);                                    // HpLp_impl::chain2_t<NV>
+		auto& branch = this->getT(2).getT(1).getT(1).getT(0);                            // HpLp_impl::branch_t<NV>
+		auto& branch20 = this->getT(2).getT(1).getT(1).getT(0).getT(0);                  // HpLp_impl::branch20_t<NV>
+		auto& chain164 = this->getT(2).getT(1).getT(1).getT(0).getT(0).getT(0);          // HpLp_impl::chain164_t<NV>
+		auto& no_midi1 = this->getT(2).getT(1).getT(1).getT(0).getT(0).getT(0).getT(0);  // HpLp_impl::no_midi1_t<NV>
+		auto& ladder1 = this->getT(2).getT(1).getT(1).getT(0).                           // filters::ladder<NV>
+                        getT(0).getT(0).getT(0).getT(0);
+		auto& svf = this->getT(2).getT(1).getT(1).getT(0).                              // filters::svf<NV>
+                    getT(0).getT(0).getT(0).getT(1);
+		auto& chain186 = this->getT(2).getT(1).getT(1).getT(0).getT(0).getT(1);         // HpLp_impl::chain186_t<NV>
+		auto& split8 = this->getT(2).getT(1).getT(1).getT(0).getT(0).getT(1).getT(0);   // HpLp_impl::split8_t<NV>
+		auto& ladder2 = this->getT(2).getT(1).getT(1).getT(0).                          // filters::ladder<NV>
+                        getT(0).getT(1).getT(0).getT(0);
+		auto& svf1 = this->getT(2).getT(1).getT(1).getT(0).                             // filters::svf<NV>
+                     getT(0).getT(1).getT(0).getT(1);
+		auto& branch21 = this->getT(2).getT(1).getT(1).getT(0).getT(1);                 // HpLp_impl::branch21_t<NV>
+		auto& chain165 = this->getT(2).getT(1).getT(1).getT(0).getT(1).getT(0);         // HpLp_impl::chain165_t<NV>
+		auto& no_midi2 = this->getT(2).getT(1).getT(1).getT(0).getT(1).getT(0).getT(0); // HpLp_impl::no_midi2_t<NV>
+		auto& svf_eq1 = this->getT(2).getT(1).getT(1).getT(0).                          // filters::svf_eq<NV>
+                        getT(1).getT(0).getT(0).getT(0);
+		auto& svf_eq = this->getT(2).getT(1).getT(1).getT(0).                           // filters::svf_eq<NV>
+                       getT(1).getT(0).getT(0).getT(1);
+		auto& chain187 = this->getT(2).getT(1).getT(1).getT(0).getT(1).getT(1);         // HpLp_impl::chain187_t<NV>
+		auto& split9 = this->getT(2).getT(1).getT(1).getT(0).getT(1).getT(1).getT(0);   // HpLp_impl::split9_t<NV>
+		auto& svf_eq2 = this->getT(2).getT(1).getT(1).getT(0).                          // filters::svf_eq<NV>
+                        getT(1).getT(1).getT(0).getT(0);
+		auto& svf_eq3 = this->getT(2).getT(1).getT(1).getT(0).                          // filters::svf_eq<NV>
+                        getT(1).getT(1).getT(0).getT(1);
+		auto& branch22 = this->getT(2).getT(1).getT(1).getT(0).getT(2);                 // HpLp_impl::branch22_t<NV>
+		auto& chain166 = this->getT(2).getT(1).getT(1).getT(0).getT(2).getT(0);         // HpLp_impl::chain166_t<NV>
+		auto& no_midi3 = this->getT(2).getT(1).getT(1).getT(0).getT(2).getT(0).getT(0); // HpLp_impl::no_midi3_t<NV>
+		auto& faust4 = this->getT(2).getT(1).getT(1).getT(0).                           // project::Comb<NV>
+                       getT(2).getT(0).getT(0).getT(0);
+		auto& one_pole = this->getT(2).getT(1).getT(1).getT(0).                        // filters::one_pole<NV>
+                         getT(2).getT(0).getT(0).getT(1);
+		auto& chain188 = this->getT(2).getT(1).getT(1).getT(0).getT(2).getT(1);        // HpLp_impl::chain188_t<NV>
+		auto& split10 = this->getT(2).getT(1).getT(1).getT(0).getT(2).getT(1).getT(0); // HpLp_impl::split10_t<NV>
+		auto& chain4 = this->getT(2).getT(1).getT(1).getT(0).                          // HpLp_impl::chain4_t<NV>
+                       getT(2).getT(1).getT(0).getT(0);
+		auto& allpass1 = this->getT(2).getT(1).getT(1).getT(0).   // filters::allpass<NV>
+                         getT(2).getT(1).getT(0).getT(0).
+                         getT(0);
+		auto& one_pole1 = this->getT(2).getT(1).getT(1).getT(0).  // filters::one_pole<NV>
+                          getT(2).getT(1).getT(0).getT(0).
+                          getT(1);
+		auto& tanh1 = this->getT(2).getT(1).getT(1).getT(0).  // wrap::no_process<math::tanh<NV>>
+                      getT(2).getT(1).getT(0).getT(0).
+                      getT(2);
+		auto& gain1 = this->getT(2).getT(1).getT(1).getT(1); // core::gain<NV>
 		
 		// Parameter Connections -------------------------------------------------------------------
 		
@@ -1472,7 +1459,7 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		global_cable3.getWrappedObject().getParameter().connectT(0, add4);   // global_cable3 -> add4::Value
 		global_cable11.getWrappedObject().getParameter().connectT(0, add26); // global_cable11 -> add26::Value
 		global_cable10.getWrappedObject().getParameter().connectT(0, add5);  // global_cable10 -> add5::Value
-		event_data_reader3.getParameter().connectT(0, add27);                // event_data_reader3 -> add27::Value
+		global_cable19.getWrappedObject().getParameter().connectT(0, add27); // global_cable19 -> add27::Value
 		event_data_reader11.getParameter().connectT(0, add29);               // event_data_reader11 -> add29::Value
 		event_data_reader10.getParameter().connectT(0, add28);               // event_data_reader10 -> add28::Value
 		event_data_reader12.getParameter().connectT(0, add30);               // event_data_reader12 -> add30::Value
@@ -1500,7 +1487,7 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		global_cable6.getWrappedObject().getParameter().connectT(0, add10);  // global_cable6 -> add10::Value
 		global_cable13.getWrappedObject().getParameter().connectT(0, add32); // global_cable13 -> add32::Value
 		global_cable14.getWrappedObject().getParameter().connectT(0, add11); // global_cable14 -> add11::Value
-		event_data_reader6.getParameter().connectT(0, add33);                // event_data_reader6 -> add33::Value
+		global_cable17.getWrappedObject().getParameter().connectT(0, add33); // global_cable17 -> add33::Value
 		event_data_reader13.getParameter().connectT(0, add34);               // event_data_reader13 -> add34::Value
 		event_data_reader14.getParameter().connectT(0, add35);               // event_data_reader14 -> add35::Value
 		event_data_reader17.getParameter().connectT(0, add36);               // event_data_reader17 -> add36::Value
@@ -1531,7 +1518,7 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		global_cable7.getWrappedObject().getParameter().connectT(0, add12);  // global_cable7 -> add12::Value
 		global_cable15.getWrappedObject().getParameter().connectT(0, add38); // global_cable15 -> add38::Value
 		global_cable16.getWrappedObject().getParameter().connectT(0, add13); // global_cable16 -> add13::Value
-		event_data_reader7.getParameter().connectT(0, add39);                // event_data_reader7 -> add39::Value
+		global_cable18.getWrappedObject().getParameter().connectT(0, add39); // global_cable18 -> add39::Value
 		event_data_reader15.getParameter().connectT(0, add40);               // event_data_reader15 -> add40::Value
 		event_data_reader16.getParameter().connectT(0, add41);               // event_data_reader16 -> add41::Value
 		midi_cc18.getWrappedObject().getParameter().connectT(0, add64);      // midi_cc18 -> add64::Value
@@ -1577,8 +1564,7 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		gain14.setParameterT(1, 20.); // core::gain::Smoothing
 		gain14.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		event_data_reader3.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
-		event_data_reader3.setParameterT(1, 0.); // routing::event_data_reader::Static
+		global_cable19.setParameterT(0, 1.); // routing::global_cable::Value
 		
 		; // add27::Value is automated
 		
@@ -1679,8 +1665,7 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		gain30.setParameterT(1, 20.); // core::gain::Smoothing
 		gain30.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		event_data_reader6.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
-		event_data_reader6.setParameterT(1, 0.); // routing::event_data_reader::Static
+		global_cable17.setParameterT(0, 1.); // routing::global_cable::Value
 		
 		; // add33::Value is automated
 		
@@ -1781,8 +1766,7 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		gain41.setParameterT(1, 20.); // core::gain::Smoothing
 		gain41.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		event_data_reader7.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
-		event_data_reader7.setParameterT(1, 0.); // routing::event_data_reader::Static
+		global_cable18.setParameterT(0, 1.); // routing::global_cable::Value
 		
 		; // add39::Value is automated
 		
@@ -1955,18 +1939,18 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		
 		tanh1.setParameterT(0, 0.106592); // math::tanh::Value
 		
-		;                              // gain1::Gain is automated
-		gain1.setParameterT(1, 17.1);  // core::gain::Smoothing
-		gain1.setParameterT(2, -100.); // core::gain::ResetValue
+		;                            // gain1::Gain is automated
+		gain1.setParameterT(1, 20.); // core::gain::Smoothing
+		gain1.setParameterT(2, 0.);  // core::gain::ResetValue
 		
 		this->setParameterT(0, 1.);
-		this->setParameterT(1, 0.593071);
-		this->setParameterT(2, 0.337211);
+		this->setParameterT(1, 0.19837);
+		this->setParameterT(2, 1.);
 		this->setParameterT(3, 0.);
-		this->setParameterT(4, 0.543393);
-		this->setParameterT(5, 2.);
+		this->setParameterT(4, 0.188349);
+		this->setParameterT(5, 1.);
 		this->setParameterT(6, 0.);
-		this->setParameterT(7, -0.028125);
+		this->setParameterT(7, 0.);
 		this->setParameterT(8, 0.);
 		this->setParameterT(9, 1.);
 		this->setParameterT(10, 1.);
@@ -1998,12 +1982,15 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		this->getT(0).getT(0).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // HpLp_impl::global_cable3_t<NV>
 		this->getT(0).getT(0).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // HpLp_impl::global_cable11_t<NV>
 		this->getT(0).getT(0).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // HpLp_impl::global_cable10_t<NV>
+		this->getT(0).getT(0).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // HpLp_impl::global_cable19_t<NV>
 		this->getT(0).getT(1).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // HpLp_impl::global_cable6_t<NV>
 		this->getT(0).getT(1).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // HpLp_impl::global_cable13_t<NV>
 		this->getT(0).getT(1).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // HpLp_impl::global_cable14_t<NV>
+		this->getT(0).getT(1).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // HpLp_impl::global_cable17_t<NV>
 		this->getT(0).getT(2).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // HpLp_impl::global_cable7_t<NV>
 		this->getT(0).getT(2).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // HpLp_impl::global_cable15_t<NV>
 		this->getT(0).getT(2).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // HpLp_impl::global_cable16_t<NV>
+		this->getT(0).getT(2).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // HpLp_impl::global_cable18_t<NV>
 	}
 	
 	void setExternalData(const ExternalData& b, int index)
@@ -2016,7 +2003,7 @@ template <int NV> struct instance: public HpLp_impl::HpLp_t_<NV>
 		this->getT(0).getT(1).getT(2).setExternalData(b, index); // HpLp_impl::peak4_t<NV>
 		this->getT(0).getT(2).getT(0).setExternalData(b, index); // HpLp_impl::sliderbank5_t<NV>
 		this->getT(0).getT(2).getT(2).setExternalData(b, index); // HpLp_impl::peak5_t<NV>
-		this->getT(1).getT(0).getT(1).setExternalData(b, index); // HpLp_impl::cable_table_t<NV>
+		this->getT(2).getT(0).setExternalData(b, index);         // HpLp_impl::cable_table_t<NV>
 	}
 };
 }

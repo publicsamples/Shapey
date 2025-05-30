@@ -16,6 +16,35 @@ namespace files_impl
 // ==============================| Node & Parameter type declarations |==============================
 
 template <int NV>
+using ramp_t = wrap::no_data<core::ramp<NV, false>>;
+template <int NV>
+using tempo_sync_t = wrap::mod<parameter::plain<ramp_t<NV>, 0>, 
+                               control::tempo_sync<NV>>;
+
+template <int NV>
+using chain113_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, tempo_sync_t<NV>>, 
+                                    ramp_t<NV>, 
+                                    math::add<NV>>;
+
+template <int NV>
+using clock_ramp_t = wrap::mod<parameter::plain<math::add<NV>, 0>, 
+                               wrap::no_data<core::clock_ramp<NV, false>>>;
+
+template <int NV>
+using chain114_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, clock_ramp_t<NV>>, 
+                                    math::add<NV>>;
+template <int NV>
+using branch3_t = container::branch<parameter::empty, 
+                                    wrap::fix<1, chain113_t<NV>>, 
+                                    chain114_t<NV>>;
+
+template <int NV>
+using chain112_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, branch3_t<NV>>>;
+
+template <int NV>
 using cable_table_t = wrap::data<control::cable_table<parameter::plain<math::add<NV>, 0>>, 
                                  data::external::table<0>>;
 
@@ -24,16 +53,13 @@ using cable_pack_t = wrap::data<control::cable_pack<parameter::plain<math::add<N
                                 data::external::sliderpack<0>>;
 
 template <int NV>
-using ramp_mod = parameter::chain<ranges::Identity, 
-                                  parameter::plain<cable_table_t<NV>, 0>, 
-                                  parameter::plain<cable_pack_t<NV>, 0>>;
+using peak2_mod = parameter::chain<ranges::Identity, 
+                                   parameter::plain<cable_table_t<NV>, 0>, 
+                                   parameter::plain<cable_pack_t<NV>, 0>>;
 
 template <int NV>
-using ramp_t = wrap::mod<ramp_mod<NV>, 
-                         wrap::no_data<core::ramp<NV, false>>>;
-template <int NV>
-using tempo_sync_t = wrap::mod<parameter::plain<ramp_t<NV>, 0>, 
-                               control::tempo_sync<NV>>;
+using peak2_t = wrap::mod<peak2_mod<NV>, 
+                          wrap::no_data<core::peak>>;
 using pack_resizer_t = wrap::data<control::pack_resizer, 
                                   data::external::sliderpack<0>>;
 
@@ -68,6 +94,8 @@ template <int NV> using minmax8_t = minmax3_t<NV>;
 template <int NV> using minmax4_t = minmax3_t<NV>;
 
 template <int NV> using minmax13_t = minmax3_t<NV>;
+using cable_table7_t = wrap::data<control::cable_table<parameter::empty>, 
+                                  data::external::table<2>>;
 
 template <int NV>
 using pma1_mod = parameter::chain<ranges::Identity, 
@@ -79,7 +107,8 @@ using pma1_mod = parameter::chain<ranges::Identity,
                                   parameter::plain<minmax9_t<NV>, 0>, 
                                   parameter::plain<minmax8_t<NV>, 0>, 
                                   parameter::plain<minmax4_t<NV>, 0>, 
-                                  parameter::plain<minmax13_t<NV>, 0>>;
+                                  parameter::plain<minmax13_t<NV>, 0>, 
+                                  parameter::plain<cable_table7_t, 0>>;
 
 template <int NV>
 using pma1_t = control::pma<NV, pma1_mod<NV>>;
@@ -90,14 +119,15 @@ using peak1_t = wrap::mod<parameter::plain<pma1_t<NV>, 0>,
 template <int NV>
 using chain5_t = container::chain<parameter::empty, 
                                   wrap::fix<1, math::clear<NV>>, 
-                                  tempo_sync_t<NV>, 
-                                  ramp_t<NV>, 
+                                  chain112_t<NV>, 
+                                  peak2_t<NV>, 
                                   math::clear<NV>, 
                                   pack_resizer_t, 
                                   branch1_t<NV>, 
                                   peak1_t<NV>, 
                                   math::clear<NV>, 
-                                  pma1_t<NV>>;
+                                  pma1_t<NV>, 
+                                  cable_table7_t>;
 
 using split4_t = container::split<parameter::empty, 
                                   wrap::fix<1, core::empty>>;
@@ -180,18 +210,21 @@ using chain40_t = container::chain<parameter::empty,
                                    wrap::fix<1, global_cable10_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
+using global_cable25_t_index = runtime_target::indexers::fix_hash<2333887>;
 
 template <int NV>
-using event_data_reader3_t = wrap::mod<parameter::plain<math::add<NV>, 0>, 
-                                       routing::event_data_reader<NV>>;
+using global_cable25_t = routing::global_cable<global_cable25_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
 
 template <int NV>
 using chain42_t = container::chain<parameter::empty, 
-                                   wrap::fix<1, event_data_reader3_t<NV>>, 
+                                   wrap::fix<1, global_cable25_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader11_t = event_data_reader3_t<NV>;
+template <int NV>
+using event_data_reader11_t = wrap::mod<parameter::plain<math::add<NV>, 0>, 
+                                        routing::event_data_reader<NV>>;
 
 template <int NV>
 using chain44_t = container::chain<parameter::empty, 
@@ -199,7 +232,7 @@ using chain44_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader10_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader10_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain45_t = container::chain<parameter::empty, 
@@ -207,7 +240,7 @@ using chain45_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader13_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader13_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain46_t = container::chain<parameter::empty, 
@@ -309,6 +342,8 @@ using pma2_t = control::pma<NV, pma2_mod<NV>>;
 template <int NV>
 using peak3_t = wrap::mod<parameter::plain<pma2_t<NV>, 0>, 
                           wrap::no_data<core::peak>>;
+using cable_table8_t = wrap::data<control::cable_table<parameter::empty>, 
+                                  data::external::table<3>>;
 
 template <int NV>
 using modchain2_t_ = container::chain<parameter::empty, 
@@ -316,7 +351,8 @@ using modchain2_t_ = container::chain<parameter::empty,
                                       split1_t<NV>, 
                                       peak3_t<NV>, 
                                       pma2_t<NV>, 
-                                      cable_table6_t>;
+                                      cable_table6_t, 
+                                      cable_table8_t>;
 
 template <int NV>
 using modchain2_t = wrap::control_rate<modchain2_t_<NV>>;
@@ -383,16 +419,19 @@ using chain74_t = container::chain<parameter::empty,
                                    wrap::fix<1, global_cable21_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
+using global_cable26_t_index = global_cable25_t_index;
 
-template <int NV> using event_data_reader5_t = event_data_reader3_t<NV>;
+template <int NV>
+using global_cable26_t = routing::global_cable<global_cable26_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
 
 template <int NV>
 using chain75_t = container::chain<parameter::empty, 
-                                   wrap::fix<1, event_data_reader5_t<NV>>, 
+                                   wrap::fix<1, global_cable26_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader20_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader20_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain76_t = container::chain<parameter::empty, 
@@ -400,7 +439,7 @@ using chain76_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader21_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader21_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain77_t = container::chain<parameter::empty, 
@@ -408,7 +447,7 @@ using chain77_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader22_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader22_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain80_t = container::chain<parameter::empty, 
@@ -585,16 +624,19 @@ using chain66_t = container::chain<parameter::empty,
                                    wrap::fix<1, global_cable19_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
+using global_cable27_t_index = global_cable25_t_index;
 
-template <int NV> using event_data_reader4_t = event_data_reader3_t<NV>;
+template <int NV>
+using global_cable27_t = routing::global_cable<global_cable27_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
 
 template <int NV>
 using chain67_t = container::chain<parameter::empty, 
-                                   wrap::fix<1, event_data_reader4_t<NV>>, 
+                                   wrap::fix<1, global_cable27_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader12_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader12_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain68_t = container::chain<parameter::empty, 
@@ -602,7 +644,7 @@ using chain68_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader19_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader19_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain69_t = container::chain<parameter::empty, 
@@ -690,15 +732,123 @@ using split2_t = container::split<parameter::empty,
                                   chain70_t<NV>, 
                                   chain71_t<NV>>;
 
-DECLARE_PARAMETER_RANGE_STEP(pma3_modRange, 
+using chain145_t = container::chain<parameter::empty, 
+                                    wrap::fix<2, core::empty>>;
+template <int NV>
+using branch4_t = container::branch<parameter::empty, 
+                                    wrap::fix<2, chain145_t>, 
+                                    math::clear<NV>>;
+
+struct cable_table9_t_data
+{
+	span<float, 512> data =
+	{
+		0.988764f, 0.99064f, 0.992517f, 0.994393f, 0.996269f, 0.998146f,
+		0.998933f, 0.907846f, 0.816759f, 0.725672f, 0.634585f, 0.543498f,
+		0.452411f, 0.361324f, 0.270237f, 0.17915f, 0.0880626f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+		0.f, 0.f
+	};
+};
+
+template <int NV>
+using cable_table9_t = wrap::data<control::cable_table<parameter::plain<branch4_t<NV>, 0>>, 
+                                  data::embedded::table<cable_table9_t_data>>;
+DECLARE_PARAMETER_RANGE_STEP(pma3_mod_0Range, 
                              -100., 
                              24., 
                              0.1);
 
 template <int NV>
-using pma3_mod = parameter::from0To1<core::gain<NV>, 
-                                     0, 
-                                     pma3_modRange>;
+using pma3_mod_0 = parameter::from0To1<core::gain<NV>, 
+                                       0, 
+                                       pma3_mod_0Range>;
+
+template <int NV>
+using pma3_mod = parameter::chain<ranges::Identity, 
+                                  pma3_mod_0<NV>, 
+                                  parameter::plain<cable_table9_t<NV>, 0>>;
 
 template <int NV>
 using pma3_t = control::pma<NV, pma3_mod<NV>>;
@@ -778,16 +928,19 @@ using chain95_t = container::chain<parameter::empty,
                                    wrap::fix<1, global_cable23_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
+using global_cable28_t_index = global_cable25_t_index;
 
-template <int NV> using event_data_reader7_t = event_data_reader3_t<NV>;
+template <int NV>
+using global_cable28_t = routing::global_cable<global_cable28_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
 
 template <int NV>
 using chain96_t = container::chain<parameter::empty, 
-                                   wrap::fix<1, event_data_reader7_t<NV>>, 
+                                   wrap::fix<1, global_cable28_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader15_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader15_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain97_t = container::chain<parameter::empty, 
@@ -795,7 +948,7 @@ using chain97_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader26_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader26_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain98_t = container::chain<parameter::empty, 
@@ -1216,16 +1369,19 @@ using chain85_t = container::chain<parameter::empty,
                                    wrap::fix<1, global_cable22_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
+using global_cable29_t_index = global_cable25_t_index;
 
-template <int NV> using event_data_reader6_t = event_data_reader3_t<NV>;
+template <int NV>
+using global_cable29_t = routing::global_cable<global_cable29_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
 
 template <int NV>
 using chain86_t = container::chain<parameter::empty, 
-                                   wrap::fix<1, event_data_reader6_t<NV>>, 
+                                   wrap::fix<1, global_cable29_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader14_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader14_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain87_t = container::chain<parameter::empty, 
@@ -1233,7 +1389,7 @@ using chain87_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader24_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader24_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain88_t = container::chain<parameter::empty, 
@@ -1577,14 +1733,576 @@ using modchain5_t_ = container::chain<parameter::empty,
 template <int NV>
 using modchain5_t = wrap::control_rate<modchain5_t_<NV>>;
 
+template <int NV> using sliderbank10_c0 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank10_c1 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank10_c2 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank10_c3 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank10_c4 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank10_c5 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank10_c6 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank10_c7 = sliderbank3_c0<NV>;
+
 template <int NV>
-using split6_t = container::split<parameter::empty, 
-                                  wrap::fix<2, modchain_t<NV>>, 
-                                  modchain2_t<NV>, 
-                                  modchain4_t<NV>, 
-                                  modchain3_t<NV>, 
-                                  modchain6_t<NV>, 
-                                  modchain5_t<NV>>;
+using sliderbank10_multimod = parameter::list<sliderbank10_c0<NV>, 
+                                              sliderbank10_c1<NV>, 
+                                              sliderbank10_c2<NV>, 
+                                              sliderbank10_c3<NV>, 
+                                              sliderbank10_c4<NV>, 
+                                              sliderbank10_c5<NV>, 
+                                              sliderbank10_c6<NV>, 
+                                              sliderbank10_c7<NV>>;
+
+template <int NV>
+using sliderbank10_t = wrap::data<control::sliderbank<sliderbank10_multimod<NV>>, 
+                                  data::external::sliderpack<6>>;
+using global_cable8_t_index = global_cable3_t_index;
+
+template <int NV>
+using global_cable8_t = routing::global_cable<global_cable8_t_index, 
+                                              parameter::plain<math::add<NV>, 0>>;
+
+template <int NV>
+using chain101_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, global_cable8_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+using global_cable15_t_index = global_cable11_t_index;
+
+template <int NV>
+using global_cable15_t = routing::global_cable<global_cable15_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
+
+template <int NV>
+using chain102_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, global_cable15_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+using global_cable24_t_index = global_cable10_t_index;
+
+template <int NV>
+using global_cable24_t = routing::global_cable<global_cable24_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
+
+template <int NV>
+using chain103_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, global_cable24_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+using global_cable30_t_index = global_cable25_t_index;
+
+template <int NV>
+using global_cable30_t = routing::global_cable<global_cable30_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
+
+template <int NV>
+using chain104_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, global_cable30_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+
+template <int NV> using event_data_reader16_t = event_data_reader11_t<NV>;
+
+template <int NV>
+using chain105_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, event_data_reader16_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+
+template <int NV> using event_data_reader28_t = event_data_reader11_t<NV>;
+
+template <int NV>
+using chain106_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, event_data_reader28_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+
+template <int NV> using chain107_t = chain70_t<NV>;
+
+template <int NV> using midi_cc30_t = midi_cc10_t<NV>;
+
+template <int NV>
+using chain60_t = container::chain<parameter::empty, 
+                                   wrap::fix<1, midi_cc30_t<NV>>, 
+                                   math::add<NV>>;
+
+template <int NV> using midi_cc31_t = midi_cc10_t<NV>;
+
+template <int NV>
+using chain61_t = container::chain<parameter::empty, 
+                                   wrap::fix<1, midi_cc31_t<NV>>, 
+                                   math::add<NV>>;
+
+template <int NV> using midi_cc32_t = midi_cc10_t<NV>;
+
+template <int NV>
+using chain62_t = container::chain<parameter::empty, 
+                                   wrap::fix<1, midi_cc32_t<NV>>, 
+                                   math::add<NV>>;
+
+template <int NV> using midi_cc33_t = midi_cc10_t<NV>;
+
+template <int NV>
+using chain63_t = container::chain<parameter::empty, 
+                                   wrap::fix<1, midi_cc33_t<NV>>, 
+                                   math::add<NV>>;
+
+template <int NV> using midi22_t = midi7_t<NV>;
+
+template <int NV>
+using chain109_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi22_t<NV>>, 
+                                    math::add<NV>>;
+
+template <int NV> using midi23_t = midi8_t<NV>;
+
+template <int NV>
+using chain110_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi23_t<NV>>, 
+                                    math::add<NV>>;
+
+template <int NV> using midi24_t = midi9_t<NV>;
+
+template <int NV>
+using chain111_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi24_t<NV>>, 
+                                    math::add<NV>>;
+template <int NV>
+using branch11_t = container::branch<parameter::empty, 
+                                     wrap::fix<1, chain60_t<NV>>, 
+                                     chain61_t<NV>, 
+                                     chain62_t<NV>, 
+                                     chain63_t<NV>, 
+                                     chain109_t<NV>, 
+                                     chain110_t<NV>, 
+                                     chain111_t<NV>>;
+
+template <int NV>
+using chain108_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, branch11_t<NV>>, 
+                                    core::gain<NV>>;
+
+template <int NV>
+using split15_t = container::split<parameter::empty, 
+                                   wrap::fix<1, chain101_t<NV>>, 
+                                   chain102_t<NV>, 
+                                   chain103_t<NV>, 
+                                   chain104_t<NV>, 
+                                   chain105_t<NV>, 
+                                   chain106_t<NV>, 
+                                   chain107_t<NV>, 
+                                   chain108_t<NV>>;
+
+template <int NV>
+using pma12_mod_0 = parameter::from0To1<tempo_sync_t<NV>, 
+                                        0, 
+                                        cable_table3_modRange>;
+
+template <int NV>
+using pma12_mod_1 = parameter::from0To1<clock_ramp_t<NV>, 
+                                        0, 
+                                        cable_table3_modRange>;
+
+template <int NV>
+using pma12_mod = parameter::chain<ranges::Identity, 
+                                   pma12_mod_0<NV>, 
+                                   pma12_mod_1<NV>>;
+
+template <int NV>
+using pma12_t = control::pma<NV, pma12_mod<NV>>;
+template <int NV>
+using peak10_t = wrap::mod<parameter::plain<pma12_t<NV>, 0>, 
+                           wrap::no_data<core::peak>>;
+
+template <int NV>
+using split16_t = container::split<parameter::empty, 
+                                   wrap::fix<1, peak10_t<NV>>>;
+
+template <int NV>
+using split17_t = container::split<parameter::empty, 
+                                   wrap::fix<1, pma12_t<NV>>>;
+
+template <int NV>
+using modchain7_t_ = container::chain<parameter::empty, 
+                                      wrap::fix<1, sliderbank10_t<NV>>, 
+                                      split15_t<NV>, 
+                                      split16_t<NV>, 
+                                      split17_t<NV>>;
+
+template <int NV>
+using modchain7_t = wrap::control_rate<modchain7_t_<NV>>;
+
+template <int NV> using sliderbank11_c0 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank11_c1 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank11_c2 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank11_c3 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank11_c4 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank11_c5 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank11_c6 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank11_c7 = sliderbank3_c0<NV>;
+
+template <int NV>
+using sliderbank11_multimod = parameter::list<sliderbank11_c0<NV>, 
+                                              sliderbank11_c1<NV>, 
+                                              sliderbank11_c2<NV>, 
+                                              sliderbank11_c3<NV>, 
+                                              sliderbank11_c4<NV>, 
+                                              sliderbank11_c5<NV>, 
+                                              sliderbank11_c6<NV>, 
+                                              sliderbank11_c7<NV>>;
+
+template <int NV>
+using sliderbank11_t = wrap::data<control::sliderbank<sliderbank11_multimod<NV>>, 
+                                  data::external::sliderpack<7>>;
+using global_cable9_t_index = global_cable3_t_index;
+
+template <int NV>
+using global_cable9_t = routing::global_cable<global_cable9_t_index, 
+                                              parameter::plain<math::add<NV>, 0>>;
+
+template <int NV>
+using chain115_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, global_cable9_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+using global_cable16_t_index = global_cable11_t_index;
+
+template <int NV>
+using global_cable16_t = routing::global_cable<global_cable16_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
+
+template <int NV>
+using chain116_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, global_cable16_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+using global_cable31_t_index = global_cable10_t_index;
+
+template <int NV>
+using global_cable31_t = routing::global_cable<global_cable31_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
+
+template <int NV>
+using chain117_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, global_cable31_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+using global_cable32_t_index = global_cable25_t_index;
+
+template <int NV>
+using global_cable32_t = routing::global_cable<global_cable32_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
+
+template <int NV>
+using chain118_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, global_cable32_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+
+template <int NV> using event_data_reader17_t = event_data_reader11_t<NV>;
+
+template <int NV>
+using chain119_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, event_data_reader17_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+
+template <int NV> using event_data_reader30_t = event_data_reader11_t<NV>;
+
+template <int NV>
+using chain120_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, event_data_reader30_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+
+template <int NV> using chain121_t = chain70_t<NV>;
+
+template <int NV> using midi_cc34_t = midi_cc10_t<NV>;
+
+template <int NV>
+using chain123_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi_cc34_t<NV>>, 
+                                    math::add<NV>>;
+
+template <int NV> using midi_cc35_t = midi_cc10_t<NV>;
+
+template <int NV>
+using chain124_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi_cc35_t<NV>>, 
+                                    math::add<NV>>;
+
+template <int NV> using midi_cc36_t = midi_cc10_t<NV>;
+
+template <int NV>
+using chain125_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi_cc36_t<NV>>, 
+                                    math::add<NV>>;
+
+template <int NV> using midi_cc37_t = midi_cc10_t<NV>;
+
+template <int NV>
+using chain126_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi_cc37_t<NV>>, 
+                                    math::add<NV>>;
+
+template <int NV> using midi25_t = midi7_t<NV>;
+
+template <int NV>
+using chain127_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi25_t<NV>>, 
+                                    math::add<NV>>;
+
+template <int NV> using midi26_t = midi8_t<NV>;
+
+template <int NV>
+using chain128_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi26_t<NV>>, 
+                                    math::add<NV>>;
+
+template <int NV> using midi27_t = midi9_t<NV>;
+
+template <int NV>
+using chain129_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi27_t<NV>>, 
+                                    math::add<NV>>;
+template <int NV>
+using branch12_t = container::branch<parameter::empty, 
+                                     wrap::fix<1, chain123_t<NV>>, 
+                                     chain124_t<NV>, 
+                                     chain125_t<NV>, 
+                                     chain126_t<NV>, 
+                                     chain127_t<NV>, 
+                                     chain128_t<NV>, 
+                                     chain129_t<NV>>;
+
+template <int NV>
+using chain122_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, branch12_t<NV>>, 
+                                    core::gain<NV>>;
+
+template <int NV>
+using split18_t = container::split<parameter::empty, 
+                                   wrap::fix<1, chain115_t<NV>>, 
+                                   chain116_t<NV>, 
+                                   chain117_t<NV>, 
+                                   chain118_t<NV>, 
+                                   chain119_t<NV>, 
+                                   chain120_t<NV>, 
+                                   chain121_t<NV>, 
+                                   chain122_t<NV>>;
+
+DECLARE_PARAMETER_RANGE_SKEW(pma14_modRange, 
+                             0., 
+                             2000., 
+                             0.231378);
+
+template <int NV>
+using pma14_mod = parameter::from0To1<core::smoother<NV>, 
+                                      0, 
+                                      pma14_modRange>;
+
+template <int NV>
+using pma14_t = control::pma<NV, pma14_mod<NV>>;
+template <int NV>
+using peak11_t = wrap::mod<parameter::plain<pma14_t<NV>, 0>, 
+                           wrap::no_data<core::peak>>;
+
+template <int NV>
+using split19_t = container::split<parameter::empty, 
+                                   wrap::fix<1, peak11_t<NV>>>;
+
+template <int NV>
+using split20_t = container::split<parameter::empty, 
+                                   wrap::fix<1, pma14_t<NV>>>;
+
+template <int NV>
+using modchain8_t_ = container::chain<parameter::empty, 
+                                      wrap::fix<1, sliderbank11_t<NV>>, 
+                                      split18_t<NV>, 
+                                      split19_t<NV>, 
+                                      split20_t<NV>>;
+
+template <int NV>
+using modchain8_t = wrap::control_rate<modchain8_t_<NV>>;
+
+template <int NV> using sliderbank12_c0 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank12_c1 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank12_c2 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank12_c3 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank12_c4 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank12_c5 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank12_c6 = sliderbank3_c0<NV>;
+
+template <int NV> using sliderbank12_c7 = sliderbank3_c0<NV>;
+
+template <int NV>
+using sliderbank12_multimod = parameter::list<sliderbank12_c0<NV>, 
+                                              sliderbank12_c1<NV>, 
+                                              sliderbank12_c2<NV>, 
+                                              sliderbank12_c3<NV>, 
+                                              sliderbank12_c4<NV>, 
+                                              sliderbank12_c5<NV>, 
+                                              sliderbank12_c6<NV>, 
+                                              sliderbank12_c7<NV>>;
+
+template <int NV>
+using sliderbank12_t = wrap::data<control::sliderbank<sliderbank12_multimod<NV>>, 
+                                  data::external::sliderpack<8>>;
+using global_cable17_t_index = global_cable3_t_index;
+
+template <int NV>
+using global_cable17_t = routing::global_cable<global_cable17_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
+
+template <int NV>
+using chain130_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, global_cable17_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+using global_cable18_t_index = global_cable11_t_index;
+
+template <int NV>
+using global_cable18_t = routing::global_cable<global_cable18_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
+
+template <int NV>
+using chain131_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, global_cable18_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+using global_cable33_t_index = global_cable10_t_index;
+
+template <int NV>
+using global_cable33_t = routing::global_cable<global_cable33_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
+
+template <int NV>
+using chain132_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, global_cable33_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+using global_cable34_t_index = global_cable25_t_index;
+
+template <int NV>
+using global_cable34_t = routing::global_cable<global_cable34_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
+
+template <int NV>
+using chain133_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, global_cable34_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+
+template <int NV> using event_data_reader18_t = event_data_reader11_t<NV>;
+
+template <int NV>
+using chain134_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, event_data_reader18_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+
+template <int NV> using event_data_reader32_t = event_data_reader11_t<NV>;
+
+template <int NV>
+using chain135_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, event_data_reader32_t<NV>>, 
+                                    math::add<NV>, 
+                                    core::gain<NV>>;
+
+template <int NV> using chain136_t = chain70_t<NV>;
+
+template <int NV> using midi_cc38_t = midi_cc10_t<NV>;
+
+template <int NV>
+using chain138_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi_cc38_t<NV>>, 
+                                    math::add<NV>>;
+
+template <int NV> using midi_cc39_t = midi_cc10_t<NV>;
+
+template <int NV>
+using chain139_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi_cc39_t<NV>>, 
+                                    math::add<NV>>;
+
+template <int NV> using midi_cc40_t = midi_cc10_t<NV>;
+
+template <int NV>
+using chain140_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi_cc40_t<NV>>, 
+                                    math::add<NV>>;
+
+template <int NV> using midi_cc41_t = midi_cc10_t<NV>;
+
+template <int NV>
+using chain141_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi_cc41_t<NV>>, 
+                                    math::add<NV>>;
+
+template <int NV> using midi28_t = midi7_t<NV>;
+
+template <int NV>
+using chain142_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi28_t<NV>>, 
+                                    math::add<NV>>;
+
+template <int NV> using midi29_t = midi8_t<NV>;
+
+template <int NV>
+using chain143_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi29_t<NV>>, 
+                                    math::add<NV>>;
+
+template <int NV> using midi30_t = midi9_t<NV>;
+
+template <int NV>
+using chain144_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, midi30_t<NV>>, 
+                                    math::add<NV>>;
+template <int NV>
+using branch13_t = container::branch<parameter::empty, 
+                                     wrap::fix<1, chain138_t<NV>>, 
+                                     chain139_t<NV>, 
+                                     chain140_t<NV>, 
+                                     chain141_t<NV>, 
+                                     chain142_t<NV>, 
+                                     chain143_t<NV>, 
+                                     chain144_t<NV>>;
+
+template <int NV>
+using chain137_t = container::chain<parameter::empty, 
+                                    wrap::fix<1, branch13_t<NV>>, 
+                                    core::gain<NV>>;
+
+template <int NV>
+using split21_t = container::split<parameter::empty, 
+                                   wrap::fix<1, chain130_t<NV>>, 
+                                   chain131_t<NV>, 
+                                   chain132_t<NV>, 
+                                   chain133_t<NV>, 
+                                   chain134_t<NV>, 
+                                   chain135_t<NV>, 
+                                   chain136_t<NV>, 
+                                   chain137_t<NV>>;
 
 template <int NV> using xfader_c0 = sliderbank3_c0<NV>;
 
@@ -1594,7 +2312,43 @@ template <int NV>
 using xfader_multimod = parameter::list<xfader_c0<NV>, xfader_c1<NV>>;
 
 template <int NV>
-using xfader_t = control::xfader<xfader_multimod<NV>, faders::overlap>;
+using xfader_t = control::xfader<xfader_multimod<NV>, faders::rms>;
+template <int NV>
+using pma15_t = control::pma<NV, 
+                             parameter::plain<xfader_t<NV>, 0>>;
+template <int NV>
+using peak12_t = wrap::mod<parameter::plain<pma15_t<NV>, 0>, 
+                           wrap::no_data<core::peak>>;
+
+template <int NV>
+using split22_t = container::split<parameter::empty, 
+                                   wrap::fix<1, peak12_t<NV>>>;
+
+template <int NV>
+using split23_t = container::split<parameter::empty, 
+                                   wrap::fix<1, pma15_t<NV>>>;
+
+template <int NV>
+using modchain9_t_ = container::chain<parameter::empty, 
+                                      wrap::fix<1, sliderbank12_t<NV>>, 
+                                      split21_t<NV>, 
+                                      split22_t<NV>, 
+                                      split23_t<NV>>;
+
+template <int NV>
+using modchain9_t = wrap::control_rate<modchain9_t_<NV>>;
+
+template <int NV>
+using split6_t = container::split<parameter::empty, 
+                                  wrap::fix<2, modchain_t<NV>>, 
+                                  modchain2_t<NV>, 
+                                  modchain4_t<NV>, 
+                                  modchain3_t<NV>, 
+                                  modchain6_t<NV>, 
+                                  modchain5_t<NV>, 
+                                  modchain7_t<NV>, 
+                                  modchain8_t<NV>, 
+                                  modchain9_t<NV>>;
 
 template <int NV>
 using chain_t = container::chain<parameter::empty, 
@@ -1669,8 +2423,9 @@ using chain8_t = container::chain<parameter::empty,
 
 template <int NV>
 using chain21_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, core::mono2stereo>, 
+                                   wrap::fix<2, wrap::no_process<core::mono2stereo>>, 
                                    chain8_t<NV>>;
+using oscilloscope_t = wrap::no_data<analyse::oscilloscope>;
 template <int NV>
 using file_player4_t = wrap::data<core::file_player<NV>, 
                                   data::external::audiofile<1>>;
@@ -1846,8 +2601,8 @@ using branch_t = container::branch<parameter::empty,
 
 template <int NV>
 using chain11_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, core::gain<NV>>, 
-                                   chain21_t<NV>, 
+                                   wrap::fix<2, chain21_t<NV>>, 
+                                   oscilloscope_t, 
                                    core::smoother<NV>, 
                                    math::add<NV>, 
                                    branch2_t<NV>, 
@@ -1856,7 +2611,10 @@ using chain11_t = container::chain<parameter::empty,
 
 template <int NV>
 using chain3_t = container::chain<parameter::empty, 
-                                  wrap::fix<2, chain11_t<NV>>, 
+                                  wrap::fix<2, cable_table9_t<NV>>, 
+                                  branch4_t<NV>, 
+                                  core::gain<NV>, 
+                                  chain11_t<NV>, 
                                   core::gain<NV>>;
 
 template <int NV>
@@ -1881,6 +2639,15 @@ namespace files_t_parameters
 {
 // Parameter list for files_impl::files_t ----------------------------------------------------------
 
+DECLARE_PARAMETER_RANGE_SKEW(smooth_InputRange, 
+                             0., 
+                             2000., 
+                             0.231378);
+
+template <int NV>
+using smooth = parameter::chain<smooth_InputRange, 
+                                parameter::plain<files_impl::pma14_t<NV>, 2>>;
+
 DECLARE_PARAMETER_RANGE_STEP(quant_InputRange, 
                              1., 
                              9., 
@@ -1897,6 +2664,11 @@ using quant_0 = parameter::from0To1<files_impl::branch8_t<NV>,
 
 template <int NV>
 using quant = parameter::chain<quant_InputRange, quant_0<NV>>;
+
+template <int NV>
+using Position = parameter::chain<ranges::Identity, 
+                                  parameter::plain<files_impl::pma2_t<NV>, 2>, 
+                                  parameter::plain<files_impl::cable_table8_t, 0>>;
 
 DECLARE_PARAMETER_RANGE(Win_InputRange, 
                         0., 
@@ -1955,6 +2727,39 @@ using XfStage_0 = parameter::from0To1<files_impl::event_data_reader13_t<NV>,
 
 template <int NV>
 using XfStage = parameter::chain<XfStage_InputRange, XfStage_0<NV>>;
+
+DECLARE_PARAMETER_RANGE_STEP(intmodtempo_InputRange, 
+                             0., 
+                             18., 
+                             1.);
+
+template <int NV>
+using intmodtempo = parameter::chain<intmodtempo_InputRange, 
+                                     parameter::plain<files_impl::pma12_t<NV>, 2>>;
+
+DECLARE_PARAMETER_RANGE_STEP(InmodDiv_InputRange, 
+                             1., 
+                             32., 
+                             1.);
+DECLARE_PARAMETER_RANGE_STEP(InmodDiv_0Range, 
+                             1., 
+                             32., 
+                             1.);
+
+template <int NV>
+using InmodDiv_0 = parameter::from0To1<files_impl::tempo_sync_t<NV>, 
+                                       1, 
+                                       InmodDiv_0Range>;
+
+template <int NV>
+using InmodDiv_1 = parameter::from0To1<files_impl::clock_ramp_t<NV>, 
+                                       1, 
+                                       files_impl::cable_table2_modRange>;
+
+template <int NV>
+using InmodDiv = parameter::chain<InmodDiv_InputRange, 
+                                  InmodDiv_0<NV>, 
+                                  InmodDiv_1<NV>>;
 
 using fb = parameter::chain<ranges::Identity, 
                             parameter::plain<routing::receive<stereo_cable>, 0>, 
@@ -2092,15 +2897,68 @@ using mid5_0 = parameter::from0To1<files_impl::branch9_t<NV>,
 template <int NV>
 using mid5 = parameter::chain<mid5_InputRange, mid5_0<NV>>;
 
+DECLARE_PARAMETER_RANGE(Midi6_InputRange, 
+                        1., 
+                        7.);
 template <int NV>
-using smooth = parameter::plain<core::smoother<NV>, 0>;
+using Midi6_0 = parameter::from0To1<files_impl::branch11_t<NV>, 
+                                    0, 
+                                    Midi1_0Range>;
+
 template <int NV>
-using Position = parameter::plain<files_impl::pma2_t<NV>, 2>;
+using Midi6 = parameter::chain<Midi6_InputRange, Midi6_0<NV>>;
+
+DECLARE_PARAMETER_RANGE(Midi7_InputRange, 
+                        1., 
+                        7.);
+template <int NV>
+using Midi7_0 = parameter::from0To1<files_impl::branch12_t<NV>, 
+                                    0, 
+                                    Midi1_0Range>;
+
+template <int NV>
+using Midi7 = parameter::chain<Midi7_InputRange, Midi7_0<NV>>;
+
+DECLARE_PARAMETER_RANGE(Midi8_InputRange, 
+                        1., 
+                        7.);
+template <int NV>
+using Midi8_0 = parameter::from0To1<files_impl::branch13_t<NV>, 
+                                    0, 
+                                    Midi1_0Range>;
+
+template <int NV>
+using Midi8 = parameter::chain<Midi8_InputRange, Midi8_0<NV>>;
+
+DECLARE_PARAMETER_RANGE(XfStage6_InputRange, 
+                        1., 
+                        4.);
+template <int NV> using XfStage6_0 = xf3_0<NV>;
+
+template <int NV>
+using XfStage6 = parameter::chain<XfStage6_InputRange, XfStage6_0<NV>>;
+
+DECLARE_PARAMETER_RANGE(XfStage7_InputRange, 
+                        1., 
+                        4.);
+template <int NV> using XfStage7_0 = xf3_0<NV>;
+
+template <int NV>
+using XfStage7 = parameter::chain<XfStage7_InputRange, XfStage7_0<NV>>;
+
+DECLARE_PARAMETER_RANGE(XfStage8_InputRange, 
+                        1., 
+                        4.);
+template <int NV> using XfStage8_0 = xf3_0<NV>;
+
+template <int NV>
+using XfStage8 = parameter::chain<XfStage8_InputRange, XfStage8_0<NV>>;
+
 template <int NV>
 using Input = parameter::plain<files_impl::pma3_t<NV>, 2>;
 template <int NV>
-using Mix = parameter::plain<files_impl::xfader_t<NV>, 
-                             0>;
+using Mix = parameter::plain<files_impl::pma15_t<NV>, 
+                             2>;
 template <int NV>
 using PositionTempoMod = parameter::plain<files_impl::pma2_t<NV>, 1>;
 template <int NV>
@@ -2114,12 +2972,6 @@ using IntModSteps = parameter::plain<files_impl::pack_resizer_t,
 template <int NV>
 using IntmodOne = parameter::plain<files_impl::ramp_t<NV>, 1>;
 template <int NV>
-using intmodtempo = parameter::plain<files_impl::tempo_sync_t<NV>, 
-                                     0>;
-template <int NV>
-using InmodDiv = parameter::plain<files_impl::tempo_sync_t<NV>, 
-                                  1>;
-template <int NV>
 using tablestep = parameter::plain<files_impl::branch1_t<NV>, 
                                    0>;
 template <int NV>
@@ -2127,6 +2979,18 @@ using UserMode = parameter::plain<files_impl::branch2_t<NV>,
                                   0>;
 template <int NV>
 using WinMod = parameter::plain<files_impl::pma7_t<NV>, 1>;
+template <int NV>
+using InmodClk = parameter::plain<files_impl::branch3_t<NV>, 
+                                  0>;
+template <int NV>
+using InTempoMod = parameter::plain<files_impl::pma12_t<NV>, 
+                                    1>;
+template <int NV>
+using SmoothMod = parameter::plain<files_impl::pma14_t<NV>, 
+                                   1>;
+template <int NV>
+using MixMod = parameter::plain<files_impl::pma15_t<NV>, 
+                                1>;
 template <int NV>
 using files_t_plist = parameter::list<smooth<NV>, 
                                       quant<NV>, 
@@ -2162,7 +3026,17 @@ using files_t_plist = parameter::list<smooth<NV>,
                                       xf4<NV>, 
                                       xf5<NV>, 
                                       midi4<NV>, 
-                                      mid5<NV>>;
+                                      mid5<NV>, 
+                                      InmodClk<NV>, 
+                                      InTempoMod<NV>, 
+                                      SmoothMod<NV>, 
+                                      MixMod<NV>, 
+                                      Midi6<NV>, 
+                                      Midi7<NV>, 
+                                      Midi8<NV>, 
+                                      XfStage6<NV>, 
+                                      XfStage7<NV>, 
+                                      XfStage8<NV>>;
 }
 
 template <int NV>
@@ -2176,46 +3050,46 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 	
 	struct metadata
 	{
-		static const int NumTables = 2;
-		static const int NumSliderPacks = 6;
+		static const int NumTables = 4;
+		static const int NumSliderPacks = 9;
 		static const int NumAudioFiles = 2;
 		static const int NumFilters = 0;
 		static const int NumDisplayBuffers = 0;
 		
 		SNEX_METADATA_ID(files);
 		SNEX_METADATA_NUM_CHANNELS(2);
-		SNEX_METADATA_ENCODED_PARAMETERS(564)
+		SNEX_METADATA_ENCODED_PARAMETERS(730)
 		{
 			0x005B, 0x0000, 0x7300, 0x6F6D, 0x746F, 0x0068, 0x0000, 0x0000, 
             0x0000, 0x44FA, 0x0000, 0x0000, 0xEE69, 0x3E6C, 0xCCCD, 0x3DCC, 
             0x015B, 0x0000, 0x7100, 0x6175, 0x746E, 0x0000, 0x8000, 0x003F, 
             0x1000, 0x0041, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x5B3F, 
             0x0002, 0x0000, 0x6F50, 0x6973, 0x6974, 0x6E6F, 0x0000, 0x0000, 
-            0x0000, 0x8000, 0xDF3F, 0x21F4, 0x003F, 0x8000, 0x003F, 0x0000, 
+            0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
             0x5B00, 0x0003, 0x0000, 0x6E49, 0x7570, 0x0074, 0x0000, 0x0000, 
-            0x0000, 0x3F80, 0xCDEA, 0x3F4E, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x045B, 0x0000, 0x5700, 0x6E69, 0x0000, 0x0000, 0x0000, 0x7A00, 
-            0xAE44, 0x09A7, 0x0044, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0005, 
-            0x0000, 0x6658, 0x0000, 0x0000, 0x0000, 0x7A00, 0xB844, 0x029E, 
-            0x0044, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0006, 0x0000, 0x6873, 
-            0x6669, 0x0074, 0x0000, 0x3F80, 0x0000, 0x4040, 0x0000, 0x4000, 
+            0x0044, 0x2000, 0x0041, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0005, 
+            0x0000, 0x6658, 0x0000, 0x0000, 0x0000, 0x7A00, 0x0044, 0x2000, 
+            0x0041, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0006, 0x0000, 0x6873, 
+            0x6669, 0x0074, 0x0000, 0x3F80, 0x0000, 0x4040, 0x0000, 0x3F80, 
             0x0000, 0x3F80, 0x0000, 0x3F80, 0x075B, 0x0000, 0x7000, 0x7469, 
-            0x6863, 0x0000, 0xC000, 0x00C1, 0xC000, 0x0041, 0xC000, 0x0041, 
+            0x6863, 0x0000, 0xC000, 0x00C1, 0xC000, 0x6D41, 0x6666, 0x003F, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0008, 0x0000, 0x694D, 0x0078, 
-            0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 
+            0x0000, 0x0000, 0x0000, 0x3F80, 0xCCCD, 0x3ECC, 0x0000, 0x3F80, 
             0x0000, 0x0000, 0x095B, 0x0000, 0x5000, 0x736F, 0x7469, 0x6F69, 
             0x546E, 0x6D65, 0x6F70, 0x6F4D, 0x0064, 0x0000, 0xBF80, 0x0000, 
-            0x3F80, 0xD70A, 0x3EA3, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0A5B, 
+            0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0A5B, 
             0x0000, 0x5000, 0x7469, 0x6863, 0x6F4D, 0x0064, 0x0000, 0xBF80, 
-            0x0000, 0x3F80, 0xA6F5, 0xBD27, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x0B5B, 0x0000, 0x4900, 0x706E, 0x7475, 0x6F4D, 0x0064, 0x0000, 
             0xBF80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
             0x0000, 0x0C5B, 0x0000, 0x5800, 0x5366, 0x6174, 0x6567, 0x0000, 
             0x8000, 0x003F, 0x8000, 0x0040, 0x8000, 0x003F, 0x8000, 0x003F, 
             0x8000, 0x5B3F, 0x000D, 0x0000, 0x6E49, 0x4D74, 0x646F, 0x0000, 
-            0x8000, 0x00BF, 0x8000, 0xCD3F, 0xCCCC, 0x00BD, 0x8000, 0x003F, 
+            0x8000, 0x00BF, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 0x003F, 
             0x0000, 0x5B00, 0x000E, 0x0000, 0x6E49, 0x4D74, 0x646F, 0x7453, 
-            0x7065, 0x0073, 0x0000, 0x4080, 0x0000, 0x4280, 0x0000, 0x4180, 
+            0x7065, 0x0073, 0x0000, 0x4080, 0x0000, 0x4280, 0x0000, 0x4120, 
             0x0000, 0x3F80, 0x0000, 0x3F80, 0x0F5B, 0x0000, 0x4900, 0x746E, 
             0x6F6D, 0x4F64, 0x656E, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 
             0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0010, 0x0000, 
@@ -2224,7 +3098,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
             0x115B, 0x0000, 0x4900, 0x6D6E, 0x646F, 0x6944, 0x0076, 0x0000, 
             0x3F80, 0x0000, 0x4200, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x125B, 0x0000, 0x6600, 0x0062, 0x0000, 0x0000, 0x0000, 
-            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x135B, 
+            0x3F80, 0x6666, 0x3F66, 0x0000, 0x3F80, 0x0000, 0x0000, 0x135B, 
             0x0000, 0x7400, 0x6261, 0x656C, 0x7473, 0x7065, 0x0000, 0x0000, 
             0x0000, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
             0x5B00, 0x0014, 0x0000, 0x694D, 0x6964, 0x0031, 0x0000, 0x3F80, 
@@ -2242,21 +3116,42 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
             0x6E69, 0x7953, 0x636E, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 
             0x0000, 0x0000, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001B, 0x0000, 
             0x6957, 0x546E, 0x6D65, 0x6F70, 0x0000, 0x8000, 0x00C1, 0x9000, 
-            0x0041, 0x0000, 0x00C0, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001C, 
+            0x0041, 0x0000, 0x0000, 0x8000, 0x003F, 0x8000, 0x5B3F, 0x001C, 
             0x0000, 0x6658, 0x6554, 0x706D, 0x006F, 0x0000, 0xC180, 0x0000, 
-            0x4190, 0x0000, 0x4110, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x1D5B, 
+            0x4190, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x1D5B, 
             0x0000, 0x5700, 0x6E69, 0x6F4D, 0x0064, 0x0000, 0xBF80, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x1E5B, 
             0x0000, 0x5800, 0x4D66, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 
             0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x001F, 
             0x0000, 0x6678, 0x0034, 0x0000, 0x3F80, 0x0000, 0x4080, 0x0000, 
-            0x4040, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x205B, 0x0000, 0x7800, 
+            0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x205B, 0x0000, 0x7800, 
             0x3566, 0x0000, 0x8000, 0x003F, 0x8000, 0x0040, 0x8000, 0x003F, 
             0x8000, 0x003F, 0x0000, 0x5B00, 0x0021, 0x0000, 0x696D, 0x6964, 
             0x0034, 0x0000, 0x3F80, 0x0000, 0x40E0, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0000, 0x0000, 0x225B, 0x0000, 0x6D00, 0x6469, 0x0035, 
             0x0000, 0x3F80, 0x0000, 0x40E0, 0x0000, 0x3F80, 0x0000, 0x3F80, 
-            0x0000, 0x3F80, 0x0000, 0x0000
+            0x0000, 0x3F80, 0x235B, 0x0000, 0x4900, 0x6D6E, 0x646F, 0x6C43, 
+            0x006B, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 
+            0x3F80, 0x0000, 0x0000, 0x245B, 0x0000, 0x4900, 0x546E, 0x6D65, 
+            0x6F70, 0x6F4D, 0x0064, 0x0000, 0xBF80, 0x0000, 0x3F80, 0x0000, 
+            0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x255B, 0x0000, 0x5300, 
+            0x6F6D, 0x746F, 0x4D68, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 
+            0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0026, 
+            0x0000, 0x694D, 0x4D78, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 
+            0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0027, 
+            0x0000, 0x694D, 0x6964, 0x0036, 0x0000, 0x3F80, 0x0000, 0x40E0, 
+            0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x285B, 0x0000, 
+            0x4D00, 0x6469, 0x3769, 0x0000, 0x8000, 0x003F, 0xE000, 0x0040, 
+            0x8000, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0029, 0x0000, 
+            0x694D, 0x6964, 0x0038, 0x0000, 0x3F80, 0x0000, 0x40E0, 0x0000, 
+            0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x2A5B, 0x0000, 0x5800, 
+            0x5366, 0x6174, 0x6567, 0x0036, 0x0000, 0x3F80, 0x0000, 0x4080, 
+            0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x2B5B, 0x0000, 
+            0x5800, 0x5366, 0x6174, 0x6567, 0x0037, 0x0000, 0x3F80, 0x0000, 
+            0x4080, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x2C5B, 
+            0x0000, 0x5800, 0x5366, 0x6174, 0x6567, 0x0038, 0x0000, 0x3F80, 
+            0x0000, 0x4080, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x0000
 		};
 	};
 	
@@ -2269,8 +3164,21 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		auto& modchain = this->getT(0).getT(0).getT(0);                                     // files_impl::modchain_t<NV>
 		auto& chain5 = this->getT(0).getT(0).getT(0).getT(0);                               // files_impl::chain5_t<NV>
 		auto& clear = this->getT(0).getT(0).getT(0).getT(0).getT(0);                        // math::clear<NV>
-		auto& tempo_sync = this->getT(0).getT(0).getT(0).getT(0).getT(1);                   // files_impl::tempo_sync_t<NV>
-		auto& ramp = this->getT(0).getT(0).getT(0).getT(0).getT(2);                         // files_impl::ramp_t<NV>
+		auto& chain112 = this->getT(0).getT(0).getT(0).getT(0).getT(1);                     // files_impl::chain112_t<NV>
+		auto& branch3 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(0);              // files_impl::branch3_t<NV>
+		auto& chain113 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(0).getT(0);     // files_impl::chain113_t<NV>
+		auto& tempo_sync = this->getT(0).getT(0).getT(0).getT(0).                           // files_impl::tempo_sync_t<NV>
+                           getT(1).getT(0).getT(0).getT(0);
+		auto& ramp = this->getT(0).getT(0).getT(0).getT(0).                                 // files_impl::ramp_t<NV>
+                     getT(1).getT(0).getT(0).getT(1);
+		auto& add17 = this->getT(0).getT(0).getT(0).getT(0).                                // math::add<NV>
+                      getT(1).getT(0).getT(0).getT(2);
+		auto& chain114 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(0).getT(1);     // files_impl::chain114_t<NV>
+		auto& clock_ramp = this->getT(0).getT(0).getT(0).getT(0).                           // files_impl::clock_ramp_t<NV>
+                           getT(1).getT(0).getT(1).getT(0);
+		auto& add18 = this->getT(0).getT(0).getT(0).getT(0).                                // math::add<NV>
+                      getT(1).getT(0).getT(1).getT(1);
+		auto& peak2 = this->getT(0).getT(0).getT(0).getT(0).getT(2);                        // files_impl::peak2_t<NV>
 		auto& clear2 = this->getT(0).getT(0).getT(0).getT(0).getT(3);                       // math::clear<NV>
 		auto& pack_resizer = this->getT(0).getT(0).getT(0).getT(0).getT(4);                 // files_impl::pack_resizer_t
 		auto& branch1 = this->getT(0).getT(0).getT(0).getT(0).getT(5);                      // files_impl::branch1_t<NV>
@@ -2283,6 +3191,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		auto& peak1 = this->getT(0).getT(0).getT(0).getT(0).getT(6);                        // files_impl::peak1_t<NV>
 		auto& clear1 = this->getT(0).getT(0).getT(0).getT(0).getT(7);                       // math::clear<NV>
 		auto& pma1 = this->getT(0).getT(0).getT(0).getT(0).getT(8);                         // files_impl::pma1_t<NV>
+		auto& cable_table7 = this->getT(0).getT(0).getT(0).getT(0).getT(9);                 // files_impl::cable_table7_t
 		auto& split4 = this->getT(0).getT(0).getT(0).getT(1);                               // files_impl::split4_t
 		auto& modchain2 = this->getT(0).getT(0).getT(1);                                    // files_impl::modchain2_t<NV>
 		auto& sliderbank3 = this->getT(0).getT(0).getT(1).getT(0);                          // files_impl::sliderbank3_t<NV>
@@ -2300,7 +3209,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		auto& add5 = this->getT(0).getT(0).getT(1).getT(1).getT(2).getT(1);                 // math::add<NV>
 		auto& gain14 = this->getT(0).getT(0).getT(1).getT(1).getT(2).getT(2);               // core::gain<NV>
 		auto& chain42 = this->getT(0).getT(0).getT(1).getT(1).getT(3);                      // files_impl::chain42_t<NV>
-		auto& event_data_reader3 = this->getT(0).getT(0).getT(1).getT(1).getT(3).getT(0);   // files_impl::event_data_reader3_t<NV>
+		auto& global_cable25 = this->getT(0).getT(0).getT(1).getT(1).getT(3).getT(0);       // files_impl::global_cable25_t<NV>
 		auto& add27 = this->getT(0).getT(0).getT(1).getT(1).getT(3).getT(1);                // math::add<NV>
 		auto& gain16 = this->getT(0).getT(0).getT(1).getT(1).getT(3).getT(2);               // core::gain<NV>
 		auto& chain44 = this->getT(0).getT(0).getT(1).getT(1).getT(4);                      // files_impl::chain44_t<NV>
@@ -2356,6 +3265,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		auto& peak3 = this->getT(0).getT(0).getT(1).getT(2);                                // files_impl::peak3_t<NV>
 		auto& pma2 = this->getT(0).getT(0).getT(1).getT(3);                                 // files_impl::pma2_t<NV>
 		auto& cable_table6 = this->getT(0).getT(0).getT(1).getT(4);                         // files_impl::cable_table6_t
+		auto& cable_table8 = this->getT(0).getT(0).getT(1).getT(5);                         // files_impl::cable_table8_t
 		auto& modchain4 = this->getT(0).getT(0).getT(2);                                    // files_impl::modchain4_t<NV>
 		auto& sliderbank7 = this->getT(0).getT(0).getT(2).getT(0);                          // files_impl::sliderbank7_t<NV>
 		auto& split3 = this->getT(0).getT(0).getT(2).getT(1);                               // files_impl::split3_t<NV>
@@ -2372,7 +3282,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		auto& add9 = this->getT(0).getT(0).getT(2).getT(1).getT(2).getT(1);                 // math::add<NV>
 		auto& gain23 = this->getT(0).getT(0).getT(2).getT(1).getT(2).getT(2);               // core::gain<NV>
 		auto& chain75 = this->getT(0).getT(0).getT(2).getT(1).getT(3);                      // files_impl::chain75_t<NV>
-		auto& event_data_reader5 = this->getT(0).getT(0).getT(2).getT(1).getT(3).getT(0);   // files_impl::event_data_reader5_t<NV>
+		auto& global_cable26 = this->getT(0).getT(0).getT(2).getT(1).getT(3).getT(0);       // files_impl::global_cable26_t<NV>
 		auto& add55 = this->getT(0).getT(0).getT(2).getT(1).getT(3).getT(1);                // math::add<NV>
 		auto& gain24 = this->getT(0).getT(0).getT(2).getT(1).getT(3).getT(2);               // core::gain<NV>
 		auto& chain76 = this->getT(0).getT(0).getT(2).getT(1).getT(4);                      // files_impl::chain76_t<NV>
@@ -2443,7 +3353,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		auto& add7 = this->getT(0).getT(0).getT(3).getT(1).getT(2).getT(1);                 // math::add<NV>
 		auto& gain19 = this->getT(0).getT(0).getT(3).getT(1).getT(2).getT(2);               // core::gain<NV>
 		auto& chain67 = this->getT(0).getT(0).getT(3).getT(1).getT(3);                      // files_impl::chain67_t<NV>
-		auto& event_data_reader4 = this->getT(0).getT(0).getT(3).getT(1).getT(3).getT(0);   // files_impl::event_data_reader4_t<NV>
+		auto& global_cable27 = this->getT(0).getT(0).getT(3).getT(1).getT(3).getT(0);       // files_impl::global_cable27_t<NV>
 		auto& add49 = this->getT(0).getT(0).getT(3).getT(1).getT(3).getT(1);                // math::add<NV>
 		auto& gain20 = this->getT(0).getT(0).getT(3).getT(1).getT(3).getT(2);               // core::gain<NV>
 		auto& chain68 = this->getT(0).getT(0).getT(3).getT(1).getT(4);                      // files_impl::chain68_t<NV>
@@ -2514,7 +3424,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		auto& add14 = this->getT(0).getT(0).getT(4).getT(1).getT(2).getT(1);                // math::add<NV>
 		auto& gain38 = this->getT(0).getT(0).getT(4).getT(1).getT(2).getT(2);               // core::gain<NV>
 		auto& chain96 = this->getT(0).getT(0).getT(4).getT(1).getT(3);                      // files_impl::chain96_t<NV>
-		auto& event_data_reader7 = this->getT(0).getT(0).getT(4).getT(1).getT(3).getT(0);   // files_impl::event_data_reader7_t<NV>
+		auto& global_cable28 = this->getT(0).getT(0).getT(4).getT(1).getT(3).getT(0);       // files_impl::global_cable28_t<NV>
 		auto& add92 = this->getT(0).getT(0).getT(4).getT(1).getT(3).getT(1);                // math::add<NV>
 		auto& gain39 = this->getT(0).getT(0).getT(4).getT(1).getT(3).getT(2);               // core::gain<NV>
 		auto& chain97 = this->getT(0).getT(0).getT(4).getT(1).getT(4);                      // files_impl::chain97_t<NV>
@@ -2588,7 +3498,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		auto& add12 = this->getT(0).getT(0).getT(5).getT(1).getT(2).getT(1);                // math::add<NV>
 		auto& gain30 = this->getT(0).getT(0).getT(5).getT(1).getT(2).getT(2);               // core::gain<NV>
 		auto& chain86 = this->getT(0).getT(0).getT(5).getT(1).getT(3);                      // files_impl::chain86_t<NV>
-		auto& event_data_reader6 = this->getT(0).getT(0).getT(5).getT(1).getT(3).getT(0);   // files_impl::event_data_reader6_t<NV>
+		auto& global_cable29 = this->getT(0).getT(0).getT(5).getT(1).getT(3).getT(0);       // files_impl::global_cable29_t<NV>
 		auto& add59 = this->getT(0).getT(0).getT(5).getT(1).getT(3).getT(1);                // math::add<NV>
 		auto& gain31 = this->getT(0).getT(0).getT(5).getT(1).getT(3).getT(2);               // core::gain<NV>
 		auto& chain87 = this->getT(0).getT(0).getT(5).getT(1).getT(4);                      // files_impl::chain87_t<NV>
@@ -2646,156 +3556,382 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		auto& split10 = this->getT(0).getT(0).getT(5).getT(3);                              // files_impl::split10_t<NV>
 		auto& pma11 = this->getT(0).getT(0).getT(5).getT(3).getT(0);                        // files_impl::pma11_t<NV>
 		auto& pma9 = this->getT(0).getT(0).getT(5).getT(3).getT(1);                         // files_impl::pma9_t<NV>
+		auto& modchain7 = this->getT(0).getT(0).getT(6);                                    // files_impl::modchain7_t<NV>
+		auto& sliderbank10 = this->getT(0).getT(0).getT(6).getT(0);                         // files_impl::sliderbank10_t<NV>
+		auto& split15 = this->getT(0).getT(0).getT(6).getT(1);                              // files_impl::split15_t<NV>
+		auto& chain101 = this->getT(0).getT(0).getT(6).getT(1).getT(0);                     // files_impl::chain101_t<NV>
+		auto& global_cable8 = this->getT(0).getT(0).getT(6).getT(1).getT(0).getT(0);        // files_impl::global_cable8_t<NV>
+		auto& add15 = this->getT(0).getT(0).getT(6).getT(1).getT(0).getT(1);                // math::add<NV>
+		auto& gain41 = this->getT(0).getT(0).getT(6).getT(1).getT(0).getT(2);               // core::gain<NV>
+		auto& chain102 = this->getT(0).getT(0).getT(6).getT(1).getT(1);                     // files_impl::chain102_t<NV>
+		auto& global_cable15 = this->getT(0).getT(0).getT(6).getT(1).getT(1).getT(0);       // files_impl::global_cable15_t<NV>
+		auto& add103 = this->getT(0).getT(0).getT(6).getT(1).getT(1).getT(1);               // math::add<NV>
+		auto& gain42 = this->getT(0).getT(0).getT(6).getT(1).getT(1).getT(2);               // core::gain<NV>
+		auto& chain103 = this->getT(0).getT(0).getT(6).getT(1).getT(2);                     // files_impl::chain103_t<NV>
+		auto& global_cable24 = this->getT(0).getT(0).getT(6).getT(1).getT(2).getT(0);       // files_impl::global_cable24_t<NV>
+		auto& add16 = this->getT(0).getT(0).getT(6).getT(1).getT(2).getT(1);                // math::add<NV>
+		auto& gain43 = this->getT(0).getT(0).getT(6).getT(1).getT(2).getT(2);               // core::gain<NV>
+		auto& chain104 = this->getT(0).getT(0).getT(6).getT(1).getT(3);                     // files_impl::chain104_t<NV>
+		auto& global_cable30 = this->getT(0).getT(0).getT(6).getT(1).getT(3).getT(0);       // files_impl::global_cable30_t<NV>
+		auto& add104 = this->getT(0).getT(0).getT(6).getT(1).getT(3).getT(1);               // math::add<NV>
+		auto& gain44 = this->getT(0).getT(0).getT(6).getT(1).getT(3).getT(2);               // core::gain<NV>
+		auto& chain105 = this->getT(0).getT(0).getT(6).getT(1).getT(4);                     // files_impl::chain105_t<NV>
+		auto& event_data_reader16 = this->getT(0).getT(0).getT(6).getT(1).getT(4).getT(0);  // files_impl::event_data_reader16_t<NV>
+		auto& add105 = this->getT(0).getT(0).getT(6).getT(1).getT(4).getT(1);               // math::add<NV>
+		auto& gain63 = this->getT(0).getT(0).getT(6).getT(1).getT(4).getT(2);               // core::gain<NV>
+		auto& chain106 = this->getT(0).getT(0).getT(6).getT(1).getT(5);                     // files_impl::chain106_t<NV>
+		auto& event_data_reader28 = this->getT(0).getT(0).getT(6).getT(1).getT(5).getT(0);  // files_impl::event_data_reader28_t<NV>
+		auto& add106 = this->getT(0).getT(0).getT(6).getT(1).getT(5).getT(1);               // math::add<NV>
+		auto& gain45 = this->getT(0).getT(0).getT(6).getT(1).getT(5).getT(2);               // core::gain<NV>
+		auto& chain107 = this->getT(0).getT(0).getT(6).getT(1).getT(6);                     // files_impl::chain107_t<NV>
+		auto& event_data_reader29 = this->getT(0).getT(0).getT(6).getT(1).getT(6).getT(0);  // routing::event_data_reader<NV>
+		auto& add107 = this->getT(0).getT(0).getT(6).getT(1).getT(6).getT(1);               // math::add<NV>
+		auto& gain64 = this->getT(0).getT(0).getT(6).getT(1).getT(6).getT(2);               // core::gain<NV>
+		auto& chain108 = this->getT(0).getT(0).getT(6).getT(1).getT(7);                     // files_impl::chain108_t<NV>
+		auto& branch11 = this->getT(0).getT(0).getT(6).getT(1).getT(7).getT(0);             // files_impl::branch11_t<NV>
+		auto& chain60 = this->getT(0).getT(0).getT(6).getT(1).getT(7).getT(0).getT(0);      // files_impl::chain60_t<NV>
+		auto& midi_cc30 = this->getT(0).getT(0).getT(6).getT(1).                            // files_impl::midi_cc30_t<NV>
+                          getT(7).getT(0).getT(0).getT(0);
+		auto& add108 = this->getT(0).getT(0).getT(6).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(0).getT(1);
+		auto& chain61 = this->getT(0).getT(0).getT(6).getT(1).getT(7).getT(0).getT(1);      // files_impl::chain61_t<NV>
+		auto& midi_cc31 = this->getT(0).getT(0).getT(6).getT(1).                            // files_impl::midi_cc31_t<NV>
+                          getT(7).getT(0).getT(1).getT(0);
+		auto& add109 = this->getT(0).getT(0).getT(6).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(1).getT(1);
+		auto& chain62 = this->getT(0).getT(0).getT(6).getT(1).getT(7).getT(0).getT(2);      // files_impl::chain62_t<NV>
+		auto& midi_cc32 = this->getT(0).getT(0).getT(6).getT(1).                            // files_impl::midi_cc32_t<NV>
+                          getT(7).getT(0).getT(2).getT(0);
+		auto& add110 = this->getT(0).getT(0).getT(6).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(2).getT(1);
+		auto& chain63 = this->getT(0).getT(0).getT(6).getT(1).getT(7).getT(0).getT(3);      // files_impl::chain63_t<NV>
+		auto& midi_cc33 = this->getT(0).getT(0).getT(6).getT(1).                            // files_impl::midi_cc33_t<NV>
+                          getT(7).getT(0).getT(3).getT(0);
+		auto& add111 = this->getT(0).getT(0).getT(6).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(3).getT(1);
+		auto& chain109 = this->getT(0).getT(0).getT(6).getT(1).getT(7).getT(0).getT(4);     // files_impl::chain109_t<NV>
+		auto& midi22 = this->getT(0).getT(0).getT(6).getT(1).                               // files_impl::midi22_t<NV>
+                       getT(7).getT(0).getT(4).getT(0);
+		auto& add112 = this->getT(0).getT(0).getT(6).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(4).getT(1);
+		auto& chain110 = this->getT(0).getT(0).getT(6).getT(1).getT(7).getT(0).getT(5);     // files_impl::chain110_t<NV>
+		auto& midi23 = this->getT(0).getT(0).getT(6).getT(1).                               // files_impl::midi23_t<NV>
+                       getT(7).getT(0).getT(5).getT(0);
+		auto& add113 = this->getT(0).getT(0).getT(6).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(5).getT(1);
+		auto& chain111 = this->getT(0).getT(0).getT(6).getT(1).getT(7).getT(0).getT(6);     // files_impl::chain111_t<NV>
+		auto& midi24 = this->getT(0).getT(0).getT(6).getT(1).                               // files_impl::midi24_t<NV>
+                       getT(7).getT(0).getT(6).getT(0);
+		auto& add114 = this->getT(0).getT(0).getT(6).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(6).getT(1);
+		auto& gain65 = this->getT(0).getT(0).getT(6).getT(1).getT(7).getT(1);               // core::gain<NV>
+		auto& split16 = this->getT(0).getT(0).getT(6).getT(2);                              // files_impl::split16_t<NV>
+		auto& peak10 = this->getT(0).getT(0).getT(6).getT(2).getT(0);                       // files_impl::peak10_t<NV>
+		auto& split17 = this->getT(0).getT(0).getT(6).getT(3);                              // files_impl::split17_t<NV>
+		auto& pma12 = this->getT(0).getT(0).getT(6).getT(3).getT(0);                        // files_impl::pma12_t<NV>
+		auto& modchain8 = this->getT(0).getT(0).getT(7);                                    // files_impl::modchain8_t<NV>
+		auto& sliderbank11 = this->getT(0).getT(0).getT(7).getT(0);                         // files_impl::sliderbank11_t<NV>
+		auto& split18 = this->getT(0).getT(0).getT(7).getT(1);                              // files_impl::split18_t<NV>
+		auto& chain115 = this->getT(0).getT(0).getT(7).getT(1).getT(0);                     // files_impl::chain115_t<NV>
+		auto& global_cable9 = this->getT(0).getT(0).getT(7).getT(1).getT(0).getT(0);        // files_impl::global_cable9_t<NV>
+		auto& add19 = this->getT(0).getT(0).getT(7).getT(1).getT(0).getT(1);                // math::add<NV>
+		auto& gain46 = this->getT(0).getT(0).getT(7).getT(1).getT(0).getT(2);               // core::gain<NV>
+		auto& chain116 = this->getT(0).getT(0).getT(7).getT(1).getT(1);                     // files_impl::chain116_t<NV>
+		auto& global_cable16 = this->getT(0).getT(0).getT(7).getT(1).getT(1).getT(0);       // files_impl::global_cable16_t<NV>
+		auto& add115 = this->getT(0).getT(0).getT(7).getT(1).getT(1).getT(1);               // math::add<NV>
+		auto& gain47 = this->getT(0).getT(0).getT(7).getT(1).getT(1).getT(2);               // core::gain<NV>
+		auto& chain117 = this->getT(0).getT(0).getT(7).getT(1).getT(2);                     // files_impl::chain117_t<NV>
+		auto& global_cable31 = this->getT(0).getT(0).getT(7).getT(1).getT(2).getT(0);       // files_impl::global_cable31_t<NV>
+		auto& add20 = this->getT(0).getT(0).getT(7).getT(1).getT(2).getT(1);                // math::add<NV>
+		auto& gain48 = this->getT(0).getT(0).getT(7).getT(1).getT(2).getT(2);               // core::gain<NV>
+		auto& chain118 = this->getT(0).getT(0).getT(7).getT(1).getT(3);                     // files_impl::chain118_t<NV>
+		auto& global_cable32 = this->getT(0).getT(0).getT(7).getT(1).getT(3).getT(0);       // files_impl::global_cable32_t<NV>
+		auto& add116 = this->getT(0).getT(0).getT(7).getT(1).getT(3).getT(1);               // math::add<NV>
+		auto& gain49 = this->getT(0).getT(0).getT(7).getT(1).getT(3).getT(2);               // core::gain<NV>
+		auto& chain119 = this->getT(0).getT(0).getT(7).getT(1).getT(4);                     // files_impl::chain119_t<NV>
+		auto& event_data_reader17 = this->getT(0).getT(0).getT(7).getT(1).getT(4).getT(0);  // files_impl::event_data_reader17_t<NV>
+		auto& add117 = this->getT(0).getT(0).getT(7).getT(1).getT(4).getT(1);               // math::add<NV>
+		auto& gain66 = this->getT(0).getT(0).getT(7).getT(1).getT(4).getT(2);               // core::gain<NV>
+		auto& chain120 = this->getT(0).getT(0).getT(7).getT(1).getT(5);                     // files_impl::chain120_t<NV>
+		auto& event_data_reader30 = this->getT(0).getT(0).getT(7).getT(1).getT(5).getT(0);  // files_impl::event_data_reader30_t<NV>
+		auto& add118 = this->getT(0).getT(0).getT(7).getT(1).getT(5).getT(1);               // math::add<NV>
+		auto& gain50 = this->getT(0).getT(0).getT(7).getT(1).getT(5).getT(2);               // core::gain<NV>
+		auto& chain121 = this->getT(0).getT(0).getT(7).getT(1).getT(6);                     // files_impl::chain121_t<NV>
+		auto& event_data_reader31 = this->getT(0).getT(0).getT(7).getT(1).getT(6).getT(0);  // routing::event_data_reader<NV>
+		auto& add119 = this->getT(0).getT(0).getT(7).getT(1).getT(6).getT(1);               // math::add<NV>
+		auto& gain67 = this->getT(0).getT(0).getT(7).getT(1).getT(6).getT(2);               // core::gain<NV>
+		auto& chain122 = this->getT(0).getT(0).getT(7).getT(1).getT(7);                     // files_impl::chain122_t<NV>
+		auto& branch12 = this->getT(0).getT(0).getT(7).getT(1).getT(7).getT(0);             // files_impl::branch12_t<NV>
+		auto& chain123 = this->getT(0).getT(0).getT(7).getT(1).getT(7).getT(0).getT(0);     // files_impl::chain123_t<NV>
+		auto& midi_cc34 = this->getT(0).getT(0).getT(7).getT(1).                            // files_impl::midi_cc34_t<NV>
+                          getT(7).getT(0).getT(0).getT(0);
+		auto& add120 = this->getT(0).getT(0).getT(7).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(0).getT(1);
+		auto& chain124 = this->getT(0).getT(0).getT(7).getT(1).getT(7).getT(0).getT(1);     // files_impl::chain124_t<NV>
+		auto& midi_cc35 = this->getT(0).getT(0).getT(7).getT(1).                            // files_impl::midi_cc35_t<NV>
+                          getT(7).getT(0).getT(1).getT(0);
+		auto& add121 = this->getT(0).getT(0).getT(7).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(1).getT(1);
+		auto& chain125 = this->getT(0).getT(0).getT(7).getT(1).getT(7).getT(0).getT(2);     // files_impl::chain125_t<NV>
+		auto& midi_cc36 = this->getT(0).getT(0).getT(7).getT(1).                            // files_impl::midi_cc36_t<NV>
+                          getT(7).getT(0).getT(2).getT(0);
+		auto& add122 = this->getT(0).getT(0).getT(7).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(2).getT(1);
+		auto& chain126 = this->getT(0).getT(0).getT(7).getT(1).getT(7).getT(0).getT(3);     // files_impl::chain126_t<NV>
+		auto& midi_cc37 = this->getT(0).getT(0).getT(7).getT(1).                            // files_impl::midi_cc37_t<NV>
+                          getT(7).getT(0).getT(3).getT(0);
+		auto& add123 = this->getT(0).getT(0).getT(7).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(3).getT(1);
+		auto& chain127 = this->getT(0).getT(0).getT(7).getT(1).getT(7).getT(0).getT(4);     // files_impl::chain127_t<NV>
+		auto& midi25 = this->getT(0).getT(0).getT(7).getT(1).                               // files_impl::midi25_t<NV>
+                       getT(7).getT(0).getT(4).getT(0);
+		auto& add124 = this->getT(0).getT(0).getT(7).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(4).getT(1);
+		auto& chain128 = this->getT(0).getT(0).getT(7).getT(1).getT(7).getT(0).getT(5);     // files_impl::chain128_t<NV>
+		auto& midi26 = this->getT(0).getT(0).getT(7).getT(1).                               // files_impl::midi26_t<NV>
+                       getT(7).getT(0).getT(5).getT(0);
+		auto& add132 = this->getT(0).getT(0).getT(7).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(5).getT(1);
+		auto& chain129 = this->getT(0).getT(0).getT(7).getT(1).getT(7).getT(0).getT(6);     // files_impl::chain129_t<NV>
+		auto& midi27 = this->getT(0).getT(0).getT(7).getT(1).                               // files_impl::midi27_t<NV>
+                       getT(7).getT(0).getT(6).getT(0);
+		auto& add133 = this->getT(0).getT(0).getT(7).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(6).getT(1);
+		auto& gain68 = this->getT(0).getT(0).getT(7).getT(1).getT(7).getT(1);               // core::gain<NV>
+		auto& split19 = this->getT(0).getT(0).getT(7).getT(2);                              // files_impl::split19_t<NV>
+		auto& peak11 = this->getT(0).getT(0).getT(7).getT(2).getT(0);                       // files_impl::peak11_t<NV>
+		auto& split20 = this->getT(0).getT(0).getT(7).getT(3);                              // files_impl::split20_t<NV>
+		auto& pma14 = this->getT(0).getT(0).getT(7).getT(3).getT(0);                        // files_impl::pma14_t<NV>
+		auto& modchain9 = this->getT(0).getT(0).getT(8);                                    // files_impl::modchain9_t<NV>
+		auto& sliderbank12 = this->getT(0).getT(0).getT(8).getT(0);                         // files_impl::sliderbank12_t<NV>
+		auto& split21 = this->getT(0).getT(0).getT(8).getT(1);                              // files_impl::split21_t<NV>
+		auto& chain130 = this->getT(0).getT(0).getT(8).getT(1).getT(0);                     // files_impl::chain130_t<NV>
+		auto& global_cable17 = this->getT(0).getT(0).getT(8).getT(1).getT(0).getT(0);       // files_impl::global_cable17_t<NV>
+		auto& add21 = this->getT(0).getT(0).getT(8).getT(1).getT(0).getT(1);                // math::add<NV>
+		auto& gain69 = this->getT(0).getT(0).getT(8).getT(1).getT(0).getT(2);               // core::gain<NV>
+		auto& chain131 = this->getT(0).getT(0).getT(8).getT(1).getT(1);                     // files_impl::chain131_t<NV>
+		auto& global_cable18 = this->getT(0).getT(0).getT(8).getT(1).getT(1).getT(0);       // files_impl::global_cable18_t<NV>
+		auto& add134 = this->getT(0).getT(0).getT(8).getT(1).getT(1).getT(1);               // math::add<NV>
+		auto& gain70 = this->getT(0).getT(0).getT(8).getT(1).getT(1).getT(2);               // core::gain<NV>
+		auto& chain132 = this->getT(0).getT(0).getT(8).getT(1).getT(2);                     // files_impl::chain132_t<NV>
+		auto& global_cable33 = this->getT(0).getT(0).getT(8).getT(1).getT(2).getT(0);       // files_impl::global_cable33_t<NV>
+		auto& add22 = this->getT(0).getT(0).getT(8).getT(1).getT(2).getT(1);                // math::add<NV>
+		auto& gain71 = this->getT(0).getT(0).getT(8).getT(1).getT(2).getT(2);               // core::gain<NV>
+		auto& chain133 = this->getT(0).getT(0).getT(8).getT(1).getT(3);                     // files_impl::chain133_t<NV>
+		auto& global_cable34 = this->getT(0).getT(0).getT(8).getT(1).getT(3).getT(0);       // files_impl::global_cable34_t<NV>
+		auto& add135 = this->getT(0).getT(0).getT(8).getT(1).getT(3).getT(1);               // math::add<NV>
+		auto& gain72 = this->getT(0).getT(0).getT(8).getT(1).getT(3).getT(2);               // core::gain<NV>
+		auto& chain134 = this->getT(0).getT(0).getT(8).getT(1).getT(4);                     // files_impl::chain134_t<NV>
+		auto& event_data_reader18 = this->getT(0).getT(0).getT(8).getT(1).getT(4).getT(0);  // files_impl::event_data_reader18_t<NV>
+		auto& add136 = this->getT(0).getT(0).getT(8).getT(1).getT(4).getT(1);               // math::add<NV>
+		auto& gain73 = this->getT(0).getT(0).getT(8).getT(1).getT(4).getT(2);               // core::gain<NV>
+		auto& chain135 = this->getT(0).getT(0).getT(8).getT(1).getT(5);                     // files_impl::chain135_t<NV>
+		auto& event_data_reader32 = this->getT(0).getT(0).getT(8).getT(1).getT(5).getT(0);  // files_impl::event_data_reader32_t<NV>
+		auto& add137 = this->getT(0).getT(0).getT(8).getT(1).getT(5).getT(1);               // math::add<NV>
+		auto& gain74 = this->getT(0).getT(0).getT(8).getT(1).getT(5).getT(2);               // core::gain<NV>
+		auto& chain136 = this->getT(0).getT(0).getT(8).getT(1).getT(6);                     // files_impl::chain136_t<NV>
+		auto& event_data_reader33 = this->getT(0).getT(0).getT(8).getT(1).getT(6).getT(0);  // routing::event_data_reader<NV>
+		auto& add138 = this->getT(0).getT(0).getT(8).getT(1).getT(6).getT(1);               // math::add<NV>
+		auto& gain75 = this->getT(0).getT(0).getT(8).getT(1).getT(6).getT(2);               // core::gain<NV>
+		auto& chain137 = this->getT(0).getT(0).getT(8).getT(1).getT(7);                     // files_impl::chain137_t<NV>
+		auto& branch13 = this->getT(0).getT(0).getT(8).getT(1).getT(7).getT(0);             // files_impl::branch13_t<NV>
+		auto& chain138 = this->getT(0).getT(0).getT(8).getT(1).getT(7).getT(0).getT(0);     // files_impl::chain138_t<NV>
+		auto& midi_cc38 = this->getT(0).getT(0).getT(8).getT(1).                            // files_impl::midi_cc38_t<NV>
+                          getT(7).getT(0).getT(0).getT(0);
+		auto& add139 = this->getT(0).getT(0).getT(8).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(0).getT(1);
+		auto& chain139 = this->getT(0).getT(0).getT(8).getT(1).getT(7).getT(0).getT(1);     // files_impl::chain139_t<NV>
+		auto& midi_cc39 = this->getT(0).getT(0).getT(8).getT(1).                            // files_impl::midi_cc39_t<NV>
+                          getT(7).getT(0).getT(1).getT(0);
+		auto& add140 = this->getT(0).getT(0).getT(8).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(1).getT(1);
+		auto& chain140 = this->getT(0).getT(0).getT(8).getT(1).getT(7).getT(0).getT(2);     // files_impl::chain140_t<NV>
+		auto& midi_cc40 = this->getT(0).getT(0).getT(8).getT(1).                            // files_impl::midi_cc40_t<NV>
+                          getT(7).getT(0).getT(2).getT(0);
+		auto& add141 = this->getT(0).getT(0).getT(8).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(2).getT(1);
+		auto& chain141 = this->getT(0).getT(0).getT(8).getT(1).getT(7).getT(0).getT(3);     // files_impl::chain141_t<NV>
+		auto& midi_cc41 = this->getT(0).getT(0).getT(8).getT(1).                            // files_impl::midi_cc41_t<NV>
+                          getT(7).getT(0).getT(3).getT(0);
+		auto& add142 = this->getT(0).getT(0).getT(8).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(3).getT(1);
+		auto& chain142 = this->getT(0).getT(0).getT(8).getT(1).getT(7).getT(0).getT(4);     // files_impl::chain142_t<NV>
+		auto& midi28 = this->getT(0).getT(0).getT(8).getT(1).                               // files_impl::midi28_t<NV>
+                       getT(7).getT(0).getT(4).getT(0);
+		auto& add143 = this->getT(0).getT(0).getT(8).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(4).getT(1);
+		auto& chain143 = this->getT(0).getT(0).getT(8).getT(1).getT(7).getT(0).getT(5);     // files_impl::chain143_t<NV>
+		auto& midi29 = this->getT(0).getT(0).getT(8).getT(1).                               // files_impl::midi29_t<NV>
+                       getT(7).getT(0).getT(5).getT(0);
+		auto& add144 = this->getT(0).getT(0).getT(8).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(5).getT(1);
+		auto& chain144 = this->getT(0).getT(0).getT(8).getT(1).getT(7).getT(0).getT(6);     // files_impl::chain144_t<NV>
+		auto& midi30 = this->getT(0).getT(0).getT(8).getT(1).                               // files_impl::midi30_t<NV>
+                       getT(7).getT(0).getT(6).getT(0);
+		auto& add145 = this->getT(0).getT(0).getT(8).getT(1).                               // math::add<NV>
+                       getT(7).getT(0).getT(6).getT(1);
+		auto& gain76 = this->getT(0).getT(0).getT(8).getT(1).getT(7).getT(1);               // core::gain<NV>
+		auto& split22 = this->getT(0).getT(0).getT(8).getT(2);                              // files_impl::split22_t<NV>
+		auto& peak12 = this->getT(0).getT(0).getT(8).getT(2).getT(0);                       // files_impl::peak12_t<NV>
+		auto& split23 = this->getT(0).getT(0).getT(8).getT(3);                              // files_impl::split23_t<NV>
+		auto& pma15 = this->getT(0).getT(0).getT(8).getT(3).getT(0);                        // files_impl::pma15_t<NV>
 		auto& chain4 = this->getT(0).getT(1);                                               // files_impl::chain4_t<NV>
 		auto& xfader = this->getT(0).getT(1).getT(0);                                       // files_impl::xfader_t<NV>
 		auto& split = this->getT(0).getT(1).getT(1);                                        // files_impl::split_t<NV>
 		auto& chain = this->getT(0).getT(1).getT(1).getT(0);                                // files_impl::chain_t<NV>
 		auto& gain1 = this->getT(0).getT(1).getT(1).getT(0).getT(0);                        // core::gain<NV>
 		auto& chain3 = this->getT(0).getT(1).getT(1).getT(1);                               // files_impl::chain3_t<NV>
-		auto& chain11 = this->getT(0).getT(1).getT(1).getT(1).getT(0);                      // files_impl::chain11_t<NV>
-		auto& gain3 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(0);                // core::gain<NV>
-		auto& chain21 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(1);              // files_impl::chain21_t<NV>
-		auto& mono2stereo = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(1).getT(0);  // core::mono2stereo
-		auto& chain8 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(1).getT(1);       // files_impl::chain8_t<NV>
+		auto& cable_table9 = this->getT(0).getT(1).getT(1).getT(1).getT(0);                 // files_impl::cable_table9_t<NV>
+		auto& branch4 = this->getT(0).getT(1).getT(1).getT(1).getT(1);                      // files_impl::branch4_t<NV>
+		auto& chain145 = this->getT(0).getT(1).getT(1).getT(1).getT(1).getT(0);             // files_impl::chain145_t
+		auto& clear4 = this->getT(0).getT(1).getT(1).getT(1).getT(1).getT(1);               // math::clear<NV>
+		auto& gain3 = this->getT(0).getT(1).getT(1).getT(1).getT(2);                        // core::gain<NV>
+		auto& chain11 = this->getT(0).getT(1).getT(1).getT(1).getT(3);                      // files_impl::chain11_t<NV>
+		auto& chain21 = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(0);              // files_impl::chain21_t<NV>
+		auto& mono2stereo = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(0).getT(0);  // wrap::no_process<core::mono2stereo>
+		auto& chain8 = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(0).getT(1);       // files_impl::chain8_t<NV>
 		auto& modchain1 = this->getT(0).getT(1).getT(1).getT(1).                            // files_impl::modchain1_t<NV>
-                          getT(0).getT(1).getT(1).getT(0);
+                          getT(3).getT(0).getT(1).getT(0);
 		auto& branch8 = this->getT(0).getT(1).getT(1).getT(1).                              // files_impl::branch8_t<NV>
-                        getT(0).getT(1).getT(1).getT(0).
+                        getT(3).getT(0).getT(1).getT(0).
                         getT(0);
-		auto& add1 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                         // math::add<NV>
-                     getT(1).getT(1).getT(0).getT(0).getT(0);
-		auto& chain6 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                       // files_impl::chain6_t<NV>
-                       getT(1).getT(1).getT(0).getT(0).getT(1);
-		auto& minmax3 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                      // files_impl::minmax3_t<NV>
-                        getT(1).getT(1).getT(0).getT(0).getT(1).
+		auto& add1 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                         // math::add<NV>
+                     getT(0).getT(1).getT(0).getT(0).getT(0);
+		auto& chain6 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                       // files_impl::chain6_t<NV>
+                       getT(0).getT(1).getT(0).getT(0).getT(1);
+		auto& minmax3 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                      // files_impl::minmax3_t<NV>
+                        getT(0).getT(1).getT(0).getT(0).getT(1).
                         getT(0);
-		auto& add125 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                       // math::add<NV>
-                       getT(1).getT(1).getT(0).getT(0).getT(1).
+		auto& add125 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                       // math::add<NV>
+                       getT(0).getT(1).getT(0).getT(0).getT(1).
                        getT(1);
-		auto& chain15 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                      // files_impl::chain15_t<NV>
-                        getT(1).getT(1).getT(0).getT(0).getT(2);
-		auto& minmax5 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                      // files_impl::minmax5_t<NV>
-                        getT(1).getT(1).getT(0).getT(0).getT(2).
+		auto& chain15 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                      // files_impl::chain15_t<NV>
+                        getT(0).getT(1).getT(0).getT(0).getT(2);
+		auto& minmax5 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                      // files_impl::minmax5_t<NV>
+                        getT(0).getT(1).getT(0).getT(0).getT(2).
                         getT(0);
-		auto& add131 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                       // math::add<NV>
-                       getT(1).getT(1).getT(0).getT(0).getT(2).
+		auto& add131 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                       // math::add<NV>
+                       getT(0).getT(1).getT(0).getT(0).getT(2).
                        getT(1);
-		auto& chain89 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                      // files_impl::chain89_t<NV>
-                        getT(1).getT(1).getT(0).getT(0).getT(3);
-		auto& minmax12 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                     // files_impl::minmax12_t<NV>
-                         getT(1).getT(1).getT(0).getT(0).getT(3).
+		auto& chain89 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                      // files_impl::chain89_t<NV>
+                        getT(0).getT(1).getT(0).getT(0).getT(3);
+		auto& minmax12 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                     // files_impl::minmax12_t<NV>
+                         getT(0).getT(1).getT(0).getT(0).getT(3).
                          getT(0);
-		auto& add126 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                       // math::add<NV>
-                       getT(1).getT(1).getT(0).getT(0).getT(3).
+		auto& add126 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                       // math::add<NV>
+                       getT(0).getT(1).getT(0).getT(0).getT(3).
                        getT(1);
-		auto& chain83 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                      // files_impl::chain83_t<NV>
-                        getT(1).getT(1).getT(0).getT(0).getT(4);
-		auto& minmax10 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                     // files_impl::minmax10_t<NV>
-                         getT(1).getT(1).getT(0).getT(0).getT(4).
+		auto& chain83 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                      // files_impl::chain83_t<NV>
+                        getT(0).getT(1).getT(0).getT(0).getT(4);
+		auto& minmax10 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                     // files_impl::minmax10_t<NV>
+                         getT(0).getT(1).getT(0).getT(0).getT(4).
                          getT(0);
-		auto& add127 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                       // math::add<NV>
-                       getT(1).getT(1).getT(0).getT(0).getT(4).
+		auto& add127 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                       // math::add<NV>
+                       getT(0).getT(1).getT(0).getT(0).getT(4).
                        getT(1);
-		auto& chain79 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                      // files_impl::chain79_t<NV>
-                        getT(1).getT(1).getT(0).getT(0).getT(5);
-		auto& minmax9 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                      // files_impl::minmax9_t<NV>
-                        getT(1).getT(1).getT(0).getT(0).getT(5).
+		auto& chain79 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                      // files_impl::chain79_t<NV>
+                        getT(0).getT(1).getT(0).getT(0).getT(5);
+		auto& minmax9 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                      // files_impl::minmax9_t<NV>
+                        getT(0).getT(1).getT(0).getT(0).getT(5).
                         getT(0);
-		auto& add128 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                       // math::add<NV>
-                       getT(1).getT(1).getT(0).getT(0).getT(5).
+		auto& add128 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                       // math::add<NV>
+                       getT(0).getT(1).getT(0).getT(0).getT(5).
                        getT(1);
-		auto& chain78 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                      // files_impl::chain78_t<NV>
-                        getT(1).getT(1).getT(0).getT(0).getT(6);
-		auto& minmax8 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                      // files_impl::minmax8_t<NV>
-                        getT(1).getT(1).getT(0).getT(0).getT(6).
+		auto& chain78 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                      // files_impl::chain78_t<NV>
+                        getT(0).getT(1).getT(0).getT(0).getT(6);
+		auto& minmax8 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                      // files_impl::minmax8_t<NV>
+                        getT(0).getT(1).getT(0).getT(0).getT(6).
                         getT(0);
-		auto& add129 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                       // math::add<NV>
-                       getT(1).getT(1).getT(0).getT(0).getT(6).
+		auto& add129 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                       // math::add<NV>
+                       getT(0).getT(1).getT(0).getT(0).getT(6).
                        getT(1);
-		auto& chain43 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                      // files_impl::chain43_t<NV>
-                        getT(1).getT(1).getT(0).getT(0).getT(7);
-		auto& minmax4 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                      // files_impl::minmax4_t<NV>
-                        getT(1).getT(1).getT(0).getT(0).getT(7).
+		auto& chain43 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                      // files_impl::chain43_t<NV>
+                        getT(0).getT(1).getT(0).getT(0).getT(7);
+		auto& minmax4 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                      // files_impl::minmax4_t<NV>
+                        getT(0).getT(1).getT(0).getT(0).getT(7).
                         getT(0);
-		auto& add130 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                       // math::add<NV>
-                       getT(1).getT(1).getT(0).getT(0).getT(7).
+		auto& add130 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                       // math::add<NV>
+                       getT(0).getT(1).getT(0).getT(0).getT(7).
                        getT(1);
-		auto& chain90 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                      // files_impl::chain90_t<NV>
-                        getT(1).getT(1).getT(0).getT(0).getT(8);
-		auto& minmax13 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                     // files_impl::minmax13_t<NV>
-                         getT(1).getT(1).getT(0).getT(0).getT(8).
+		auto& chain90 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                      // files_impl::chain90_t<NV>
+                        getT(0).getT(1).getT(0).getT(0).getT(8);
+		auto& minmax13 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                     // files_impl::minmax13_t<NV>
+                         getT(0).getT(1).getT(0).getT(0).getT(8).
                          getT(0);
-		auto& add3 = this->getT(0).getT(1).getT(1).getT(1).getT(0).                         // math::add<NV>
-                     getT(1).getT(1).getT(0).getT(0).getT(8).
+		auto& add3 = this->getT(0).getT(1).getT(1).getT(1).getT(3).                         // math::add<NV>
+                     getT(0).getT(1).getT(0).getT(0).getT(8).
                      getT(1);
 		auto& peak = this->getT(0).getT(1).getT(1).getT(1).                                 // files_impl::peak_t<NV>
-                     getT(0).getT(1).getT(1).getT(0).
+                     getT(3).getT(0).getT(1).getT(0).
                      getT(1);
-		auto& smoother10 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(2);           // core::smoother<NV>
-		auto& add = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(3);                  // math::add<NV>
-		auto& branch2 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(4);              // files_impl::branch2_t<NV>
-		auto& file_player4 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(4).getT(0); // files_impl::file_player4_t<NV>
-		auto& file_player5 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(4).getT(1); // files_impl::file_player5_t<NV>
-		auto& split5 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(5);               // files_impl::split5_t<NV>
-		auto& chain12 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(5).getT(0);      // files_impl::chain12_t<NV>
+		auto& oscilloscope = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(1);         // files_impl::oscilloscope_t
+		auto& smoother10 = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(2);           // core::smoother<NV>
+		auto& add = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(3);                  // math::add<NV>
+		auto& branch2 = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(4);              // files_impl::branch2_t<NV>
+		auto& file_player4 = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(4).getT(0); // files_impl::file_player4_t<NV>
+		auto& file_player5 = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(4).getT(1); // files_impl::file_player5_t<NV>
+		auto& split5 = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(5);               // files_impl::split5_t<NV>
+		auto& chain12 = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(5).getT(0);      // files_impl::chain12_t<NV>
 		auto& split11 = this->getT(0).getT(1).getT(1).getT(1).                              // files_impl::split11_t<NV>
-                        getT(0).getT(5).getT(0).getT(0);
+                        getT(3).getT(5).getT(0).getT(0);
 		auto& cable_table2 = this->getT(0).getT(1).getT(1).getT(1).                    // files_impl::cable_table2_t<NV>
-                             getT(0).getT(5).getT(0).getT(0).
+                             getT(3).getT(5).getT(0).getT(0).
                              getT(0);
 		auto& cable_table3 = this->getT(0).getT(1).getT(1).getT(1).                    // files_impl::cable_table3_t<NV>
-                             getT(0).getT(5).getT(0).getT(0).
+                             getT(3).getT(5).getT(0).getT(0).
                              getT(1);
 		auto& tempo_sync1 = this->getT(0).getT(1).getT(1).getT(1).                     // files_impl::tempo_sync1_t<NV>
-                            getT(0).getT(5).getT(0).getT(1);
+                            getT(3).getT(5).getT(0).getT(1);
 		auto& converter = this->getT(0).getT(1).getT(1).getT(1).                       // files_impl::converter_t<NV>
-                          getT(0).getT(5).getT(0).getT(2);
-		auto& chain17 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(5).getT(1); // files_impl::chain17_t<NV>
+                          getT(3).getT(5).getT(0).getT(2);
+		auto& chain17 = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(5).getT(1); // files_impl::chain17_t<NV>
 		auto& split12 = this->getT(0).getT(1).getT(1).getT(1).                         // files_impl::split12_t<NV>
-                        getT(0).getT(5).getT(1).getT(0);
+                        getT(3).getT(5).getT(1).getT(0);
 		auto& cable_table4 = this->getT(0).getT(1).getT(1).getT(1).                    // files_impl::cable_table4_t<NV>
-                             getT(0).getT(5).getT(1).getT(0).
+                             getT(3).getT(5).getT(1).getT(0).
                              getT(0);
 		auto& cable_table5 = this->getT(0).getT(1).getT(1).getT(1).                    // files_impl::cable_table5_t<NV>
-                             getT(0).getT(5).getT(1).getT(0).
+                             getT(3).getT(5).getT(1).getT(0).
                              getT(1);
 		auto& tempo_sync3 = this->getT(0).getT(1).getT(1).getT(1).                     // files_impl::tempo_sync3_t<NV>
-                            getT(0).getT(5).getT(1).getT(1);
+                            getT(3).getT(5).getT(1).getT(1);
 		auto& converter1 = this->getT(0).getT(1).getT(1).getT(1).                      // files_impl::converter1_t<NV>
-                           getT(0).getT(5).getT(1).getT(2);
-		auto& branch = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(6);          // files_impl::branch_t<NV>
-		auto& chain1 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(6).getT(0);  // files_impl::chain1_t<NV>
+                           getT(3).getT(5).getT(1).getT(2);
+		auto& branch = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(6);          // files_impl::branch_t<NV>
+		auto& chain1 = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(6).getT(0);  // files_impl::chain1_t<NV>
 		auto& tanh1 = this->getT(0).getT(1).getT(1).getT(1).                           // wrap::no_process<math::tanh<NV>>
-                      getT(0).getT(6).getT(0).getT(0);
-		auto& chain2 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(6).getT(1);  // files_impl::chain2_t<NV>
+                      getT(3).getT(6).getT(0).getT(0);
+		auto& chain2 = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(6).getT(1);  // files_impl::chain2_t<NV>
 		auto& receive = this->getT(0).getT(1).getT(1).getT(1).                         // routing::receive<stereo_cable>
-                        getT(0).getT(6).getT(1).getT(0);
+                        getT(3).getT(6).getT(1).getT(0);
 		auto& faust = this->getT(0).getT(1).getT(1).getT(1).                           // project::shfiter<NV>
-                      getT(0).getT(6).getT(1).getT(1);
+                      getT(3).getT(6).getT(1).getT(1);
 		auto& send = this->getT(0).getT(1).getT(1).getT(1).                            // routing::send<stereo_cable>
-                     getT(0).getT(6).getT(1).getT(2);
-		auto& chain10 = this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(6).getT(2); // files_impl::chain10_t<NV>
+                     getT(3).getT(6).getT(1).getT(2);
+		auto& chain10 = this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(6).getT(2); // files_impl::chain10_t<NV>
 		auto& midi4 = this->getT(0).getT(1).getT(1).getT(1).                           // files_impl::midi4_t<NV>
-                      getT(0).getT(6).getT(2).getT(0);
+                      getT(3).getT(6).getT(2).getT(0);
 		auto& cable_table1 = this->getT(0).getT(1).getT(1).getT(1).  // files_impl::cable_table1_t<NV>
-                             getT(0).getT(6).getT(2).getT(1);
+                             getT(3).getT(6).getT(2).getT(1);
 		auto& faust1 = this->getT(0).getT(1).getT(1).getT(1).        // project::ps2<NV>
-                       getT(0).getT(6).getT(2).getT(2);
+                       getT(3).getT(6).getT(2).getT(2);
 		auto& faust2 = this->getT(0).getT(1).getT(1).getT(1).        // project::shfiter<NV>
-                       getT(0).getT(6).getT(2).getT(3);
+                       getT(3).getT(6).getT(2).getT(3);
 		auto& receive1 = this->getT(0).getT(1).getT(1).getT(1).      // routing::receive<stereo_cable>
-                         getT(0).getT(6).getT(2).getT(4);
+                         getT(3).getT(6).getT(2).getT(4);
 		auto& send1 = this->getT(0).getT(1).getT(1).getT(1).         // routing::send<stereo_cable>
-                      getT(0).getT(6).getT(2).getT(5);
-		auto& gain2 = this->getT(0).getT(1).getT(1).getT(1).getT(1); // core::gain<NV>
+                      getT(3).getT(6).getT(2).getT(5);
+		auto& gain2 = this->getT(0).getT(1).getT(1).getT(1).getT(4); // core::gain<NV>
 		
 		// Parameter Connections -------------------------------------------------------------------
 		
-		this->getParameterT(0).connectT(0, smoother10); // smooth -> smoother10::SmoothingTime
+		this->getParameterT(0).connectT(0, pma14); // smooth -> pma14::Add
 		
 		this->getParameterT(1).connectT(0, branch8); // quant -> branch8::Index
 		
-		this->getParameterT(2).connectT(0, pma2); // Position -> pma2::Add
+		auto& Position_p = this->getParameterT(2);
+		Position_p.connectT(0, pma2);         // Position -> pma2::Add
+		Position_p.connectT(1, cable_table8); // Position -> cable_table8::Value
 		
 		this->getParameterT(3).connectT(0, pma3); // Input -> pma3::Add
 		
@@ -2807,7 +3943,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		
 		this->getParameterT(7).connectT(0, pma4); // pitch -> pma4::Add
 		
-		this->getParameterT(8).connectT(0, xfader); // Mix -> xfader::Value
+		this->getParameterT(8).connectT(0, pma15); // Mix -> pma15::Add
 		
 		this->getParameterT(9).connectT(0, pma2); // PositionTempoMod -> pma2::Multiply
 		
@@ -2823,9 +3959,11 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		
 		this->getParameterT(15).connectT(0, ramp); // IntmodOne -> ramp::LoopStart
 		
-		this->getParameterT(16).connectT(0, tempo_sync); // intmodtempo -> tempo_sync::Tempo
+		this->getParameterT(16).connectT(0, pma12); // intmodtempo -> pma12::Add
 		
-		this->getParameterT(17).connectT(0, tempo_sync); // InmodDiv -> tempo_sync::Multiplier
+		auto& InmodDiv_p = this->getParameterT(17);
+		InmodDiv_p.connectT(0, tempo_sync); // InmodDiv -> tempo_sync::Multiplier
+		InmodDiv_p.connectT(1, clock_ramp); // InmodDiv -> clock_ramp::Multiplier
 		
 		auto& fb_p = this->getParameterT(18);
 		fb_p.connectT(0, receive);  // fb -> receive::Feedback
@@ -2867,31 +4005,53 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		
 		this->getParameterT(34).connectT(0, branch9); // mid5 -> branch9::Index
 		
+		this->getParameterT(35).connectT(0, branch3); // InmodClk -> branch3::Index
+		
+		this->getParameterT(36).connectT(0, pma12); // InTempoMod -> pma12::Multiply
+		
+		this->getParameterT(37).connectT(0, pma14); // SmoothMod -> pma14::Multiply
+		
+		this->getParameterT(38).connectT(0, pma15); // MixMod -> pma15::Multiply
+		
+		this->getParameterT(39).connectT(0, branch11); // Midi6 -> branch11::Index
+		
+		this->getParameterT(40).connectT(0, branch12); // Midi7 -> branch12::Index
+		
+		this->getParameterT(41).connectT(0, branch13); // Midi8 -> branch13::Index
+		
+		this->getParameterT(42).connectT(0, event_data_reader29); // XfStage6 -> event_data_reader29::SlotIndex
+		
+		this->getParameterT(43).connectT(0, event_data_reader31); // XfStage7 -> event_data_reader31::SlotIndex
+		
+		this->getParameterT(44).connectT(0, event_data_reader33); // XfStage8 -> event_data_reader33::SlotIndex
+		
 		// Modulation Connections ------------------------------------------------------------------
 		
-		cable_table.getWrappedObject().getParameter().connectT(0, add2); // cable_table -> add2::Value
-		cable_pack.getWrappedObject().getParameter().connectT(0, add10); // cable_pack -> add10::Value
-		ramp.getParameter().connectT(0, cable_table);                    // ramp -> cable_table::Value
-		ramp.getParameter().connectT(1, cable_pack);                     // ramp -> cable_pack::Value
-		tempo_sync.getParameter().connectT(0, ramp);                     // tempo_sync -> ramp::PeriodTime
-		minmax3.getWrappedObject().getParameter().connectT(0, add125);   // minmax3 -> add125::Value
-		minmax5.getWrappedObject().getParameter().connectT(0, add131);   // minmax5 -> add131::Value
-		minmax12.getWrappedObject().getParameter().connectT(0, add126);  // minmax12 -> add126::Value
-		minmax10.getWrappedObject().getParameter().connectT(0, add127);  // minmax10 -> add127::Value
-		minmax9.getWrappedObject().getParameter().connectT(0, add128);   // minmax9 -> add128::Value
-		minmax8.getWrappedObject().getParameter().connectT(0, add129);   // minmax8 -> add129::Value
-		minmax4.getWrappedObject().getParameter().connectT(0, add130);   // minmax4 -> add130::Value
-		minmax13.getWrappedObject().getParameter().connectT(0, add3);    // minmax13 -> add3::Value
-		pma1.getWrappedObject().getParameter().connectT(0, add1);        // pma1 -> add1::Value
-		pma1.getWrappedObject().getParameter().connectT(1, minmax3);     // pma1 -> minmax3::Value
-		pma1.getWrappedObject().getParameter().connectT(2, minmax5);     // pma1 -> minmax5::Value
-		pma1.getWrappedObject().getParameter().connectT(3, minmax12);    // pma1 -> minmax12::Value
-		pma1.getWrappedObject().getParameter().connectT(4, minmax10);    // pma1 -> minmax10::Value
-		pma1.getWrappedObject().getParameter().connectT(5, minmax9);     // pma1 -> minmax9::Value
-		pma1.getWrappedObject().getParameter().connectT(6, minmax8);     // pma1 -> minmax8::Value
-		pma1.getWrappedObject().getParameter().connectT(7, minmax4);     // pma1 -> minmax4::Value
-		pma1.getWrappedObject().getParameter().connectT(8, minmax13);    // pma1 -> minmax13::Value
-		peak1.getParameter().connectT(0, pma1);                          // peak1 -> pma1::Value
+		tempo_sync.getParameter().connectT(0, ramp);                      // tempo_sync -> ramp::PeriodTime
+		clock_ramp.getParameter().connectT(0, add18);                     // clock_ramp -> add18::Value
+		cable_table.getWrappedObject().getParameter().connectT(0, add2);  // cable_table -> add2::Value
+		cable_pack.getWrappedObject().getParameter().connectT(0, add10);  // cable_pack -> add10::Value
+		peak2.getParameter().connectT(0, cable_table);                    // peak2 -> cable_table::Value
+		peak2.getParameter().connectT(1, cable_pack);                     // peak2 -> cable_pack::Value
+		minmax3.getWrappedObject().getParameter().connectT(0, add125);    // minmax3 -> add125::Value
+		minmax5.getWrappedObject().getParameter().connectT(0, add131);    // minmax5 -> add131::Value
+		minmax12.getWrappedObject().getParameter().connectT(0, add126);   // minmax12 -> add126::Value
+		minmax10.getWrappedObject().getParameter().connectT(0, add127);   // minmax10 -> add127::Value
+		minmax9.getWrappedObject().getParameter().connectT(0, add128);    // minmax9 -> add128::Value
+		minmax8.getWrappedObject().getParameter().connectT(0, add129);    // minmax8 -> add129::Value
+		minmax4.getWrappedObject().getParameter().connectT(0, add130);    // minmax4 -> add130::Value
+		minmax13.getWrappedObject().getParameter().connectT(0, add3);     // minmax13 -> add3::Value
+		pma1.getWrappedObject().getParameter().connectT(0, add1);         // pma1 -> add1::Value
+		pma1.getWrappedObject().getParameter().connectT(1, minmax3);      // pma1 -> minmax3::Value
+		pma1.getWrappedObject().getParameter().connectT(2, minmax5);      // pma1 -> minmax5::Value
+		pma1.getWrappedObject().getParameter().connectT(3, minmax12);     // pma1 -> minmax12::Value
+		pma1.getWrappedObject().getParameter().connectT(4, minmax10);     // pma1 -> minmax10::Value
+		pma1.getWrappedObject().getParameter().connectT(5, minmax9);      // pma1 -> minmax9::Value
+		pma1.getWrappedObject().getParameter().connectT(6, minmax8);      // pma1 -> minmax8::Value
+		pma1.getWrappedObject().getParameter().connectT(7, minmax4);      // pma1 -> minmax4::Value
+		pma1.getWrappedObject().getParameter().connectT(8, minmax13);     // pma1 -> minmax13::Value
+		pma1.getWrappedObject().getParameter().connectT(9, cable_table7); // pma1 -> cable_table7::Value
+		peak1.getParameter().connectT(0, pma1);                           // peak1 -> pma1::Value
 		auto& sliderbank3_p = sliderbank3.getWrappedObject().getParameter();
 		sliderbank3_p.getParameterT(0).connectT(0, gain13);                  // sliderbank3 -> gain13::Gain
 		sliderbank3_p.getParameterT(1).connectT(0, gain15);                  // sliderbank3 -> gain15::Gain
@@ -2904,7 +4064,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		global_cable3.getWrappedObject().getParameter().connectT(0, add4);   // global_cable3 -> add4::Value
 		global_cable11.getWrappedObject().getParameter().connectT(0, add26); // global_cable11 -> add26::Value
 		global_cable10.getWrappedObject().getParameter().connectT(0, add5);  // global_cable10 -> add5::Value
-		event_data_reader3.getParameter().connectT(0, add27);                // event_data_reader3 -> add27::Value
+		global_cable25.getWrappedObject().getParameter().connectT(0, add27); // global_cable25 -> add27::Value
 		event_data_reader11.getParameter().connectT(0, add29);               // event_data_reader11 -> add29::Value
 		event_data_reader10.getParameter().connectT(0, add28);               // event_data_reader10 -> add28::Value
 		event_data_reader13.getParameter().connectT(0, add30);               // event_data_reader13 -> add30::Value
@@ -2930,7 +4090,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		global_cable5.getWrappedObject().getParameter().connectT(0, add8);   // global_cable5 -> add8::Value
 		global_cable20.getWrappedObject().getParameter().connectT(0, add54); // global_cable20 -> add54::Value
 		global_cable21.getWrappedObject().getParameter().connectT(0, add9);  // global_cable21 -> add9::Value
-		event_data_reader5.getParameter().connectT(0, add55);                // event_data_reader5 -> add55::Value
+		global_cable26.getWrappedObject().getParameter().connectT(0, add55); // global_cable26 -> add55::Value
 		event_data_reader20.getParameter().connectT(0, add56);               // event_data_reader20 -> add56::Value
 		event_data_reader21.getParameter().connectT(0, add57);               // event_data_reader21 -> add57::Value
 		event_data_reader22.getParameter().connectT(0, add58);               // event_data_reader22 -> add58::Value
@@ -2956,7 +4116,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		global_cable4.getWrappedObject().getParameter().connectT(0, add6);   // global_cable4 -> add6::Value
 		global_cable12.getWrappedObject().getParameter().connectT(0, add48); // global_cable12 -> add48::Value
 		global_cable19.getWrappedObject().getParameter().connectT(0, add7);  // global_cable19 -> add7::Value
-		event_data_reader4.getParameter().connectT(0, add49);                // event_data_reader4 -> add49::Value
+		global_cable27.getWrappedObject().getParameter().connectT(0, add49); // global_cable27 -> add49::Value
 		event_data_reader12.getParameter().connectT(0, add50);               // event_data_reader12 -> add50::Value
 		event_data_reader19.getParameter().connectT(0, add51);               // event_data_reader19 -> add51::Value
 		midi_cc18.getWrappedObject().getParameter().connectT(0, add74);      // midi_cc18 -> add74::Value
@@ -2966,7 +4126,9 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		midi13.getParameter().connectT(0, add78);                            // midi13 -> add78::Value
 		midi14.getParameter().connectT(0, add79);                            // midi14 -> add79::Value
 		midi15.getParameter().connectT(0, add80);                            // midi15 -> add80::Value
+		cable_table9.getWrappedObject().getParameter().connectT(0, branch4); // cable_table9 -> branch4::Index
 		pma3.getWrappedObject().getParameter().connectT(0, gain3);           // pma3 -> gain3::Gain
+		pma3.getWrappedObject().getParameter().connectT(1, cable_table9);    // pma3 -> cable_table9::Value
 		peak6.getParameter().connectT(0, pma3);                              // peak6 -> pma3::Value
 		auto& sliderbank9_p = sliderbank9.getWrappedObject().getParameter();
 		sliderbank9_p.getParameterT(0).connectT(0, gain36);                      // sliderbank9 -> gain36::Gain
@@ -2980,7 +4142,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		global_cable7.getWrappedObject().getParameter().connectT(0, add13);      // global_cable7 -> add13::Value
 		global_cable14.getWrappedObject().getParameter().connectT(0, add91);     // global_cable14 -> add91::Value
 		global_cable23.getWrappedObject().getParameter().connectT(0, add14);     // global_cable23 -> add14::Value
-		event_data_reader7.getParameter().connectT(0, add92);                    // event_data_reader7 -> add92::Value
+		global_cable28.getWrappedObject().getParameter().connectT(0, add92);     // global_cable28 -> add92::Value
 		event_data_reader15.getParameter().connectT(0, add93);                   // event_data_reader15 -> add93::Value
 		event_data_reader26.getParameter().connectT(0, add94);                   // event_data_reader26 -> add94::Value
 		midi_cc26.getWrappedObject().getParameter().connectT(0, add96);          // midi_cc26 -> add96::Value
@@ -3013,7 +4175,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		global_cable6.getWrappedObject().getParameter().connectT(0, add11);      // global_cable6 -> add11::Value
 		global_cable13.getWrappedObject().getParameter().connectT(0, add53);     // global_cable13 -> add53::Value
 		global_cable22.getWrappedObject().getParameter().connectT(0, add12);     // global_cable22 -> add12::Value
-		event_data_reader6.getParameter().connectT(0, add59);                    // event_data_reader6 -> add59::Value
+		global_cable29.getWrappedObject().getParameter().connectT(0, add59);     // global_cable29 -> add59::Value
 		event_data_reader14.getParameter().connectT(0, add81);                   // event_data_reader14 -> add81::Value
 		event_data_reader24.getParameter().connectT(0, add82);                   // event_data_reader24 -> add82::Value
 		midi_cc22.getWrappedObject().getParameter().connectT(0, add84);          // midi_cc22 -> add84::Value
@@ -3034,9 +4196,82 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		pma11.getWrappedObject().getParameter().connectT(0, tempo_sync3);        // pma11 -> tempo_sync3::UnsyncedTime
 		peak8.getParameter().connectT(0, pma9);                                  // peak8 -> pma9::Value
 		peak8.getParameter().connectT(1, pma11);                                 // peak8 -> pma11::Value
+		auto& sliderbank10_p = sliderbank10.getWrappedObject().getParameter();
+		sliderbank10_p.getParameterT(0).connectT(0, gain41);                  // sliderbank10 -> gain41::Gain
+		sliderbank10_p.getParameterT(1).connectT(0, gain42);                  // sliderbank10 -> gain42::Gain
+		sliderbank10_p.getParameterT(2).connectT(0, gain43);                  // sliderbank10 -> gain43::Gain
+		sliderbank10_p.getParameterT(3).connectT(0, gain44);                  // sliderbank10 -> gain44::Gain
+		sliderbank10_p.getParameterT(4).connectT(0, gain63);                  // sliderbank10 -> gain63::Gain
+		sliderbank10_p.getParameterT(5).connectT(0, gain45);                  // sliderbank10 -> gain45::Gain
+		sliderbank10_p.getParameterT(6).connectT(0, gain64);                  // sliderbank10 -> gain64::Gain
+		sliderbank10_p.getParameterT(7).connectT(0, gain65);                  // sliderbank10 -> gain65::Gain
+		global_cable8.getWrappedObject().getParameter().connectT(0, add15);   // global_cable8 -> add15::Value
+		global_cable15.getWrappedObject().getParameter().connectT(0, add103); // global_cable15 -> add103::Value
+		global_cable24.getWrappedObject().getParameter().connectT(0, add16);  // global_cable24 -> add16::Value
+		global_cable30.getWrappedObject().getParameter().connectT(0, add104); // global_cable30 -> add104::Value
+		event_data_reader16.getParameter().connectT(0, add105);               // event_data_reader16 -> add105::Value
+		event_data_reader28.getParameter().connectT(0, add106);               // event_data_reader28 -> add106::Value
+		midi_cc30.getWrappedObject().getParameter().connectT(0, add108);      // midi_cc30 -> add108::Value
+		midi_cc31.getWrappedObject().getParameter().connectT(0, add109);      // midi_cc31 -> add109::Value
+		midi_cc32.getWrappedObject().getParameter().connectT(0, add110);      // midi_cc32 -> add110::Value
+		midi_cc33.getWrappedObject().getParameter().connectT(0, add111);      // midi_cc33 -> add111::Value
+		midi22.getParameter().connectT(0, add112);                            // midi22 -> add112::Value
+		midi23.getParameter().connectT(0, add113);                            // midi23 -> add113::Value
+		midi24.getParameter().connectT(0, add114);                            // midi24 -> add114::Value
+		pma12.getWrappedObject().getParameter().connectT(0, tempo_sync);      // pma12 -> tempo_sync::Tempo
+		pma12.getWrappedObject().getParameter().connectT(1, clock_ramp);      // pma12 -> clock_ramp::Tempo
+		peak10.getParameter().connectT(0, pma12);                             // peak10 -> pma12::Value
+		auto& sliderbank11_p = sliderbank11.getWrappedObject().getParameter();
+		sliderbank11_p.getParameterT(0).connectT(0, gain46);                  // sliderbank11 -> gain46::Gain
+		sliderbank11_p.getParameterT(1).connectT(0, gain47);                  // sliderbank11 -> gain47::Gain
+		sliderbank11_p.getParameterT(2).connectT(0, gain48);                  // sliderbank11 -> gain48::Gain
+		sliderbank11_p.getParameterT(3).connectT(0, gain49);                  // sliderbank11 -> gain49::Gain
+		sliderbank11_p.getParameterT(4).connectT(0, gain66);                  // sliderbank11 -> gain66::Gain
+		sliderbank11_p.getParameterT(5).connectT(0, gain50);                  // sliderbank11 -> gain50::Gain
+		sliderbank11_p.getParameterT(6).connectT(0, gain67);                  // sliderbank11 -> gain67::Gain
+		sliderbank11_p.getParameterT(7).connectT(0, gain68);                  // sliderbank11 -> gain68::Gain
+		global_cable9.getWrappedObject().getParameter().connectT(0, add19);   // global_cable9 -> add19::Value
+		global_cable16.getWrappedObject().getParameter().connectT(0, add115); // global_cable16 -> add115::Value
+		global_cable31.getWrappedObject().getParameter().connectT(0, add20);  // global_cable31 -> add20::Value
+		global_cable32.getWrappedObject().getParameter().connectT(0, add116); // global_cable32 -> add116::Value
+		event_data_reader17.getParameter().connectT(0, add117);               // event_data_reader17 -> add117::Value
+		event_data_reader30.getParameter().connectT(0, add118);               // event_data_reader30 -> add118::Value
+		midi_cc34.getWrappedObject().getParameter().connectT(0, add120);      // midi_cc34 -> add120::Value
+		midi_cc35.getWrappedObject().getParameter().connectT(0, add121);      // midi_cc35 -> add121::Value
+		midi_cc36.getWrappedObject().getParameter().connectT(0, add122);      // midi_cc36 -> add122::Value
+		midi_cc37.getWrappedObject().getParameter().connectT(0, add123);      // midi_cc37 -> add123::Value
+		midi25.getParameter().connectT(0, add124);                            // midi25 -> add124::Value
+		midi26.getParameter().connectT(0, add132);                            // midi26 -> add132::Value
+		midi27.getParameter().connectT(0, add133);                            // midi27 -> add133::Value
+		pma14.getWrappedObject().getParameter().connectT(0, smoother10);      // pma14 -> smoother10::SmoothingTime
+		peak11.getParameter().connectT(0, pma14);                             // peak11 -> pma14::Value
+		auto& sliderbank12_p = sliderbank12.getWrappedObject().getParameter();
+		sliderbank12_p.getParameterT(0).connectT(0, gain69);                  // sliderbank12 -> gain69::Gain
+		sliderbank12_p.getParameterT(1).connectT(0, gain70);                  // sliderbank12 -> gain70::Gain
+		sliderbank12_p.getParameterT(2).connectT(0, gain71);                  // sliderbank12 -> gain71::Gain
+		sliderbank12_p.getParameterT(3).connectT(0, gain72);                  // sliderbank12 -> gain72::Gain
+		sliderbank12_p.getParameterT(4).connectT(0, gain73);                  // sliderbank12 -> gain73::Gain
+		sliderbank12_p.getParameterT(5).connectT(0, gain74);                  // sliderbank12 -> gain74::Gain
+		sliderbank12_p.getParameterT(6).connectT(0, gain75);                  // sliderbank12 -> gain75::Gain
+		sliderbank12_p.getParameterT(7).connectT(0, gain76);                  // sliderbank12 -> gain76::Gain
+		global_cable17.getWrappedObject().getParameter().connectT(0, add21);  // global_cable17 -> add21::Value
+		global_cable18.getWrappedObject().getParameter().connectT(0, add134); // global_cable18 -> add134::Value
+		global_cable33.getWrappedObject().getParameter().connectT(0, add22);  // global_cable33 -> add22::Value
+		global_cable34.getWrappedObject().getParameter().connectT(0, add135); // global_cable34 -> add135::Value
+		event_data_reader18.getParameter().connectT(0, add136);               // event_data_reader18 -> add136::Value
+		event_data_reader32.getParameter().connectT(0, add137);               // event_data_reader32 -> add137::Value
+		midi_cc38.getWrappedObject().getParameter().connectT(0, add139);      // midi_cc38 -> add139::Value
+		midi_cc39.getWrappedObject().getParameter().connectT(0, add140);      // midi_cc39 -> add140::Value
+		midi_cc40.getWrappedObject().getParameter().connectT(0, add141);      // midi_cc40 -> add141::Value
+		midi_cc41.getWrappedObject().getParameter().connectT(0, add142);      // midi_cc41 -> add142::Value
+		midi28.getParameter().connectT(0, add143);                            // midi28 -> add143::Value
+		midi29.getParameter().connectT(0, add144);                            // midi29 -> add144::Value
+		midi30.getParameter().connectT(0, add145);                            // midi30 -> add145::Value
 		auto& xfader_p = xfader.getWrappedObject().getParameter();
 		xfader_p.getParameterT(0).connectT(0, gain1);                       // xfader -> gain1::Gain
 		xfader_p.getParameterT(1).connectT(0, gain2);                       // xfader -> gain2::Gain
+		pma15.getWrappedObject().getParameter().connectT(0, xfader);        // pma15 -> xfader::Value
+		peak12.getParameter().connectT(0, pma15);                           // peak12 -> pma15::Value
 		peak.getParameter().connectT(0, add);                               // peak -> add::Value
 		cable_table1.getWrappedObject().getParameter().connectT(0, faust1); // cable_table1 -> faust1::shiftfreq
 		midi4.getParameter().connectT(0, cable_table1);                     // midi4 -> cable_table1::Value
@@ -3050,6 +4285,8 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		
 		clear.setParameterT(0, 0.); // math::clear::Value
 		
+		; // branch3::Index is automated
+		
 		;                                   // tempo_sync::Tempo is automated
 		;                                   // tempo_sync::Multiplier is automated
 		tempo_sync.setParameterT(2, 1.);    // control::tempo_sync::Enabled
@@ -3058,6 +4295,16 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		;                          // ramp::PeriodTime is automated
 		;                          // ramp::LoopStart is automated
 		ramp.setParameterT(2, 1.); // core::ramp::Gate
+		
+		add17.setParameterT(0, 0.); // math::add::Value
+		
+		;                                // clock_ramp::Tempo is automated
+		;                                // clock_ramp::Multiplier is automated
+		clock_ramp.setParameterT(2, 0.); // core::clock_ramp::AddToSignal
+		clock_ramp.setParameterT(3, 1.); // core::clock_ramp::UpdateMode
+		clock_ramp.setParameterT(4, 0.); // core::clock_ramp::Inactive
+		
+		; // add18::Value is automated
 		
 		clear2.setParameterT(0, 0.); // math::clear::Value
 		
@@ -3078,6 +4325,8 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		; // pma1::Value is automated
 		; // pma1::Multiply is automated
 		; // pma1::Add is automated
+		
+		; // cable_table7::Value is automated
 		
 		sliderbank3.setParameterT(0, 1.); // control::sliderbank::Value
 		
@@ -3105,8 +4354,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		gain14.setParameterT(1, 20.); // core::gain::Smoothing
 		gain14.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		event_data_reader3.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
-		event_data_reader3.setParameterT(1, 0.); // routing::event_data_reader::Static
+		global_cable25.setParameterT(0, 1.); // routing::global_cable::Value
 		
 		; // add27::Value is automated
 		
@@ -3183,6 +4431,8 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		
 		; // cable_table6::Value is automated
 		
+		; // cable_table8::Value is automated
+		
 		sliderbank7.setParameterT(0, 1.); // control::sliderbank::Value
 		
 		global_cable5.setParameterT(0, 1.); // routing::global_cable::Value
@@ -3209,8 +4459,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		gain23.setParameterT(1, 20.); // core::gain::Smoothing
 		gain23.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		event_data_reader5.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
-		event_data_reader5.setParameterT(1, 0.); // routing::event_data_reader::Static
+		global_cable26.setParameterT(0, 1.); // routing::global_cable::Value
 		
 		; // add55::Value is automated
 		
@@ -3311,8 +4560,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		gain19.setParameterT(1, 20.); // core::gain::Smoothing
 		gain19.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		event_data_reader4.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
-		event_data_reader4.setParameterT(1, 0.); // routing::event_data_reader::Static
+		global_cable27.setParameterT(0, 1.); // routing::global_cable::Value
 		
 		; // add49::Value is automated
 		
@@ -3413,8 +4661,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		gain38.setParameterT(1, 20.); // core::gain::Smoothing
 		gain38.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		event_data_reader7.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
-		event_data_reader7.setParameterT(1, 0.); // routing::event_data_reader::Static
+		global_cable28.setParameterT(0, 1.); // routing::global_cable::Value
 		
 		; // add92::Value is automated
 		
@@ -3519,8 +4766,7 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		gain30.setParameterT(1, 20.); // core::gain::Smoothing
 		gain30.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		event_data_reader6.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
-		event_data_reader6.setParameterT(1, 0.); // routing::event_data_reader::Static
+		global_cable29.setParameterT(0, 1.); // routing::global_cable::Value
 		
 		; // add59::Value is automated
 		
@@ -3599,11 +4845,320 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		; // pma9::Multiply is automated
 		; // pma9::Add is automated
 		
+		sliderbank10.setParameterT(0, 1.); // control::sliderbank::Value
+		
+		global_cable8.setParameterT(0, 1.); // routing::global_cable::Value
+		
+		; // add15::Value is automated
+		
+		;                             // gain41::Gain is automated
+		gain41.setParameterT(1, 20.); // core::gain::Smoothing
+		gain41.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		global_cable15.setParameterT(0, 1.); // routing::global_cable::Value
+		
+		; // add103::Value is automated
+		
+		;                             // gain42::Gain is automated
+		gain42.setParameterT(1, 20.); // core::gain::Smoothing
+		gain42.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		global_cable24.setParameterT(0, 1.); // routing::global_cable::Value
+		
+		; // add16::Value is automated
+		
+		;                             // gain43::Gain is automated
+		gain43.setParameterT(1, 20.); // core::gain::Smoothing
+		gain43.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		global_cable30.setParameterT(0, 1.); // routing::global_cable::Value
+		
+		; // add104::Value is automated
+		
+		;                             // gain44::Gain is automated
+		gain44.setParameterT(1, 20.); // core::gain::Smoothing
+		gain44.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		event_data_reader16.setParameterT(0, 1.); // routing::event_data_reader::SlotIndex
+		event_data_reader16.setParameterT(1, 0.); // routing::event_data_reader::Static
+		
+		; // add105::Value is automated
+		
+		;                             // gain63::Gain is automated
+		gain63.setParameterT(1, 20.); // core::gain::Smoothing
+		gain63.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		event_data_reader28.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
+		event_data_reader28.setParameterT(1, 0.); // routing::event_data_reader::Static
+		
+		; // add106::Value is automated
+		
+		;                             // gain45::Gain is automated
+		gain45.setParameterT(1, 20.); // core::gain::Smoothing
+		gain45.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		;                                         // event_data_reader29::SlotIndex is automated
+		event_data_reader29.setParameterT(1, 0.); // routing::event_data_reader::Static
+		
+		add107.setParameterT(0, 0.); // math::add::Value
+		
+		;                             // gain64::Gain is automated
+		gain64.setParameterT(1, 20.); // core::gain::Smoothing
+		gain64.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		; // branch11::Index is automated
+		
+		midi_cc30.setParameterT(0, 128.); // control::midi_cc::CCNumber
+		midi_cc30.setParameterT(1, 0.);   // control::midi_cc::EnableMPE
+		midi_cc30.setParameterT(2, 0.);   // control::midi_cc::DefaultValue
+		
+		; // add108::Value is automated
+		
+		midi_cc31.setParameterT(0, 129.); // control::midi_cc::CCNumber
+		midi_cc31.setParameterT(1, 0.);   // control::midi_cc::EnableMPE
+		midi_cc31.setParameterT(2, 0.);   // control::midi_cc::DefaultValue
+		
+		; // add109::Value is automated
+		
+		midi_cc32.setParameterT(0, 1.); // control::midi_cc::CCNumber
+		midi_cc32.setParameterT(1, 0.); // control::midi_cc::EnableMPE
+		midi_cc32.setParameterT(2, 0.); // control::midi_cc::DefaultValue
+		
+		; // add110::Value is automated
+		
+		midi_cc33.setParameterT(0, 2.); // control::midi_cc::CCNumber
+		midi_cc33.setParameterT(1, 0.); // control::midi_cc::EnableMPE
+		midi_cc33.setParameterT(2, 0.); // control::midi_cc::DefaultValue
+		
+		; // add111::Value is automated
+		
+		; // add112::Value is automated
+		
+		; // add113::Value is automated
+		
+		; // add114::Value is automated
+		
+		;                             // gain65::Gain is automated
+		gain65.setParameterT(1, 20.); // core::gain::Smoothing
+		gain65.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		; // pma12::Value is automated
+		; // pma12::Multiply is automated
+		; // pma12::Add is automated
+		
+		sliderbank11.setParameterT(0, 1.); // control::sliderbank::Value
+		
+		global_cable9.setParameterT(0, 1.); // routing::global_cable::Value
+		
+		; // add19::Value is automated
+		
+		;                             // gain46::Gain is automated
+		gain46.setParameterT(1, 20.); // core::gain::Smoothing
+		gain46.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		global_cable16.setParameterT(0, 1.); // routing::global_cable::Value
+		
+		; // add115::Value is automated
+		
+		;                             // gain47::Gain is automated
+		gain47.setParameterT(1, 20.); // core::gain::Smoothing
+		gain47.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		global_cable31.setParameterT(0, 1.); // routing::global_cable::Value
+		
+		; // add20::Value is automated
+		
+		;                             // gain48::Gain is automated
+		gain48.setParameterT(1, 20.); // core::gain::Smoothing
+		gain48.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		global_cable32.setParameterT(0, 1.); // routing::global_cable::Value
+		
+		; // add116::Value is automated
+		
+		;                             // gain49::Gain is automated
+		gain49.setParameterT(1, 20.); // core::gain::Smoothing
+		gain49.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		event_data_reader17.setParameterT(0, 1.); // routing::event_data_reader::SlotIndex
+		event_data_reader17.setParameterT(1, 0.); // routing::event_data_reader::Static
+		
+		; // add117::Value is automated
+		
+		;                             // gain66::Gain is automated
+		gain66.setParameterT(1, 20.); // core::gain::Smoothing
+		gain66.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		event_data_reader30.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
+		event_data_reader30.setParameterT(1, 0.); // routing::event_data_reader::Static
+		
+		; // add118::Value is automated
+		
+		;                             // gain50::Gain is automated
+		gain50.setParameterT(1, 20.); // core::gain::Smoothing
+		gain50.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		;                                         // event_data_reader31::SlotIndex is automated
+		event_data_reader31.setParameterT(1, 0.); // routing::event_data_reader::Static
+		
+		add119.setParameterT(0, 0.); // math::add::Value
+		
+		;                             // gain67::Gain is automated
+		gain67.setParameterT(1, 20.); // core::gain::Smoothing
+		gain67.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		; // branch12::Index is automated
+		
+		midi_cc34.setParameterT(0, 128.); // control::midi_cc::CCNumber
+		midi_cc34.setParameterT(1, 0.);   // control::midi_cc::EnableMPE
+		midi_cc34.setParameterT(2, 0.);   // control::midi_cc::DefaultValue
+		
+		; // add120::Value is automated
+		
+		midi_cc35.setParameterT(0, 129.); // control::midi_cc::CCNumber
+		midi_cc35.setParameterT(1, 0.);   // control::midi_cc::EnableMPE
+		midi_cc35.setParameterT(2, 0.);   // control::midi_cc::DefaultValue
+		
+		; // add121::Value is automated
+		
+		midi_cc36.setParameterT(0, 1.); // control::midi_cc::CCNumber
+		midi_cc36.setParameterT(1, 0.); // control::midi_cc::EnableMPE
+		midi_cc36.setParameterT(2, 0.); // control::midi_cc::DefaultValue
+		
+		; // add122::Value is automated
+		
+		midi_cc37.setParameterT(0, 2.); // control::midi_cc::CCNumber
+		midi_cc37.setParameterT(1, 0.); // control::midi_cc::EnableMPE
+		midi_cc37.setParameterT(2, 0.); // control::midi_cc::DefaultValue
+		
+		; // add123::Value is automated
+		
+		; // add124::Value is automated
+		
+		; // add132::Value is automated
+		
+		; // add133::Value is automated
+		
+		;                             // gain68::Gain is automated
+		gain68.setParameterT(1, 20.); // core::gain::Smoothing
+		gain68.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		; // pma14::Value is automated
+		; // pma14::Multiply is automated
+		; // pma14::Add is automated
+		
+		sliderbank12.setParameterT(0, 1.); // control::sliderbank::Value
+		
+		global_cable17.setParameterT(0, 1.); // routing::global_cable::Value
+		
+		; // add21::Value is automated
+		
+		;                             // gain69::Gain is automated
+		gain69.setParameterT(1, 20.); // core::gain::Smoothing
+		gain69.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		global_cable18.setParameterT(0, 1.); // routing::global_cable::Value
+		
+		; // add134::Value is automated
+		
+		;                             // gain70::Gain is automated
+		gain70.setParameterT(1, 20.); // core::gain::Smoothing
+		gain70.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		global_cable33.setParameterT(0, 1.); // routing::global_cable::Value
+		
+		; // add22::Value is automated
+		
+		;                             // gain71::Gain is automated
+		gain71.setParameterT(1, 20.); // core::gain::Smoothing
+		gain71.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		global_cable34.setParameterT(0, 1.); // routing::global_cable::Value
+		
+		; // add135::Value is automated
+		
+		;                             // gain72::Gain is automated
+		gain72.setParameterT(1, 20.); // core::gain::Smoothing
+		gain72.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		event_data_reader18.setParameterT(0, 1.); // routing::event_data_reader::SlotIndex
+		event_data_reader18.setParameterT(1, 0.); // routing::event_data_reader::Static
+		
+		; // add136::Value is automated
+		
+		;                             // gain73::Gain is automated
+		gain73.setParameterT(1, 20.); // core::gain::Smoothing
+		gain73.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		event_data_reader32.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
+		event_data_reader32.setParameterT(1, 0.); // routing::event_data_reader::Static
+		
+		; // add137::Value is automated
+		
+		;                             // gain74::Gain is automated
+		gain74.setParameterT(1, 20.); // core::gain::Smoothing
+		gain74.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		;                                         // event_data_reader33::SlotIndex is automated
+		event_data_reader33.setParameterT(1, 0.); // routing::event_data_reader::Static
+		
+		add138.setParameterT(0, 0.); // math::add::Value
+		
+		;                             // gain75::Gain is automated
+		gain75.setParameterT(1, 20.); // core::gain::Smoothing
+		gain75.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		; // branch13::Index is automated
+		
+		midi_cc38.setParameterT(0, 128.); // control::midi_cc::CCNumber
+		midi_cc38.setParameterT(1, 0.);   // control::midi_cc::EnableMPE
+		midi_cc38.setParameterT(2, 0.);   // control::midi_cc::DefaultValue
+		
+		; // add139::Value is automated
+		
+		midi_cc39.setParameterT(0, 129.); // control::midi_cc::CCNumber
+		midi_cc39.setParameterT(1, 0.);   // control::midi_cc::EnableMPE
+		midi_cc39.setParameterT(2, 0.);   // control::midi_cc::DefaultValue
+		
+		; // add140::Value is automated
+		
+		midi_cc40.setParameterT(0, 1.); // control::midi_cc::CCNumber
+		midi_cc40.setParameterT(1, 0.); // control::midi_cc::EnableMPE
+		midi_cc40.setParameterT(2, 0.); // control::midi_cc::DefaultValue
+		
+		; // add141::Value is automated
+		
+		midi_cc41.setParameterT(0, 2.); // control::midi_cc::CCNumber
+		midi_cc41.setParameterT(1, 0.); // control::midi_cc::EnableMPE
+		midi_cc41.setParameterT(2, 0.); // control::midi_cc::DefaultValue
+		
+		; // add142::Value is automated
+		
+		; // add143::Value is automated
+		
+		; // add144::Value is automated
+		
+		; // add145::Value is automated
+		
+		;                             // gain76::Gain is automated
+		gain76.setParameterT(1, 20.); // core::gain::Smoothing
+		gain76.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		; // pma15::Value is automated
+		; // pma15::Multiply is automated
+		; // pma15::Add is automated
+		
 		; // xfader::Value is automated
 		
-		;                             // gain1::Gain is automated
-		gain1.setParameterT(1, 0.4);  // core::gain::Smoothing
-		gain1.setParameterT(2, -24.); // core::gain::ResetValue
+		;                              // gain1::Gain is automated
+		gain1.setParameterT(1, 0.);    // core::gain::Smoothing
+		gain1.setParameterT(2, -100.); // core::gain::ResetValue
+		
+		; // cable_table9::Value is automated
+		
+		; // branch4::Index is automated
+		
+		clear4.setParameterT(0, 0.); // math::clear::Value
 		
 		;                              // gain3::Gain is automated
 		gain3.setParameterT(1, 0.);    // core::gain::Smoothing
@@ -3746,29 +5301,29 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		
 		; // receive1::Feedback is automated
 		
-		;                             // gain2::Gain is automated
-		gain2.setParameterT(1, 1.8);  // core::gain::Smoothing
-		gain2.setParameterT(2, -11.); // core::gain::ResetValue
+		;                              // gain2::Gain is automated
+		gain2.setParameterT(1, 0.);    // core::gain::Smoothing
+		gain2.setParameterT(2, -100.); // core::gain::ResetValue
 		
 		this->setParameterT(0, 0.);
 		this->setParameterT(1, 1.);
-		this->setParameterT(2, 0.632643);
-		this->setParameterT(3, 0.807829);
-		this->setParameterT(4, 550.62);
-		this->setParameterT(5, 522.48);
-		this->setParameterT(6, 2.);
-		this->setParameterT(7, 24.);
-		this->setParameterT(8, 1.);
-		this->setParameterT(9, 0.32);
-		this->setParameterT(10, -0.0409307);
+		this->setParameterT(2, 0.);
+		this->setParameterT(3, 0.);
+		this->setParameterT(4, 10.);
+		this->setParameterT(5, 10.);
+		this->setParameterT(6, 1.);
+		this->setParameterT(7, 0.9);
+		this->setParameterT(8, 0.4);
+		this->setParameterT(9, 1.);
+		this->setParameterT(10, 0.);
 		this->setParameterT(11, 0.);
 		this->setParameterT(12, 1.);
-		this->setParameterT(13, -0.1);
-		this->setParameterT(14, 16.);
+		this->setParameterT(13, 1.);
+		this->setParameterT(14, 10.);
 		this->setParameterT(15, 0.);
 		this->setParameterT(16, 0.);
 		this->setParameterT(17, 1.);
-		this->setParameterT(18, 0.);
+		this->setParameterT(18, 0.9);
 		this->setParameterT(19, 0.);
 		this->setParameterT(20, 1.);
 		this->setParameterT(21, 1.);
@@ -3777,14 +5332,24 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		this->setParameterT(24, 1.);
 		this->setParameterT(25, 0.);
 		this->setParameterT(26, 0.);
-		this->setParameterT(27, -2.);
-		this->setParameterT(28, 9.);
+		this->setParameterT(27, 0.);
+		this->setParameterT(28, 0.);
 		this->setParameterT(29, 0.);
 		this->setParameterT(30, 0.);
-		this->setParameterT(31, 3.);
+		this->setParameterT(31, 1.);
 		this->setParameterT(32, 1.);
 		this->setParameterT(33, 1.);
 		this->setParameterT(34, 1.);
+		this->setParameterT(35, 0.);
+		this->setParameterT(36, 0.);
+		this->setParameterT(37, 0.);
+		this->setParameterT(38, 0.);
+		this->setParameterT(39, 1.);
+		this->setParameterT(40, 1.);
+		this->setParameterT(41, 1.);
+		this->setParameterT(42, 1.);
+		this->setParameterT(43, 1.);
+		this->setParameterT(44, 1.);
 		this->setExternalData({}, -1);
 	}
 	~instance() override
@@ -3809,32 +5374,55 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		this->getT(0).getT(0).getT(1).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable3_t<NV>
 		this->getT(0).getT(0).getT(1).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable11_t<NV>
 		this->getT(0).getT(0).getT(1).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable10_t<NV>
+		this->getT(0).getT(0).getT(1).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable25_t<NV>
 		this->getT(0).getT(0).getT(2).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable5_t<NV>
 		this->getT(0).getT(0).getT(2).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable20_t<NV>
 		this->getT(0).getT(0).getT(2).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable21_t<NV>
+		this->getT(0).getT(0).getT(2).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable26_t<NV>
 		this->getT(0).getT(0).getT(3).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable4_t<NV>
 		this->getT(0).getT(0).getT(3).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable12_t<NV>
 		this->getT(0).getT(0).getT(3).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable19_t<NV>
+		this->getT(0).getT(0).getT(3).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable27_t<NV>
 		this->getT(0).getT(0).getT(4).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable7_t<NV>
 		this->getT(0).getT(0).getT(4).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable14_t<NV>
 		this->getT(0).getT(0).getT(4).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable23_t<NV>
+		this->getT(0).getT(0).getT(4).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable28_t<NV>
 		this->getT(0).getT(0).getT(5).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable6_t<NV>
 		this->getT(0).getT(0).getT(5).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable13_t<NV>
 		this->getT(0).getT(0).getT(5).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable22_t<NV>
+		this->getT(0).getT(0).getT(5).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable29_t<NV>
+		this->getT(0).getT(0).getT(6).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable8_t<NV>
+		this->getT(0).getT(0).getT(6).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable15_t<NV>
+		this->getT(0).getT(0).getT(6).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable24_t<NV>
+		this->getT(0).getT(0).getT(6).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable30_t<NV>
+		this->getT(0).getT(0).getT(7).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable9_t<NV>
+		this->getT(0).getT(0).getT(7).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable16_t<NV>
+		this->getT(0).getT(0).getT(7).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable31_t<NV>
+		this->getT(0).getT(0).getT(7).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable32_t<NV>
+		this->getT(0).getT(0).getT(8).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable17_t<NV>
+		this->getT(0).getT(0).getT(8).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable18_t<NV>
+		this->getT(0).getT(0).getT(8).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable33_t<NV>
+		this->getT(0).getT(0).getT(8).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // files_impl::global_cable34_t<NV>
 	}
 	
 	void setExternalData(const ExternalData& b, int index)
 	{
 		// External Data Connections ---------------------------------------------------------------
 		
-		this->getT(0).getT(0).getT(0).getT(0).getT(2).setExternalData(b, index);                 // files_impl::ramp_t<NV>
+		this->getT(0).getT(0).getT(0).getT(0).                                                   // files_impl::ramp_t<NV>
+        getT(1).getT(0).getT(0).getT(1).setExternalData(b, index);
+		this->getT(0).getT(0).getT(0).getT(0).                                                   // files_impl::clock_ramp_t<NV>
+        getT(1).getT(0).getT(1).getT(0).setExternalData(b, index);
+		this->getT(0).getT(0).getT(0).getT(0).getT(2).setExternalData(b, index);                 // files_impl::peak2_t<NV>
 		this->getT(0).getT(0).getT(0).getT(0).getT(4).setExternalData(b, index);                 // files_impl::pack_resizer_t
 		this->getT(0).getT(0).getT(0).getT(0).getT(5).getT(0).getT(0).setExternalData(b, index); // files_impl::cable_table_t<NV>
 		this->getT(0).getT(0).getT(0).getT(0).getT(5).getT(1).getT(0).setExternalData(b, index); // files_impl::cable_pack_t<NV>
 		this->getT(0).getT(0).getT(0).getT(0).getT(6).setExternalData(b, index);                 // files_impl::peak1_t<NV>
+		this->getT(0).getT(0).getT(0).getT(0).getT(9).setExternalData(b, index);                 // files_impl::cable_table7_t
 		this->getT(0).getT(0).getT(1).getT(0).setExternalData(b, index);                         // files_impl::sliderbank3_t<NV>
 		this->getT(0).getT(0).getT(1).getT(2).setExternalData(b, index);                         // files_impl::peak3_t<NV>
 		this->getT(0).getT(0).getT(1).getT(4).setExternalData(b, index);                         // files_impl::cable_table6_t
+		this->getT(0).getT(0).getT(1).getT(5).setExternalData(b, index);                         // files_impl::cable_table8_t
 		this->getT(0).getT(0).getT(2).getT(0).setExternalData(b, index);                         // files_impl::sliderbank7_t<NV>
 		this->getT(0).getT(0).getT(2).getT(2).setExternalData(b, index);                         // files_impl::peak7_t<NV>
 		this->getT(0).getT(0).getT(3).getT(0).setExternalData(b, index);                         // files_impl::sliderbank6_t<NV>
@@ -3843,25 +5431,33 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		this->getT(0).getT(0).getT(4).getT(2).getT(0).setExternalData(b, index);                 // files_impl::peak9_t<NV>
 		this->getT(0).getT(0).getT(5).getT(0).setExternalData(b, index);                         // files_impl::sliderbank8_t<NV>
 		this->getT(0).getT(0).getT(5).getT(2).getT(0).setExternalData(b, index);                 // files_impl::peak8_t<NV>
+		this->getT(0).getT(0).getT(6).getT(0).setExternalData(b, index);                         // files_impl::sliderbank10_t<NV>
+		this->getT(0).getT(0).getT(6).getT(2).getT(0).setExternalData(b, index);                 // files_impl::peak10_t<NV>
+		this->getT(0).getT(0).getT(7).getT(0).setExternalData(b, index);                         // files_impl::sliderbank11_t<NV>
+		this->getT(0).getT(0).getT(7).getT(2).getT(0).setExternalData(b, index);                 // files_impl::peak11_t<NV>
+		this->getT(0).getT(0).getT(8).getT(0).setExternalData(b, index);                         // files_impl::sliderbank12_t<NV>
+		this->getT(0).getT(0).getT(8).getT(2).getT(0).setExternalData(b, index);                 // files_impl::peak12_t<NV>
+		this->getT(0).getT(1).getT(1).getT(1).getT(0).setExternalData(b, index);                 // files_impl::cable_table9_t<NV>
 		this->getT(0).getT(1).getT(1).getT(1).                                                   // files_impl::peak_t<NV>
-        getT(0).getT(1).getT(1).getT(0).
+        getT(3).getT(0).getT(1).getT(0).
         getT(1).setExternalData(b, index);
-		this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(4).getT(0).setExternalData(b, index); // files_impl::file_player4_t<NV>
-		this->getT(0).getT(1).getT(1).getT(1).getT(0).getT(4).getT(1).setExternalData(b, index); // files_impl::file_player5_t<NV>
+		this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(1).setExternalData(b, index);         // files_impl::oscilloscope_t
+		this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(4).getT(0).setExternalData(b, index); // files_impl::file_player4_t<NV>
+		this->getT(0).getT(1).getT(1).getT(1).getT(3).getT(4).getT(1).setExternalData(b, index); // files_impl::file_player5_t<NV>
 		this->getT(0).getT(1).getT(1).getT(1).                                                   // files_impl::cable_table2_t<NV>
-        getT(0).getT(5).getT(0).getT(0).
+        getT(3).getT(5).getT(0).getT(0).
         getT(0).setExternalData(b, index);
 		this->getT(0).getT(1).getT(1).getT(1).  // files_impl::cable_table3_t<NV>
-        getT(0).getT(5).getT(0).getT(0).
+        getT(3).getT(5).getT(0).getT(0).
         getT(1).setExternalData(b, index);
 		this->getT(0).getT(1).getT(1).getT(1).  // files_impl::cable_table4_t<NV>
-        getT(0).getT(5).getT(1).getT(0).
+        getT(3).getT(5).getT(1).getT(0).
         getT(0).setExternalData(b, index);
 		this->getT(0).getT(1).getT(1).getT(1).  // files_impl::cable_table5_t<NV>
-        getT(0).getT(5).getT(1).getT(0).
+        getT(3).getT(5).getT(1).getT(0).
         getT(1).setExternalData(b, index);
 		this->getT(0).getT(1).getT(1).getT(1).  // files_impl::cable_table1_t<NV>
-        getT(0).getT(6).getT(2).getT(1).setExternalData(b, index);
+        getT(3).getT(6).getT(2).getT(1).setExternalData(b, index);
 	}
 };
 }

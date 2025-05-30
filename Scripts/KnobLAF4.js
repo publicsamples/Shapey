@@ -121,11 +121,23 @@ const var ModSm = [Content.getComponent("GateStep1"),
                    Content.getComponent("Seqmax4"),
                    Content.getComponent("SeqScl4")];
 
+const var LfoMidiVal1 = [Content.getComponent("LfoMidiMin1"),
+						 Content.getComponent("LfoMidiMin2"),
+						 Content.getComponent("LfoMidiMin3"),
+						 Content.getComponent("LfoMidiMin4"),
+                         Content.getComponent("LfoMidiMax1"),
+                         Content.getComponent("LfoMidiMax2"),
+                         Content.getComponent("LfoMidiMax3"),
+                         Content.getComponent("LfoMidiMax4"),
+                         Content.getComponent("LfoMidiStep1"),
+                         Content.getComponent("LfoMidiStep2"),
+                         Content.getComponent("LfoMidiStep3"),
+                         Content.getComponent("LfoMidiStep4")];
 
 
 
 
-for(s in ModSm)
+for(s in LfoMidiVal1)
       s.setLocalLookAndFeel(KnobLaf4);  
 
 

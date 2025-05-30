@@ -31,14 +31,12 @@
       </Node>
     </Nodes>
     <Parameters>
-      <Parameter ID="vol" MinValue="0.0" MaxValue="1.0" Value="0.8999999761581421"
-                 DefaultValue="1.0">
+      <Parameter ID="vol" MinValue="0.0" MaxValue="1.0" Value="1.0">
         <Connections>
           <Connection NodeId="gain" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter ID="pan" MinValue="-1.0" MaxValue="1.0" Value="-0.04834375000000013"
-                 DefaultValue="1.0">
+      <Parameter ID="pan" MinValue="-1.0" MaxValue="1.0" Value="0.0" DefaultValue="1.0">
         <Connections>
           <Connection NodeId="jpanner" ParameterId="Pan"/>
         </Connections>

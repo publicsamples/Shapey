@@ -8,7 +8,7 @@ const var Osc1Mods =[];
 
 for (i = 0; i < 5; i++)
 {
-    Osc1Mods[i] = Content.getComponent("OsModRoute"+(i+1));
+    Osc1Mods[i] = Content.getComponent("OsModRouteA"+(i+1));
 
 } 
 
@@ -22,17 +22,31 @@ Content.getComponent("OscModRoutPage1").setControlCallback(onOscModRoutPage1Cont
 
 const var File1Mods =[];
 
-for (i = 0; i < 6; i++)
+for (i = 0; i < 9; i++)
 {
     File1Mods[i] = Content.getComponent("flModRouteA"+(i+1));
 
 } 
 
-
+const var ModLabels1 = [Content.getComponent("FileModLabel1"),
+                        Content.getComponent("ModLabelsFile1")];
+  
+        
 inline function onfileModRoutPage1Control(component, value)
 {
  for (i = 0; i < File1Mods.length; i++)
         File1Mods[i].showControl(value - 1 == i);
+   
+   
+   	if (value == 1){
+   		 for(s in ModLabels1)
+       s.showControl(0);
+   		}
+   	  else {
+	   for(s in ModLabels1)
+       s.showControl(1); 
+   	  }   
+        
 };
 
 Content.getComponent("fileModRoutPage1").setControlCallback(onfileModRoutPage1Control);
@@ -132,21 +146,7 @@ Osc1.setAttribute(Osc1.pitchmode, value);
  
  
  
- //File Manager 
-  
- 
- inline function onFolderSelect1Control(component, value)
- {
- 	 {
-	 if (value == 1){
-		 FilePanel.showControl(1);
-		 }
-	 
- };
- };
- 
- Content.getComponent("FolderSelect1").setControlCallback(onFolderSelect1Control);
- 
+
 const var WinUnsync1 = [Content.getComponent("FileWin1"),
                        Content.getComponent("FileXf1")];
 
@@ -184,9 +184,10 @@ inline function onWinSync1Control(component, value)
 
 Content.getComponent("WinSync1").setControlCallback(onWinSync1Control);
 
+
 const var CutLabel1 = Content.getComponent("CutLabel1");
 const var CutLabel2 = Content.getComponent("CutLabel2");
-const var CutLabel3 = Content.getComponent("CutLabel3");
+const var CutLabel9 = Content.getComponent("CutLabel9");
 
 
 inline function onFilterType1Control(component, value)
@@ -196,26 +197,20 @@ inline function onFilterType1Control(component, value)
 	if (value == 1){
 		CutLabel1.setValue("Low Pass");
 		CutLabel2.setValue("High Pass");
-		CutLabel3.setValue("Serial/ Paralel");
+		CutLabel9.setValue("Serial/ Paralel");
 	}
 	
 	if (value == 2){
 			CutLabel1.setValue("Low Shelf");
 			CutLabel2.setValue("High Shelf");
-			CutLabel3.setValue("Serial/ Paralel");
+			CutLabel9.setValue("Serial/ Paralel");
 		}
+			
 		
-	
 	if (value == 3){
-		CutLabel1.setValue("Low Pass");
-		CutLabel2.setValue("High Pass");
-		CutLabel3.setValue("Serial/ Paralel");
-		}	
-		
-	if (value == 4){
-			CutLabel1.setValue("Comb Freq");
+			CutLabel1.setValue("Freq");
 			CutLabel2.setValue("Low Pass");
-			CutLabel3.setValue("FFWD/ Allpass");
+			CutLabel9.setValue("FFWD/ Allpass");
 			}		
 	
 };
@@ -235,16 +230,4 @@ const var PosSp1 = Content.getComponent("PosSp1");
  };
  
  Content.getComponent("PosModMode1").setControlCallback(onPosModMode1Control);
- 
- //const var MidiIn1 = Synth.getMidiProcessor("MidiIn1");
-//const var Seq1 = Synth.getModulator("Seq1");
- 
- //inline function onSeqPwr1Control(component, value)
-/// {
-// 	MidiIn1.setBypassed(value-1);
-//// 	Seq1.setBypassed(value-1);
-/// };
- 
-// Content.getComponent("SeqPwr1").setControlCallback(onSeqPwr1Control);
- 
  

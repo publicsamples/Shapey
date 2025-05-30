@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Preset Version="0.1.0">
+  <Content Processor="Interface">
+    <Control type="ScriptButton" id="Presets" value="0.0"/>
+    <Control type="ScriptComboBox" id="VoiceMode" value="2.0"/>
+    <Control type="ScriptComboBox" id="VoiceMode1" value="2.0"/>
+    <Control type="ScriptComboBox" id="cmbPresets" value="1.0"/>
+    <Control type="ScriptSlider" id="Width1" value="0.4699999988079071"/>
+    <Control type="ScriptComboBox" id="PitchMode1" value="1.0"/>
+    <Control type="ScriptSlider" id="Pitch1" value="1.570000052452087"/>
+    <Control type="ScriptSlider" id="Input1" value="1.0"/>
+    <Control type="ScriptSlider" id="Step1" value="0.0"/>
+    <Control type="ScriptButton" id="ShowUserTable1" value="0.0"/>
+    <Control type="ScriptSlider" id="OscShapeInput1" value="1.0"/>
+    <Control type="ScriptComboBox" id="OscModRoutPage1" value="3.0"/>
+    <Control type="ScriptSliderPack" id="PmSp1" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="PitchMod1" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc1" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc1" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc2" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc2" value="1.0"/>
+    <Control type="ScriptSliderPack" id="InMdSp1" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+    <Control type="ScriptSlider" id="InputMod1" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc4" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc4" value="1.0"/>
+    <Control type="ScriptSliderPack" id="ShSp1" value="6.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="ShapeMod1" value="0.8199999928474426"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc5" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc5" value="1.0"/>
+    <Control type="ScriptSliderPack" id="WdMdSp1" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+    <Control type="ScriptSlider" id="WidthMod1" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc3" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc3" value="1.0"/>
+    <Control type="ScriptSliderPack" id="OtMdSp1" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+    <Control type="ScriptSlider" id="OutMod1" value="0.0"/>
+    <Control type="ScriptSlider" id="FmIn1" value="0.5400000214576721"/>
+    <Control type="ScriptSlider" id="Harm1" value="0.0"/>
+    <Control type="ScriptSlider" id="HarmStep1" value="1.0"/>
+    <Control type="ScriptSlider" id="Tempo1" value="9.0"/>
+    <Control type="ScriptSlider" id="Div1" value="2.099999904632568"/>
+    <Control type="ScriptComboBox" id="PitchMode2" value="2.0"/>
+    <Control type="ScriptTable" id="UserShape1" value="0.0" data=""/>
+    <Control type="ScriptComboBox" id="MidiGate1" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiGate2" value="1.0"/>
+    <Control type="ScriptSlider" id="Bend1" value="0.0"/>
+    <Control type="ScriptComboBox" id="fileModRoutPage1" value="8.0"/>
+    <Control type="ScriptSlider" id="FilePitch1" value="0.9000003933906555"/>
+    <Control type="ScriptSlider" id="FilePos1" value="0.0"/>
+    <Control type="ScriptSlider" id="FileWin1" value="881.3499755859375"/>
+    <Control type="ScriptSlider" id="FileIn1" value="0.2599999904632568"/>
+    <Control type="ScriptSlider" id="FileSmooth1" value="0.0"/>
+    <Control type="ScriptSlider" id="PosMod1" value="1.0"/>
+    <Control type="ScriptTable" id="PosTable1" value="0.0" data=""/>
+    <Control type="ScriptSlider" id="PosModTempo1" value="0.0"/>
+    <Control type="ScriptSlider" id="PosModDiv1" value="3.0"/>
+    <Control type="ScriptButton" id="ScriptButton1" value="0.0"/>
+    <Control type="ScriptButton" id="PosModMode1" value="0.0"/>
+    <Control type="ScriptSliderPack" id="PosSp1" value="-1.0" data="64....f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+."/>
+    <Control type="ScriptSlider" id="ScriptSlider1" value="16.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc9" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc9" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp7" value="1.0" data="32....f+......................................"/>
+    <Control type="ScriptSlider" id="FileTempoMod1" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc10" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc10" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp8" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FilePitchMod1" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc11" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc11" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp9" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FileInMod1" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc15" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc15" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp13" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinMod1" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc16" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc16" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp14" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod1" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc17" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc17" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp15" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod2" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc18" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc18" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp16" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod3" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc19" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc19" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp17" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod4" value="0.0"/>
+    <Control type="ScriptAudioWaveform" id="Wav1" value="0.0" data="{PROJECT_FOLDER}Wavetables/1024/BELL4.WAV"
+             rangeStart="0" rangeEnd="262144"/>
+    <Control type="ScriptTable" id="PosiTable2" value="0.0" data=""/>
+    <Control type="ScriptTable" id="PosiTable1" value="0.0" data=""/>
+    <Control type="ScriptTable" id="PosiTable3" value="0.0" data=""/>
+    <Control type="ScriptSlider" id="FileXf1" value="820.2000122070312"/>
+    <Control type="ScriptComboBox" id="Quantise1" value="4.0"/>
+    <Control type="ScriptSlider" id="FileMix1" value="0.0"/>
+    <Control type="ScriptComboBox" id="Quantise2" value="1.0"/>
+    <Control type="ScriptSlider" id="Feed1" value="0.2599999904632568"/>
+    <Control type="ScriptButton" id="WinSync1" value="0.0"/>
+    <Control type="ScriptSlider" id="FileWinTempo1" value="0.0"/>
+    <Control type="ScriptSlider" id="FileXfTempo1" value="0.0"/>
+    <Control type="ScriptButton" id="UserMode" value="0.0"/>
+    <Control type="ScriptComboBox" id="FlModRoutPage1" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc14" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc14" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp12" value="1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FilterMixMod1" value="0.1299999952316284"/>
+    <Control type="ScriptComboBox" id="XfSelOsc12" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc12" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp10" value="1.0" data="32......jBWO7C................................"/>
+    <Control type="ScriptSlider" id="FilterMixMod2" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc13" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc13" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp11" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FilterMixMod3" value="0.0"/>
+    <Control type="ScriptSlider" id="SlotVol6" value="10000.0"/>
+    <Control type="ScriptSlider" id="SlotVol7" value="1.0"/>
+    <Control type="ScriptSlider" id="SlotVol8" value="20000.0"/>
+    <Control type="ScriptSlider" id="SlotVol9" value="0.0"/>
+    <Control type="ScriptSlider" id="SlotVol10" value="95.0"/>
+    <Control type="ScriptSlider" id="FxMix2" value="0.0"/>
+    <Control type="ScriptSlider" id="XfParamB2" value="1.0"/>
+    <Control type="ScriptSlider" id="XfParamA2" value="0.07000000029802322"/>
+    <Control type="ScriptComboBox" id="FilterType1" value="1.0"/>
+    <Control type="ScriptSlider" id="FilterQ1" value="1.0"/>
+    <Control type="ScriptButton" id="FilterRt1" value="1.0"/>
+    <Control type="ScriptSlider" id="VcaGain1" value="1.0"/>
+    <Control type="ScriptSlider" id="VcaPan1" value="0.0"/>
+    <Control type="ScriptSlider" id="Width2" value="0.0"/>
+    <Control type="ScriptComboBox" id="PitchMode3" value="1.0"/>
+    <Control type="ScriptSlider" id="Pitch2" value="-0.3100000023841858"/>
+    <Control type="ScriptSlider" id="Input2" value="0.0"/>
+    <Control type="ScriptSlider" id="Step2" value="0.0"/>
+    <Control type="ScriptButton" id="ShowUserTable2" value="0.0"/>
+    <Control type="ScriptSlider" id="OscShapeInput2" value="1.0"/>
+    <Control type="ScriptComboBox" id="OscModRoutPage2" value="3.0"/>
+    <Control type="ScriptSliderPack" id="PmSp2" value="5.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="PitchMod2" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc6" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc6" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc7" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc7" value="1.0"/>
+    <Control type="ScriptSliderPack" id="InMdSp2" value="6.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="InputMod2" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc8" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc8" value="1.0"/>
+    <Control type="ScriptSliderPack" id="ShSp2" value="6.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="ShapeMod2" value="0.4799999892711639"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc20" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc20" value="1.0"/>
+    <Control type="ScriptSliderPack" id="WdMdSp2" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+    <Control type="ScriptSlider" id="WidthMod2" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc21" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc21" value="1.0"/>
+    <Control type="ScriptSliderPack" id="OtMdSp2" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+    <Control type="ScriptSlider" id="OutMod2" value="0.0"/>
+    <Control type="ScriptSlider" id="FmIn2" value="0.6299999952316284"/>
+    <Control type="ScriptSlider" id="Harm2" value="0.0"/>
+    <Control type="ScriptSlider" id="HarmStep2" value="1.0"/>
+    <Control type="ScriptSlider" id="Tempo2" value="0.0"/>
+    <Control type="ScriptSlider" id="Div2" value="0.0"/>
+    <Control type="ScriptComboBox" id="PitchMode4" value="2.0"/>
+    <Control type="ScriptTable" id="UserShape2" value="0.0" data=""/>
+    <Control type="ScriptComboBox" id="MidiGate3" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiGate4" value="1.0"/>
+    <Control type="ScriptSlider" id="Bend2" value="0.0"/>
+    <Control type="ScriptComboBox" id="fileModRoutPage2" value="3.0"/>
+    <Control type="ScriptSlider" id="FilePitch2" value="0.4000003635883331"/>
+    <Control type="ScriptSlider" id="FilePos2" value="0.4600000083446503"/>
+    <Control type="ScriptSlider" id="FileWin2" value="116.4300003051758"/>
+    <Control type="ScriptSlider" id="FileIn2" value="0.2000000029802322"/>
+    <Control type="ScriptSlider" id="FileSmooth2" value="3.640000104904175"/>
+    <Control type="ScriptSlider" id="PosMod2" value="-0.9900000095367432"/>
+    <Control type="ScriptTable" id="PosTable2" value="0.0" data=""/>
+    <Control type="ScriptSlider" id="PosModTempo2" value="0.0"/>
+    <Control type="ScriptSlider" id="PosModDiv2" value="3.0"/>
+    <Control type="ScriptButton" id="ScriptButton2" value="0.0"/>
+    <Control type="ScriptButton" id="PosModMode2" value="0.0"/>
+    <Control type="ScriptSliderPack" id="PosSp2" value="-1.0" data="64....f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+."/>
+    <Control type="ScriptSlider" id="ScriptSlider2" value="16.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc22" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc22" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp18" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FileTempoMod2" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc23" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc23" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp19" value="0" data="32....f+......................................"/>
+    <Control type="ScriptSlider" id="FilePitchMod2" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc24" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc24" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp20" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FileInMod2" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc25" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc25" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp21" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinMod2" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc26" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc26" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp22" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod5" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc27" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc27" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp23" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod6" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc28" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc28" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp24" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod7" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc29" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc29" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp25" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod8" value="0.0"/>
+    <Control type="ScriptAudioWaveform" id="Wav2" value="0.0" data="{PROJECT_FOLDER}Misc/LoopsChains/castle.wav"
+             rangeStart="0" rangeEnd="281453"/>
+    <Control type="ScriptTable" id="PosiTable4" value="0.0" data=""/>
+    <Control type="ScriptTable" id="PosiTable5" value="0.0" data=""/>
+    <Control type="ScriptTable" id="PosiTable6" value="0.0" data=""/>
+    <Control type="ScriptSlider" id="FileXf2" value="122.2200012207031"/>
+    <Control type="ScriptComboBox" id="Quantise3" value="1.0"/>
+    <Control type="ScriptSlider" id="FileMix2" value="1.0"/>
+    <Control type="ScriptComboBox" id="Quantise4" value="2.0"/>
+    <Control type="ScriptSlider" id="Feed2" value="0.8999999761581421"/>
+    <Control type="ScriptButton" id="WinSync2" value="0.0"/>
+    <Control type="ScriptSlider" id="FileWinTempo2" value="0.0"/>
+    <Control type="ScriptSlider" id="FileXfTempo2" value="0.0"/>
+    <Control type="ScriptButton" id="UserMode1" value="0.0"/>
+    <Control type="ScriptComboBox" id="FlModRoutPage2" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc30" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc30" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp26" value="1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FilterMixMod4" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc31" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc31" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp27" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FilterMixMod5" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc32" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc32" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp28" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FilterMixMod6" value="0.0"/>
+    <Control type="ScriptSlider" id="SlotVol11" value="10000.0"/>
+    <Control type="ScriptSlider" id="SlotVol12" value="1.0"/>
+    <Control type="ScriptSlider" id="SlotVol13" value="20000.0"/>
+    <Control type="ScriptSlider" id="SlotVol14" value="0.0"/>
+    <Control type="ScriptSlider" id="SlotVol15" value="0.0"/>
+    <Control type="ScriptSlider" id="FxMix3" value="1.0"/>
+    <Control type="ScriptSlider" id="XfParamB3" value="0.0"/>
+    <Control type="ScriptSlider" id="XfParamA3" value="0.8700000047683716"/>
+    <Control type="ScriptComboBox" id="FilterType2" value="1.0"/>
+    <Control type="ScriptSlider" id="FilterQ2" value="0.5"/>
+    <Control type="ScriptButton" id="FilterRt2" value="0.0"/>
+    <Control type="ScriptSlider" id="VcaGain2" value="1.0"/>
+    <Control type="ScriptSlider" id="VcaPan2" value="0.0"/>
+    <Control type="ScriptSlider" id="Width3" value="0.0"/>
+    <Control type="ScriptComboBox" id="PitchMode5" value="1.0"/>
+    <Control type="ScriptSlider" id="Pitch3" value="0.0"/>
+    <Control type="ScriptSlider" id="Input3" value="0.5"/>
+    <Control type="ScriptSlider" id="Step3" value="0.0"/>
+    <Control type="ScriptButton" id="ShowUserTable3" value="0.0"/>
+    <Control type="ScriptSlider" id="OscShapeInput3" value="0.0"/>
+    <Control type="ScriptComboBox" id="OscModRoutPage3" value="1.0"/>
+    <Control type="ScriptSliderPack" id="PmSp3" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="PitchMod3" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc33" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc33" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc34" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc34" value="1.0"/>
+    <Control type="ScriptSliderPack" id="InMdSp3" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+    <Control type="ScriptSlider" id="InputMod3" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc35" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc35" value="1.0"/>
+    <Control type="ScriptSliderPack" id="ShSp3" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+    <Control type="ScriptSlider" id="ShapeMod3" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc36" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc36" value="1.0"/>
+    <Control type="ScriptSliderPack" id="WdMdSp3" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+    <Control type="ScriptSlider" id="WidthMod3" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc37" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc37" value="1.0"/>
+    <Control type="ScriptSliderPack" id="OtMdSp3" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+    <Control type="ScriptSlider" id="OutMod3" value="0.0"/>
+    <Control type="ScriptSlider" id="FmIn3" value="0.0"/>
+    <Control type="ScriptSlider" id="Harm3" value="0.0"/>
+    <Control type="ScriptSlider" id="HarmStep3" value="1.0"/>
+    <Control type="ScriptSlider" id="Tempo3" value="0.0"/>
+    <Control type="ScriptSlider" id="Div3" value="0.0"/>
+    <Control type="ScriptComboBox" id="PitchMode6" value="1.0"/>
+    <Control type="ScriptTable" id="UserShape3" value="0.0" data=""/>
+    <Control type="ScriptComboBox" id="MidiGate5" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiGate6" value="1.0"/>
+    <Control type="ScriptSlider" id="Bend3" value="0.0"/>
+    <Control type="ScriptComboBox" id="fileModRoutPage3" value="1.0"/>
+    <Control type="ScriptSlider" id="FilePitch3" value="0.0"/>
+    <Control type="ScriptSlider" id="FilePos3" value="0.5299999713897705"/>
+    <Control type="ScriptSlider" id="FileWin3" value="0.0"/>
+    <Control type="ScriptSlider" id="FileIn3" value="0.25"/>
+    <Control type="ScriptSlider" id="FileSmooth3" value="0.0"/>
+    <Control type="ScriptSlider" id="PosMod3" value="0.0"/>
+    <Control type="ScriptTable" id="PosTable3" value="0.0" data=""/>
+    <Control type="ScriptSlider" id="PosModTempo3" value="0.0"/>
+    <Control type="ScriptSlider" id="PosModDiv3" value="0.0"/>
+    <Control type="ScriptButton" id="ScriptButton3" value="0.0"/>
+    <Control type="ScriptButton" id="PosModMode3" value="0.0"/>
+    <Control type="ScriptSliderPack" id="PosSp3" value="-1.0" data="64....f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+."/>
+    <Control type="ScriptSlider" id="ScriptSlider3" value="16.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc38" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc38" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp29" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FileTempoMod3" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc39" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc39" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp30" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FilePitchMod3" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc40" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc40" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp31" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FileInMod3" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc41" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc41" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp32" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinMod3" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc42" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc42" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp33" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod9" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc43" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc43" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp34" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod10" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc44" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc44" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp35" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod11" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc45" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc45" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp36" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod12" value="0.0"/>
+    <Control type="ScriptAudioWaveform" id="Wav3" value="0.0" data="" rangeStart="0"
+             rangeEnd="0"/>
+    <Control type="ScriptTable" id="PosiTable7" value="0.0" data=""/>
+    <Control type="ScriptTable" id="PosiTable8" value="0.0" data=""/>
+    <Control type="ScriptTable" id="PosiTable9" value="0.0" data=""/>
+    <Control type="ScriptSlider" id="FileXf3" value="0.0"/>
+    <Control type="ScriptComboBox" id="Quantise5" value="1.0"/>
+    <Control type="ScriptSlider" id="FileMix3" value="1.0"/>
+    <Control type="ScriptComboBox" id="Quantise6" value="1.0"/>
+    <Control type="ScriptSlider" id="Feed3" value="0.0"/>
+    <Control type="ScriptButton" id="WinSync3" value="0.0"/>
+    <Control type="ScriptSlider" id="FileWinTempo3" value="0.0"/>
+    <Control type="ScriptSlider" id="FileXfTempo3" value="0.0"/>
+    <Control type="ScriptButton" id="UserMode2" value="0.0"/>
+    <Control type="ScriptComboBox" id="FlModRoutPage3" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc46" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc46" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp37" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FilterMixMod7" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc47" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc47" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp38" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FilterMixMod8" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc48" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc48" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp39" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FilterMixMod9" value="0.0"/>
+    <Control type="ScriptSlider" id="SlotVol16" value="10000.0"/>
+    <Control type="ScriptSlider" id="SlotVol17" value="1.0"/>
+    <Control type="ScriptSlider" id="SlotVol18" value="20000.0"/>
+    <Control type="ScriptSlider" id="SlotVol19" value="0.0"/>
+    <Control type="ScriptSlider" id="SlotVol20" value="0.0"/>
+    <Control type="ScriptSlider" id="FxMix4" value="1.0"/>
+    <Control type="ScriptSlider" id="XfParamB4" value="0.0"/>
+    <Control type="ScriptSlider" id="XfParamA4" value="1.0"/>
+    <Control type="ScriptComboBox" id="FilterType3" value="1.0"/>
+    <Control type="ScriptSlider" id="FilterQ3" value="0.0"/>
+    <Control type="ScriptButton" id="FilterRt3" value="0.0"/>
+    <Control type="ScriptSlider" id="VcaGain3" value="1.0"/>
+    <Control type="ScriptSlider" id="VcaPan3" value="0.0"/>
+    <Control type="ScriptSlider" id="Width4" value="0.0"/>
+    <Control type="ScriptComboBox" id="PitchMode7" value="1.0"/>
+    <Control type="ScriptSlider" id="Pitch4" value="0.0"/>
+    <Control type="ScriptSlider" id="Input4" value="0.5"/>
+    <Control type="ScriptSlider" id="Step4" value="0.0"/>
+    <Control type="ScriptButton" id="ShowUserTable4" value="0.0"/>
+    <Control type="ScriptSlider" id="OscShapeInput4" value="0.0"/>
+    <Control type="ScriptComboBox" id="OscModRoutPage4" value="1.0"/>
+    <Control type="ScriptSliderPack" id="PmSp4" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="PitchMod4" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc49" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc49" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc50" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc50" value="1.0"/>
+    <Control type="ScriptSliderPack" id="InMdSp4" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+    <Control type="ScriptSlider" id="InputMod4" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc51" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc51" value="1.0"/>
+    <Control type="ScriptSliderPack" id="ShSp4" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+    <Control type="ScriptSlider" id="ShapeMod4" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc52" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc52" value="1.0"/>
+    <Control type="ScriptSliderPack" id="WdMdSp4" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+    <Control type="ScriptSlider" id="WidthMod4" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc53" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc53" value="1.0"/>
+    <Control type="ScriptSliderPack" id="OtMdSp4" value="-1.0" data="32....f+....9C...3O...f+....9C...3O...f+....9C"/>
+    <Control type="ScriptSlider" id="OutMod4" value="0.0"/>
+    <Control type="ScriptSlider" id="FmIn4" value="0.0"/>
+    <Control type="ScriptSlider" id="Harm4" value="0.0"/>
+    <Control type="ScriptSlider" id="HarmStep4" value="1.0"/>
+    <Control type="ScriptSlider" id="Tempo4" value="0.0"/>
+    <Control type="ScriptSlider" id="Div4" value="0.0"/>
+    <Control type="ScriptComboBox" id="PitchMode8" value="1.0"/>
+    <Control type="ScriptTable" id="UserShape4" value="0.0" data=""/>
+    <Control type="ScriptComboBox" id="MidiGate7" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiGate8" value="1.0"/>
+    <Control type="ScriptSlider" id="Bend4" value="0.0"/>
+    <Control type="ScriptComboBox" id="fileModRoutPage4" value="1.0"/>
+    <Control type="ScriptSlider" id="FilePitch4" value="0.0"/>
+    <Control type="ScriptSlider" id="FilePos4" value="0.5"/>
+    <Control type="ScriptSlider" id="FileWin4" value="0.0"/>
+    <Control type="ScriptSlider" id="FileIn4" value="0.25"/>
+    <Control type="ScriptSlider" id="FileSmooth4" value="0.0"/>
+    <Control type="ScriptSlider" id="PosMod4" value="0.0"/>
+    <Control type="ScriptTable" id="PosTable4" value="0.0" data=""/>
+    <Control type="ScriptSlider" id="PosModTempo4" value="0.0"/>
+    <Control type="ScriptSlider" id="PosModDiv4" value="0.0"/>
+    <Control type="ScriptButton" id="ScriptButton4" value="0.0"/>
+    <Control type="ScriptButton" id="PosModMode4" value="0.0"/>
+    <Control type="ScriptSliderPack" id="PosSp4" value="-1.0" data="4....f+."/>
+    <Control type="ScriptSlider" id="ScriptSlider4" value="1.490116119384766e-6"/>
+    <Control type="ScriptComboBox" id="XfSelOsc54" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc54" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp40" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FileTempoMod4" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc55" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc55" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp41" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FilePitchMod4" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc56" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc56" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp42" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FileInMod4" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc57" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc57" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp43" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinMod4" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc58" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc58" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp44" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod13" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc59" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc59" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp45" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod14" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc60" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc60" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp46" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod15" value="0.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc61" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc61" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp47" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="WinXfMod16" value="0.0"/>
+    <Control type="ScriptAudioWaveform" id="Wav4" value="0.0" data="" rangeStart="0"
+             rangeEnd="0"/>
+    <Control type="ScriptTable" id="PosiTable10" value="0.0" data=""/>
+    <Control type="ScriptTable" id="PosiTable11" value="0.0" data=""/>
+    <Control type="ScriptTable" id="PosiTable12" value="0.0" data=""/>
+    <Control type="ScriptSlider" id="FileXf4" value="0.0"/>
+    <Control type="ScriptComboBox" id="Quantise7" value="1.0"/>
+    <Control type="ScriptSlider" id="FileMix4" value="1.0"/>
+    <Control type="ScriptComboBox" id="Quantise8" value="1.0"/>
+    <Control type="ScriptSlider" id="Feed4" value="0.0"/>
+    <Control type="ScriptButton" id="WinSync4" value="0.0"/>
+    <Control type="ScriptSlider" id="FileWinTempo4" value="0.0"/>
+    <Control type="ScriptSlider" id="FileXfTempo4" value="0.0"/>
+    <Control type="ScriptButton" id="UserMode3" value="0.0"/>
+    <Control type="ScriptComboBox" id="FlModRoutPage4" value="1.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc62" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc62" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp48" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FilterMixMod10" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc63" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc63" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp49" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FilterMixMod11" value="0.0"/>
+    <Control type="ScriptComboBox" id="XfSelOsc64" value="1.0"/>
+    <Control type="ScriptComboBox" id="MidiSelOsc64" value="1.0"/>
+    <Control type="ScriptSliderPack" id="FxSp50" value="-1.0" data="32............................................"/>
+    <Control type="ScriptSlider" id="FilterMixMod12" value="0.0"/>
+    <Control type="ScriptSlider" id="SlotVol21" value="10000.0"/>
+    <Control type="ScriptSlider" id="SlotVol22" value="1.0"/>
+    <Control type="ScriptSlider" id="SlotVol23" value="20000.0"/>
+    <Control type="ScriptSlider" id="SlotVol24" value="0.0"/>
+    <Control type="ScriptSlider" id="SlotVol25" value="0.0"/>
+    <Control type="ScriptSlider" id="FxMix5" value="1.0"/>
+    <Control type="ScriptSlider" id="XfParamB5" value="0.0"/>
+    <Control type="ScriptSlider" id="XfParamA5" value="1.0"/>
+    <Control type="ScriptComboBox" id="FilterType4" value="1.0"/>
+    <Control type="ScriptSlider" id="FilterQ4" value="0.0"/>
+    <Control type="ScriptButton" id="FilterRt4" value="0.0"/>
+    <Control type="ScriptSlider" id="VcaGain4" value="1.0"/>
+    <Control type="ScriptSlider" id="VcaPan4" value="0.0"/>
+    <Control type="ScriptButton" id="FolderSelect1" value="1.0"/>
+    <Control type="ScriptSlider" id="Voices1" value="16.0"/>
+    <Control type="ScriptSlider" id="Voices2" value="16.0"/>
+    <Control type="ScriptSlider" id="Voices3" value="16.0"/>
+    <Control type="ScriptSlider" id="Voices4" value="16.0"/>
+    <Control type="ScriptSliderPack" id="SliderPack1" value="-1.0" data="60....f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O"/>
+    <Control type="ScriptSliderPack" id="SliderPack2" value="-1.0" data="64.....+....7C...vO....+....7C...vO....+....7C...vO....+....7C...vO....+....7C...vO....+."/>
+    <Control type="ScriptSliderPack" id="SliderPack3" value="-1.0" data="64.Jb8H7nv0iviBWOBOJb8H7nv0iviBWOBOJb8H7nv0iviBWOBOJb8H7nv0iviBWOBOJb8H7nv0iviBWOBOJb8H7."/>
+    <Control type="ScriptSlider" id="SeqTempo1" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqDiv1" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqStep1" value="16.0"/>
+    <Control type="ScriptSlider" id="Seqmax1" value="72.0"/>
+    <Control type="ScriptSlider" id="SeqMin1" value="36.0"/>
+    <Control type="ScriptButton" id="SeqDaw1" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqScl1" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqTempoMod1" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqDivMod1" value="0.0"/>
+    <Control type="ScriptSlider" id="PitchStep1" value="16.0"/>
+    <Control type="ScriptComboBox" id="TempoMod1" value="1.0"/>
+    <Control type="ScriptComboBox" id="DivMod1" value="1.0"/>
+    <Control type="ScriptButton" id="SeqPwr1" value="0.0"/>
+    <Control type="ScriptSlider" id="ClockTempo1" value="0.0"/>
+    <Control type="ScriptSlider" id="VelStep1" value="16.0"/>
+    <Control type="ScriptSlider" id="GateStep1" value="16.0"/>
+    <Control type="ScriptSlider" id="SeqDiv5" value="0.0"/>
+    <Control type="ScriptSliderPack" id="SliderPack4" value="-1.0" data="60................................................................................."/>
+    <Control type="ScriptSliderPack" id="SliderPack5" value="-1.0" data="64......................................................................................."/>
+    <Control type="ScriptSliderPack" id="SliderPack6" value="-1.0" data="64......................................................................................."/>
+    <Control type="ScriptSlider" id="SeqTempo2" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqDiv2" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqStep2" value="16.0"/>
+    <Control type="ScriptSlider" id="Seqmax2" value="72.0"/>
+    <Control type="ScriptSlider" id="SeqMin2" value="36.0"/>
+    <Control type="ScriptButton" id="SeqDaw2" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqScl2" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqTempoMod2" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqDivMod2" value="0.0"/>
+    <Control type="ScriptSlider" id="PitchStep2" value="16.0"/>
+    <Control type="ScriptComboBox" id="TempoMod2" value="1.0"/>
+    <Control type="ScriptComboBox" id="DivMod2" value="1.0"/>
+    <Control type="ScriptButton" id="SeqPwr2" value="0.0"/>
+    <Control type="ScriptSlider" id="ClockTempo2" value="0.0"/>
+    <Control type="ScriptSlider" id="VelStep2" value="16.0"/>
+    <Control type="ScriptSlider" id="GateStep2" value="16.0"/>
+    <Control type="ScriptSlider" id="SeqDiv6" value="0.0"/>
+    <Control type="ScriptSliderPack" id="SliderPack7" value="-1.0" data="60....f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O"/>
+    <Control type="ScriptSliderPack" id="SliderPack8" value="-1.0" data="64.....+....7C...vO....+....7C...vO....+....7C...vO....+....7C...vO....+....7C...vO....+."/>
+    <Control type="ScriptSliderPack" id="SliderPack9" value="-1.0" data="64.Jb8H7nv0iviBWOBOJb8H7nv0iviBWOBOJb8H7nv0iviBWOBOJb8H7nv0iviBWOBOJb8H7nv0iviBWOBOJb8H7."/>
+    <Control type="ScriptSlider" id="SeqTempo3" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqDiv3" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqStep3" value="16.0"/>
+    <Control type="ScriptSlider" id="Seqmax3" value="72.0"/>
+    <Control type="ScriptSlider" id="SeqMin3" value="36.0"/>
+    <Control type="ScriptButton" id="SeqDaw3" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqScl3" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqTempoMod3" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqDivMod3" value="0.0"/>
+    <Control type="ScriptSlider" id="PitchStep3" value="16.0"/>
+    <Control type="ScriptComboBox" id="TempoMod3" value="1.0"/>
+    <Control type="ScriptComboBox" id="DivMod3" value="1.0"/>
+    <Control type="ScriptButton" id="SeqPwr3" value="0.0"/>
+    <Control type="ScriptSlider" id="ClockTempo3" value="0.0"/>
+    <Control type="ScriptSlider" id="VelStep3" value="16.0"/>
+    <Control type="ScriptSlider" id="GateStep3" value="16.0"/>
+    <Control type="ScriptSlider" id="SeqDiv7" value="0.0"/>
+    <Control type="ScriptSliderPack" id="SliderPack10" value="-1.0" data="60....f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O"/>
+    <Control type="ScriptSliderPack" id="SliderPack11" value="-1.0" data="64.....+....7C...vO....+....7C...vO....+....7C...vO....+....7C...vO....+....7C...vO....+."/>
+    <Control type="ScriptSliderPack" id="SliderPack12" value="-1.0" data="64.Jb8H7nv0iviBWOBOJb8H7nv0iviBWOBOJb8H7nv0iviBWOBOJb8H7nv0iviBWOBOJb8H7nv0iviBWOBOJb8H7."/>
+    <Control type="ScriptSlider" id="SeqTempo4" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqDiv4" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqStep4" value="16.0"/>
+    <Control type="ScriptSlider" id="Seqmax4" value="72.0"/>
+    <Control type="ScriptSlider" id="SeqMin4" value="36.0"/>
+    <Control type="ScriptButton" id="SeqDaw4" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqScl4" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqTempoMod4" value="0.0"/>
+    <Control type="ScriptSlider" id="SeqDivMod4" value="0.0"/>
+    <Control type="ScriptSlider" id="PitchStep4" value="16.0"/>
+    <Control type="ScriptComboBox" id="TempoMod4" value="1.0"/>
+    <Control type="ScriptComboBox" id="DivMod4" value="1.0"/>
+    <Control type="ScriptButton" id="SeqPwr4" value="0.0"/>
+    <Control type="ScriptSlider" id="ClockTempo4" value="0.0"/>
+    <Control type="ScriptSlider" id="VelStep4" value="16.0"/>
+    <Control type="ScriptSlider" id="GateStep4" value="16.0"/>
+    <Control type="ScriptSlider" id="SeqDiv8" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoTempo1" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoDiv1" value="2.0"/>
+    <Control type="ScriptComboBox" id="LfoShape1" value="7.0"/>
+    <Control type="ScriptSliderPack" id="LfoSliderPack1" value="13.0" data="64.Jb8n8DtdT8yGEttOeT359.....v0iByO...f+....9SJb8zO....+7Qgq7C...3O...f+nv0i1S35QoOlYl49."/>
+    <Control type="ScriptTable" id="LfoTable1" value="0.0" data=""/>
+    <Control type="ScriptSlider" id="LfoTempoMod1" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoTempoModSrc1" value="1.0"/>
+    <Control type="ScriptComboBox" id="LfoDivSrc1" value="1.0"/>
+    <Control type="ScriptSlider" id="LfoDivMod1" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoGateSrc1" value="1.0"/>
+    <Control type="ScriptSlider" id="LfoGateMod1" value="0.0"/>
+    <Control type="ScriptSlider" id="Adj1" value="1.0"/>
+    <Control type="ScriptComboBox" id="AdjSrc1" value="1.0"/>
+    <Control type="ScriptSlider" id="AdjMod1" value="0.0"/>
+    <Control type="ScriptComboBox" id="AdjMode1" value="1.0"/>
+    <Control type="ScriptButton" id="ScriptButton6" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoMidiMin1" value="24.0"/>
+    <Control type="ScriptSlider" id="LfoMidiMax1" value="96.0"/>
+    <Control type="ScriptSlider" id="LfoMidiStep1" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoTempo2" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoDiv2" value="12.0"/>
+    <Control type="ScriptComboBox" id="LfoShape2" value="1.0"/>
+    <Control type="ScriptSliderPack" id="LfoSliderPack2" value="-1.0" data="64....f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+."/>
+    <Control type="ScriptTable" id="LfoTable2" value="0.0" data=""/>
+    <Control type="ScriptSlider" id="LfoTempoMod2" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoTempoModSrc2" value="1.0"/>
+    <Control type="ScriptComboBox" id="LfoDivSrc2" value="1.0"/>
+    <Control type="ScriptSlider" id="LfoDivMod2" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoGateSrc2" value="4.0"/>
+    <Control type="ScriptSlider" id="LfoGateMod2" value="-1.0"/>
+    <Control type="ScriptSlider" id="Adj2" value="1.0"/>
+    <Control type="ScriptComboBox" id="AdjSrc2" value="1.0"/>
+    <Control type="ScriptSlider" id="AdjMod2" value="0.0"/>
+    <Control type="ScriptComboBox" id="AdjMode2" value="1.0"/>
+    <Control type="ScriptButton" id="ScriptButton7" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoMidiMin2" value="24.0"/>
+    <Control type="ScriptSlider" id="LfoMidiMax2" value="96.0"/>
+    <Control type="ScriptSlider" id="LfoMidiStep2" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoTempo3" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoDiv3" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoShape3" value="1.0"/>
+    <Control type="ScriptSliderPack" id="LfoSliderPack3" value="-1.0" data="64....f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+."/>
+    <Control type="ScriptTable" id="LfoTable3" value="0.0" data=""/>
+    <Control type="ScriptSlider" id="LfoTempoMod3" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoTempoModSrc3" value="1.0"/>
+    <Control type="ScriptComboBox" id="LfoDivSrc3" value="1.0"/>
+    <Control type="ScriptSlider" id="LfoDivMod3" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoGateSrc3" value="1.0"/>
+    <Control type="ScriptSlider" id="LfoGateMod3" value="0.0"/>
+    <Control type="ScriptSlider" id="Adj3" value="0.5"/>
+    <Control type="ScriptComboBox" id="AdjSrc3" value="1.0"/>
+    <Control type="ScriptSlider" id="AdjMod3" value="0.0"/>
+    <Control type="ScriptComboBox" id="AdjMode3" value="1.0"/>
+    <Control type="ScriptButton" id="ScriptButton8" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoMidiMin3" value="24.0"/>
+    <Control type="ScriptSlider" id="LfoMidiMax3" value="96.0"/>
+    <Control type="ScriptSlider" id="LfoMidiStep3" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoTempo6" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoDiv6" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoShape6" value="1.0"/>
+    <Control type="ScriptSliderPack" id="LfoSliderPack6" value="-1.0" data="64....f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+."/>
+    <Control type="ScriptTable" id="LfoTable6" value="0.0" data=""/>
+    <Control type="ScriptSlider" id="LfoTempoMod6" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoTempoModSrc6" value="1.0"/>
+    <Control type="ScriptComboBox" id="LfoDivSrc6" value="1.0"/>
+    <Control type="ScriptSlider" id="LfoDivMod6" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoGateSrc6" value="1.0"/>
+    <Control type="ScriptSlider" id="LfoGateMod6" value="0.0"/>
+    <Control type="ScriptSlider" id="Adj6" value="0.5"/>
+    <Control type="ScriptComboBox" id="AdjSrc6" value="1.0"/>
+    <Control type="ScriptSlider" id="AdjMod6" value="0.0"/>
+    <Control type="ScriptComboBox" id="AdjMode6" value="1.0"/>
+    <Control type="ScriptButton" id="ScriptButton11" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoMidiMin6" value="24.0"/>
+    <Control type="ScriptSlider" id="LfoMidiMax6" value="96.0"/>
+    <Control type="ScriptSlider" id="LfoMidiStep6" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoTempo4" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoDiv4" value="16.0"/>
+    <Control type="ScriptComboBox" id="LfoShape4" value="6.0"/>
+    <Control type="ScriptSliderPack" id="LfoSliderPack4" value="15" data="64.1iBW+PgqG8C...zOrGEN+b8nv7iYlYxOZlYF+jBWO7CtdTvOWOJ79XOJb6CWOJrO6Qgq9nYlY5yiBWmOeT3Z9."/>
+    <Control type="ScriptTable" id="LfoTable4" value="0.0" data=""/>
+    <Control type="ScriptSlider" id="ModEnvAttack1" value="0.0"/>
+    <Control type="ScriptSlider" id="ModEnvHold1" value="0.0"/>
+    <Control type="ScriptSlider" id="ModEnvDec1" value="25304.0"/>
+    <Control type="ScriptSlider" id="ModEnvSus1" value="0.1899999976158142"/>
+    <Control type="ScriptSlider" id="ModEnvRel1" value="1389.0"/>
+    <Control type="ScriptButton" id="ClkTring1" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoTempoMod4" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoTempoModSrc4" value="1.0"/>
+    <Control type="ScriptComboBox" id="LfoDivSrc4" value="1.0"/>
+    <Control type="ScriptSlider" id="LfoDivMod4" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoGateSrc4" value="1.0"/>
+    <Control type="ScriptSlider" id="LfoGateMod4" value="0.0"/>
+    <Control type="ScriptSlider" id="Adj4" value="0.1500000059604645"/>
+    <Control type="ScriptComboBox" id="AdjSrc4" value="1.0"/>
+    <Control type="ScriptSlider" id="AdjMod4" value="0.0"/>
+    <Control type="ScriptComboBox" id="AdjMode4" value="1.0"/>
+    <Control type="ScriptButton" id="ScriptButton9" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoMidiMin4" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoMidiMax4" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoMidiStep4" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoTempo5" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoDiv5" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoShape5" value="1.0"/>
+    <Control type="ScriptSliderPack" id="LfoSliderPack5" value="13.0" data="64.Jb8n8DtdT8yGEttOeT359.....v0iByO...f+....9SJb8zO....+7Qgq7C...3O...f+nv0i1S35QoOlYl49."/>
+    <Control type="ScriptTable" id="LfoTable5" value="0.0" data=""/>
+    <Control type="ScriptSlider" id="LfoTempoMod5" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoTempoModSrc5" value="1.0"/>
+    <Control type="ScriptComboBox" id="LfoDivSrc5" value="1.0"/>
+    <Control type="ScriptSlider" id="LfoDivMod5" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoGateSrc5" value="1.0"/>
+    <Control type="ScriptSlider" id="LfoGateMod5" value="0.0"/>
+    <Control type="ScriptSlider" id="Adj5" value="0.5"/>
+    <Control type="ScriptComboBox" id="AdjSrc5" value="1.0"/>
+    <Control type="ScriptSlider" id="AdjMod5" value="0.0"/>
+    <Control type="ScriptComboBox" id="AdjMode5" value="1.0"/>
+    <Control type="ScriptButton" id="ScriptButton10" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoMidiMin5" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoMidiMax5" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoMidiStep5" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoTempo7" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoDiv7" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoShape7" value="1.0"/>
+    <Control type="ScriptSliderPack" id="LfoSliderPack7" value="13.0" data="64.Jb8n8DtdT8yGEttOeT359.....v0iByO...f+....9SJb8zO....+7Qgq7C...3O...f+nv0i1S35QoOlYl49."/>
+    <Control type="ScriptTable" id="LfoTable7" value="0.0" data=""/>
+    <Control type="ScriptSlider" id="LfoTempoMod7" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoTempoModSrc7" value="1.0"/>
+    <Control type="ScriptComboBox" id="LfoDivSrc7" value="1.0"/>
+    <Control type="ScriptSlider" id="LfoDivMod7" value="0.0"/>
+    <Control type="ScriptComboBox" id="LfoGateSrc7" value="1.0"/>
+    <Control type="ScriptSlider" id="LfoGateMod7" value="0.0"/>
+    <Control type="ScriptSlider" id="Adj7" value="0.5"/>
+    <Control type="ScriptComboBox" id="AdjSrc7" value="1.0"/>
+    <Control type="ScriptSlider" id="AdjMod7" value="0.0"/>
+    <Control type="ScriptComboBox" id="AdjMode7" value="1.0"/>
+    <Control type="ScriptButton" id="ScriptButton12" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoMidiMin7" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoMidiMax7" value="0.0"/>
+    <Control type="ScriptSlider" id="LfoMidiStep7" value="0.0"/>
+    <Control type="ScriptComboBox" id="ModSelect" value="5.0"/>
+    <Control type="ScriptedViewport" id="FirstSp" value="2.0"/>
+    <Control type="ScriptedViewport" id="SecondSp" value="0.0"/>
+    <Control type="ScriptedViewport" id="ThirdSp" value="1.0"/>
+    <Control type="ScriptedViewport" id="FirstSp1" value="0.0"/>
+    <Control type="ScriptedViewport" id="SecondSp1" value="0.0"/>
+    <Control type="ScriptedViewport" id="ThirdSp1" value="0.0"/>
+    <Control type="ScriptedViewport" id="FirstSp2" value="0.0"/>
+    <Control type="ScriptedViewport" id="SecondSp2" value="0.0"/>
+    <Control type="ScriptedViewport" id="ThirdSp2" value="0.0"/>
+    <Control type="ScriptedViewport" id="FirstSp3" value="0.0"/>
+    <Control type="ScriptedViewport" id="SecondSp3" value="0.0"/>
+    <Control type="ScriptedViewport" id="ThirdSp3" value="0.0"/>
+    <Control type="ScriptedViewport" id="FirstSp4" value="0.0"/>
+    <Control type="ScriptedViewport" id="SecondSp4" value="0.0"/>
+    <Control type="ScriptedViewport" id="ThirdSp4" value="0.0"/>
+    <Control type="ScriptedViewport" id="FirstSp5" value="0.0"/>
+    <Control type="ScriptedViewport" id="SecondSp5" value="0.0"/>
+    <Control type="ScriptedViewport" id="ThirdSp5" value="0.0"/>
+    <Control type="ScriptSlider" id="SlotVol26" value="-100.0"/>
+    <Control type="ScriptSlider" id="SlotVol27" value="0.0"/>
+    <Control type="ScriptSlider" id="SlotVol28" value="-100.0"/>
+    <Control type="ScriptSlider" id="SlotVol29" value="0.0"/>
+    <Control type="ScriptSlider" id="SlotVol30" value="0.0"/>
+    <Control type="ScriptSlider" id="ScriptSlider5" value="-0.3999985158443451"/>
+    <Control type="ScriptSlider" id="ScriptSlider6" value="-3.199998617172241"/>
+    <Control type="ScriptSlider" id="ScriptSlider7" value="0.0"/>
+    <Control type="ScriptSlider" id="ScriptSlider8" value="1.0"/>
+    <Control type="ScriptButton" id="ScriptButton5" value="0.0"/>
+  </Content>
+  <MidiAutomation/>
+  <MPEData Enabled="0"/>
+</Preset>

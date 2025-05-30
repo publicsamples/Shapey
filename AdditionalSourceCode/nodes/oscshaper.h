@@ -85,18 +85,21 @@ using chain3_t = container::chain<parameter::empty,
                                   wrap::fix<1, global_cable1_t<NV>>, 
                                   math::add<NV>, 
                                   core::gain<NV>>;
+using global_cable25_t_index = runtime_target::indexers::fix_hash<2333887>;
 
 template <int NV>
-using event_data_reader_t = wrap::mod<parameter::plain<math::add<NV>, 0>, 
-                                      routing::event_data_reader<NV>>;
+using global_cable25_t = routing::global_cable<global_cable25_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
 
 template <int NV>
 using chain5_t = container::chain<parameter::empty, 
-                                  wrap::fix<1, event_data_reader_t<NV>>, 
+                                  wrap::fix<1, global_cable25_t<NV>>, 
                                   math::add<NV>, 
                                   core::gain<NV>>;
 
-template <int NV> using event_data_reader2_t = event_data_reader_t<NV>;
+template <int NV>
+using event_data_reader2_t = wrap::mod<parameter::plain<math::add<NV>, 0>, 
+                                       routing::event_data_reader<NV>>;
 
 template <int NV>
 using chain10_t = container::chain<parameter::empty, 
@@ -104,7 +107,7 @@ using chain10_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader1_t = event_data_reader_t<NV>;
+template <int NV> using event_data_reader1_t = event_data_reader2_t<NV>;
 
 template <int NV>
 using chain8_t = container::chain<parameter::empty, 
@@ -303,16 +306,19 @@ using chain28_t = container::chain<parameter::empty,
                                    wrap::fix<1, global_cable9_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
+using global_cable26_t_index = global_cable25_t_index;
 
-template <int NV> using event_data_reader7_t = event_data_reader_t<NV>;
+template <int NV>
+using global_cable26_t = routing::global_cable<global_cable26_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
 
 template <int NV>
 using chain29_t = container::chain<parameter::empty, 
-                                   wrap::fix<1, event_data_reader7_t<NV>>, 
+                                   wrap::fix<1, global_cable26_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader8_t = event_data_reader_t<NV>;
+template <int NV> using event_data_reader8_t = event_data_reader2_t<NV>;
 
 template <int NV>
 using chain30_t = container::chain<parameter::empty, 
@@ -320,7 +326,7 @@ using chain30_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader9_t = event_data_reader_t<NV>;
+template <int NV> using event_data_reader9_t = event_data_reader2_t<NV>;
 
 template <int NV>
 using chain31_t = container::chain<parameter::empty, 
@@ -328,7 +334,7 @@ using chain31_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader10_t = event_data_reader_t<NV>;
+template <int NV> using event_data_reader10_t = event_data_reader2_t<NV>;
 
 template <int NV>
 using chain32_t = container::chain<parameter::empty, 
@@ -423,17 +429,27 @@ struct expr4
 };
 }
 
-DECLARE_PARAMETER_RANGE(pma4_mod_0Range, 
-                        0.5, 
-                        1.);
+template <int NV> using xfader1_c0 = sliderbank_c0<NV>;
+
+template <int NV> using xfader1_c1 = sliderbank_c0<NV>;
 
 template <int NV>
-using pma4_mod_0 = parameter::from0To1<math::pi<NV>, 
+using xfader1_multimod = parameter::list<xfader1_c0<NV>, xfader1_c1<NV>>;
+
+template <int NV>
+using xfader1_t = control::xfader<xfader1_multimod<NV>, faders::linear>;
+DECLARE_PARAMETER_RANGE_STEP(pma4_mod_0Range, 
+                             -10., 
+                             24., 
+                             0.1);
+
+template <int NV>
+using pma4_mod_0 = parameter::from0To1<core::gain<NV>, 
                                        0, 
                                        pma4_mod_0Range>;
 
 DECLARE_PARAMETER_RANGE_STEP(pma4_mod_1Range, 
-                             -15., 
+                             -20., 
                              24., 
                              0.1);
 
@@ -443,8 +459,8 @@ using pma4_mod_1 = parameter::from0To1<core::gain<NV>,
                                        pma4_mod_1Range>;
 
 DECLARE_PARAMETER_RANGE_STEP(pma4_mod_2Range, 
-                             -20., 
-                             24., 
+                             -12., 
+                             12., 
                              0.1);
 
 template <int NV>
@@ -452,40 +468,30 @@ using pma4_mod_2 = parameter::from0To1<core::gain<NV>,
                                        0, 
                                        pma4_mod_2Range>;
 
-DECLARE_PARAMETER_RANGE_STEP(pma4_mod_3Range, 
-                             -12., 
-                             12., 
-                             0.1);
+template <int NV> using pma4_mod_3 = pma4_mod_2<NV>;
 
-template <int NV>
-using pma4_mod_3 = parameter::from0To1<core::gain<NV>, 
-                                       0, 
-                                       pma4_mod_3Range>;
+template <int NV> using pma4_mod_4 = pma4_mod_2<NV>;
 
-template <int NV> using pma4_mod_4 = pma4_mod_3<NV>;
-
-template <int NV> using pma4_mod_5 = pma4_mod_3<NV>;
-
-template <int NV> using pma4_mod_6 = pma4_mod_3<NV>;
-
-DECLARE_PARAMETER_RANGE(pma4_mod_7Range, 
+DECLARE_PARAMETER_RANGE(pma4_mod_5Range, 
                         0.11, 
                         1.);
 
 template <int NV>
-using pma4_mod_7 = parameter::from0To1<math::expr<NV, custom::expr4>, 
+using pma4_mod_5 = parameter::from0To1<math::expr<NV, custom::expr4>, 
                                        0, 
-                                       pma4_mod_7Range>;
+                                       pma4_mod_5Range>;
 
-DECLARE_PARAMETER_RANGE_STEP(pma4_mod_8Range, 
-                             -24., 
-                             0., 
-                             0.1);
+DECLARE_PARAMETER_RANGE_SKEW(pma4_mod_6Range, 
+                             20., 
+                             20000., 
+                             0.229905);
 
 template <int NV>
-using pma4_mod_8 = parameter::from0To1<core::gain<NV>, 
+using pma4_mod_6 = parameter::from0To1<wrap::no_process<fx::phase_delay<NV>>, 
                                        0, 
-                                       pma4_mod_8Range>;
+                                       pma4_mod_6Range>;
+
+template <int NV> using pma4_mod_8 = pma4_mod_2<NV>;
 
 template <int NV>
 using pma4_mod = parameter::chain<ranges::Identity, 
@@ -496,7 +502,7 @@ using pma4_mod = parameter::chain<ranges::Identity,
                                   pma4_mod_4<NV>, 
                                   pma4_mod_5<NV>, 
                                   pma4_mod_6<NV>, 
-                                  pma4_mod_7<NV>, 
+                                  parameter::plain<xfader1_t<NV>, 0>, 
                                   pma4_mod_8<NV>>;
 
 template <int NV>
@@ -573,16 +579,19 @@ using chain19_t = container::chain<parameter::empty,
                                    wrap::fix<1, global_cable6_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
+using global_cable27_t_index = global_cable25_t_index;
 
-template <int NV> using event_data_reader4_t = event_data_reader_t<NV>;
+template <int NV>
+using global_cable27_t = routing::global_cable<global_cable27_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
 
 template <int NV>
 using chain20_t = container::chain<parameter::empty, 
-                                   wrap::fix<1, event_data_reader4_t<NV>>, 
+                                   wrap::fix<1, global_cable27_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader5_t = event_data_reader_t<NV>;
+template <int NV> using event_data_reader5_t = event_data_reader2_t<NV>;
 
 template <int NV>
 using chain21_t = container::chain<parameter::empty, 
@@ -590,7 +599,7 @@ using chain21_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader6_t = event_data_reader_t<NV>;
+template <int NV> using event_data_reader6_t = event_data_reader2_t<NV>;
 
 template <int NV>
 using chain22_t = container::chain<parameter::empty, 
@@ -598,7 +607,7 @@ using chain22_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader11_t = event_data_reader_t<NV>;
+template <int NV> using event_data_reader11_t = event_data_reader2_t<NV>;
 
 template <int NV>
 using chain23_t = container::chain<parameter::empty, 
@@ -709,23 +718,64 @@ template <int NV>
 using modchain_t = wrap::control_rate<modchain_t_<NV>>;
 
 template <int NV>
-using chain_t = container::chain<parameter::empty, 
-                                 wrap::fix<2, math::pi<NV>>, 
-                                 math::sin<NV>, 
-                                 core::gain<NV>>;
+using chain57_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, math::sub<NV>>, 
+                                   math::abs<NV>, 
+                                   math::mul<NV>>;
+
+template <int NV>
+using chain6_t = container::chain<parameter::empty, 
+                                  wrap::fix<2, chain57_t<NV>>, 
+                                  core::gain<NV>>;
+namespace custom
+{
+
+struct expr
+{
+	static float op(float input, float value)
+	{
+		return (1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);;
+	}
+};
+}
+
+template <int NV>
+using chain58_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, math::expr<NV, custom::expr>>, 
+                                   wrap::no_process<math::pi<NV>>, 
+                                   wrap::no_process<math::sub<NV>>, 
+                                   wrap::no_process<math::sin<NV>>, 
+                                   core::gain<NV>>;
+
+template <int NV>
+using split1_t = container::split<parameter::empty, 
+                                  wrap::fix<2, chain6_t<NV>>, 
+                                  chain58_t<NV>>;
+
+template <int NV>
+using chain55_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, xfader1_t<NV>>, 
+                                   split1_t<NV>, 
+                                   core::gain<NV>>;
 
 template <int NV>
 using chain9_t = container::chain<parameter::empty, 
-                                  wrap::fix<2, core::gain<NV>>, 
-                                  math::pi<NV>, 
+                                  wrap::fix<2, math::sub<NV>>, 
+                                  core::gain<NV>, 
+                                  math::mod_inv<NV>, 
                                   math::rect<NV>, 
                                   core::gain<NV>>;
 
 template <int NV>
-using chain11_t = container::chain<parameter::empty, 
+using chain61_t = container::chain<parameter::empty, 
                                    wrap::fix<2, core::gain<NV>>, 
+                                   wrap::no_process<math::mul<NV>>, 
                                    math::pi<NV>, 
-                                   math::fmod<NV>, 
+                                   math::fmod<NV>>;
+
+template <int NV>
+using chain11_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, chain61_t<NV>>, 
                                    core::gain<NV>>;
 
 template <int NV>
@@ -748,8 +798,10 @@ struct expr1
 
 template <int NV>
 using chain7_t = container::chain<parameter::empty, 
-                                  wrap::fix<2, math::sin<NV>>, 
+                                  wrap::fix<2, math::pi<NV>>, 
+                                  wrap::no_process<math::sin<NV>>, 
                                   core::gain<NV>, 
+                                  math::sin<NV>, 
                                   math::expr<NV, custom::expr1>, 
                                   core::gain<NV>>;
 namespace custom
@@ -766,8 +818,8 @@ struct expr2
 
 template <int NV>
 using chain56_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, math::pi<NV>>, 
-                                   wrap::no_process<math::sin<NV>>, 
+                                   wrap::fix<2, wrap::no_process<math::pi<NV>>>, 
+                                   wrap::no_process<fx::phase_delay<NV>>, 
                                    core::gain<NV>, 
                                    math::expr<NV, custom::expr2>, 
                                    math::sin<NV>, 
@@ -779,16 +831,18 @@ struct expr3
 {
 	static float op(float input, float value)
 	{
-		return input * Math.sinh(Math.PI * 4.0 * value * input) * (1 - Math.PI);;
+		return input * Math.tan(Math.PI * 12.0 * value * input) * (2 - Math.PI);;
 	}
 };
 }
 
 template <int NV>
-using chain66_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, core::gain<NV>>, 
+using chain60_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, math::pi<NV>>, 
+                                   core::gain<NV>, 
                                    math::expr<NV, custom::expr3>, 
-                                   math::pi<NV>, 
+                                   math::square<NV>, 
+                                   math::rect<NV>, 
                                    math::sin<NV>, 
                                    core::gain<NV>>;
 using table4_t = wrap::data<math::table, 
@@ -803,13 +857,13 @@ using chain13_t = container::chain<parameter::empty,
 
 template <int NV>
 using split_t = container::split<parameter::empty, 
-                                 wrap::fix<2, chain_t<NV>>, 
+                                 wrap::fix<2, chain55_t<NV>>, 
                                  chain9_t<NV>, 
                                  chain11_t<NV>, 
                                  chain65_t<NV>, 
                                  chain7_t<NV>, 
                                  chain56_t<NV>, 
-                                 chain66_t<NV>, 
+                                 chain60_t<NV>, 
                                  chain13_t<NV>>;
 
 template <int NV>
@@ -832,6 +886,21 @@ DECLARE_PARAMETER_RANGE(shaper_InputRange,
 template <int NV>
 using shaper = parameter::chain<shaper_InputRange, 
                                 parameter::plain<oscshaper_impl::pma_t<NV>, 2>>;
+
+DECLARE_PARAMETER_RANGE_STEP(width_1Range, 
+                             -48., 
+                             12., 
+                             0.1);
+
+template <int NV>
+using width_1 = parameter::from0To1<core::gain<NV>, 
+                                    0, 
+                                    width_1Range>;
+
+template <int NV>
+using width = parameter::chain<ranges::Identity, 
+                               parameter::plain<oscshaper_impl::pma4_t<NV>, 2>, 
+                               width_1<NV>>;
 
 DECLARE_PARAMETER_RANGE_STEP(XfStage_InputRange, 
                              1., 
@@ -911,9 +980,6 @@ template <int NV>
 using midi3 = parameter::chain<midi3_InputRange, midi3_0<NV>>;
 
 template <int NV>
-using width = parameter::plain<oscshaper_impl::pma4_t<NV>, 
-                               2>;
-template <int NV>
 using out = parameter::plain<oscshaper_impl::pma3_t<NV>, 
                              2>;
 template <int NV>
@@ -962,17 +1028,17 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		SNEX_METADATA_ENCODED_PARAMETERS(190)
 		{
 			0x005B, 0x0000, 0x7300, 0x6168, 0x6570, 0x0072, 0x0000, 0x3F80, 
-            0x0000, 0x4100, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x4100, 0xA0C5, 0x4036, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x015B, 0x0000, 0x7700, 0x6469, 0x6874, 0x0000, 0x0000, 0x0000, 
-            0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 
+            0x8000, 0x8F3F, 0x75C2, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 
             0x0002, 0x0000, 0x756F, 0x0074, 0x0000, 0x0000, 0x0000, 0x3F80, 
-            0xD70A, 0x3EA3, 0x0000, 0x3F80, 0x0000, 0x0000, 0x035B, 0x0000, 
+            0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x035B, 0x0000, 
             0x7300, 0x6168, 0x6570, 0x6F6D, 0x0064, 0x0000, 0xBF80, 0x0000, 
-            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x045B, 
+            0x3F80, 0xDE9C, 0xBCD4, 0x0000, 0x3F80, 0x0000, 0x0000, 0x045B, 
             0x0000, 0x7700, 0x6469, 0x6874, 0x6F6D, 0x0064, 0x0000, 0xBF80, 
-            0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x3F80, 0xF4DF, 0x3E7A, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x055B, 0x0000, 0x6F00, 0x7475, 0x6F6D, 0x0064, 0x0000, 0xBF80, 
-            0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x3F80, 0xD37A, 0xBD4B, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x065B, 0x0000, 0x5800, 0x5366, 0x6174, 0x6567, 0x0000, 0x8000, 
             0x003F, 0x8000, 0x0040, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 
             0x5B3F, 0x0007, 0x0000, 0x694D, 0x6964, 0x0031, 0x0000, 0x3F80, 
@@ -1011,7 +1077,7 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		auto& add1 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(2).getT(1);                // math::add<NV>
 		auto& gain8 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(2).getT(2);               // core::gain<NV>
 		auto& chain5 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(3);                      // oscshaper_impl::chain5_t<NV>
-		auto& event_data_reader = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(3).getT(0);   // oscshaper_impl::event_data_reader_t<NV>
+		auto& global_cable25 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(3).getT(0);      // oscshaper_impl::global_cable25_t<NV>
 		auto& add3 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(3).getT(1);                // math::add<NV>
 		auto& gain7 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(3).getT(2);               // core::gain<NV>
 		auto& chain10 = this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(4);                     // oscshaper_impl::chain10_t<NV>
@@ -1103,7 +1169,7 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		auto& add20 = this->getT(0).getT(0).getT(0).getT(1).getT(1).getT(2).getT(1);               // math::add<NV>
 		auto& gain25 = this->getT(0).getT(0).getT(0).getT(1).getT(1).getT(2).getT(2);              // core::gain<NV>
 		auto& chain29 = this->getT(0).getT(0).getT(0).getT(1).getT(1).getT(3);                     // oscshaper_impl::chain29_t<NV>
-		auto& event_data_reader7 = this->getT(0).getT(0).getT(0).getT(1).getT(1).getT(3).getT(0);  // oscshaper_impl::event_data_reader7_t<NV>
+		auto& global_cable26 = this->getT(0).getT(0).getT(0).getT(1).getT(1).getT(3).getT(0);      // oscshaper_impl::global_cable26_t<NV>
 		auto& add21 = this->getT(0).getT(0).getT(0).getT(1).getT(1).getT(3).getT(1);               // math::add<NV>
 		auto& gain27 = this->getT(0).getT(0).getT(0).getT(1).getT(1).getT(3).getT(2);              // core::gain<NV>
 		auto& chain30 = this->getT(0).getT(0).getT(0).getT(1).getT(1).getT(4);                     // oscshaper_impl::chain30_t<NV>
@@ -1194,7 +1260,7 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		auto& add12 = this->getT(0).getT(0).getT(0).getT(2).getT(1).getT(2).getT(1);               // math::add<NV>
 		auto& gain17 = this->getT(0).getT(0).getT(0).getT(2).getT(1).getT(2).getT(2);              // core::gain<NV>
 		auto& chain20 = this->getT(0).getT(0).getT(0).getT(2).getT(1).getT(3);                     // oscshaper_impl::chain20_t<NV>
-		auto& event_data_reader4 = this->getT(0).getT(0).getT(0).getT(2).getT(1).getT(3).getT(0);  // oscshaper_impl::event_data_reader4_t<NV>
+		auto& global_cable27 = this->getT(0).getT(0).getT(0).getT(2).getT(1).getT(3).getT(0);      // oscshaper_impl::global_cable27_t<NV>
 		auto& add13 = this->getT(0).getT(0).getT(0).getT(2).getT(1).getT(3).getT(1);               // math::add<NV>
 		auto& gain18 = this->getT(0).getT(0).getT(0).getT(2).getT(1).getT(3).getT(2);              // core::gain<NV>
 		auto& chain21 = this->getT(0).getT(0).getT(0).getT(2).getT(1).getT(4);                     // oscshaper_impl::chain21_t<NV>
@@ -1273,43 +1339,62 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		auto& xfader = this->getT(0).getT(1);                                         // oscshaper_impl::xfader_t<NV>
 		auto& pma4 = this->getT(0).getT(2);                                           // oscshaper_impl::pma4_t<NV>
 		auto& split = this->getT(0).getT(3);                                          // oscshaper_impl::split_t<NV>
-		auto& chain = this->getT(0).getT(3).getT(0);                                  // oscshaper_impl::chain_t<NV>
-		auto& pi1 = this->getT(0).getT(3).getT(0).getT(0);                            // math::pi<NV>
-		auto& sin3 = this->getT(0).getT(3).getT(0).getT(1);                           // math::sin<NV>
+		auto& chain55 = this->getT(0).getT(3).getT(0);                                // oscshaper_impl::chain55_t<NV>
+		auto& xfader1 = this->getT(0).getT(3).getT(0).getT(0);                        // oscshaper_impl::xfader1_t<NV>
+		auto& split1 = this->getT(0).getT(3).getT(0).getT(1);                         // oscshaper_impl::split1_t<NV>
+		auto& chain6 = this->getT(0).getT(3).getT(0).getT(1).getT(0);                 // oscshaper_impl::chain6_t<NV>
+		auto& chain57 = this->getT(0).getT(3).getT(0).getT(1).getT(0).getT(0);        // oscshaper_impl::chain57_t<NV>
+		auto& sub = this->getT(0).getT(3).getT(0).getT(1).getT(0).getT(0).getT(0);    // math::sub<NV>
+		auto& abs = this->getT(0).getT(3).getT(0).getT(1).getT(0).getT(0).getT(1);    // math::abs<NV>
+		auto& mul1 = this->getT(0).getT(3).getT(0).getT(1).getT(0).getT(0).getT(2);   // math::mul<NV>
+		auto& gain34 = this->getT(0).getT(3).getT(0).getT(1).getT(0).getT(1);         // core::gain<NV>
+		auto& chain58 = this->getT(0).getT(3).getT(0).getT(1).getT(1);                // oscshaper_impl::chain58_t<NV>
+		auto& expr = this->getT(0).getT(3).getT(0).getT(1).getT(1).getT(0);           // math::expr<NV, custom::expr>
+		auto& pi = this->getT(0).getT(3).getT(0).getT(1).getT(1).getT(1);             // wrap::no_process<math::pi<NV>>
+		auto& sub2 = this->getT(0).getT(3).getT(0).getT(1).getT(1).getT(2);           // wrap::no_process<math::sub<NV>>
+		auto& sin1 = this->getT(0).getT(3).getT(0).getT(1).getT(1).getT(3);           // wrap::no_process<math::sin<NV>>
+		auto& gain32 = this->getT(0).getT(3).getT(0).getT(1).getT(1).getT(4);         // core::gain<NV>
 		auto& gain11 = this->getT(0).getT(3).getT(0).getT(2);                         // core::gain<NV>
 		auto& chain9 = this->getT(0).getT(3).getT(1);                                 // oscshaper_impl::chain9_t<NV>
-		auto& gain16 = this->getT(0).getT(3).getT(1).getT(0);                         // core::gain<NV>
-		auto& pi4 = this->getT(0).getT(3).getT(1).getT(1);                            // math::pi<NV>
-		auto& rect1 = this->getT(0).getT(3).getT(1).getT(2);                          // math::rect<NV>
-		auto& gain13 = this->getT(0).getT(3).getT(1).getT(3);                         // core::gain<NV>
+		auto& sub1 = this->getT(0).getT(3).getT(1).getT(0);                           // math::sub<NV>
+		auto& gain16 = this->getT(0).getT(3).getT(1).getT(1);                         // core::gain<NV>
+		auto& mod_inv1 = this->getT(0).getT(3).getT(1).getT(2);                       // math::mod_inv<NV>
+		auto& rect1 = this->getT(0).getT(3).getT(1).getT(3);                          // math::rect<NV>
+		auto& gain13 = this->getT(0).getT(3).getT(1).getT(4);                         // core::gain<NV>
 		auto& chain11 = this->getT(0).getT(3).getT(2);                                // oscshaper_impl::chain11_t<NV>
-		auto& gain37 = this->getT(0).getT(3).getT(2).getT(0);                         // core::gain<NV>
-		auto& pi5 = this->getT(0).getT(3).getT(2).getT(1);                            // math::pi<NV>
-		auto& fmod2 = this->getT(0).getT(3).getT(2).getT(2);                          // math::fmod<NV>
-		auto& gain15 = this->getT(0).getT(3).getT(2).getT(3);                         // core::gain<NV>
+		auto& chain61 = this->getT(0).getT(3).getT(2).getT(0);                        // oscshaper_impl::chain61_t<NV>
+		auto& gain37 = this->getT(0).getT(3).getT(2).getT(0).getT(0);                 // core::gain<NV>
+		auto& mul = this->getT(0).getT(3).getT(2).getT(0).getT(1);                    // wrap::no_process<math::mul<NV>>
+		auto& pi5 = this->getT(0).getT(3).getT(2).getT(0).getT(2);                    // math::pi<NV>
+		auto& fmod2 = this->getT(0).getT(3).getT(2).getT(0).getT(3);                  // math::fmod<NV>
+		auto& gain15 = this->getT(0).getT(3).getT(2).getT(1);                         // core::gain<NV>
 		auto& chain65 = this->getT(0).getT(3).getT(3);                                // oscshaper_impl::chain65_t<NV>
 		auto& gain44 = this->getT(0).getT(3).getT(3).getT(0);                         // core::gain<NV>
 		auto& expr4 = this->getT(0).getT(3).getT(3).getT(1);                          // math::expr<NV, custom::expr4>
 		auto& sin5 = this->getT(0).getT(3).getT(3).getT(2);                           // math::sin<NV>
 		auto& gain45 = this->getT(0).getT(3).getT(3).getT(3);                         // core::gain<NV>
 		auto& chain7 = this->getT(0).getT(3).getT(4);                                 // oscshaper_impl::chain7_t<NV>
-		auto& sin = this->getT(0).getT(3).getT(4).getT(0);                            // math::sin<NV>
-		auto& gain35 = this->getT(0).getT(3).getT(4).getT(1);                         // core::gain<NV>
-		auto& expr1 = this->getT(0).getT(3).getT(4).getT(2);                          // math::expr<NV, custom::expr1>
-		auto& gain2 = this->getT(0).getT(3).getT(4).getT(3);                          // core::gain<NV>
+		auto& pi7 = this->getT(0).getT(3).getT(4).getT(0);                            // math::pi<NV>
+		auto& sin = this->getT(0).getT(3).getT(4).getT(1);                            // wrap::no_process<math::sin<NV>>
+		auto& gain35 = this->getT(0).getT(3).getT(4).getT(2);                         // core::gain<NV>
+		auto& sin6 = this->getT(0).getT(3).getT(4).getT(3);                           // math::sin<NV>
+		auto& expr1 = this->getT(0).getT(3).getT(4).getT(4);                          // math::expr<NV, custom::expr1>
+		auto& gain2 = this->getT(0).getT(3).getT(4).getT(5);                          // core::gain<NV>
 		auto& chain56 = this->getT(0).getT(3).getT(5);                                // oscshaper_impl::chain56_t<NV>
-		auto& pi2 = this->getT(0).getT(3).getT(5).getT(0);                            // math::pi<NV>
-		auto& sin1 = this->getT(0).getT(3).getT(5).getT(1);                           // wrap::no_process<math::sin<NV>>
+		auto& pi2 = this->getT(0).getT(3).getT(5).getT(0);                            // wrap::no_process<math::pi<NV>>
+		auto& phase_delay = this->getT(0).getT(3).getT(5).getT(1);                    // wrap::no_process<fx::phase_delay<NV>>
 		auto& gain36 = this->getT(0).getT(3).getT(5).getT(2);                         // core::gain<NV>
 		auto& expr2 = this->getT(0).getT(3).getT(5).getT(3);                          // math::expr<NV, custom::expr2>
-		auto& sin2 = this->getT(0).getT(3).getT(5).getT(4);                           // math::sin<NV>
+		auto& sin8 = this->getT(0).getT(3).getT(5).getT(4);                           // math::sin<NV>
 		auto& gain33 = this->getT(0).getT(3).getT(5).getT(5);                         // core::gain<NV>
-		auto& chain66 = this->getT(0).getT(3).getT(6);                                // oscshaper_impl::chain66_t<NV>
-		auto& gain43 = this->getT(0).getT(3).getT(6).getT(0);                         // core::gain<NV>
-		auto& expr3 = this->getT(0).getT(3).getT(6).getT(1);                          // math::expr<NV, custom::expr3>
-		auto& pi8 = this->getT(0).getT(3).getT(6).getT(2);                            // math::pi<NV>
-		auto& sin9 = this->getT(0).getT(3).getT(6).getT(3);                           // math::sin<NV>
-		auto& gain46 = this->getT(0).getT(3).getT(6).getT(4);                         // core::gain<NV>
+		auto& chain60 = this->getT(0).getT(3).getT(6);                                // oscshaper_impl::chain60_t<NV>
+		auto& pi3 = this->getT(0).getT(3).getT(6).getT(0);                            // math::pi<NV>
+		auto& gain38 = this->getT(0).getT(3).getT(6).getT(1);                         // core::gain<NV>
+		auto& expr3 = this->getT(0).getT(3).getT(6).getT(2);                          // math::expr<NV, custom::expr3>
+		auto& square = this->getT(0).getT(3).getT(6).getT(3);                         // math::square<NV>
+		auto& rect2 = this->getT(0).getT(3).getT(6).getT(4);                          // math::rect<NV>
+		auto& sin9 = this->getT(0).getT(3).getT(6).getT(5);                           // math::sin<NV>
+		auto& gain40 = this->getT(0).getT(3).getT(6).getT(6);                         // core::gain<NV>
 		auto& chain13 = this->getT(0).getT(3).getT(7);                                // oscshaper_impl::chain13_t<NV>
 		auto& gain14 = this->getT(0).getT(3).getT(7).getT(0);                         // core::gain<NV>
 		auto& pi6 = this->getT(0).getT(3).getT(7).getT(1);                            // math::pi<NV>
@@ -1322,7 +1407,9 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		
 		this->getParameterT(0).connectT(0, pma); // shaper -> pma::Add
 		
-		this->getParameterT(1).connectT(0, pma4); // width -> pma4::Add
+		auto& width_p = this->getParameterT(1);
+		width_p.connectT(0, pma4);   // width -> pma4::Add
+		width_p.connectT(1, gain38); // width -> gain38::Gain
 		
 		this->getParameterT(2).connectT(0, pma3); // out -> pma3::Add
 		
@@ -1347,27 +1434,27 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		// Modulation Connections ------------------------------------------------------------------
 		
 		auto& sliderbank_p = sliderbank.getWrappedObject().getParameter();
-		sliderbank_p.getParameterT(0).connectT(0, gain);                   // sliderbank -> gain::Gain
-		sliderbank_p.getParameterT(1).connectT(0, gain9);                  // sliderbank -> gain9::Gain
-		sliderbank_p.getParameterT(2).connectT(0, gain8);                  // sliderbank -> gain8::Gain
-		sliderbank_p.getParameterT(3).connectT(0, gain7);                  // sliderbank -> gain7::Gain
-		sliderbank_p.getParameterT(4).connectT(0, gain6);                  // sliderbank -> gain6::Gain
-		sliderbank_p.getParameterT(5).connectT(0, gain5);                  // sliderbank -> gain5::Gain
-		sliderbank_p.getParameterT(6).connectT(0, gain4);                  // sliderbank -> gain4::Gain
-		sliderbank_p.getParameterT(7).connectT(0, gain3);                  // sliderbank -> gain3::Gain
-		global_cable.getWrappedObject().getParameter().connectT(0, add);   // global_cable -> add::Value
-		global_cable2.getWrappedObject().getParameter().connectT(0, add2); // global_cable2 -> add2::Value
-		global_cable1.getWrappedObject().getParameter().connectT(0, add1); // global_cable1 -> add1::Value
-		event_data_reader.getParameter().connectT(0, add3);                // event_data_reader -> add3::Value
-		event_data_reader2.getParameter().connectT(0, add7);               // event_data_reader2 -> add7::Value
-		event_data_reader1.getParameter().connectT(0, add6);               // event_data_reader1 -> add6::Value
-		midi_cc10.getWrappedObject().getParameter().connectT(0, add50);    // midi_cc10 -> add50::Value
-		midi_cc11.getWrappedObject().getParameter().connectT(0, add51);    // midi_cc11 -> add51::Value
-		midi_cc12.getWrappedObject().getParameter().connectT(0, add52);    // midi_cc12 -> add52::Value
-		midi_cc13.getWrappedObject().getParameter().connectT(0, add53);    // midi_cc13 -> add53::Value
-		midi6.getParameter().connectT(0, add54);                           // midi6 -> add54::Value
-		midi7.getParameter().connectT(0, add55);                           // midi7 -> add55::Value
-		midi8.getParameter().connectT(0, add56);                           // midi8 -> add56::Value
+		sliderbank_p.getParameterT(0).connectT(0, gain);                    // sliderbank -> gain::Gain
+		sliderbank_p.getParameterT(1).connectT(0, gain9);                   // sliderbank -> gain9::Gain
+		sliderbank_p.getParameterT(2).connectT(0, gain8);                   // sliderbank -> gain8::Gain
+		sliderbank_p.getParameterT(3).connectT(0, gain7);                   // sliderbank -> gain7::Gain
+		sliderbank_p.getParameterT(4).connectT(0, gain6);                   // sliderbank -> gain6::Gain
+		sliderbank_p.getParameterT(5).connectT(0, gain5);                   // sliderbank -> gain5::Gain
+		sliderbank_p.getParameterT(6).connectT(0, gain4);                   // sliderbank -> gain4::Gain
+		sliderbank_p.getParameterT(7).connectT(0, gain3);                   // sliderbank -> gain3::Gain
+		global_cable.getWrappedObject().getParameter().connectT(0, add);    // global_cable -> add::Value
+		global_cable2.getWrappedObject().getParameter().connectT(0, add2);  // global_cable2 -> add2::Value
+		global_cable1.getWrappedObject().getParameter().connectT(0, add1);  // global_cable1 -> add1::Value
+		global_cable25.getWrappedObject().getParameter().connectT(0, add3); // global_cable25 -> add3::Value
+		event_data_reader2.getParameter().connectT(0, add7);                // event_data_reader2 -> add7::Value
+		event_data_reader1.getParameter().connectT(0, add6);                // event_data_reader1 -> add6::Value
+		midi_cc10.getWrappedObject().getParameter().connectT(0, add50);     // midi_cc10 -> add50::Value
+		midi_cc11.getWrappedObject().getParameter().connectT(0, add51);     // midi_cc11 -> add51::Value
+		midi_cc12.getWrappedObject().getParameter().connectT(0, add52);     // midi_cc12 -> add52::Value
+		midi_cc13.getWrappedObject().getParameter().connectT(0, add53);     // midi_cc13 -> add53::Value
+		midi6.getParameter().connectT(0, add54);                            // midi6 -> add54::Value
+		midi7.getParameter().connectT(0, add55);                            // midi7 -> add55::Value
+		midi8.getParameter().connectT(0, add56);                            // midi8 -> add56::Value
 		auto& xfader_p = xfader.getWrappedObject().getParameter();
 		xfader_p.getParameterT(0).connectT(0, gain11);             // xfader -> gain11::Gain
 		xfader_p.getParameterT(1).connectT(0, gain13);             // xfader -> gain13::Gain
@@ -1375,68 +1462,71 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		xfader_p.getParameterT(3).connectT(0, gain45);             // xfader -> gain45::Gain
 		xfader_p.getParameterT(4).connectT(0, gain2);              // xfader -> gain2::Gain
 		xfader_p.getParameterT(5).connectT(0, gain33);             // xfader -> gain33::Gain
-		xfader_p.getParameterT(6).connectT(0, gain46);             // xfader -> gain46::Gain
+		xfader_p.getParameterT(6).connectT(0, gain40);             // xfader -> gain40::Gain
 		xfader_p.getParameterT(7).connectT(0, gain26);             // xfader -> gain26::Gain
 		pma.getWrappedObject().getParameter().connectT(0, xfader); // pma -> xfader::Value
 		peak.getParameter().connectT(0, pma);                      // peak -> pma::Value
 		auto& sliderbank2_p = sliderbank2.getWrappedObject().getParameter();
-		sliderbank2_p.getParameterT(0).connectT(0, gain23);                 // sliderbank2 -> gain23::Gain
-		sliderbank2_p.getParameterT(1).connectT(0, gain24);                 // sliderbank2 -> gain24::Gain
-		sliderbank2_p.getParameterT(2).connectT(0, gain25);                 // sliderbank2 -> gain25::Gain
-		sliderbank2_p.getParameterT(3).connectT(0, gain27);                 // sliderbank2 -> gain27::Gain
-		sliderbank2_p.getParameterT(4).connectT(0, gain28);                 // sliderbank2 -> gain28::Gain
-		sliderbank2_p.getParameterT(5).connectT(0, gain29);                 // sliderbank2 -> gain29::Gain
-		sliderbank2_p.getParameterT(6).connectT(0, gain30);                 // sliderbank2 -> gain30::Gain
-		sliderbank2_p.getParameterT(7).connectT(0, gain31);                 // sliderbank2 -> gain31::Gain
-		global_cable7.getWrappedObject().getParameter().connectT(0, add18); // global_cable7 -> add18::Value
-		global_cable8.getWrappedObject().getParameter().connectT(0, add19); // global_cable8 -> add19::Value
-		global_cable9.getWrappedObject().getParameter().connectT(0, add20); // global_cable9 -> add20::Value
-		event_data_reader7.getParameter().connectT(0, add21);               // event_data_reader7 -> add21::Value
-		event_data_reader8.getParameter().connectT(0, add22);               // event_data_reader8 -> add22::Value
-		event_data_reader9.getParameter().connectT(0, add23);               // event_data_reader9 -> add23::Value
-		event_data_reader10.getParameter().connectT(0, add24);              // event_data_reader10 -> add24::Value
-		midi_cc14.getWrappedObject().getParameter().connectT(0, add57);     // midi_cc14 -> add57::Value
-		midi_cc15.getWrappedObject().getParameter().connectT(0, add58);     // midi_cc15 -> add58::Value
-		midi_cc16.getWrappedObject().getParameter().connectT(0, add59);     // midi_cc16 -> add59::Value
-		midi_cc17.getWrappedObject().getParameter().connectT(0, add60);     // midi_cc17 -> add60::Value
-		midi9.getParameter().connectT(0, add61);                            // midi9 -> add61::Value
-		midi10.getParameter().connectT(0, add62);                           // midi10 -> add62::Value
-		midi11.getParameter().connectT(0, add63);                           // midi11 -> add63::Value
-		pma4.getWrappedObject().getParameter().connectT(0, pi1);            // pma4 -> pi1::Value
-		pma4.getWrappedObject().getParameter().connectT(1, gain16);         // pma4 -> gain16::Gain
-		pma4.getWrappedObject().getParameter().connectT(2, gain14);         // pma4 -> gain14::Gain
-		pma4.getWrappedObject().getParameter().connectT(3, gain35);         // pma4 -> gain35::Gain
-		pma4.getWrappedObject().getParameter().connectT(4, gain36);         // pma4 -> gain36::Gain
-		pma4.getWrappedObject().getParameter().connectT(5, gain37);         // pma4 -> gain37::Gain
-		pma4.getWrappedObject().getParameter().connectT(6, gain44);         // pma4 -> gain44::Gain
-		pma4.getWrappedObject().getParameter().connectT(7, expr4);          // pma4 -> expr4::Value
-		pma4.getWrappedObject().getParameter().connectT(8, gain43);         // pma4 -> gain43::Gain
-		peak2.getParameter().connectT(0, pma4);                             // peak2 -> pma4::Value
+		sliderbank2_p.getParameterT(0).connectT(0, gain23);                  // sliderbank2 -> gain23::Gain
+		sliderbank2_p.getParameterT(1).connectT(0, gain24);                  // sliderbank2 -> gain24::Gain
+		sliderbank2_p.getParameterT(2).connectT(0, gain25);                  // sliderbank2 -> gain25::Gain
+		sliderbank2_p.getParameterT(3).connectT(0, gain27);                  // sliderbank2 -> gain27::Gain
+		sliderbank2_p.getParameterT(4).connectT(0, gain28);                  // sliderbank2 -> gain28::Gain
+		sliderbank2_p.getParameterT(5).connectT(0, gain29);                  // sliderbank2 -> gain29::Gain
+		sliderbank2_p.getParameterT(6).connectT(0, gain30);                  // sliderbank2 -> gain30::Gain
+		sliderbank2_p.getParameterT(7).connectT(0, gain31);                  // sliderbank2 -> gain31::Gain
+		global_cable7.getWrappedObject().getParameter().connectT(0, add18);  // global_cable7 -> add18::Value
+		global_cable8.getWrappedObject().getParameter().connectT(0, add19);  // global_cable8 -> add19::Value
+		global_cable9.getWrappedObject().getParameter().connectT(0, add20);  // global_cable9 -> add20::Value
+		global_cable26.getWrappedObject().getParameter().connectT(0, add21); // global_cable26 -> add21::Value
+		event_data_reader8.getParameter().connectT(0, add22);                // event_data_reader8 -> add22::Value
+		event_data_reader9.getParameter().connectT(0, add23);                // event_data_reader9 -> add23::Value
+		event_data_reader10.getParameter().connectT(0, add24);               // event_data_reader10 -> add24::Value
+		midi_cc14.getWrappedObject().getParameter().connectT(0, add57);      // midi_cc14 -> add57::Value
+		midi_cc15.getWrappedObject().getParameter().connectT(0, add58);      // midi_cc15 -> add58::Value
+		midi_cc16.getWrappedObject().getParameter().connectT(0, add59);      // midi_cc16 -> add59::Value
+		midi_cc17.getWrappedObject().getParameter().connectT(0, add60);      // midi_cc17 -> add60::Value
+		midi9.getParameter().connectT(0, add61);                             // midi9 -> add61::Value
+		midi10.getParameter().connectT(0, add62);                            // midi10 -> add62::Value
+		midi11.getParameter().connectT(0, add63);                            // midi11 -> add63::Value
+		auto& xfader1_p = xfader1.getWrappedObject().getParameter();
+		xfader1_p.getParameterT(0).connectT(0, gain34);                  // xfader1 -> gain34::Gain
+		xfader1_p.getParameterT(1).connectT(0, gain32);                  // xfader1 -> gain32::Gain
+		pma4.getWrappedObject().getParameter().connectT(0, gain16);      // pma4 -> gain16::Gain
+		pma4.getWrappedObject().getParameter().connectT(1, gain14);      // pma4 -> gain14::Gain
+		pma4.getWrappedObject().getParameter().connectT(2, gain36);      // pma4 -> gain36::Gain
+		pma4.getWrappedObject().getParameter().connectT(3, gain37);      // pma4 -> gain37::Gain
+		pma4.getWrappedObject().getParameter().connectT(4, gain44);      // pma4 -> gain44::Gain
+		pma4.getWrappedObject().getParameter().connectT(5, expr4);       // pma4 -> expr4::Value
+		pma4.getWrappedObject().getParameter().connectT(6, phase_delay); // pma4 -> phase_delay::Frequency
+		pma4.getWrappedObject().getParameter().connectT(7, xfader1);     // pma4 -> xfader1::Value
+		pma4.getWrappedObject().getParameter().connectT(8, gain35);      // pma4 -> gain35::Gain
+		peak2.getParameter().connectT(0, pma4);                          // peak2 -> pma4::Value
 		auto& sliderbank1_p = sliderbank1.getWrappedObject().getParameter();
-		sliderbank1_p.getParameterT(0).connectT(0, gain10);                 // sliderbank1 -> gain10::Gain
-		sliderbank1_p.getParameterT(1).connectT(0, gain12);                 // sliderbank1 -> gain12::Gain
-		sliderbank1_p.getParameterT(2).connectT(0, gain17);                 // sliderbank1 -> gain17::Gain
-		sliderbank1_p.getParameterT(3).connectT(0, gain18);                 // sliderbank1 -> gain18::Gain
-		sliderbank1_p.getParameterT(4).connectT(0, gain19);                 // sliderbank1 -> gain19::Gain
-		sliderbank1_p.getParameterT(5).connectT(0, gain20);                 // sliderbank1 -> gain20::Gain
-		sliderbank1_p.getParameterT(6).connectT(0, gain21);                 // sliderbank1 -> gain21::Gain
-		sliderbank1_p.getParameterT(7).connectT(0, gain22);                 // sliderbank1 -> gain22::Gain
-		global_cable4.getWrappedObject().getParameter().connectT(0, add10); // global_cable4 -> add10::Value
-		global_cable5.getWrappedObject().getParameter().connectT(0, add11); // global_cable5 -> add11::Value
-		global_cable6.getWrappedObject().getParameter().connectT(0, add12); // global_cable6 -> add12::Value
-		event_data_reader4.getParameter().connectT(0, add13);               // event_data_reader4 -> add13::Value
-		event_data_reader5.getParameter().connectT(0, add14);               // event_data_reader5 -> add14::Value
-		event_data_reader6.getParameter().connectT(0, add15);               // event_data_reader6 -> add15::Value
-		event_data_reader11.getParameter().connectT(0, add16);              // event_data_reader11 -> add16::Value
-		midi_cc18.getWrappedObject().getParameter().connectT(0, add64);     // midi_cc18 -> add64::Value
-		midi_cc19.getWrappedObject().getParameter().connectT(0, add65);     // midi_cc19 -> add65::Value
-		midi_cc20.getWrappedObject().getParameter().connectT(0, add66);     // midi_cc20 -> add66::Value
-		midi_cc21.getWrappedObject().getParameter().connectT(0, add67);     // midi_cc21 -> add67::Value
-		midi12.getParameter().connectT(0, add68);                           // midi12 -> add68::Value
-		midi13.getParameter().connectT(0, add69);                           // midi13 -> add69::Value
-		midi14.getParameter().connectT(0, add70);                           // midi14 -> add70::Value
-		pma3.getWrappedObject().getParameter().connectT(0, gain1);          // pma3 -> gain1::Gain
-		peak1.getParameter().connectT(0, pma3);                             // peak1 -> pma3::Value
+		sliderbank1_p.getParameterT(0).connectT(0, gain10);                  // sliderbank1 -> gain10::Gain
+		sliderbank1_p.getParameterT(1).connectT(0, gain12);                  // sliderbank1 -> gain12::Gain
+		sliderbank1_p.getParameterT(2).connectT(0, gain17);                  // sliderbank1 -> gain17::Gain
+		sliderbank1_p.getParameterT(3).connectT(0, gain18);                  // sliderbank1 -> gain18::Gain
+		sliderbank1_p.getParameterT(4).connectT(0, gain19);                  // sliderbank1 -> gain19::Gain
+		sliderbank1_p.getParameterT(5).connectT(0, gain20);                  // sliderbank1 -> gain20::Gain
+		sliderbank1_p.getParameterT(6).connectT(0, gain21);                  // sliderbank1 -> gain21::Gain
+		sliderbank1_p.getParameterT(7).connectT(0, gain22);                  // sliderbank1 -> gain22::Gain
+		global_cable4.getWrappedObject().getParameter().connectT(0, add10);  // global_cable4 -> add10::Value
+		global_cable5.getWrappedObject().getParameter().connectT(0, add11);  // global_cable5 -> add11::Value
+		global_cable6.getWrappedObject().getParameter().connectT(0, add12);  // global_cable6 -> add12::Value
+		global_cable27.getWrappedObject().getParameter().connectT(0, add13); // global_cable27 -> add13::Value
+		event_data_reader5.getParameter().connectT(0, add14);                // event_data_reader5 -> add14::Value
+		event_data_reader6.getParameter().connectT(0, add15);                // event_data_reader6 -> add15::Value
+		event_data_reader11.getParameter().connectT(0, add16);               // event_data_reader11 -> add16::Value
+		midi_cc18.getWrappedObject().getParameter().connectT(0, add64);      // midi_cc18 -> add64::Value
+		midi_cc19.getWrappedObject().getParameter().connectT(0, add65);      // midi_cc19 -> add65::Value
+		midi_cc20.getWrappedObject().getParameter().connectT(0, add66);      // midi_cc20 -> add66::Value
+		midi_cc21.getWrappedObject().getParameter().connectT(0, add67);      // midi_cc21 -> add67::Value
+		midi12.getParameter().connectT(0, add68);                            // midi12 -> add68::Value
+		midi13.getParameter().connectT(0, add69);                            // midi13 -> add69::Value
+		midi14.getParameter().connectT(0, add70);                            // midi14 -> add70::Value
+		pma3.getWrappedObject().getParameter().connectT(0, gain1);           // pma3 -> gain1::Gain
+		peak1.getParameter().connectT(0, pma3);                              // peak1 -> pma3::Value
 		
 		// Default Values --------------------------------------------------------------------------
 		
@@ -1466,8 +1556,7 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		gain8.setParameterT(1, 20.); // core::gain::Smoothing
 		gain8.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		event_data_reader.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
-		event_data_reader.setParameterT(1, 0.); // routing::event_data_reader::Static
+		global_cable25.setParameterT(0, 1.); // routing::global_cable::Value
 		
 		; // add3::Value is automated
 		
@@ -1568,8 +1657,7 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		gain25.setParameterT(1, 20.); // core::gain::Smoothing
 		gain25.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		event_data_reader7.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
-		event_data_reader7.setParameterT(1, 0.); // routing::event_data_reader::Static
+		global_cable26.setParameterT(0, 1.); // routing::global_cable::Value
 		
 		; // add21::Value is automated
 		
@@ -1666,8 +1754,7 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		gain17.setParameterT(1, 20.); // core::gain::Smoothing
 		gain17.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		event_data_reader4.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
-		event_data_reader4.setParameterT(1, 0.); // routing::event_data_reader::Static
+		global_cable27.setParameterT(0, 1.); // routing::global_cable::Value
 		
 		; // add13::Value is automated
 		
@@ -1748,19 +1835,41 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		; // pma4::Multiply is automated
 		; // pma4::Add is automated
 		
-		; // pi1::Value is automated
+		; // xfader1::Value is automated
 		
-		sin3.setParameterT(0, 1.); // math::sin::Value
+		sub.setParameterT(0, 0.5); // math::sub::Value
 		
-		;                               // gain11::Gain is automated
-		gain11.setParameterT(1, 0.);    // core::gain::Smoothing
-		gain11.setParameterT(2, -100.); // core::gain::ResetValue
+		abs.setParameterT(0, 1.); // math::abs::Value
+		
+		mul1.setParameterT(0, 2.); // math::mul::Value
+		
+		;                               // gain34::Gain is automated
+		gain34.setParameterT(1, 19.1);  // core::gain::Smoothing
+		gain34.setParameterT(2, -100.); // core::gain::ResetValue
+		
+		expr.setParameterT(0, 1.); // math::expr::Value
+		
+		pi.setParameterT(0, 0.702121); // math::pi::Value
+		
+		sub2.setParameterT(0, 0.); // math::sub::Value
+		
+		sin1.setParameterT(0, 0.86); // math::sin::Value
+		
+		;                              // gain32::Gain is automated
+		gain32.setParameterT(1, 19.8); // core::gain::Smoothing
+		gain32.setParameterT(2, -22.); // core::gain::ResetValue
+		
+		;                              // gain11::Gain is automated
+		gain11.setParameterT(1, 0.);   // core::gain::Smoothing
+		gain11.setParameterT(2, -13.); // core::gain::ResetValue
+		
+		sub1.setParameterT(0, 0.); // math::sub::Value
 		
 		;                              // gain16::Gain is automated
 		gain16.setParameterT(1, 20.2); // core::gain::Smoothing
 		gain16.setParameterT(2, -12.); // core::gain::ResetValue
 		
-		pi4.setParameterT(0, 1.); // math::pi::Value
+		mod_inv1.setParameterT(0, 0.0992969); // math::mod_inv::Value
 		
 		rect1.setParameterT(0, 1.); // math::rect::Value
 		
@@ -1771,6 +1880,8 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		;                             // gain37::Gain is automated
 		gain37.setParameterT(1, 20.); // core::gain::Smoothing
 		gain37.setParameterT(2, 0.);  // core::gain::ResetValue
+		
+		mul.setParameterT(0, 1.); // math::mul::Value
 		
 		pi5.setParameterT(0, 1.); // math::pi::Value
 		
@@ -1792,11 +1903,15 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		gain45.setParameterT(1, 0.);    // core::gain::Smoothing
 		gain45.setParameterT(2, -100.); // core::gain::ResetValue
 		
+		pi7.setParameterT(0, 0.5); // math::pi::Value
+		
 		sin.setParameterT(0, 1.); // math::sin::Value
 		
 		;                              // gain35::Gain is automated
 		gain35.setParameterT(1, 20.);  // core::gain::Smoothing
 		gain35.setParameterT(2, -12.); // core::gain::ResetValue
+		
+		sin6.setParameterT(0, 1.); // math::sin::Value
 		
 		expr1.setParameterT(0, 1.); // math::expr::Value
 		
@@ -1806,33 +1921,37 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		
 		pi2.setParameterT(0, 0.465825); // math::pi::Value
 		
-		sin1.setParameterT(0, 1.); // math::sin::Value
+		; // phase_delay::Frequency is automated
 		
 		;                              // gain36::Gain is automated
 		gain36.setParameterT(1, 20.);  // core::gain::Smoothing
 		gain36.setParameterT(2, -12.); // core::gain::ResetValue
 		
-		expr2.setParameterT(0, 0.367733); // math::expr::Value
+		expr2.setParameterT(0, 0.479197); // math::expr::Value
 		
-		sin2.setParameterT(0, 1.); // math::sin::Value
+		sin8.setParameterT(0, 1.); // math::sin::Value
 		
 		;                               // gain33::Gain is automated
 		gain33.setParameterT(1, 0.);    // core::gain::Smoothing
 		gain33.setParameterT(2, -100.); // core::gain::ResetValue
 		
-		;                              // gain43::Gain is automated
-		gain43.setParameterT(1, 8.7);  // core::gain::Smoothing
-		gain43.setParameterT(2, -12.); // core::gain::ResetValue
+		pi3.setParameterT(0, 0.465825); // math::pi::Value
 		
-		expr3.setParameterT(0, 1.); // math::expr::Value
+		;                              // gain38::Gain is automated
+		gain38.setParameterT(1, 20.);  // core::gain::Smoothing
+		gain38.setParameterT(2, -12.); // core::gain::ResetValue
 		
-		pi8.setParameterT(0, 1.); // math::pi::Value
+		expr3.setParameterT(0, 0.363295); // math::expr::Value
 		
-		sin9.setParameterT(0, 1.); // math::sin::Value
+		square.setParameterT(0, 1.); // math::square::Value
 		
-		;                               // gain46::Gain is automated
-		gain46.setParameterT(1, 0.);    // core::gain::Smoothing
-		gain46.setParameterT(2, -100.); // core::gain::ResetValue
+		rect2.setParameterT(0, 0.590634); // math::rect::Value
+		
+		sin9.setParameterT(0, 0.803583); // math::sin::Value
+		
+		;                               // gain40::Gain is automated
+		gain40.setParameterT(1, 0.);    // core::gain::Smoothing
+		gain40.setParameterT(2, -100.); // core::gain::ResetValue
 		
 		;                              // gain14::Gain is automated
 		gain14.setParameterT(1, 10.8); // core::gain::Smoothing
@@ -1844,9 +1963,9 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		gain26.setParameterT(1, 20.);  // core::gain::Smoothing
 		gain26.setParameterT(2, -9.5); // core::gain::ResetValue
 		
-		;                             // gain1::Gain is automated
-		gain1.setParameterT(1, 20.);  // core::gain::Smoothing
-		gain1.setParameterT(2, -18.); // core::gain::ResetValue
+		;                              // gain1::Gain is automated
+		gain1.setParameterT(1, 20.);   // core::gain::Smoothing
+		gain1.setParameterT(2, -100.); // core::gain::ResetValue
 		
 		one_pole.setParameterT(0, 50.1457); // filters::one_pole::Frequency
 		one_pole.setParameterT(1, 1.);      // filters::one_pole::Q
@@ -1855,12 +1974,12 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		one_pole.setParameterT(4, 1.);      // filters::one_pole::Mode
 		one_pole.setParameterT(5, 1.);      // filters::one_pole::Enabled
 		
-		this->setParameterT(0, 1.);
-		this->setParameterT(1, 0.);
-		this->setParameterT(2, 0.32);
-		this->setParameterT(3, 0.);
-		this->setParameterT(4, 1.);
-		this->setParameterT(5, 0.);
+		this->setParameterT(0, 2.85356);
+		this->setParameterT(1, 0.96);
+		this->setParameterT(2, 0.);
+		this->setParameterT(3, -0.0259851);
+		this->setParameterT(4, 0.245075);
+		this->setParameterT(5, -0.0497622);
 		this->setParameterT(6, 1.);
 		this->setParameterT(7, 1.);
 		this->setParameterT(8, 1.);
@@ -1891,12 +2010,15 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // oscshaper_impl::global_cable_t<NV>
 		this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // oscshaper_impl::global_cable2_t<NV>
 		this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // oscshaper_impl::global_cable1_t<NV>
+		this->getT(0).getT(0).getT(0).getT(0).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // oscshaper_impl::global_cable25_t<NV>
 		this->getT(0).getT(0).getT(0).getT(1).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // oscshaper_impl::global_cable7_t<NV>
 		this->getT(0).getT(0).getT(0).getT(1).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // oscshaper_impl::global_cable8_t<NV>
 		this->getT(0).getT(0).getT(0).getT(1).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // oscshaper_impl::global_cable9_t<NV>
+		this->getT(0).getT(0).getT(0).getT(1).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // oscshaper_impl::global_cable26_t<NV>
 		this->getT(0).getT(0).getT(0).getT(2).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // oscshaper_impl::global_cable4_t<NV>
 		this->getT(0).getT(0).getT(0).getT(2).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // oscshaper_impl::global_cable5_t<NV>
 		this->getT(0).getT(0).getT(0).getT(2).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // oscshaper_impl::global_cable6_t<NV>
+		this->getT(0).getT(0).getT(0).getT(2).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // oscshaper_impl::global_cable27_t<NV>
 	}
 	
 	void setExternalData(const ExternalData& b, int index)

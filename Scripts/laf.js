@@ -44,3 +44,14 @@ laf.registerFunction("drawPresetBrowserListItem", function(g, obj)
     g.drawAlignedText(obj.text, obj.area, "centred");
 });
 
+
+laf.registerFunction("drawTableRuler", function(g, obj)
+{
+    g.setColour(Colours.withAlpha(obj.bgColour, 2.1));
+    
+    var x = obj.position * obj.area[2];
+    
+    g.drawLine(x, x, 0, obj.area[3], 10.0);
+    g.setColour(obj.bgColour);
+    g.drawLine(x, x, 0, obj.area[3], 1);
+});

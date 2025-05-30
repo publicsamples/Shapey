@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="ModToNote" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="ModToNote" Bypassed="0" Name="ModToNote">
+    <Nodes>
+      <Node ID="split" FactoryPath="container.split" Bypassed="0" Name="split">
+        <Nodes>
+          <Node ID="chain" FactoryPath="container.chain" Bypassed="0" Name="chain">
+            <Nodes>
+              <Node ID="wrapmidi1" FactoryPath="container.midichain" Bypassed="0"
+                    Name="wrapmidi1">
+                <Nodes>
+                  <Node ID="midi" FactoryPath="control.midi" Bypassed="0" Name="midi">
+                    <Properties>
+                      <Property ID="Mode" Value="NoteNumber"/>
+                    </Properties>
+                    <Parameters/>
+                  </Node>
+                </Nodes>
+                <Parameters/>
+              </Node>
+              <Node ID="NoteSelector" FactoryPath="project.NoteSelector" Bypassed="0"
+                    Name="NoteSelector">
+                <ModulationTargets>
+                  <Connection NodeId="global_cable" ParameterId="Value"/>
+                </ModulationTargets>
+                <ComplexData>
+                  <DisplayBuffers>
+                    <DisplayBuffer Index="-1"/>
+                  </DisplayBuffers>
+                </ComplexData>
+                <Parameters>
+                  <Parameter MinValue="1.0" MaxValue="8.0" StepSize="1.0" ID="NoteSrc" Value="1.0"
+                             DefaultValue="2.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="global_cable" FactoryPath="routing.global_cable" Bypassed="0"
+                    Name="global_cable" NodeColour="4282863538">
+                <Properties>
+                  <Property ID="Connection" Value="Vnote1"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+          <Node ID="chain1" FactoryPath="container.chain" Bypassed="0" Name="chain">
+            <Nodes>
+              <Node ID="NoteSelector2" FactoryPath="project.NoteSelector2" Bypassed="0"
+                    Name="NoteSelector2">
+                <ModulationTargets>
+                  <Connection NodeId="global_cable1" ParameterId="Value"/>
+                </ModulationTargets>
+                <ComplexData>
+                  <DisplayBuffers>
+                    <DisplayBuffer Index="-1"/>
+                  </DisplayBuffers>
+                </ComplexData>
+                <Parameters>
+                  <Parameter MinValue="1.0" MaxValue="8.0" StepSize="1.0" ID="NoteSrc" Value="3.0"
+                             DefaultValue="2.0"/>
+                  <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1.0" ID="GateSource"
+                             Value="3.0"/>
+                </Parameters>
+              </Node>
+              <Node ID="global_cable1" FactoryPath="routing.global_cable" Bypassed="0"
+                    Name="global_cable" NodeColour="4289876295">
+                <Properties>
+                  <Property ID="Connection" Value="VGate1"/>
+                </Properties>
+                <Parameters>
+                  <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                </Parameters>
+              </Node>
+            </Nodes>
+            <Parameters/>
+          </Node>
+        </Nodes>
+        <Parameters/>
+      </Node>
+      <Node ID="clear" FactoryPath="math.clear" Bypassed="0" Name="clear">
+        <Parameters>
+          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+        </Parameters>
+      </Node>
+    </Nodes>
+    <Parameters/>
+  </Node>
+</Network>

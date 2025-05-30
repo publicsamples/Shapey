@@ -103,6 +103,10 @@ const var UserShape1 = Content.getComponent("UserShape1").setLocalLookAndFeel(Kn
 
 const var OscKnobs = [Content.getComponent("Step1"),
                       Content.getComponent("FmIn1"), 
+                      Content.getComponent("Bend1"), 
+                      Content.getComponent("Bend2"), 
+                      Content.getComponent("Bend3"), 
+                      Content.getComponent("Bend4"), 
                       Content.getComponent("HarmStep1"), 
                       Content.getComponent("Div1"),
                       Content.getComponent("PitchMod1"),
@@ -260,7 +264,26 @@ Content.getComponent("SeqTempo4")];
 for(s in SeqCont1)
       s.setLocalLookAndFeel(KnobLaf);  
 
+const var LfoMods1 = [Content.getComponent("LfoGateMod1"),
+					  Content.getComponent("LfoGateMod2"),
+					  Content.getComponent("LfoGateMod3"),
+					  Content.getComponent("LfoGateMod4"),
+                      Content.getComponent("LfoTempoMod1"),
+                      Content.getComponent("LfoTempoMod2"),
+                      Content.getComponent("LfoTempoMod3"),
+                      Content.getComponent("LfoTempoMod4"),
+                      Content.getComponent("LfoDivMod1"),
+                      Content.getComponent("LfoDivMod2"),
+                      Content.getComponent("LfoDivMod3"),
+                      Content.getComponent("LfoDivMod4"),
+                      Content.getComponent("AdjMod1"),
+                      Content.getComponent("AdjMod2"),
+                      Content.getComponent("AdjMod3"),
+                      Content.getComponent("AdjMod4")];
 
+
+for(s in LfoMods1)
+      s.setLocalLookAndFeel(KnobLaf);  
 
  
 

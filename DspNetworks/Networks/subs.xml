@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Network ID="subs" AllowPolyphonic="1" Version="0.0.0">
+  <Node FactoryPath="container.chain" ID="subs" Bypassed="0" Name="subs">
+    <Nodes/>
+	<Processor Type="container" ID="SubharmonicGen" Bypass="false" ScriptProcessor="false">
+	  <Processor Type="const" ID="BaseFreq" Value="100.0"/>
+	  <Processor Type="core.phasor" ID="MasterPhasor"/>
+	  <Processor Type="const" ID="Divider" Value="3.0"/>
+	  <Processor Type="core.logic.div" ID="DivFreq"/>
+	  <Processor Type="core.phasor" ID="SubharmonicPhasor"/>
+	  <Processor Type="core.mul" ID="Gain" Value="0.25"/>
+	  <Processor Type="core.out" ID="Out"/>
+
+	  <!-- Divider frequency = Base / N -->
+	  <Connection Source="BaseFreq:Out" Target="DivFreq:In1"/>
+	  <Connection Source="Divider:Out" Target="DivFreq:In2"/>
+
+	  <!-- Phasors -->
+	  <Connection Source="BaseFreq:Out" Target="MasterPhasor:Freq"/>
+	  <Connection Source="DivFreq:Out" Target="SubharmonicPhasor:Freq"/>
+
+	  <!-- Output -->
+	  <Connection Source="SubharmonicPhasor:Out" Target="Gain:In"/>
+	  <Connection Source="Gain:Out" Target="Out:In"/>
+	</Processor>
+    <Parameters/>
+  </Node>
+</Network>

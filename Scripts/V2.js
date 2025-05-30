@@ -6,7 +6,7 @@ const var Osc2Mods =[];
 
 for (i = 0; i < 5; i++)
 {
-    Osc2Mods[i] = Content.getComponent("OsModRoute"+(i+6));
+    Osc2Mods[i] = Content.getComponent("OsModRouteB"+(i+1));
 
 } 
 
@@ -20,17 +20,29 @@ Content.getComponent("OscModRoutPage2").setControlCallback(onOscModRoutPage2Cont
 
 const var File2Mods =[];
 
-for (i = 0; i < 6; i++)
+for (i = 0; i < 9; i++)
 {
-    File2Mods[i] = Content.getComponent("flModRouteA"+(i+7));
+    File2Mods[i] = Content.getComponent("flModRouteB"+(i+1));
 
 } 
 
+const var ModLabels2 = [Content.getComponent("FileModLabel2"),
+                        Content.getComponent("ModLabelsFile2")];
 
+         
 inline function onfileModRoutPage2Control(component, value)
 {
  for (i = 0; i < File2Mods.length; i++)
         File2Mods[i].showControl(value - 1 == i);
+        
+        if (value == 1){
+        	 for(s in ModLabels2)
+               s.showControl(0);
+        	}
+          else {
+        	   for(s in ModLabels2)
+               s.showControl(1); 
+          }
 };
 
 Content.getComponent("fileModRoutPage2").setControlCallback(onfileModRoutPage2Control);
@@ -39,7 +51,7 @@ const var Filter2Mods =[];
 
 for (i = 0; i < 3; i++)
 {
-    Filter2Mods[i] = Content.getComponent("fModRouteA"+(i+4));
+    Filter2Mods[i] = Content.getComponent("fModRouteB"+(i+1));
 
 } 
 
@@ -123,7 +135,7 @@ Osc2.setAttribute(Osc2.pitchmode, value);
   
  };
  
- Content.getComponent("PitchMode3").setControlCallback(onPitchMode2Control);
+ Content.getComponent("PitchMode3").setControlCallback(onPitchMode3Control);
  
  
 const var WinUnsync2 = [Content.getComponent("FileWin2"),
@@ -162,9 +174,9 @@ inline function onWinSync2Control(component, value)
 
 Content.getComponent("WinSync2").setControlCallback(onWinSync2Control);
 
+const var CutLabel3 = Content.getComponent("CutLabel3");
 const var CutLabel4 = Content.getComponent("CutLabel4");
-const var CutLabel5 = Content.getComponent("CutLabel5");
-const var CutLabel6 = Content.getComponent("CutLabel6");
+const var CutLabel10 = Content.getComponent("CutLabel10");
 
 
 inline function onFilterType2Control(component, value)
@@ -172,28 +184,22 @@ inline function onFilterType2Control(component, value)
 	Filter1.setAttribute(Filter1.type, value);
 
 	if (value == 1){
-		CutLabel4.setValue("Low Pass");
-		CutLabel5.setValue("High Pass");
-		CutLabel6.setValue("Serial/ Paralel");
+		CutLabel3.setValue("Low Pass");
+		CutLabel4.setValue("High Pass");
+		CutLabel10.setValue("Serial/ Paralel");
 	}
 	
 	if (value == 2){
-			CutLabel4.setValue("Low Shelf");
-			CutLabel5.setValue("High Shelf");
-			CutLabel6.setValue("Serial/ Paralel");
+			CutLabel3.setValue("Low Shelf");
+			CutLabel4.setValue("High Shelf");
+			CutLabel10.setValue("Serial/ Paralel");
 		}
-		
 	
-	if (value == 3){
-		CutLabel4.setValue("Low Pass");
-		CutLabel5.setValue("High Pass");
-		CutLabel6.setValue("Serial/ Paralel");
-		}	
 		
-	if (value == 4){
-			CutLabel4.setValue("Comb Freq");
-			CutLabel5.setValue("Low Pass");
-			CutLabel6.setValue("FFWD/ Allpass");
+	if (value == 3){
+			CutLabel3.setValue("Freq");
+			CutLabel4.setValue("Low Pass");
+			CutLabel10.setValue("FFWD/ Allpass");
 			}		
 	
 };

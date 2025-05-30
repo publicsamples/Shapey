@@ -85,18 +85,21 @@ using chain40_t = container::chain<parameter::empty,
                                    wrap::fix<1, global_cable10_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
+using global_cable14_t_index = runtime_target::indexers::fix_hash<2333887>;
 
 template <int NV>
-using event_data_reader3_t = wrap::mod<parameter::plain<math::add<NV>, 0>, 
-                                       routing::event_data_reader<NV>>;
+using global_cable14_t = routing::global_cable<global_cable14_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
 
 template <int NV>
 using chain42_t = container::chain<parameter::empty, 
-                                   wrap::fix<1, event_data_reader3_t<NV>>, 
+                                   wrap::fix<1, global_cable14_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader11_t = event_data_reader3_t<NV>;
+template <int NV>
+using event_data_reader11_t = wrap::mod<parameter::plain<math::add<NV>, 0>, 
+                                        routing::event_data_reader<NV>>;
 
 template <int NV>
 using chain44_t = container::chain<parameter::empty, 
@@ -104,7 +107,7 @@ using chain44_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader10_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader10_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain43_t = container::chain<parameter::empty, 
@@ -207,7 +210,7 @@ template <int NV> using pma9_t = pma1_t<NV>;
 
 template <int NV>
 using converter5_mod = parameter::chain<ranges::Identity, 
-                                        parameter::plain<core::phasor_fm<NV>, 2>, 
+                                        parameter::plain<core::phasor_fm<NV>, 1>, 
                                         parameter::plain<core::phasor_fm<NV>, 2>>;
 
 template <int NV>
@@ -385,16 +388,19 @@ using chain49_t = container::chain<parameter::empty,
                                    wrap::fix<1, global_cable13_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
+using global_cable25_t_index = global_cable14_t_index;
 
-template <int NV> using event_data_reader4_t = event_data_reader3_t<NV>;
+template <int NV>
+using global_cable25_t = routing::global_cable<global_cable25_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
 
 template <int NV>
 using chain50_t = container::chain<parameter::empty, 
-                                   wrap::fix<1, event_data_reader4_t<NV>>, 
+                                   wrap::fix<1, global_cable25_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader12_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader12_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain51_t = container::chain<parameter::empty, 
@@ -402,7 +408,7 @@ using chain51_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader13_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader13_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain52_t = container::chain<parameter::empty, 
@@ -566,16 +572,19 @@ using chain65_t = container::chain<parameter::empty,
                                    wrap::fix<1, global_cable17_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
+using global_cable26_t_index = global_cable14_t_index;
 
-template <int NV> using event_data_reader6_t = event_data_reader3_t<NV>;
+template <int NV>
+using global_cable26_t = routing::global_cable<global_cable26_t_index, 
+                                               parameter::plain<math::add<NV>, 0>>;
 
 template <int NV>
 using chain66_t = container::chain<parameter::empty, 
-                                   wrap::fix<1, event_data_reader6_t<NV>>, 
+                                   wrap::fix<1, global_cable26_t<NV>>, 
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader16_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader16_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain67_t = container::chain<parameter::empty, 
@@ -583,7 +592,7 @@ using chain67_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader17_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader17_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain68_t = container::chain<parameter::empty, 
@@ -591,7 +600,7 @@ using chain68_t = container::chain<parameter::empty,
                                    math::add<NV>, 
                                    core::gain<NV>>;
 
-template <int NV> using event_data_reader18_t = event_data_reader3_t<NV>;
+template <int NV> using event_data_reader18_t = event_data_reader11_t<NV>;
 
 template <int NV>
 using chain69_t = container::chain<parameter::empty, 
@@ -977,7 +986,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
             0x6970, 0x6374, 0x6D68, 0x646F, 0x0065, 0x0000, 0x3F80, 0x0000, 
             0x4080, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x045B, 
             0x0000, 0x7300, 0x6574, 0x0070, 0x0000, 0x0000, 0x0000, 0x3F80, 
-            0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x055B, 0x0000, 
+            0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x055B, 0x0000, 
             0x4900, 0x706E, 0x7475, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 
             0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 0x0006, 0x0000, 
             0x6950, 0x6374, 0x4D68, 0x646F, 0x0000, 0x8000, 0x00BF, 0x8000, 
@@ -1034,7 +1043,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		auto& add5 = this->getT(0).getT(0).getT(1).getT(2).getT(1);                      // math::add<NV>
 		auto& gain14 = this->getT(0).getT(0).getT(1).getT(2).getT(2);                    // core::gain<NV>
 		auto& chain42 = this->getT(0).getT(0).getT(1).getT(3);                           // osc1_impl::chain42_t<NV>
-		auto& event_data_reader3 = this->getT(0).getT(0).getT(1).getT(3).getT(0);        // osc1_impl::event_data_reader3_t<NV>
+		auto& global_cable14 = this->getT(0).getT(0).getT(1).getT(3).getT(0);            // osc1_impl::global_cable14_t<NV>
 		auto& add27 = this->getT(0).getT(0).getT(1).getT(3).getT(1);                     // math::add<NV>
 		auto& gain16 = this->getT(0).getT(0).getT(1).getT(3).getT(2);                    // core::gain<NV>
 		auto& chain44 = this->getT(0).getT(0).getT(1).getT(4);                           // osc1_impl::chain44_t<NV>
@@ -1107,7 +1116,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		auto& add7 = this->getT(0).getT(1).getT(1).getT(2).getT(1);                      // math::add<NV>
 		auto& gain19 = this->getT(0).getT(1).getT(1).getT(2).getT(2);                    // core::gain<NV>
 		auto& chain50 = this->getT(0).getT(1).getT(1).getT(3);                           // osc1_impl::chain50_t<NV>
-		auto& event_data_reader4 = this->getT(0).getT(1).getT(1).getT(3).getT(0);        // osc1_impl::event_data_reader4_t<NV>
+		auto& global_cable25 = this->getT(0).getT(1).getT(1).getT(3).getT(0);            // osc1_impl::global_cable25_t<NV>
 		auto& add33 = this->getT(0).getT(1).getT(1).getT(3).getT(1);                     // math::add<NV>
 		auto& gain20 = this->getT(0).getT(1).getT(1).getT(3).getT(2);                    // core::gain<NV>
 		auto& chain51 = this->getT(0).getT(1).getT(1).getT(4);                           // osc1_impl::chain51_t<NV>
@@ -1164,7 +1173,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		auto& add11 = this->getT(0).getT(2).getT(1).getT(2).getT(1);                     // math::add<NV>
 		auto& gain30 = this->getT(0).getT(2).getT(1).getT(2).getT(2);                    // core::gain<NV>
 		auto& chain66 = this->getT(0).getT(2).getT(1).getT(3);                           // osc1_impl::chain66_t<NV>
-		auto& event_data_reader6 = this->getT(0).getT(2).getT(1).getT(3).getT(0);        // osc1_impl::event_data_reader6_t<NV>
+		auto& global_cable26 = this->getT(0).getT(2).getT(1).getT(3).getT(0);            // osc1_impl::global_cable26_t<NV>
 		auto& add45 = this->getT(0).getT(2).getT(1).getT(3).getT(1);                     // math::add<NV>
 		auto& gain31 = this->getT(0).getT(2).getT(1).getT(3).getT(2);                    // core::gain<NV>
 		auto& chain67 = this->getT(0).getT(2).getT(1).getT(4);                           // osc1_impl::chain67_t<NV>
@@ -1294,7 +1303,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		global_cable3.getWrappedObject().getParameter().connectT(0, add4);    // global_cable3 -> add4::Value
 		global_cable11.getWrappedObject().getParameter().connectT(0, add26);  // global_cable11 -> add26::Value
 		global_cable10.getWrappedObject().getParameter().connectT(0, add5);   // global_cable10 -> add5::Value
-		event_data_reader3.getParameter().connectT(0, add27);                 // event_data_reader3 -> add27::Value
+		global_cable14.getWrappedObject().getParameter().connectT(0, add27);  // global_cable14 -> add27::Value
 		event_data_reader11.getParameter().connectT(0, add29);                // event_data_reader11 -> add29::Value
 		event_data_reader10.getParameter().connectT(0, add28);                // event_data_reader10 -> add28::Value
 		midi_cc10.getWrappedObject().getParameter().connectT(0, add50);       // midi_cc10 -> add50::Value
@@ -1306,8 +1315,8 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		midi8.getParameter().connectT(0, add56);                              // midi8 -> add56::Value
 		pma1.getWrappedObject().getParameter().connectT(0, add);              // pma1 -> add::Value
 		pma9.getWrappedObject().getParameter().connectT(0, add2);             // pma9 -> add2::Value
-		converter5.getWrappedObject().getParameter().connectT(0, phasor_fm3); // converter5 -> phasor_fm3::FreqRatio
-		converter5.getWrappedObject().getParameter().connectT(1, phasor_fm1); // converter5 -> phasor_fm1::FreqRatio
+		converter5.getWrappedObject().getParameter().connectT(0, phasor_fm1); // converter5 -> phasor_fm1::Frequency
+		converter5.getWrappedObject().getParameter().connectT(1, phasor_fm3); // converter5 -> phasor_fm3::FreqRatio
 		tempo_sync.getParameter().connectT(0, converter5);                    // tempo_sync -> converter5::Value
 		pma8.getWrappedObject().getParameter().connectT(0, tempo_sync);       // pma8 -> tempo_sync::Tempo
 		pma11.getWrappedObject().getParameter().connectT(0, tempo_sync);      // pma11 -> tempo_sync::UnsyncedTime
@@ -1333,7 +1342,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		global_cable4.getWrappedObject().getParameter().connectT(0, add6);   // global_cable4 -> add6::Value
 		global_cable12.getWrappedObject().getParameter().connectT(0, add32); // global_cable12 -> add32::Value
 		global_cable13.getWrappedObject().getParameter().connectT(0, add7);  // global_cable13 -> add7::Value
-		event_data_reader4.getParameter().connectT(0, add33);                // event_data_reader4 -> add33::Value
+		global_cable25.getWrappedObject().getParameter().connectT(0, add33); // global_cable25 -> add33::Value
 		event_data_reader12.getParameter().connectT(0, add34);               // event_data_reader12 -> add34::Value
 		event_data_reader13.getParameter().connectT(0, add35);               // event_data_reader13 -> add35::Value
 		midi_cc3.getWrappedObject().getParameter().connectT(0, add31);       // midi_cc3 -> add31::Value
@@ -1357,7 +1366,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		global_cable6.getWrappedObject().getParameter().connectT(0, add10);  // global_cable6 -> add10::Value
 		global_cable16.getWrappedObject().getParameter().connectT(0, add44); // global_cable16 -> add44::Value
 		global_cable17.getWrappedObject().getParameter().connectT(0, add11); // global_cable17 -> add11::Value
-		event_data_reader6.getParameter().connectT(0, add45);                // event_data_reader6 -> add45::Value
+		global_cable26.getWrappedObject().getParameter().connectT(0, add45); // global_cable26 -> add45::Value
 		event_data_reader16.getParameter().connectT(0, add46);               // event_data_reader16 -> add46::Value
 		event_data_reader17.getParameter().connectT(0, add47);               // event_data_reader17 -> add47::Value
 		event_data_reader18.getParameter().connectT(0, add48);               // event_data_reader18 -> add48::Value
@@ -1398,8 +1407,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		gain14.setParameterT(1, 20.); // core::gain::Smoothing
 		gain14.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		event_data_reader3.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
-		event_data_reader3.setParameterT(1, 0.); // routing::event_data_reader::Static
+		global_cable14.setParameterT(0, 1.); // routing::global_cable::Value
 		
 		; // add27::Value is automated
 		
@@ -1530,8 +1538,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		gain19.setParameterT(1, 20.); // core::gain::Smoothing
 		gain19.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		event_data_reader4.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
-		event_data_reader4.setParameterT(1, 0.); // routing::event_data_reader::Static
+		global_cable25.setParameterT(0, 1.); // routing::global_cable::Value
 		
 		; // add33::Value is automated
 		
@@ -1632,8 +1639,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		gain30.setParameterT(1, 20.); // core::gain::Smoothing
 		gain30.setParameterT(2, 0.);  // core::gain::ResetValue
 		
-		event_data_reader6.setParameterT(0, 0.); // routing::event_data_reader::SlotIndex
-		event_data_reader6.setParameterT(1, 0.); // routing::event_data_reader::Static
+		global_cable26.setParameterT(0, 1.); // routing::global_cable::Value
 		
 		; // add45::Value is automated
 		
@@ -1754,16 +1760,16 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		
 		clear1.setParameterT(0, 0.); // math::clear::Value
 		
-		phasor_fm1.setParameterT(0, 1.);    // core::phasor_fm::Gate
-		phasor_fm1.setParameterT(1, 725.8); // core::phasor_fm::Frequency
-		;                                   // phasor_fm1::FreqRatio is automated
-		phasor_fm1.setParameterT(3, 0.);    // core::phasor_fm::Phase
+		phasor_fm1.setParameterT(0, 1.); // core::phasor_fm::Gate
+		;                                // phasor_fm1::Frequency is automated
+		phasor_fm1.setParameterT(2, 0.); // core::phasor_fm::FreqRatio
+		phasor_fm1.setParameterT(3, 0.); // core::phasor_fm::Phase
 		
 		this->setParameterT(0, 0.);
 		this->setParameterT(1, 0.);
 		this->setParameterT(2, 1.);
 		this->setParameterT(3, 1.);
-		this->setParameterT(4, 0.);
+		this->setParameterT(4, 1.);
 		this->setParameterT(5, 0.);
 		this->setParameterT(6, 0.);
 		this->setParameterT(7, 0.);
@@ -1803,12 +1809,15 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		this->getT(0).getT(0).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // osc1_impl::global_cable3_t<NV>
 		this->getT(0).getT(0).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // osc1_impl::global_cable11_t<NV>
 		this->getT(0).getT(0).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // osc1_impl::global_cable10_t<NV>
+		this->getT(0).getT(0).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // osc1_impl::global_cable14_t<NV>
 		this->getT(0).getT(1).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // osc1_impl::global_cable4_t<NV>
 		this->getT(0).getT(1).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // osc1_impl::global_cable12_t<NV>
 		this->getT(0).getT(1).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // osc1_impl::global_cable13_t<NV>
+		this->getT(0).getT(1).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // osc1_impl::global_cable25_t<NV>
 		this->getT(0).getT(2).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // osc1_impl::global_cable6_t<NV>
 		this->getT(0).getT(2).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c); // osc1_impl::global_cable16_t<NV>
 		this->getT(0).getT(2).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c); // osc1_impl::global_cable17_t<NV>
+		this->getT(0).getT(2).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c); // osc1_impl::global_cable26_t<NV>
 	}
 	
 	void setExternalData(const ExternalData& b, int index)
