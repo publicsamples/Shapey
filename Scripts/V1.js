@@ -53,7 +53,7 @@ Content.getComponent("fileModRoutPage1").setControlCallback(onfileModRoutPage1Co
 
 const var Filter1Mods =[];
 
-for (i = 0; i < 3; i++)
+for (i = 0; i < 5; i++)
 {
     Filter1Mods[i] = Content.getComponent("fModRouteA"+(i+1));
 

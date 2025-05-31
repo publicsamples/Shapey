@@ -5168,21 +5168,21 @@ template <int NV> struct instance: public files_impl::files_t_<NV>
 		
 		; // add1::Value is automated
 		
-		;                             // minmax3::Value is automated
-		minmax3.setParameterT(1, 0.); // control::minmax::Minimum
-		minmax3.setParameterT(2, 1.); // control::minmax::Maximum
-		minmax3.setParameterT(3, 1.); // control::minmax::Skew
-		minmax3.setParameterT(4, 0.); // control::minmax::Step
-		minmax3.setParameterT(5, 0.); // control::minmax::Polarity
+		;                                      // minmax3::Value is automated
+		minmax3.setParameterT(1, 0.);          // control::minmax::Minimum
+		minmax3.setParameterT(2, 1.);          // control::minmax::Maximum
+		minmax3.setParameterT(3, 1.);          // control::minmax::Skew
+		minmax3.setParameterT(4, 0.000732422); // control::minmax::Step
+		minmax3.setParameterT(5, 0.);          // control::minmax::Polarity
 		
 		; // add125::Value is automated
 		
-		;                             // minmax5::Value is automated
-		minmax5.setParameterT(1, 0.); // control::minmax::Minimum
-		minmax5.setParameterT(2, 1.); // control::minmax::Maximum
-		minmax5.setParameterT(3, 1.); // control::minmax::Skew
-		minmax5.setParameterT(4, 0.); // control::minmax::Step
-		minmax5.setParameterT(5, 0.); // control::minmax::Polarity
+		;                                      // minmax5::Value is automated
+		minmax5.setParameterT(1, 0.);          // control::minmax::Minimum
+		minmax5.setParameterT(2, 1.);          // control::minmax::Maximum
+		minmax5.setParameterT(3, 1.);          // control::minmax::Skew
+		minmax5.setParameterT(4, 0.000488281); // control::minmax::Step
+		minmax5.setParameterT(5, 0.);          // control::minmax::Polarity
 		
 		; // add131::Value is automated
 		

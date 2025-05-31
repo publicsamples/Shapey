@@ -656,116 +656,6 @@ template <int NV>
 using split13_t = container::split<parameter::empty, 
                                    wrap::fix<1, chain75_t<NV>>>;
 
-struct cable_table1_t_data
-{
-	span<float, 512> data =
-	{
-		1.f, 0.996024f, 0.992048f, 0.988072f, 0.984096f, 0.98012f,
-		0.976144f, 0.972168f, 0.968192f, 0.964216f, 0.96024f, 0.956264f,
-		0.952288f, 0.948312f, 0.944336f, 0.94036f, 0.936384f, 0.932408f,
-		0.928432f, 0.924456f, 0.92048f, 0.916504f, 0.912528f, 0.908552f,
-		0.904576f, 0.900599f, 0.896623f, 0.892648f, 0.888671f, 0.884695f,
-		0.880719f, 0.876743f, 0.872767f, 0.868791f, 0.864815f, 0.860839f,
-		0.856863f, 0.852887f, 0.848911f, 0.844935f, 0.840959f, 0.836983f,
-		0.833007f, 0.829031f, 0.825055f, 0.821079f, 0.817103f, 0.813127f,
-		0.809151f, 0.805175f, 0.801199f, 0.797223f, 0.793247f, 0.789271f,
-		0.785295f, 0.781319f, 0.777343f, 0.773367f, 0.769391f, 0.765415f,
-		0.761439f, 0.757463f, 0.753487f, 0.749511f, 0.745535f, 0.741559f,
-		0.737583f, 0.733607f, 0.729631f, 0.725655f, 0.721679f, 0.717703f,
-		0.713727f, 0.709751f, 0.705775f, 0.701799f, 0.697823f, 0.693846f,
-		0.68987f, 0.685894f, 0.681918f, 0.677942f, 0.673966f, 0.66999f,
-		0.666014f, 0.662038f, 0.658062f, 0.654086f, 0.65011f, 0.646134f,
-		0.642158f, 0.638182f, 0.634206f, 0.63023f, 0.626254f, 0.622278f,
-		0.618302f, 0.614326f, 0.61035f, 0.606374f, 0.602398f, 0.598422f,
-		0.594446f, 0.59047f, 0.586494f, 0.582518f, 0.578542f, 0.574566f,
-		0.57059f, 0.566614f, 0.562638f, 0.558662f, 0.554686f, 0.55071f,
-		0.546734f, 0.542758f, 0.538782f, 0.534806f, 0.53083f, 0.526854f,
-		0.522878f, 0.518902f, 0.514926f, 0.51095f, 0.506974f, 0.502998f,
-		0.499022f, 0.495046f, 0.491069f, 0.487094f, 0.483117f, 0.479141f,
-		0.475165f, 0.471189f, 0.467213f, 0.463237f, 0.459261f, 0.455285f,
-		0.451309f, 0.447333f, 0.443357f, 0.439381f, 0.435405f, 0.431429f,
-		0.427453f, 0.423477f, 0.419501f, 0.415525f, 0.411549f, 0.407573f,
-		0.403597f, 0.399621f, 0.395645f, 0.391669f, 0.387693f, 0.383717f,
-		0.379741f, 0.375765f, 0.371789f, 0.367813f, 0.363837f, 0.359861f,
-		0.355885f, 0.351909f, 0.347933f, 0.343957f, 0.339981f, 0.336005f,
-		0.332029f, 0.328053f, 0.324077f, 0.320101f, 0.316125f, 0.312149f,
-		0.308173f, 0.304197f, 0.300221f, 0.296245f, 0.292269f, 0.288292f,
-		0.284316f, 0.28034f, 0.276364f, 0.272388f, 0.268412f, 0.264436f,
-		0.26046f, 0.256484f, 0.252508f, 0.248532f, 0.244556f, 0.24058f,
-		0.236604f, 0.232628f, 0.228652f, 0.224676f, 0.2207f, 0.216724f,
-		0.212748f, 0.208772f, 0.204796f, 0.20082f, 0.196844f, 0.192868f,
-		0.188892f, 0.184916f, 0.18094f, 0.176964f, 0.172988f, 0.169012f,
-		0.165036f, 0.16106f, 0.157084f, 0.153108f, 0.149132f, 0.145156f,
-		0.14118f, 0.137204f, 0.133228f, 0.129252f, 0.125276f, 0.1213f,
-		0.117324f, 0.113348f, 0.109372f, 0.105396f, 0.10142f, 0.0974436f,
-		0.0934675f, 0.0894916f, 0.0855155f, 0.0815395f, 0.0775635f, 0.0735875f,
-		0.0696114f, 0.0656354f, 0.0616595f, 0.0576833f, 0.0537073f, 0.0497313f,
-		0.0457554f, 0.0417793f, 0.0378032f, 0.0338273f, 0.0298512f, 0.0258753f,
-		0.0218992f, 0.0179232f, 0.0139471f, 0.0099712f, 0.00599515f, 0.00201905f,
-		0.0547943f, 0.166122f, 0.277452f, 0.38878f, 0.500109f, 0.611437f,
-		0.722765f, 0.834093f, 0.945424f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-		1.f, 1.f
-	};
-};
-
-template <int NV>
-using cable_table1_t = wrap::data<control::cable_table<parameter::plain<pma5_t<NV>, 2>>, 
-                                  data::embedded::table<cable_table1_t_data>>;
-DECLARE_PARAMETER_RANGE(cable_table2_mod_1Range, 
-                        -1., 
-                        1.);
-
-template <int NV>
-using cable_table2_mod_1 = parameter::from0To1<pma5_t<NV>, 
-                                               1, 
-                                               cable_table2_mod_1Range>;
-
-template <int NV>
-using cable_table2_mod = parameter::chain<ranges::Identity, 
-                                          parameter::plain<cable_table1_t<NV>, 0>, 
-                                          cable_table2_mod_1<NV>>;
-
 struct cable_table2_t_data
 {
 	span<float, 512> data =
@@ -860,14 +750,13 @@ struct cable_table2_t_data
 };
 
 template <int NV>
-using cable_table2_t = wrap::data<control::cable_table<cable_table2_mod<NV>>, 
+using cable_table2_t = wrap::data<control::cable_table<parameter::plain<pma5_t<NV>, 2>>, 
                                   data::embedded::table<cable_table2_t_data>>;
 
 template <int NV>
 using modchain3_t_ = container::chain<parameter::empty, 
                                       wrap::fix<1, split13_t<NV>>, 
                                       cable_table2_t<NV>, 
-                                      cable_table1_t<NV>, 
                                       pma5_t<NV>>;
 
 template <int NV>
@@ -1453,13 +1342,10 @@ using Step = parameter::chain<ranges::Identity,
                               parameter::plain<lfo_impl::minmax7_t<NV>, 4>, 
                               parameter::plain<lfo_impl::minmax8_t<NV>, 4>>;
 
-DECLARE_PARAMETER_RANGE(GateMod_InputRange, 
-                        -1., 
-                        1.);
-
 template <int NV>
-using GateMod = parameter::chain<GateMod_InputRange, 
-                                 parameter::plain<lfo_impl::cable_table2_t<NV>, 0>>;
+using GateMod = parameter::chain<ranges::Identity, 
+                                 parameter::plain<lfo_impl::cable_table2_t<NV>, 0>, 
+                                 parameter::plain<lfo_impl::pma5_t<NV>, 1>>;
 
 DECLARE_PARAMETER_RANGE(tempoSrc_InputRange, 
                         1., 
@@ -1575,17 +1461,17 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
             0x000B, 0x0000, 0x6554, 0x706D, 0x4D6F, 0x646F, 0x0000, 0x8000, 
             0x00BF, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
             0x5B00, 0x000C, 0x0000, 0x6441, 0x4D6A, 0x646F, 0x0000, 0x8000, 
-            0x00BF, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
+            0x00BF, 0x8000, 0x6F3F, 0x0312, 0x00BB, 0x8000, 0x003F, 0x0000, 
             0x5B00, 0x000D, 0x0000, 0x6147, 0x6574, 0x6F4D, 0x0064, 0x0000, 
-            0xBF80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
-            0x0000, 0x0E5B, 0x0000, 0x4400, 0x7669, 0x6F4D, 0x0064, 0x0000, 
+            0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
+            0x3F80, 0x0E5B, 0x0000, 0x4400, 0x7669, 0x6F4D, 0x0064, 0x0000, 
             0xBF80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 
             0x0000, 0x0F5B, 0x0000, 0x7400, 0x6D65, 0x6F70, 0x7253, 0x0063, 
             0x0000, 0x3F80, 0x0000, 0x40C0, 0x0000, 0x3F80, 0x0000, 0x3F80, 
             0x0000, 0x0000, 0x105B, 0x0000, 0x4100, 0x6A64, 0x7253, 0x0063, 
             0x0000, 0x3F80, 0x0000, 0x40C0, 0x0000, 0x3F80, 0x0000, 0x3F80, 
             0x0000, 0x0000, 0x115B, 0x0000, 0x4700, 0x7461, 0x5365, 0x6372, 
-            0x0000, 0x8000, 0x003F, 0xE000, 0x0040, 0x8000, 0x003F, 0x8000, 
+            0x0000, 0x8000, 0x003F, 0xE000, 0x0040, 0xE000, 0x0040, 0x8000, 
             0x003F, 0x0000, 0x5B00, 0x0012, 0x0000, 0x6944, 0x7376, 0x6372, 
             0x0000, 0x8000, 0x003F, 0xC000, 0x0040, 0x8000, 0x003F, 0x8000, 
             0x003F, 0x0000, 0x0000, 0x0000
@@ -1802,8 +1688,7 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
                        getT(0).getT(1).getT(6).getT(2);
 		auto& peak10 = this->getT(1).getT(0).getT(3).getT(0).getT(0).getT(2);                 // lfo_impl::peak10_t<NV>
 		auto& cable_table2 = this->getT(1).getT(0).getT(3).getT(1);                           // lfo_impl::cable_table2_t<NV>
-		auto& cable_table1 = this->getT(1).getT(0).getT(3).getT(2);                           // lfo_impl::cable_table1_t<NV>
-		auto& pma5 = this->getT(1).getT(0).getT(3).getT(3);                                   // lfo_impl::pma5_t<NV>
+		auto& pma5 = this->getT(1).getT(0).getT(3).getT(2);                                   // lfo_impl::pma5_t<NV>
 		auto& modchain4 = this->getT(2);                                                      // lfo_impl::modchain4_t<NV>
 		auto& branch1 = this->getT(2).getT(0);                                                // lfo_impl::branch1_t<NV>
 		auto& chain3 = this->getT(2).getT(0).getT(0);                                         // lfo_impl::chain3_t<NV>
@@ -2026,7 +1911,9 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
 		
 		this->getParameterT(12).connectT(0, pma3); // AdjMod -> pma3::Multiply
 		
-		this->getParameterT(13).connectT(0, cable_table2); // GateMod -> cable_table2::Value
+		auto& GateMod_p = this->getParameterT(13);
+		GateMod_p.connectT(0, cable_table2); // GateMod -> cable_table2::Value
+		GateMod_p.connectT(1, pma5);         // GateMod -> pma5::Multiply
 		
 		this->getParameterT(14).connectT(0, pma2); // DivMod -> pma2::Multiply
 		
@@ -2103,57 +1990,55 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
 		event_data_reader9.getParameter().connectT(0, add24);                // event_data_reader9 -> add24::Value
 		peak6.getParameter().connectT(0, pma2);                              // peak6 -> pma2::Value
 		auto& xfader3_p = xfader3.getWrappedObject().getParameter();
-		xfader3_p.getParameterT(0).connectT(0, gain58);                           // xfader3 -> gain58::Gain
-		xfader3_p.getParameterT(1).connectT(0, gain59);                           // xfader3 -> gain59::Gain
-		xfader3_p.getParameterT(2).connectT(0, gain60);                           // xfader3 -> gain60::Gain
-		xfader3_p.getParameterT(3).connectT(0, gain61);                           // xfader3 -> gain61::Gain
-		xfader3_p.getParameterT(4).connectT(0, gain62);                           // xfader3 -> gain62::Gain
-		xfader3_p.getParameterT(5).connectT(0, gain63);                           // xfader3 -> gain63::Gain
-		xfader3_p.getParameterT(6).connectT(0, gain64);                           // xfader3 -> gain64::Gain
-		global_cable19.getWrappedObject().getParameter().connectT(0, add31);      // global_cable19 -> add31::Value
-		global_cable20.getWrappedObject().getParameter().connectT(0, add32);      // global_cable20 -> add32::Value
-		global_cable24.getWrappedObject().getParameter().connectT(0, add33);      // global_cable24 -> add33::Value
-		global_cable25.getWrappedObject().getParameter().connectT(0, add34);      // global_cable25 -> add34::Value
-		event_data_reader14.getParameter().connectT(0, add35);                    // event_data_reader14 -> add35::Value
-		event_data_reader15.getParameter().connectT(0, add36);                    // event_data_reader15 -> add36::Value
-		midi.getParameter().connectT(0, add3);                                    // midi -> add3::Value
-		pma5.getWrappedObject().getParameter().connectT(0, ramp);                 // pma5 -> ramp::Gate
-		peak10.getParameter().connectT(0, pma5);                                  // peak10 -> pma5::Value
-		cable_table1.getWrappedObject().getParameter().connectT(0, pma5);         // cable_table1 -> pma5::Add
-		cable_table2.getWrappedObject().getParameter().connectT(0, cable_table1); // cable_table2 -> cable_table1::Value
-		cable_table2.getWrappedObject().getParameter().connectT(1, pma5);         // cable_table2 -> pma5::Multiply
-		peak1.getParameter().connectT(0, global_cable);                           // peak1 -> global_cable::Value
-		peak1.getParameter().connectT(1, add);                                    // peak1 -> add::Value
-		peak1.getParameter().connectT(2, add43);                                  // peak1 -> add43::Value
-		change.getWrappedObject().getParameter().connectT(0, global_cable2);      // change -> global_cable2::Value
-		peak.getParameter().connectT(0, change);                                  // peak -> change::Value
-		minmax2.getWrappedObject().getParameter().connectT(0, chain170);          // minmax2 -> chain170::note
-		change3.getWrappedObject().getParameter().connectT(0, minmax2);           // change3 -> minmax2::Value
-		peak14.getParameter().connectT(0, change3);                               // peak14 -> change3::Value
-		peak12.getParameter().connectT(0, global_cable8);                         // peak12 -> global_cable8::Value
-		peak12.getParameter().connectT(1, add5);                                  // peak12 -> add5::Value
-		peak12.getParameter().connectT(2, add47);                                 // peak12 -> add47::Value
-		change8.getWrappedObject().getParameter().connectT(0, global_cable29);    // change8 -> global_cable29::Value
-		peak13.getParameter().connectT(0, change8);                               // peak13 -> change8::Value
-		minmax6.getWrappedObject().getParameter().connectT(0, chain178);          // minmax6 -> chain178::note
-		change9.getWrappedObject().getParameter().connectT(0, minmax6);           // change9 -> minmax6::Value
-		peak18.getParameter().connectT(0, change9);                               // peak18 -> change9::Value
-		peak19.getParameter().connectT(0, global_cable31);                        // peak19 -> global_cable31::Value
-		peak19.getParameter().connectT(1, add7);                                  // peak19 -> add7::Value
-		peak19.getParameter().connectT(2, add48);                                 // peak19 -> add48::Value
-		change10.getWrappedObject().getParameter().connectT(0, global_cable32);   // change10 -> global_cable32::Value
-		peak20.getParameter().connectT(0, change10);                              // peak20 -> change10::Value
-		minmax7.getWrappedObject().getParameter().connectT(0, chain180);          // minmax7 -> chain180::note
-		change11.getWrappedObject().getParameter().connectT(0, minmax7);          // change11 -> minmax7::Value
-		peak21.getParameter().connectT(0, change11);                              // peak21 -> change11::Value
-		peak22.getParameter().connectT(0, global_cable34);                        // peak22 -> global_cable34::Value
-		peak22.getParameter().connectT(1, add10);                                 // peak22 -> add10::Value
-		peak22.getParameter().connectT(2, add49);                                 // peak22 -> add49::Value
-		change12.getWrappedObject().getParameter().connectT(0, global_cable35);   // change12 -> global_cable35::Value
-		peak23.getParameter().connectT(0, change12);                              // peak23 -> change12::Value
-		minmax8.getWrappedObject().getParameter().connectT(0, chain182);          // minmax8 -> chain182::note
-		change13.getWrappedObject().getParameter().connectT(0, minmax8);          // change13 -> minmax8::Value
-		peak24.getParameter().connectT(0, change13);                              // peak24 -> change13::Value
+		xfader3_p.getParameterT(0).connectT(0, gain58);                         // xfader3 -> gain58::Gain
+		xfader3_p.getParameterT(1).connectT(0, gain59);                         // xfader3 -> gain59::Gain
+		xfader3_p.getParameterT(2).connectT(0, gain60);                         // xfader3 -> gain60::Gain
+		xfader3_p.getParameterT(3).connectT(0, gain61);                         // xfader3 -> gain61::Gain
+		xfader3_p.getParameterT(4).connectT(0, gain62);                         // xfader3 -> gain62::Gain
+		xfader3_p.getParameterT(5).connectT(0, gain63);                         // xfader3 -> gain63::Gain
+		xfader3_p.getParameterT(6).connectT(0, gain64);                         // xfader3 -> gain64::Gain
+		global_cable19.getWrappedObject().getParameter().connectT(0, add31);    // global_cable19 -> add31::Value
+		global_cable20.getWrappedObject().getParameter().connectT(0, add32);    // global_cable20 -> add32::Value
+		global_cable24.getWrappedObject().getParameter().connectT(0, add33);    // global_cable24 -> add33::Value
+		global_cable25.getWrappedObject().getParameter().connectT(0, add34);    // global_cable25 -> add34::Value
+		event_data_reader14.getParameter().connectT(0, add35);                  // event_data_reader14 -> add35::Value
+		event_data_reader15.getParameter().connectT(0, add36);                  // event_data_reader15 -> add36::Value
+		midi.getParameter().connectT(0, add3);                                  // midi -> add3::Value
+		pma5.getWrappedObject().getParameter().connectT(0, ramp);               // pma5 -> ramp::Gate
+		peak10.getParameter().connectT(0, pma5);                                // peak10 -> pma5::Value
+		cable_table2.getWrappedObject().getParameter().connectT(0, pma5);       // cable_table2 -> pma5::Add
+		peak1.getParameter().connectT(0, global_cable);                         // peak1 -> global_cable::Value
+		peak1.getParameter().connectT(1, add);                                  // peak1 -> add::Value
+		peak1.getParameter().connectT(2, add43);                                // peak1 -> add43::Value
+		change.getWrappedObject().getParameter().connectT(0, global_cable2);    // change -> global_cable2::Value
+		peak.getParameter().connectT(0, change);                                // peak -> change::Value
+		minmax2.getWrappedObject().getParameter().connectT(0, chain170);        // minmax2 -> chain170::note
+		change3.getWrappedObject().getParameter().connectT(0, minmax2);         // change3 -> minmax2::Value
+		peak14.getParameter().connectT(0, change3);                             // peak14 -> change3::Value
+		peak12.getParameter().connectT(0, global_cable8);                       // peak12 -> global_cable8::Value
+		peak12.getParameter().connectT(1, add5);                                // peak12 -> add5::Value
+		peak12.getParameter().connectT(2, add47);                               // peak12 -> add47::Value
+		change8.getWrappedObject().getParameter().connectT(0, global_cable29);  // change8 -> global_cable29::Value
+		peak13.getParameter().connectT(0, change8);                             // peak13 -> change8::Value
+		minmax6.getWrappedObject().getParameter().connectT(0, chain178);        // minmax6 -> chain178::note
+		change9.getWrappedObject().getParameter().connectT(0, minmax6);         // change9 -> minmax6::Value
+		peak18.getParameter().connectT(0, change9);                             // peak18 -> change9::Value
+		peak19.getParameter().connectT(0, global_cable31);                      // peak19 -> global_cable31::Value
+		peak19.getParameter().connectT(1, add7);                                // peak19 -> add7::Value
+		peak19.getParameter().connectT(2, add48);                               // peak19 -> add48::Value
+		change10.getWrappedObject().getParameter().connectT(0, global_cable32); // change10 -> global_cable32::Value
+		peak20.getParameter().connectT(0, change10);                            // peak20 -> change10::Value
+		minmax7.getWrappedObject().getParameter().connectT(0, chain180);        // minmax7 -> chain180::note
+		change11.getWrappedObject().getParameter().connectT(0, minmax7);        // change11 -> minmax7::Value
+		peak21.getParameter().connectT(0, change11);                            // peak21 -> change11::Value
+		peak22.getParameter().connectT(0, global_cable34);                      // peak22 -> global_cable34::Value
+		peak22.getParameter().connectT(1, add10);                               // peak22 -> add10::Value
+		peak22.getParameter().connectT(2, add49);                               // peak22 -> add49::Value
+		change12.getWrappedObject().getParameter().connectT(0, global_cable35); // change12 -> global_cable35::Value
+		peak23.getParameter().connectT(0, change12);                            // peak23 -> change12::Value
+		minmax8.getWrappedObject().getParameter().connectT(0, chain182);        // minmax8 -> chain182::note
+		change13.getWrappedObject().getParameter().connectT(0, minmax8);        // change13 -> minmax8::Value
+		peak24.getParameter().connectT(0, change13);                            // peak24 -> change13::Value
 		
 		// Default Values --------------------------------------------------------------------------
 		
@@ -2386,8 +2271,6 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
 		gain64.setParameterT(2, 0.);  // core::gain::ResetValue
 		
 		; // cable_table2::Value is automated
-		
-		; // cable_table1::Value is automated
 		
 		; // pma5::Value is automated
 		; // pma5::Multiply is automated
@@ -2645,12 +2528,12 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
 		this->setParameterT(9, 96.);
 		this->setParameterT(10, 0.);
 		this->setParameterT(11, 0.);
-		this->setParameterT(12, 0.);
+		this->setParameterT(12, -0.002);
 		this->setParameterT(13, 1.);
 		this->setParameterT(14, 0.);
 		this->setParameterT(15, 1.);
 		this->setParameterT(16, 1.);
-		this->setParameterT(17, 1.);
+		this->setParameterT(17, 7.);
 		this->setParameterT(18, 1.);
 		this->setExternalData({}, -1);
 	}
@@ -2736,7 +2619,6 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
 		this->getT(1).getT(0).getT(2).getT(0).getT(0).getT(2).setExternalData(b, index);         // lfo_impl::peak6_t<NV>
 		this->getT(1).getT(0).getT(3).getT(0).getT(0).getT(2).setExternalData(b, index);         // lfo_impl::peak10_t<NV>
 		this->getT(1).getT(0).getT(3).getT(1).setExternalData(b, index);                         // lfo_impl::cable_table2_t<NV>
-		this->getT(1).getT(0).getT(3).getT(2).setExternalData(b, index);                         // lfo_impl::cable_table1_t<NV>
 		this->getT(2).getT(0).getT(0).getT(1).setExternalData(b, index);                         // lfo_impl::ramp_t<NV>
 		this->getT(2).getT(0).getT(1).setExternalData(b, index);                                 // lfo_impl::clock_ramp_t<NV>
 		this->getT(2).getT(1).setExternalData(b, index);                                         // lfo_impl::peak3_t

@@ -242,28 +242,6 @@ const var FltrKnbs = [Content.getComponent("FxMix2"),
 for(s in FltrKnbs)
       s.setLocalLookAndFeel(KnobLaf);  
       
-const var SeqCont1 = [Content.getComponent("SeqTempoMod1"),
-Content.getComponent("ClockTempo1"),
-Content.getComponent("SeqDivMod1"),
-Content.getComponent("SeqTempo1"),
-Content.getComponent("SeqTempoMod2"),
-Content.getComponent("ClockTempo2"),
-Content.getComponent("SeqDivMod2"),
-Content.getComponent("SeqTempo2"),
-Content.getComponent("SeqTempoMod3"),
-Content.getComponent("ClockTempo3"),
-Content.getComponent("SeqDivMod3"),
-Content.getComponent("SeqTempo3"),
-Content.getComponent("SeqTempoMod4"),
-Content.getComponent("ClockTempo4"),
-Content.getComponent("SeqDivMod4"),
-Content.getComponent("SeqTempo4")];
-
-
-
-for(s in SeqCont1)
-      s.setLocalLookAndFeel(KnobLaf);  
-
 const var LfoMods1 = [Content.getComponent("LfoGateMod1"),
 					  Content.getComponent("LfoGateMod2"),
 					  Content.getComponent("LfoGateMod3"),
@@ -272,6 +250,7 @@ const var LfoMods1 = [Content.getComponent("LfoGateMod1"),
                       Content.getComponent("LfoTempoMod2"),
                       Content.getComponent("LfoTempoMod3"),
                       Content.getComponent("LfoTempoMod4"),
+                      Content.getComponent("XfadeMod"),
                       Content.getComponent("LfoDivMod1"),
                       Content.getComponent("LfoDivMod2"),
                       Content.getComponent("LfoDivMod3"),

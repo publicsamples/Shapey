@@ -4245,8 +4245,8 @@
                                                   <Parameter MinValue="0.0" MaxValue="1.0" ID="Maximum" Value="1.0"/>
                                                   <Parameter MinValue="0.1000000014901161" MaxValue="10.0" SkewFactor="0.2890648245811462"
                                                              ID="Skew" Value="1.0"/>
-                                                  <Parameter MinValue="0.0" MaxValue="0.9999906762599999" StepSize="0.000244140625"
-                                                             ID="Step" Value="0.0" DefaultValue="0.000244140625"/>
+                                                  <Parameter MinValue="0.0" MaxValue="0.00024" StepSize="0.000244140625" ID="Step"
+                                                             Value="0.000732421875" DefaultValue="0.000244140625"/>
                                                   <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Polarity" Value="0.0"/>
                                                 </Parameters>
                                               </Node>
@@ -4272,7 +4272,7 @@
                                                   <Parameter MinValue="0.1000000014901161" MaxValue="10.0" SkewFactor="0.2890648245811462"
                                                              ID="Skew" Value="1.0"/>
                                                   <Parameter MinValue="0.0" MaxValue="0.00048828125" StepSize="0.00048828125"
-                                                             ID="Step" Value="0.0" DefaultValue="0.00048828125"/>
+                                                             ID="Step" Value="0.00048828125"/>
                                                   <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="Polarity" Value="0.0"/>
                                                 </Parameters>
                                               </Node>

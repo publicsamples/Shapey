@@ -50,7 +50,7 @@ Content.getComponent("fileModRoutPage3").setControlCallback(onfileModRoutPage3Co
 
 const var Filter3Mods =[];
 
-for (i = 0; i < 3; i++)
+for (i = 0; i < 5; i++)
 {
     Filter3Mods[i] = Content.getComponent("fModRouteC"+(i+1));
 

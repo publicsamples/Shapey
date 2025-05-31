@@ -1136,8 +1136,7 @@
                   <Node ID="cable_table2" FactoryPath="control.cable_table" Bypassed="0"
                         Name="cable_table2">
                     <ModulationTargets>
-                      <Connection NodeId="cable_table1" ParameterId="Value"/>
-                      <Connection NodeId="pma5" ParameterId="Multiply"/>
+                      <Connection NodeId="pma5" ParameterId="Add"/>
                     </ModulationTargets>
                     <ComplexData>
                       <Tables>
@@ -1148,24 +1147,10 @@
                       <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
                     </Parameters>
                   </Node>
-                  <Node ID="cable_table1" FactoryPath="control.cable_table" Bypassed="0"
-                        Name="cable_table1">
-                    <ModulationTargets>
-                      <Connection NodeId="pma5" ParameterId="Add"/>
-                    </ModulationTargets>
-                    <ComplexData>
-                      <Tables>
-                        <Table Index="-1" EmbeddedData="48..........9C...vO...+9.........vO..n.+....9C...vO...f+....9C...vO"/>
-                      </Tables>
-                    </ComplexData>
-                    <Parameters>
-                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
-                    </Parameters>
-                  </Node>
                   <Node ID="pma5" FactoryPath="control.pma" Bypassed="0" Name="pma1">
                     <Parameters>
                       <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
-                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Multiply" DefaultValue="1.0"
+                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Multiply" DefaultValue="1.0"
                                  Automated="1"/>
                       <Parameter MinValue="0.0" MaxValue="1.0" ID="Add" DefaultValue="0.0" Automated="1"/>
                     </Parameters>
@@ -2422,6 +2407,7 @@
                  StepSize="1">
         <Connections>
           <Connection NodeId="cable_table2" ParameterId="Value"/>
+          <Connection NodeId="pma5" ParameterId="Multiply"/>
         </Connections>
       </Parameter>
       <Parameter MinValue="-1.0" MaxValue="1.0" ID="DivMod" Value="0.0">
@@ -2439,7 +2425,7 @@
           <Connection NodeId="xfader2" ParameterId="Value"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="1.0" MaxValue="7.0" ID="GateSrc" Value="1.0" DefaultValue="0.0">
+      <Parameter MinValue="1.0" MaxValue="7.0" ID="GateSrc" Value="7.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="xfader3" ParameterId="Value"/>
         </Connections>

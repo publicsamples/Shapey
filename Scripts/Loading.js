@@ -212,19 +212,6 @@ Content.getComponent("ThirdCB").setControlCallback(onThirdCBControl);
 
 
 
-///	ScriptnodeSynthesiser1.setBypassed(false);
-	
-
-
-
-	//	this.setBypassed(false);
-	
-	//	slot2.loadFile(LpLoad1.get("items").split("\n")[v]);
-	//	}, this);
-
-//	}, ScriptnodeSynthesiser1);
-
-
 
 inline function onFirstSpControl(component, value)
 {

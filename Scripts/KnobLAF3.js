@@ -81,9 +81,11 @@ KnobLaf3.registerFunction("drawRotarySlider", function(g, obj)
 });
 
 
-const var OscShapeInput1 = Content.getComponent("OscShapeInput1").setLocalLookAndFeel(KnobLaf3);;
-const var OscShapeInput2 = Content.getComponent("OscShapeInput2").setLocalLookAndFeel(KnobLaf3);;
-const var OscShapeInput3 = Content.getComponent("OscShapeInput3").setLocalLookAndFeel(KnobLaf3);;
-const var OscShapeInput4 = Content.getComponent("OscShapeInput4").setLocalLookAndFeel(KnobLaf3);;
+const var OscShapeInput1 = Content.getComponent("OscShapeInput1").setLocalLookAndFeel(KnobLaf3);
+const var OscShapeInput2 = Content.getComponent("OscShapeInput2").setLocalLookAndFeel(KnobLaf3);
+const var OscShapeInput3 = Content.getComponent("OscShapeInput3").setLocalLookAndFeel(KnobLaf3);
+const var OscShapeInput4 = Content.getComponent("OscShapeInput4").setLocalLookAndFeel(KnobLaf3);
+const var Crossfader = Content.getComponent("Crossfader").setLocalLookAndFeel(KnobLaf3);
+
 
       
