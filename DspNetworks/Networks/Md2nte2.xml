@@ -141,7 +141,7 @@
                 </ComplexData>
                 <Parameters>
                   <Parameter MinValue="1.0" MaxValue="8.0" StepSize="1.0" ID="NoteSrc" DefaultValue="2.0"
-                             Automated="1"/>
+                             Value="1.0"/>
                   <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1.0" ID="GateSource"
                              Value="3.0"/>
                 </Parameters>
@@ -262,9 +262,7 @@
     </Nodes>
     <Parameters>
       <Parameter ID="gate" MinValue="1.0" MaxValue="8.0" StepSize="1.0" Value="1.0">
-        <Connections>
-          <Connection NodeId="NoteSelector2" ParameterId="NoteSrc"/>
-        </Connections>
+        <Connections/>
       </Parameter>
       <Parameter ID="note" MinValue="1.0" MaxValue="8.0" StepSize="1.0" Value="1.0">
         <Connections>

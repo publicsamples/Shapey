@@ -231,3 +231,99 @@ const var PosSp1 = Content.getComponent("PosSp1");
  
  Content.getComponent("PosModMode1").setControlCallback(onPosModMode1Control);
  
+ 
+ const var FactoryFile1 = [Content.getComponent("ThirdCB"),
+                           Content.getComponent("FolderSelect1"),
+                           Content.getComponent("Wav1")];
+ 
+ const var Userfile1 = [Content.getComponent("UsrCb1"),
+                        Content.getComponent("UsrWav1"),
+                        Content.getComponent("Folder1")];
+ 
+ const var UsrCb1 = Content.getComponent("UsrCb1");
+ const var UsrCbVis1 = Content.getComponent("UsrCbVis1");
+ const FolderPath = [];
+ 
+ inline function onUserModeControl(component, value)
+ {
+ Files1.setAttribute(Files1.UserMode, value-1);
+ 
+ 	for(s in FactoryFile1)
+ 		s.showControl(value);  
+ 		
+ 	for(s in Userfile1)
+ 	 		s.showControl(value-1);  	
+ };
+ 
+ Content.getComponent("UserMode").setControlCallback(onUserModeControl);
+ 
+ 
+ inline function onFolder1Control(component, value)
+ {
+ //Select a folder
+
+if (value == 1)
+
+    FileSystem.browseForDirectory(FileSystem.AudioFiles, function(folder) {
+        if (isDefined(folder) && folder.isDirectory()) {
+         
+         //find files in selected folder
+         
+            var folderArray = FileSystem.findFiles(folder, "*.wav, *.aif", false);
+
+            for (file in folderArray) {
+                file = file.toString(0);
+                
+                var folderArray2 = FileSystem.findFiles(folder, "*.wav, *.aif", false);
+                            
+                            for (file1 in folderArray2) {
+                                        file1 = file1.toString(1);        
+                
+         //Populate the Folder Label
+              
+              	
+              
+                FolderPath.push(folder);
+              
+            };
+            
+
+         UsrCb1.set("items", folderArray.join("\n"));
+		UsrCbVis1.set("items", folderArray2.join("\n"));
+
+	//	LpLoad2.set("items", folderArray2.join("\n"));
+    
+}
+
+        }
+    });
+};
+ };
+ 
+ Content.getComponent("Folder1").setControlCallback(onFolder1Control);
+ 
+
+inline function onUsrCbVis1Control(component, value)
+{
+	ScriptnodeSynthesiser1.setBypassed(false);
+	
+	reg v = value-1;
+	Content.callAfterDelay(300, function()
+	{
+		Engine.allNotesOff();
+	
+		this.setBypassed(true);
+		
+		Content.callAfterDelay(300, function()
+		{
+
+
+		this.setBypassed(false);
+	
+		slot2.loadFile(LpLoad1.get("items").split("\n")[v]);
+		}, this);
+
+	}, ScriptnodeSynthesiser1);
+};
+
+Content.getComponent("UsrCbVis1").setControlCallback(onUsrCbVis1Control);

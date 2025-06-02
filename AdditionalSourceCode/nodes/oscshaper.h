@@ -438,8 +438,147 @@ using xfader1_multimod = parameter::list<xfader1_c0<NV>, xfader1_c1<NV>>;
 
 template <int NV>
 using xfader1_t = control::xfader<xfader1_multimod<NV>, faders::linear>;
+
+struct cable_table_t_data
+{
+	span<float, 512> data =
+	{
+		0.f, 0.00196075f, 0.00392157f, 0.00588232f, 0.00784314f, 0.00980389f,
+		0.0117646f, 0.0137255f, 0.0156862f, 0.017647f, 0.0196078f, 0.0215685f,
+		0.0235294f, 0.0254901f, 0.0274509f, 0.0294117f, 0.0313724f, 0.0333332f,
+		0.035294f, 0.0372548f, 0.0392156f, 0.0411763f, 0.0431371f, 0.0450979f,
+		0.0470586f, 0.0490194f, 0.0509802f, 0.052941f, 0.0549018f, 0.0568625f,
+		0.0588233f, 0.0607841f, 0.0627449f, 0.0647056f, 0.0666664f, 0.0686272f,
+		0.070588f, 0.0725487f, 0.0745095f, 0.0764703f, 0.0784311f, 0.0803919f,
+		0.0823526f, 0.0843134f, 0.0862741f, 0.088235f, 0.0901957f, 0.0921565f,
+		0.0941173f, 0.096078f, 0.0980389f, 0.0999996f, 0.10196f, 0.103921f,
+		0.105882f, 0.107843f, 0.109803f, 0.111764f, 0.113725f, 0.115686f,
+		0.117647f, 0.119607f, 0.121568f, 0.123529f, 0.12549f, 0.12745f,
+		0.129411f, 0.131372f, 0.133333f, 0.135294f, 0.137254f, 0.139215f,
+		0.141176f, 0.143137f, 0.145097f, 0.147058f, 0.149019f, 0.15098f,
+		0.152941f, 0.154901f, 0.156862f, 0.158823f, 0.160784f, 0.162745f,
+		0.164705f, 0.166666f, 0.168627f, 0.170588f, 0.172548f, 0.174509f,
+		0.17647f, 0.178431f, 0.180391f, 0.182352f, 0.184313f, 0.186274f,
+		0.188235f, 0.190195f, 0.192156f, 0.194117f, 0.196078f, 0.198038f,
+		0.199999f, 0.20196f, 0.203921f, 0.205882f, 0.207842f, 0.209803f,
+		0.211764f, 0.213725f, 0.215685f, 0.217646f, 0.219607f, 0.221568f,
+		0.223529f, 0.225489f, 0.22745f, 0.229411f, 0.231372f, 0.233332f,
+		0.235293f, 0.237254f, 0.239215f, 0.241176f, 0.243136f, 0.245097f,
+		0.247058f, 0.249019f, 0.250979f, 0.25294f, 0.254901f, 0.256862f,
+		0.258823f, 0.260783f, 0.262744f, 0.264705f, 0.266666f, 0.268626f,
+		0.270587f, 0.272548f, 0.274509f, 0.27647f, 0.27843f, 0.280391f,
+		0.282352f, 0.284313f, 0.286273f, 0.288234f, 0.290195f, 0.292156f,
+		0.294116f, 0.296077f, 0.298038f, 0.299999f, 0.30196f, 0.30392f,
+		0.305881f, 0.307842f, 0.309803f, 0.311764f, 0.313724f, 0.315685f,
+		0.317646f, 0.319607f, 0.321567f, 0.323528f, 0.325489f, 0.32745f,
+		0.32941f, 0.331371f, 0.333332f, 0.335293f, 0.337254f, 0.339214f,
+		0.341175f, 0.343136f, 0.345097f, 0.347057f, 0.349018f, 0.350979f,
+		0.35294f, 0.354901f, 0.356861f, 0.358822f, 0.360783f, 0.362744f,
+		0.364704f, 0.366665f, 0.368626f, 0.370587f, 0.372548f, 0.374508f,
+		0.376469f, 0.37843f, 0.380391f, 0.382352f, 0.384312f, 0.386273f,
+		0.388234f, 0.390195f, 0.392155f, 0.394116f, 0.396077f, 0.398038f,
+		0.399998f, 0.401959f, 0.40392f, 0.405881f, 0.407842f, 0.409802f,
+		0.411763f, 0.413724f, 0.415685f, 0.417645f, 0.419606f, 0.421567f,
+		0.423528f, 0.425489f, 0.427449f, 0.42941f, 0.431371f, 0.433332f,
+		0.435292f, 0.437253f, 0.439214f, 0.441175f, 0.443136f, 0.445096f,
+		0.447057f, 0.449018f, 0.450979f, 0.45294f, 0.4549f, 0.456861f,
+		0.458822f, 0.460783f, 0.462743f, 0.464704f, 0.466665f, 0.468626f,
+		0.470586f, 0.472547f, 0.474508f, 0.476469f, 0.47843f, 0.48039f,
+		0.482351f, 0.484312f, 0.486273f, 0.488233f, 0.490194f, 0.492155f,
+		0.494116f, 0.496077f, 0.498037f, 0.499998f, 0.501959f, 0.50392f,
+		0.50588f, 0.507841f, 0.509802f, 0.511763f, 0.513724f, 0.515684f,
+		0.517645f, 0.519606f, 0.521567f, 0.523527f, 0.525488f, 0.527449f,
+		0.52941f, 0.531371f, 0.533331f, 0.535292f, 0.537253f, 0.539214f,
+		0.541174f, 0.543135f, 0.545096f, 0.547057f, 0.549017f, 0.550978f,
+		0.552939f, 0.5549f, 0.556861f, 0.558821f, 0.560782f, 0.562743f,
+		0.564704f, 0.566664f, 0.568625f, 0.570586f, 0.572547f, 0.574508f,
+		0.576468f, 0.578429f, 0.58039f, 0.582351f, 0.584311f, 0.586272f,
+		0.588233f, 0.590194f, 0.592155f, 0.594115f, 0.596076f, 0.598037f,
+		0.599998f, 0.601958f, 0.603919f, 0.60588f, 0.607841f, 0.609802f,
+		0.611762f, 0.613723f, 0.615684f, 0.617645f, 0.619606f, 0.621566f,
+		0.623527f, 0.625488f, 0.627449f, 0.629409f, 0.63137f, 0.633331f,
+		0.635292f, 0.637253f, 0.639213f, 0.641174f, 0.643135f, 0.645096f,
+		0.647056f, 0.649017f, 0.650978f, 0.652939f, 0.654899f, 0.65686f,
+		0.658821f, 0.660782f, 0.662743f, 0.664703f, 0.666664f, 0.668625f,
+		0.670586f, 0.672546f, 0.674507f, 0.676468f, 0.678429f, 0.68039f,
+		0.68235f, 0.684311f, 0.686272f, 0.688233f, 0.690193f, 0.692154f,
+		0.694115f, 0.696076f, 0.698037f, 0.699997f, 0.701958f, 0.703919f,
+		0.70588f, 0.70784f, 0.709801f, 0.711762f, 0.713723f, 0.715684f,
+		0.717644f, 0.719605f, 0.721566f, 0.723527f, 0.725487f, 0.727448f,
+		0.729409f, 0.73137f, 0.733331f, 0.735291f, 0.737252f, 0.739213f,
+		0.741174f, 0.743134f, 0.745095f, 0.747056f, 0.749017f, 0.750978f,
+		0.752938f, 0.754899f, 0.75686f, 0.758821f, 0.760781f, 0.762742f,
+		0.764703f, 0.766664f, 0.768624f, 0.770585f, 0.772546f, 0.774507f,
+		0.776468f, 0.778428f, 0.780389f, 0.78235f, 0.784311f, 0.786272f,
+		0.788232f, 0.790193f, 0.792154f, 0.794115f, 0.796075f, 0.798036f,
+		0.799997f, 0.801958f, 0.803918f, 0.805879f, 0.80784f, 0.809801f,
+		0.811762f, 0.813722f, 0.815683f, 0.817644f, 0.819605f, 0.821566f,
+		0.823526f, 0.825487f, 0.827448f, 0.829409f, 0.831369f, 0.83333f,
+		0.835291f, 0.837252f, 0.839212f, 0.841173f, 0.843134f, 0.845095f,
+		0.847056f, 0.849016f, 0.850977f, 0.852938f, 0.854899f, 0.85686f,
+		0.85882f, 0.860781f, 0.862742f, 0.864703f, 0.866663f, 0.868624f,
+		0.870585f, 0.872546f, 0.874506f, 0.876467f, 0.878428f, 0.880389f,
+		0.88235f, 0.88431f, 0.886271f, 0.888232f, 0.890193f, 0.892154f,
+		0.894114f, 0.896075f, 0.898036f, 0.899997f, 0.901957f, 0.903918f,
+		0.905879f, 0.90784f, 0.9098f, 0.911761f, 0.913722f, 0.915683f,
+		0.917644f, 0.919604f, 0.921565f, 0.923526f, 0.925487f, 0.927447f,
+		0.929408f, 0.931369f, 0.93333f, 0.935291f, 0.937251f, 0.939212f,
+		0.941173f, 0.943134f, 0.945094f, 0.947055f, 0.949016f, 0.950977f,
+		0.952938f, 0.954898f, 0.956859f, 0.95882f, 0.960781f, 0.962741f,
+		0.964702f, 0.966663f, 0.968624f, 0.970585f, 0.972545f, 0.974506f,
+		0.976467f, 0.978428f, 0.980388f, 0.982349f, 0.98431f, 0.986271f,
+		0.988232f, 0.990192f, 0.992153f, 0.994114f, 0.996075f, 0.998035f,
+		0.999996f, 1.f
+	};
+};
+
+using cable_table_t = wrap::data<control::cable_table<parameter::empty>, 
+                                 data::embedded::table<cable_table_t_data>>;
+
+DECLARE_PARAMETER_RANGE(clone_cable1_0Range, 
+                        -1., 
+                        1.);
+
+template <int NV>
+using clone_cable1_0 = parameter::from0To1<jdsp::jpanner<NV>, 
+                                           0, 
+                                           clone_cable1_0Range>;
+
+DECLARE_PARAMETER_RANGE_STEP(clone_cable1_1Range, 
+                             -16., 
+                             16., 
+                             0.5);
+
+template <int NV>
+using clone_cable1_1 = parameter::from0To1<core::gain<NV>, 
+                                           0, 
+                                           clone_cable1_1Range>;
+
+template <int NV>
+using clone_cable1_cc = parameter::clonechain<parameter::cloned<clone_cable1_0<NV>>, 
+                                              parameter::cloned<clone_cable1_1<NV>>>;
+template <int NV>
+using clone_cable1_t = control::clone_cable<clone_cable1_cc<NV>, duplilogic::spread>;
+
+namespace custom
+{
+
+struct expr5
+{
+	static float op(float input, float value)
+	{
+		return (1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);;
+	}
+};
+}
+
+template <int NV>
+using clone_cable3_cable_mod = parameter::cloned<parameter::plain<math::expr<NV, custom::expr5>, 0>>;
+template <int NV>
+using clone_cable3_t = control::clone_cable<clone_cable3_cable_mod<NV>, 
+                                            duplilogic::nyquist>;
 DECLARE_PARAMETER_RANGE_STEP(pma4_mod_0Range, 
-                             -10., 
+                             -20., 
                              24., 
                              0.1);
 
@@ -449,8 +588,8 @@ using pma4_mod_0 = parameter::from0To1<core::gain<NV>,
                                        pma4_mod_0Range>;
 
 DECLARE_PARAMETER_RANGE_STEP(pma4_mod_1Range, 
-                             -20., 
-                             24., 
+                             -12., 
+                             12., 
                              0.1);
 
 template <int NV>
@@ -458,40 +597,45 @@ using pma4_mod_1 = parameter::from0To1<core::gain<NV>,
                                        0, 
                                        pma4_mod_1Range>;
 
-DECLARE_PARAMETER_RANGE_STEP(pma4_mod_2Range, 
-                             -12., 
-                             12., 
-                             0.1);
+template <int NV> using pma4_mod_2 = pma4_mod_1<NV>;
 
-template <int NV>
-using pma4_mod_2 = parameter::from0To1<core::gain<NV>, 
-                                       0, 
-                                       pma4_mod_2Range>;
+template <int NV> using pma4_mod_3 = pma4_mod_1<NV>;
 
-template <int NV> using pma4_mod_3 = pma4_mod_2<NV>;
-
-template <int NV> using pma4_mod_4 = pma4_mod_2<NV>;
-
-DECLARE_PARAMETER_RANGE(pma4_mod_5Range, 
+DECLARE_PARAMETER_RANGE(pma4_mod_4Range, 
                         0.11, 
                         1.);
 
 template <int NV>
-using pma4_mod_5 = parameter::from0To1<math::expr<NV, custom::expr4>, 
+using pma4_mod_4 = parameter::from0To1<math::expr<NV, custom::expr4>, 
                                        0, 
-                                       pma4_mod_5Range>;
+                                       pma4_mod_4Range>;
 
-DECLARE_PARAMETER_RANGE_SKEW(pma4_mod_6Range, 
+DECLARE_PARAMETER_RANGE_SKEW(pma4_mod_5Range, 
                              20., 
                              20000., 
                              0.229905);
 
 template <int NV>
-using pma4_mod_6 = parameter::from0To1<wrap::no_process<fx::phase_delay<NV>>, 
+using pma4_mod_5 = parameter::from0To1<wrap::no_process<fx::phase_delay<NV>>, 
                                        0, 
-                                       pma4_mod_6Range>;
+                                       pma4_mod_5Range>;
 
-template <int NV> using pma4_mod_8 = pma4_mod_2<NV>;
+template <int NV> using pma4_mod_7 = pma4_mod_1<NV>;
+
+template <int NV>
+using pma4_mod_9 = parameter::from0To1<clone_cable1_t<NV>, 
+                                       1, 
+                                       clone_cable1_0Range>;
+
+DECLARE_PARAMETER_RANGE_STEP(pma4_mod_11Range, 
+                             -6., 
+                             24., 
+                             0.1);
+
+template <int NV>
+using pma4_mod_11 = parameter::from0To1<core::gain<NV>, 
+                                        0, 
+                                        pma4_mod_11Range>;
 
 template <int NV>
 using pma4_mod = parameter::chain<ranges::Identity, 
@@ -501,9 +645,12 @@ using pma4_mod = parameter::chain<ranges::Identity,
                                   pma4_mod_3<NV>, 
                                   pma4_mod_4<NV>, 
                                   pma4_mod_5<NV>, 
-                                  pma4_mod_6<NV>, 
                                   parameter::plain<xfader1_t<NV>, 0>, 
-                                  pma4_mod_8<NV>>;
+                                  pma4_mod_7<NV>, 
+                                  parameter::plain<cable_table_t, 0>, 
+                                  pma4_mod_9<NV>, 
+                                  parameter::plain<clone_cable3_t<NV>, 1>, 
+                                  pma4_mod_11<NV>>;
 
 template <int NV>
 using pma4_t = control::pma<NV, pma4_mod<NV>>;
@@ -742,9 +889,6 @@ struct expr
 template <int NV>
 using chain58_t = container::chain<parameter::empty, 
                                    wrap::fix<2, math::expr<NV, custom::expr>>, 
-                                   wrap::no_process<math::pi<NV>>, 
-                                   wrap::no_process<math::sub<NV>>, 
-                                   wrap::no_process<math::sin<NV>>, 
                                    core::gain<NV>>;
 
 template <int NV>
@@ -757,21 +901,20 @@ using chain55_t = container::chain<parameter::empty,
                                    wrap::fix<2, xfader1_t<NV>>, 
                                    split1_t<NV>, 
                                    core::gain<NV>>;
+using oscilloscope_t = wrap::no_data<analyse::oscilloscope>;
 
 template <int NV>
 using chain9_t = container::chain<parameter::empty, 
-                                  wrap::fix<2, math::sub<NV>>, 
-                                  core::gain<NV>, 
-                                  math::mod_inv<NV>, 
+                                  wrap::fix<2, core::gain<NV>>, 
                                   math::rect<NV>, 
+                                  oscilloscope_t, 
                                   core::gain<NV>>;
 
 template <int NV>
 using chain61_t = container::chain<parameter::empty, 
                                    wrap::fix<2, core::gain<NV>>, 
                                    wrap::no_process<math::mul<NV>>, 
-                                   math::pi<NV>, 
-                                   math::fmod<NV>>;
+                                   math::pi<NV>>;
 
 template <int NV>
 using chain11_t = container::chain<parameter::empty, 
@@ -824,26 +967,62 @@ using chain56_t = container::chain<parameter::empty,
                                    math::expr<NV, custom::expr2>, 
                                    math::sin<NV>, 
                                    core::gain<NV>>;
-namespace custom
-{
 
-struct expr3
+DECLARE_PARAMETER_RANGE_STEP(clone_pack_modRange, 
+                             0., 
+                             2.6, 
+                             0.1);
+
+template <int NV>
+using clone_pack_mod = parameter::from0To1<math::pi<NV>, 
+                                           0, 
+                                           clone_pack_modRange>;
+
+struct clone_pack_t_data
 {
-	static float op(float input, float value)
+	span<float, 16> data =
 	{
-		return input * Math.tan(Math.PI * 12.0 * value * input) * (2 - Math.PI);;
-	}
+		0.06f, 0.06f, 0.82f, 1.f, 1.f, 1.f,
+		0.82f, 0.63f, 0.47f, 0.2f, 1.f, 1.f,
+		0.85f, 0.78f, 0.65f, 0.44f
+	};
 };
-}
+
+template <int NV>
+using clone_pack_t = wrap::data<control::clone_pack<parameter::cloned<clone_pack_mod<NV>>>, 
+                                data::embedded::sliderpack<clone_pack_t_data>>;
+
+template <int NV>
+using clone_child_t = container::chain<parameter::empty, 
+                                       wrap::fix<2, math::pi<NV>>, 
+                                       wrap::no_process<math::sub<NV>>, 
+                                       math::expr<NV, custom::expr5>, 
+                                       wrap::no_process<math::fmod<NV>>, 
+                                       math::add<NV>, 
+                                       wrap::no_process<math::rect<NV>>, 
+                                       core::gain<NV>, 
+                                       jdsp::jpanner<NV>, 
+                                       wrap::no_process<math::square<NV>>, 
+                                       math::sin<NV>>;
+template <int NV>
+using clone_t = wrap::fix_clonecopy<clone_child_t<NV>, 16>;
+
+template <int NV>
+using chain68_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, clone_cable1_t<NV>>, 
+                                   clone_cable3_t<NV>, 
+                                   clone_pack_t<NV>, 
+                                   clone_t<NV>, 
+                                   cable_table_t, 
+                                   math::sin<NV>>;
+
+template <int NV>
+using chain67_t = container::chain<parameter::empty, 
+                                   wrap::fix<2, chain68_t<NV>>>;
 
 template <int NV>
 using chain60_t = container::chain<parameter::empty, 
-                                   wrap::fix<2, math::pi<NV>>, 
-                                   core::gain<NV>, 
-                                   math::expr<NV, custom::expr3>, 
-                                   math::square<NV>, 
-                                   math::rect<NV>, 
-                                   math::sin<NV>, 
+                                   wrap::fix<2, chain67_t<NV>>, 
                                    core::gain<NV>>;
 using table4_t = wrap::data<math::table, 
                             data::external::table<0>>;
@@ -886,21 +1065,6 @@ DECLARE_PARAMETER_RANGE(shaper_InputRange,
 template <int NV>
 using shaper = parameter::chain<shaper_InputRange, 
                                 parameter::plain<oscshaper_impl::pma_t<NV>, 2>>;
-
-DECLARE_PARAMETER_RANGE_STEP(width_1Range, 
-                             -48., 
-                             12., 
-                             0.1);
-
-template <int NV>
-using width_1 = parameter::from0To1<core::gain<NV>, 
-                                    0, 
-                                    width_1Range>;
-
-template <int NV>
-using width = parameter::chain<ranges::Identity, 
-                               parameter::plain<oscshaper_impl::pma4_t<NV>, 2>, 
-                               width_1<NV>>;
 
 DECLARE_PARAMETER_RANGE_STEP(XfStage_InputRange, 
                              1., 
@@ -980,6 +1144,9 @@ template <int NV>
 using midi3 = parameter::chain<midi3_InputRange, midi3_0<NV>>;
 
 template <int NV>
+using width = parameter::plain<oscshaper_impl::pma4_t<NV>, 
+                               2>;
+template <int NV>
 using out = parameter::plain<oscshaper_impl::pma3_t<NV>, 
                              2>;
 template <int NV>
@@ -1028,17 +1195,17 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		SNEX_METADATA_ENCODED_PARAMETERS(190)
 		{
 			0x005B, 0x0000, 0x7300, 0x6168, 0x6570, 0x0072, 0x0000, 0x3F80, 
-            0x0000, 0x4100, 0xA0C5, 0x4036, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x4100, 0x0000, 0x40E0, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x015B, 0x0000, 0x7700, 0x6469, 0x6874, 0x0000, 0x0000, 0x0000, 
-            0x8000, 0x8F3F, 0x75C2, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 
+            0x8000, 0xC33F, 0xA8F5, 0x003E, 0x8000, 0x003F, 0x0000, 0x5B00, 
             0x0002, 0x0000, 0x756F, 0x0074, 0x0000, 0x0000, 0x0000, 0x3F80, 
-            0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x035B, 0x0000, 
+            0x5C29, 0x3E8F, 0x0000, 0x3F80, 0x0000, 0x0000, 0x035B, 0x0000, 
             0x7300, 0x6168, 0x6570, 0x6F6D, 0x0064, 0x0000, 0xBF80, 0x0000, 
-            0x3F80, 0xDE9C, 0xBCD4, 0x0000, 0x3F80, 0x0000, 0x0000, 0x045B, 
+            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x045B, 
             0x0000, 0x7700, 0x6469, 0x6874, 0x6F6D, 0x0064, 0x0000, 0xBF80, 
-            0x0000, 0x3F80, 0xF4DF, 0x3E7A, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x055B, 0x0000, 0x6F00, 0x7475, 0x6F6D, 0x0064, 0x0000, 0xBF80, 
-            0x0000, 0x3F80, 0xD37A, 0xBD4B, 0x0000, 0x3F80, 0x0000, 0x0000, 
+            0x0000, 0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x065B, 0x0000, 0x5800, 0x5366, 0x6174, 0x6567, 0x0000, 0x8000, 
             0x003F, 0x8000, 0x0040, 0x8000, 0x003F, 0x8000, 0x003F, 0x8000, 
             0x5B3F, 0x0007, 0x0000, 0x694D, 0x6964, 0x0031, 0x0000, 0x3F80, 
@@ -1350,23 +1517,18 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		auto& gain34 = this->getT(0).getT(3).getT(0).getT(1).getT(0).getT(1);         // core::gain<NV>
 		auto& chain58 = this->getT(0).getT(3).getT(0).getT(1).getT(1);                // oscshaper_impl::chain58_t<NV>
 		auto& expr = this->getT(0).getT(3).getT(0).getT(1).getT(1).getT(0);           // math::expr<NV, custom::expr>
-		auto& pi = this->getT(0).getT(3).getT(0).getT(1).getT(1).getT(1);             // wrap::no_process<math::pi<NV>>
-		auto& sub2 = this->getT(0).getT(3).getT(0).getT(1).getT(1).getT(2);           // wrap::no_process<math::sub<NV>>
-		auto& sin1 = this->getT(0).getT(3).getT(0).getT(1).getT(1).getT(3);           // wrap::no_process<math::sin<NV>>
-		auto& gain32 = this->getT(0).getT(3).getT(0).getT(1).getT(1).getT(4);         // core::gain<NV>
+		auto& gain32 = this->getT(0).getT(3).getT(0).getT(1).getT(1).getT(1);         // core::gain<NV>
 		auto& gain11 = this->getT(0).getT(3).getT(0).getT(2);                         // core::gain<NV>
 		auto& chain9 = this->getT(0).getT(3).getT(1);                                 // oscshaper_impl::chain9_t<NV>
-		auto& sub1 = this->getT(0).getT(3).getT(1).getT(0);                           // math::sub<NV>
-		auto& gain16 = this->getT(0).getT(3).getT(1).getT(1);                         // core::gain<NV>
-		auto& mod_inv1 = this->getT(0).getT(3).getT(1).getT(2);                       // math::mod_inv<NV>
-		auto& rect1 = this->getT(0).getT(3).getT(1).getT(3);                          // math::rect<NV>
-		auto& gain13 = this->getT(0).getT(3).getT(1).getT(4);                         // core::gain<NV>
+		auto& gain16 = this->getT(0).getT(3).getT(1).getT(0);                         // core::gain<NV>
+		auto& rect1 = this->getT(0).getT(3).getT(1).getT(1);                          // math::rect<NV>
+		auto& oscilloscope = this->getT(0).getT(3).getT(1).getT(2);                   // oscshaper_impl::oscilloscope_t
+		auto& gain13 = this->getT(0).getT(3).getT(1).getT(3);                         // core::gain<NV>
 		auto& chain11 = this->getT(0).getT(3).getT(2);                                // oscshaper_impl::chain11_t<NV>
 		auto& chain61 = this->getT(0).getT(3).getT(2).getT(0);                        // oscshaper_impl::chain61_t<NV>
 		auto& gain37 = this->getT(0).getT(3).getT(2).getT(0).getT(0);                 // core::gain<NV>
 		auto& mul = this->getT(0).getT(3).getT(2).getT(0).getT(1);                    // wrap::no_process<math::mul<NV>>
 		auto& pi5 = this->getT(0).getT(3).getT(2).getT(0).getT(2);                    // math::pi<NV>
-		auto& fmod2 = this->getT(0).getT(3).getT(2).getT(0).getT(3);                  // math::fmod<NV>
 		auto& gain15 = this->getT(0).getT(3).getT(2).getT(1);                         // core::gain<NV>
 		auto& chain65 = this->getT(0).getT(3).getT(3);                                // oscshaper_impl::chain65_t<NV>
 		auto& gain44 = this->getT(0).getT(3).getT(3).getT(0);                         // core::gain<NV>
@@ -1388,13 +1550,25 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		auto& sin8 = this->getT(0).getT(3).getT(5).getT(4);                           // math::sin<NV>
 		auto& gain33 = this->getT(0).getT(3).getT(5).getT(5);                         // core::gain<NV>
 		auto& chain60 = this->getT(0).getT(3).getT(6);                                // oscshaper_impl::chain60_t<NV>
-		auto& pi3 = this->getT(0).getT(3).getT(6).getT(0);                            // math::pi<NV>
-		auto& gain38 = this->getT(0).getT(3).getT(6).getT(1);                         // core::gain<NV>
-		auto& expr3 = this->getT(0).getT(3).getT(6).getT(2);                          // math::expr<NV, custom::expr3>
-		auto& square = this->getT(0).getT(3).getT(6).getT(3);                         // math::square<NV>
-		auto& rect2 = this->getT(0).getT(3).getT(6).getT(4);                          // math::rect<NV>
-		auto& sin9 = this->getT(0).getT(3).getT(6).getT(5);                           // math::sin<NV>
-		auto& gain40 = this->getT(0).getT(3).getT(6).getT(6);                         // core::gain<NV>
+		auto& chain67 = this->getT(0).getT(3).getT(6).getT(0);                        // oscshaper_impl::chain67_t<NV>
+		auto& chain68 = this->getT(0).getT(3).getT(6).getT(0).getT(0);                // oscshaper_impl::chain68_t<NV>
+		auto& clone_cable1 = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(0);   // oscshaper_impl::clone_cable1_t<NV>
+		auto& clone_cable3 = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(1);   // oscshaper_impl::clone_cable3_t<NV>
+		auto& clone_pack = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(2);     // oscshaper_impl::clone_pack_t<NV>
+		auto& clone = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(3);          // oscshaper_impl::clone_t<NV>          // oscshaper_impl::clone_child_t<NV>
+		auto pi10 = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(3).getT(0);    // math::pi<NV>
+		auto sub2 = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(3).getT(1);    // wrap::no_process<math::sub<NV>>
+		auto expr5 = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(3).getT(2);   // math::expr<NV, custom::expr5>
+		auto fmod = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(3).getT(3);    // wrap::no_process<math::fmod<NV>>
+		auto add5 = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(3).getT(4);    // math::add<NV>
+		auto rect = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(3).getT(5);    // wrap::no_process<math::rect<NV>>
+		auto gain54 = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(3).getT(6);  // core::gain<NV>
+		auto jpanner = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(3).getT(7); // jdsp::jpanner<NV>
+		auto square = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(3).getT(8);  // wrap::no_process<math::square<NV>>
+		auto sin11 = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(3).getT(9);   // math::sin<NV>
+		auto& cable_table = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(4);    // oscshaper_impl::cable_table_t
+		auto& sin12 = this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(5);          // math::sin<NV>
+		auto& gain40 = this->getT(0).getT(3).getT(6).getT(1);                         // core::gain<NV>
 		auto& chain13 = this->getT(0).getT(3).getT(7);                                // oscshaper_impl::chain13_t<NV>
 		auto& gain14 = this->getT(0).getT(3).getT(7).getT(0);                         // core::gain<NV>
 		auto& pi6 = this->getT(0).getT(3).getT(7).getT(1);                            // math::pi<NV>
@@ -1407,9 +1581,7 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		
 		this->getParameterT(0).connectT(0, pma); // shaper -> pma::Add
 		
-		auto& width_p = this->getParameterT(1);
-		width_p.connectT(0, pma4);   // width -> pma4::Add
-		width_p.connectT(1, gain38); // width -> gain38::Gain
+		this->getParameterT(1).connectT(0, pma4); // width -> pma4::Add
 		
 		this->getParameterT(2).connectT(0, pma3); // out -> pma3::Add
 		
@@ -1490,18 +1662,24 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		midi10.getParameter().connectT(0, add62);                            // midi10 -> add62::Value
 		midi11.getParameter().connectT(0, add63);                            // midi11 -> add63::Value
 		auto& xfader1_p = xfader1.getWrappedObject().getParameter();
-		xfader1_p.getParameterT(0).connectT(0, gain34);                  // xfader1 -> gain34::Gain
-		xfader1_p.getParameterT(1).connectT(0, gain32);                  // xfader1 -> gain32::Gain
-		pma4.getWrappedObject().getParameter().connectT(0, gain16);      // pma4 -> gain16::Gain
-		pma4.getWrappedObject().getParameter().connectT(1, gain14);      // pma4 -> gain14::Gain
-		pma4.getWrappedObject().getParameter().connectT(2, gain36);      // pma4 -> gain36::Gain
-		pma4.getWrappedObject().getParameter().connectT(3, gain37);      // pma4 -> gain37::Gain
-		pma4.getWrappedObject().getParameter().connectT(4, gain44);      // pma4 -> gain44::Gain
-		pma4.getWrappedObject().getParameter().connectT(5, expr4);       // pma4 -> expr4::Value
-		pma4.getWrappedObject().getParameter().connectT(6, phase_delay); // pma4 -> phase_delay::Frequency
-		pma4.getWrappedObject().getParameter().connectT(7, xfader1);     // pma4 -> xfader1::Value
-		pma4.getWrappedObject().getParameter().connectT(8, gain35);      // pma4 -> gain35::Gain
-		peak2.getParameter().connectT(0, pma4);                          // peak2 -> pma4::Value
+		xfader1_p.getParameterT(0).connectT(0, gain34);                      // xfader1 -> gain34::Gain
+		xfader1_p.getParameterT(1).connectT(0, gain32);                      // xfader1 -> gain32::Gain
+		clone_cable1.getWrappedObject().getParameter().connectT(0, jpanner); // clone_cable1 -> jpanner::Pan
+		clone_cable1.getWrappedObject().getParameter().connectT(1, gain54);  // clone_cable1 -> gain54::Gain
+		clone_cable3.getWrappedObject().getParameter().connectT(0, expr5);   // clone_cable3 -> expr5::Value
+		pma4.getWrappedObject().getParameter().connectT(0, gain14);          // pma4 -> gain14::Gain
+		pma4.getWrappedObject().getParameter().connectT(1, gain36);          // pma4 -> gain36::Gain
+		pma4.getWrappedObject().getParameter().connectT(2, gain37);          // pma4 -> gain37::Gain
+		pma4.getWrappedObject().getParameter().connectT(3, gain44);          // pma4 -> gain44::Gain
+		pma4.getWrappedObject().getParameter().connectT(4, expr4);           // pma4 -> expr4::Value
+		pma4.getWrappedObject().getParameter().connectT(5, phase_delay);     // pma4 -> phase_delay::Frequency
+		pma4.getWrappedObject().getParameter().connectT(6, xfader1);         // pma4 -> xfader1::Value
+		pma4.getWrappedObject().getParameter().connectT(7, gain35);          // pma4 -> gain35::Gain
+		pma4.getWrappedObject().getParameter().connectT(8, cable_table);     // pma4 -> cable_table::Value
+		pma4.getWrappedObject().getParameter().connectT(9, clone_cable1);    // pma4 -> clone_cable1::Value
+		pma4.getWrappedObject().getParameter().connectT(10, clone_cable3);   // pma4 -> clone_cable3::Value
+		pma4.getWrappedObject().getParameter().connectT(11, gain16);         // pma4 -> gain16::Gain
+		peak2.getParameter().connectT(0, pma4);                              // peak2 -> pma4::Value
 		auto& sliderbank1_p = sliderbank1.getWrappedObject().getParameter();
 		sliderbank1_p.getParameterT(0).connectT(0, gain10);                  // sliderbank1 -> gain10::Gain
 		sliderbank1_p.getParameterT(1).connectT(0, gain12);                  // sliderbank1 -> gain12::Gain
@@ -1527,6 +1705,7 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		midi14.getParameter().connectT(0, add70);                            // midi14 -> add70::Value
 		pma3.getWrappedObject().getParameter().connectT(0, gain1);           // pma3 -> gain1::Gain
 		peak1.getParameter().connectT(0, pma3);                              // peak1 -> pma3::Value
+		clone_pack.getWrappedObject().getParameter().connectT(0, pi10);      // clone_pack -> pi10::Value
 		
 		// Default Values --------------------------------------------------------------------------
 		
@@ -1849,12 +2028,6 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		
 		expr.setParameterT(0, 1.); // math::expr::Value
 		
-		pi.setParameterT(0, 0.702121); // math::pi::Value
-		
-		sub2.setParameterT(0, 0.); // math::sub::Value
-		
-		sin1.setParameterT(0, 0.86); // math::sin::Value
-		
 		;                              // gain32::Gain is automated
 		gain32.setParameterT(1, 19.8); // core::gain::Smoothing
 		gain32.setParameterT(2, -22.); // core::gain::ResetValue
@@ -1863,13 +2036,9 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		gain11.setParameterT(1, 0.);   // core::gain::Smoothing
 		gain11.setParameterT(2, -13.); // core::gain::ResetValue
 		
-		sub1.setParameterT(0, 0.); // math::sub::Value
-		
 		;                              // gain16::Gain is automated
-		gain16.setParameterT(1, 20.2); // core::gain::Smoothing
+		gain16.setParameterT(1, 20.6); // core::gain::Smoothing
 		gain16.setParameterT(2, -12.); // core::gain::ResetValue
-		
-		mod_inv1.setParameterT(0, 0.0992969); // math::mod_inv::Value
 		
 		rect1.setParameterT(0, 1.); // math::rect::Value
 		
@@ -1884,8 +2053,6 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		mul.setParameterT(0, 1.); // math::mul::Value
 		
 		pi5.setParameterT(0, 1.); // math::pi::Value
-		
-		fmod2.setParameterT(0, 1.); // math::fmod::Value
 		
 		;                               // gain15::Gain is automated
 		gain15.setParameterT(1, 0.);    // core::gain::Smoothing
@@ -1935,19 +2102,46 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		gain33.setParameterT(1, 0.);    // core::gain::Smoothing
 		gain33.setParameterT(2, -100.); // core::gain::ResetValue
 		
-		pi3.setParameterT(0, 0.465825); // math::pi::Value
+		;                                  // clone_cable1::NumClones is deactivated
+		;                                  // clone_cable1::Value is automated
+		clone_cable1.setParameterT(2, 0.); // control::clone_cable::Gamma
 		
-		;                              // gain38::Gain is automated
-		gain38.setParameterT(1, 20.);  // core::gain::Smoothing
-		gain38.setParameterT(2, -12.); // core::gain::ResetValue
+		;                                  // clone_cable3::NumClones is deactivated
+		;                                  // clone_cable3::Value is automated
+		clone_cable3.setParameterT(2, 0.); // control::clone_cable::Gamma
 		
-		expr3.setParameterT(0, 0.363295); // math::expr::Value
+		clone_pack.setParameterT(0, 16.); // control::clone_pack::NumClones
+		clone_pack.setParameterT(1, 1.);  // control::clone_pack::Value
+		
+		clone.setParameterT(0, 16.); // container::clone::NumClones
+		clone.setParameterT(1, 2.);  // container::clone::SplitSignal
+		
+		; // pi10::Value is automated
+		
+		sub2.setParameterT(0, 1.); // math::sub::Value
+		
+		; // expr5::Value is automated
+		
+		fmod.setParameterT(0, 1.); // math::fmod::Value
+		
+		add5.setParameterT(0, 1.); // math::add::Value
+		
+		rect.setParameterT(0, 0.); // math::rect::Value
+		
+		;                               // gain54::Gain is automated
+		gain54.setParameterT(1, 408.9); // core::gain::Smoothing
+		gain54.setParameterT(2, -12.);  // core::gain::ResetValue
+		
+		;                             // jpanner::Pan is automated
+		jpanner.setParameterT(1, 1.); // jdsp::jpanner::Rule
 		
 		square.setParameterT(0, 1.); // math::square::Value
 		
-		rect2.setParameterT(0, 0.590634); // math::rect::Value
+		sin11.setParameterT(0, 0.675095); // math::sin::Value
 		
-		sin9.setParameterT(0, 0.803583); // math::sin::Value
+		; // cable_table::Value is automated
+		
+		sin12.setParameterT(0, 1.); // math::sin::Value
 		
 		;                               // gain40::Gain is automated
 		gain40.setParameterT(1, 0.);    // core::gain::Smoothing
@@ -1974,12 +2168,12 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 		one_pole.setParameterT(4, 1.);      // filters::one_pole::Mode
 		one_pole.setParameterT(5, 1.);      // filters::one_pole::Enabled
 		
-		this->setParameterT(0, 2.85356);
-		this->setParameterT(1, 0.96);
-		this->setParameterT(2, 0.);
-		this->setParameterT(3, -0.0259851);
-		this->setParameterT(4, 0.245075);
-		this->setParameterT(5, -0.0497622);
+		this->setParameterT(0, 7.);
+		this->setParameterT(1, 0.33);
+		this->setParameterT(2, 0.28);
+		this->setParameterT(3, 0.);
+		this->setParameterT(4, 0.);
+		this->setParameterT(5, 0.);
 		this->setParameterT(6, 1.);
 		this->setParameterT(7, 1.);
 		this->setParameterT(8, 1.);
@@ -2025,13 +2219,16 @@ template <int NV> struct instance: public oscshaper_impl::oscshaper_t_<NV>
 	{
 		// External Data Connections ---------------------------------------------------------------
 		
-		this->getT(0).getT(0).getT(0).getT(0).getT(0).setExternalData(b, index); // oscshaper_impl::sliderbank_t<NV>
-		this->getT(0).getT(0).getT(0).getT(0).getT(2).setExternalData(b, index); // oscshaper_impl::peak_t<NV>
-		this->getT(0).getT(0).getT(0).getT(1).getT(0).setExternalData(b, index); // oscshaper_impl::sliderbank2_t<NV>
-		this->getT(0).getT(0).getT(0).getT(1).getT(2).setExternalData(b, index); // oscshaper_impl::peak2_t<NV>
-		this->getT(0).getT(0).getT(0).getT(2).getT(0).setExternalData(b, index); // oscshaper_impl::sliderbank1_t<NV>
-		this->getT(0).getT(0).getT(0).getT(2).getT(2).setExternalData(b, index); // oscshaper_impl::peak1_t<NV>
-		this->getT(0).getT(3).getT(7).getT(2).setExternalData(b, index);         // oscshaper_impl::table4_t
+		this->getT(0).getT(0).getT(0).getT(0).getT(0).setExternalData(b, index);         // oscshaper_impl::sliderbank_t<NV>
+		this->getT(0).getT(0).getT(0).getT(0).getT(2).setExternalData(b, index);         // oscshaper_impl::peak_t<NV>
+		this->getT(0).getT(0).getT(0).getT(1).getT(0).setExternalData(b, index);         // oscshaper_impl::sliderbank2_t<NV>
+		this->getT(0).getT(0).getT(0).getT(1).getT(2).setExternalData(b, index);         // oscshaper_impl::peak2_t<NV>
+		this->getT(0).getT(0).getT(0).getT(2).getT(0).setExternalData(b, index);         // oscshaper_impl::sliderbank1_t<NV>
+		this->getT(0).getT(0).getT(0).getT(2).getT(2).setExternalData(b, index);         // oscshaper_impl::peak1_t<NV>
+		this->getT(0).getT(3).getT(1).getT(2).setExternalData(b, index);                 // oscshaper_impl::oscilloscope_t
+		this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(2).setExternalData(b, index); // oscshaper_impl::clone_pack_t<NV>
+		this->getT(0).getT(3).getT(6).getT(0).getT(0).getT(4).setExternalData(b, index); // oscshaper_impl::cable_table_t
+		this->getT(0).getT(3).getT(7).getT(2).setExternalData(b, index);                 // oscshaper_impl::table4_t
 	}
 };
 }

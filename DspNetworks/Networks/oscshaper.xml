@@ -1473,7 +1473,6 @@
           </Node>
           <Node ID="pma4" FactoryPath="control.pma" Bypassed="0" Name="pma">
             <ModulationTargets>
-              <Connection NodeId="gain16" ParameterId="Gain"/>
               <Connection NodeId="gain14" ParameterId="Gain"/>
               <Connection NodeId="gain36" ParameterId="Gain"/>
               <Connection NodeId="gain37" ParameterId="Gain"/>
@@ -1482,6 +1481,10 @@
               <Connection NodeId="phase_delay" ParameterId="Frequency"/>
               <Connection NodeId="xfader1" ParameterId="Value"/>
               <Connection NodeId="gain35" ParameterId="Gain"/>
+              <Connection NodeId="cable_table" ParameterId="Value"/>
+              <Connection NodeId="clone_cable1" ParameterId="Value"/>
+              <Connection NodeId="clone_cable3" ParameterId="Value"/>
+              <Connection NodeId="gain16" ParameterId="Gain"/>
             </ModulationTargets>
             <Parameters>
               <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
@@ -1566,22 +1569,6 @@
                               <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
                             </Parameters>
                           </Node>
-                          <Node ID="pi" FactoryPath="math.pi" Bypassed="1" Name="pi">
-                            <Parameters>
-                              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.702121337890625"
-                                         DefaultValue="2.0"/>
-                            </Parameters>
-                          </Node>
-                          <Node ID="sub2" FactoryPath="math.sub" Bypassed="1" Name="sub2">
-                            <Parameters>
-                              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
-                            </Parameters>
-                          </Node>
-                          <Node ID="sin1" FactoryPath="math.sin" Bypassed="1" Name="sin1">
-                            <Parameters>
-                              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.86" DefaultValue="2.0"/>
-                            </Parameters>
-                          </Node>
                           <Node ID="gain32" FactoryPath="core.gain" Bypassed="0" Name="gain32">
                             <Parameters>
                               <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
@@ -1616,26 +1603,15 @@
               </Node>
               <Node ID="chain9" FactoryPath="container.chain" Bypassed="0" Name="chain">
                 <Nodes>
-                  <Node ID="sub1" FactoryPath="math.sub" Bypassed="0" Name="sub">
-                    <Parameters>
-                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0" DefaultValue="0.496"/>
-                    </Parameters>
-                  </Node>
                   <Node ID="gain16" FactoryPath="core.gain" Bypassed="0" Name="gain">
                     <Parameters>
-                      <Parameter MinValue="-10.19999992847443" MaxValue="24.0" StepSize="0.1000000014901161"
+                      <Parameter MinValue="-6.0" MaxValue="24.0" StepSize="0.1000000014901161"
                                  ID="Gain" DefaultValue="0.0" Automated="1"/>
                       <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.20000030100345"
+                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.60000030696392"
                                  DefaultValue="20.0"/>
                       <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
                                  SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
-                                 DefaultValue="0.0"/>
-                    </Parameters>
-                  </Node>
-                  <Node ID="mod_inv1" FactoryPath="math.mod_inv" Bypassed="0" Name="mod_inv1">
-                    <Parameters>
-                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.09929687500000001"
                                  DefaultValue="0.0"/>
                     </Parameters>
                   </Node>
@@ -1643,6 +1619,15 @@
                     <Parameters>
                       <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
                     </Parameters>
+                  </Node>
+                  <Node ID="oscilloscope" FactoryPath="analyse.oscilloscope" Bypassed="0"
+                        Name="oscilloscope">
+                    <ComplexData>
+                      <DisplayBuffers>
+                        <DisplayBuffer Index="-1" EmbeddedData=""/>
+                      </DisplayBuffers>
+                    </ComplexData>
+                    <Parameters/>
                   </Node>
                   <Node ID="gain13" FactoryPath="core.gain" Bypassed="0" Name="gain10">
                     <Parameters>
@@ -1680,11 +1665,6 @@
                       <Node ID="pi5" FactoryPath="math.pi" Bypassed="0" Name="pi1">
                         <Parameters>
                           <Parameter MinValue="0.5" MaxValue="1.0" ID="Value" DefaultValue="2.0" Value="1.0"/>
-                        </Parameters>
-                      </Node>
-                      <Node ID="fmod2" FactoryPath="math.fmod" Bypassed="0" Name="fmod1">
-                        <Parameters>
-                          <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
                         </Parameters>
                       </Node>
                     </Nodes>
@@ -1855,49 +1835,1228 @@
               </Node>
               <Node ID="chain60" FactoryPath="container.chain" Bypassed="0" Name="chain7">
                 <Nodes>
-                  <Node ID="pi3" FactoryPath="math.pi" Bypassed="0" Name="pi">
-                    <Parameters>
-                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.4658251953125"
-                                 DefaultValue="2.0"/>
-                    </Parameters>
-                  </Node>
-                  <Node ID="gain38" FactoryPath="core.gain" Bypassed="0" Name="gain">
-                    <Parameters>
-                      <Parameter MinValue="-48.0" MaxValue="12.0" StepSize="0.1000000014901161"
-                                 ID="Gain" DefaultValue="0.0" Automated="1"/>
-                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
-                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
-                                 DefaultValue="0.0"/>
-                    </Parameters>
-                  </Node>
-                  <Node ID="expr3" FactoryPath="math.expr" Bypassed="0" Name="expr">
-                    <Properties>
-                      <Property ID="Code" Value="input * Math.tan(Math.PI * 12.0 * value * input) * (2 - Math.PI);"/>
-                      <Property ID="Debug" Value="0"/>
-                    </Properties>
-                    <Parameters>
-                      <Parameter MinValue="0.11" MaxValue="1.0" ID="Value" Value="0.3632945214843749"
-                                 DefaultValue="1.0"/>
-                    </Parameters>
-                  </Node>
-                  <Node ID="square" FactoryPath="math.square" Bypassed="0" Name="square">
-                    <Parameters>
-                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
-                    </Parameters>
-                  </Node>
-                  <Node ID="rect2" FactoryPath="math.rect" Bypassed="0" Name="rect2">
-                    <Parameters>
-                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.5906337890625"
-                                 DefaultValue="0.0"/>
-                    </Parameters>
-                  </Node>
-                  <Node ID="sin9" FactoryPath="math.sin" Bypassed="0" Name="sin">
-                    <Parameters>
-                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.8035830078125"
-                                 DefaultValue="2.0"/>
-                    </Parameters>
+                  <Node ID="chain67" FactoryPath="container.chain" Bypassed="0" Name="chain">
+                    <Nodes>
+                      <Node ID="chain68" FactoryPath="container.chain" Bypassed="0" Name="chain59">
+                        <Nodes>
+                          <Node ID="clone_cable1" FactoryPath="control.clone_cable" Bypassed="0"
+                                Name="clone_cable1">
+                            <Properties>
+                              <Property ID="Mode" Value="Spread"/>
+                            </Properties>
+                            <ModulationTargets>
+                              <Connection NodeId="jpanner" ParameterId="Pan"/>
+                              <Connection NodeId="gain54" ParameterId="Gain"/>
+                            </ModulationTargets>
+                            <Parameters>
+                              <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="NumClones"
+                                         Value="16.0" DefaultValue="1.0"/>
+                              <Parameter MinValue="-1.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                              <Parameter MinValue="0.0" MaxValue="1.0" ID="Gamma" Value="0.0"/>
+                            </Parameters>
+                          </Node>
+                          <Node ID="clone_cable3" FactoryPath="control.clone_cable" Bypassed="0"
+                                Name="clone_cable1">
+                            <Properties>
+                              <Property ID="Mode" Value="Nyquist"/>
+                            </Properties>
+                            <ModulationTargets>
+                              <Connection NodeId="expr5" ParameterId="Value"/>
+                            </ModulationTargets>
+                            <Parameters>
+                              <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="NumClones"
+                                         Value="16.0" DefaultValue="1.0"/>
+                              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                              <Parameter MinValue="0.0" MaxValue="1.0" ID="Gamma" Value="0.0"/>
+                            </Parameters>
+                          </Node>
+                          <Node ID="clone_pack" FactoryPath="control.clone_pack" Bypassed="0"
+                                Name="clone_pack">
+                            <ModulationTargets>
+                              <Connection NodeId="pi10" ParameterId="Value"/>
+                            </ModulationTargets>
+                            <ComplexData>
+                              <SliderPacks>
+                                <SliderPack Index="-1" EmbeddedData="64.OJbc87nv00SgqG0O...f+....9C...3OEtdT+35Qg7y0iBuOMyLS9....9C...3OZlYV+PgqG8iYlYxOtdT39."/>
+                              </SliderPacks>
+                            </ComplexData>
+                            <Parameters>
+                              <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="NumClones"
+                                         Value="16.0" DefaultValue="1.0"/>
+                              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                            </Parameters>
+                          </Node>
+                          <Node ID="clone" FactoryPath="container.clone" Bypassed="0" Name="clone"
+                                ShowClones="0" ShowParameters="1">
+                            <Properties>
+                              <Property ID="IsVertical" Value="0"/>
+                            </Properties>
+                            <Nodes>
+                              <Node ID="clone_child" FactoryPath="container.chain" Bypassed="0" Name="clone_child"
+                                    NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi10" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub2" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr5" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add5" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain54" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Automated="1"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Automated="1"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin11" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clone_child1" FactoryPath="container.chain" Bypassed="0"
+                                    Name="clone_child" NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi93" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub3" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr21" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod62" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add111" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect63" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain221" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Value="-6.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner31" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Value="0.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square61" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin102" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clone_child2" FactoryPath="container.chain" Bypassed="0"
+                                    Name="clone_child" NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi94" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub4" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr22" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod63" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add112" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect64" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain222" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Value="-6.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner32" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Value="0.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square62" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin103" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clone_child3" FactoryPath="container.chain" Bypassed="0"
+                                    Name="clone_child" NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi95" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub5" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr23" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod64" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add113" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect65" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain223" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Value="-6.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner33" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Value="0.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square63" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin104" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clone_child4" FactoryPath="container.chain" Bypassed="0"
+                                    Name="clone_child" NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi96" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub6" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr24" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod65" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add114" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect66" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain224" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Value="-6.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner34" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Value="0.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square64" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin105" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clone_child5" FactoryPath="container.chain" Bypassed="0"
+                                    Name="clone_child" NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi97" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub7" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr25" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod66" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add115" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect67" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain225" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Value="-6.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner35" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Value="0.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square65" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin106" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clone_child6" FactoryPath="container.chain" Bypassed="0"
+                                    Name="clone_child" NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi98" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub8" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr26" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod67" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add116" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect68" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain226" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Value="-6.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner36" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Value="0.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square66" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin107" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clone_child7" FactoryPath="container.chain" Bypassed="0"
+                                    Name="clone_child" NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi99" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub9" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr27" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod68" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add117" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect69" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain227" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Value="-6.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner37" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Value="0.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square67" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin108" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clone_child8" FactoryPath="container.chain" Bypassed="0"
+                                    Name="clone_child" NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi100" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub10" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr28" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod69" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add118" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect70" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain228" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Value="-6.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner38" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Value="0.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square68" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin109" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clone_child9" FactoryPath="container.chain" Bypassed="0"
+                                    Name="clone_child" NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi101" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub11" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr29" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod70" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add119" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect71" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain229" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Value="-6.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner39" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Value="0.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square69" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin110" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clone_child10" FactoryPath="container.chain" Bypassed="0"
+                                    Name="clone_child" NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi102" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub12" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr30" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod71" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add120" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect72" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain230" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Value="-6.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner40" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Value="0.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square70" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin111" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clone_child11" FactoryPath="container.chain" Bypassed="0"
+                                    Name="clone_child" NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi103" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub13" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr31" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod72" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add121" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect73" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain231" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Value="-6.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner41" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Value="0.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square71" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin112" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clone_child12" FactoryPath="container.chain" Bypassed="0"
+                                    Name="clone_child" NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi104" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub14" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr32" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod73" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add122" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect74" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain232" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Value="-6.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner42" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Value="0.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square72" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin113" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clone_child13" FactoryPath="container.chain" Bypassed="0"
+                                    Name="clone_child" NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi105" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub15" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr33" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod74" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add123" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect75" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain233" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Value="-6.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner43" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Value="0.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square73" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin114" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clone_child14" FactoryPath="container.chain" Bypassed="0"
+                                    Name="clone_child" NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi106" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub16" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr34" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod75" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add124" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect76" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain234" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Value="-6.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner44" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Value="0.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square74" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin115" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                              <Node ID="clone_child15" FactoryPath="container.chain" Bypassed="0"
+                                    Name="clone_child" NodeColour="4287927444">
+                                <Nodes>
+                                  <Node ID="pi107" FactoryPath="math.pi" Bypassed="0" Name="pi">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="2.6" ID="Value" DefaultValue="2.0" Automated="1"
+                                                 StepSize="0.1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sub17" FactoryPath="math.sub" Bypassed="1" Name="sub2">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="expr35" FactoryPath="math.expr" Bypassed="0" Name="expr">
+                                    <Properties>
+                                      <Property ID="Code" Value="(1.0f - value) * input + value * Math.sin(Math.PI * 2.0 * value * input);"/>
+                                      <Property ID="Debug" Value="0"/>
+                                    </Properties>
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" DefaultValue="1.0" Automated="1"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="fmod76" FactoryPath="math.fmod" Bypassed="1" Name="fmod">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="add125" FactoryPath="math.add" Bypassed="0" Name="add4">
+                                    <Parameters>
+                                      <Parameter MinValue="1.0" MaxValue="16.0" StepSize="1.0" ID="Value" Value="1.0"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="rect77" FactoryPath="math.rect" Bypassed="1" Name="rect">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="gain235" FactoryPath="core.gain" Bypassed="0" Name="gain">
+                                    <Parameters>
+                                      <Parameter MinValue="-16.0" MaxValue="16.0" StepSize="0.5" ID="Gain" DefaultValue="0.0"
+                                                 Value="-6.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="408.9000060930848"
+                                                 DefaultValue="20.0"/>
+                                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="-12.89999870210886"
+                                                 DefaultValue="0.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="jpanner45" FactoryPath="jdsp.jpanner" Bypassed="0" Name="jpanner">
+                                    <Parameters>
+                                      <Parameter MinValue="-1.0" MaxValue="1.0" ID="Pan" Value="0.0"/>
+                                      <Parameter MinValue="0.0" MaxValue="6.0" StepSize="1.0" ID="Rule" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="square75" FactoryPath="math.square" Bypassed="1" Name="square">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
+                                    </Parameters>
+                                  </Node>
+                                  <Node ID="sin116" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                                    <Parameters>
+                                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="0.6750947265625"
+                                                 DefaultValue="2.0"/>
+                                    </Parameters>
+                                  </Node>
+                                </Nodes>
+                                <Parameters/>
+                              </Node>
+                            </Nodes>
+                            <Parameters>
+                              <Parameter MinValue="1.0" MaxValue="16" StepSize="1.0" ID="NumClones" Value="16.0"
+                                         DefaultValue="1.0"/>
+                              <Parameter MinValue="0.0" MaxValue="2.0" StepSize="1.0" ID="SplitSignal"
+                                         Value="2.0"/>
+                            </Parameters>
+                          </Node>
+                          <Node ID="cable_table" FactoryPath="control.cable_table" Bypassed="0"
+                                Name="cable_table">
+                            <ComplexData>
+                              <Tables>
+                                <Table Index="-1" EmbeddedData="36...............vO..3e+....9C...vO...f+....9C...vO"/>
+                              </Tables>
+                            </ComplexData>
+                            <Parameters>
+                              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
+                            </Parameters>
+                          </Node>
+                          <Node ID="sin12" FactoryPath="math.sin" Bypassed="0" Name="sin1">
+                            <Parameters>
+                              <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0" DefaultValue="2.0"/>
+                            </Parameters>
+                          </Node>
+                        </Nodes>
+                        <Parameters/>
+                      </Node>
+                    </Nodes>
+                    <Parameters/>
                   </Node>
                   <Node ID="gain40" FactoryPath="core.gain" Bypassed="0" Name="gain2">
                     <Parameters>
@@ -1992,37 +3151,34 @@
       </Node>
     </Nodes>
     <Parameters>
-      <Parameter MinValue="1.0" MaxValue="8.0" ID="shaper" Value="2.8535625" DefaultValue="0.0">
+      <Parameter MinValue="1.0" MaxValue="8.0" ID="shaper" Value="7.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma" ParameterId="Add"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="width" Value="0.9599999785423279"
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="width" Value="0.3300000131130219"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma4" ParameterId="Add"/>
-          <Connection NodeId="gain38" ParameterId="Gain"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="out" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="out" Value="0.2800000011920929"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma3" ParameterId="Add"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="-1.0" MaxValue="1.0" ID="shapemod" Value="-0.02598505434782605"
-                 DefaultValue="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="shapemod" Value="0.0">
         <Connections>
           <Connection NodeId="pma" ParameterId="Multiply"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="-1.0" MaxValue="1.0" ID="widthmod" Value="0.2450747282608696"
-                 DefaultValue="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="widthmod" Value="0.0">
         <Connections>
           <Connection NodeId="pma4" ParameterId="Multiply"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="-1.0" MaxValue="1.0" ID="outmod" Value="-0.04976222826086951"
-                 DefaultValue="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="outmod" Value="0.0">
         <Connections>
           <Connection NodeId="pma3" ParameterId="Multiply"/>
         </Connections>

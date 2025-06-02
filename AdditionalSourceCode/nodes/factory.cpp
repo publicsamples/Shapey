@@ -35,6 +35,7 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		registerPolyNode<project::khp2<1>, project::khp2<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::khp<1>, project::khp<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::hole<1>, scriptnode::wrap::illegal_poly<project::hole<1>>>();
+		registerPolyNode<project::gran<1>, scriptnode::wrap::illegal_poly<project::gran<1>>>();
 		registerPolyNode<project::Comb<1>, project::Comb<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::files<1>, project::files<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::HpLp<1>, project::HpLp<NUM_POLYPHONIC_VOICES>>();
@@ -72,6 +73,7 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		registerDataNode<project::ModOut1_networkdata>();
 		registerDataNode<project::modtest1_networkdata>();
 		registerDataNode<project::ModToNote_networkdata>();
+		registerDataNode<project::NewArrange_networkdata>();
 		registerDataNode<project::OscOut1_networkdata>();
 		registerDataNode<project::OscOut2_networkdata>();
 		registerDataNode<project::OscOut3_networkdata>();

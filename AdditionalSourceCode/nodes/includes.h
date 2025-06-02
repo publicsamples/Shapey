@@ -10,6 +10,7 @@
 // Include third party header files ----------------
 
 #include "Comb.h"
+#include "gran.h"
 #include "hole.h"
 #include "khp.h"
 #include "khp2.h"
@@ -48,6 +49,7 @@
 #include "modtest1_networkdata.h"
 #include "ModToNote_networkdata.h"
 #include "mod_networkdata.h"
+#include "NewArrange_networkdata.h"
 #include "NoteSelector.h"
 #include "NoteSelector2.h"
 #include "osc1.h"

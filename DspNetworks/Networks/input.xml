@@ -267,7 +267,7 @@
       </Node>
     </Nodes>
     <Parameters>
-      <Parameter MinValue="1.0" MaxValue="8.0" ID="Input" Value="6.0" DefaultValue="0.0">
+      <Parameter MinValue="1.0" MaxValue="8.0" ID="Input" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="xfader" ParameterId="Value"/>
         </Connections>

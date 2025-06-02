@@ -150,20 +150,20 @@ struct _klp final : public ::faust::dsp {
 		float fSlow1 = fSlow0 + 1.0f;
 		float fSlow2 = fSlow0 / fSlow1;
 		float fSlow3 = std::max<float>(0.5f, std::min<float>(1e+01f, float(fHslider1))) + -0.70710677f;
-		float fSlow4 = 1.0f - fSlow2;
-		float fSlow5 = 1.0f / (1.0f - 0.21521823f * (fSlow0 * fSlow3 * fSlow4 / fSlow1));
+		float fSlow4 = fSlow3 * (1.0f - fSlow2);
+		float fSlow5 = 1.0f / (1.0f - 0.21521823f * (fSlow4 * fSlow0 / fSlow1));
 		float fSlow6 = 1.0f / fSlow1;
-		float fSlow7 = 0.21521823f * fSlow3 * fSlow4;
+		float fSlow7 = 0.21521823f * fSlow4;
 		float fSlow8 = 2.0f * fSlow2;
 		float fSlow9 = 0.21521823f * fSlow3;
 		for (int i0 = 0; i0 < count; i0 = i0 + 1) {
 			float fTemp0 = float(input0[i0]) - fRec3[1];
-			float fTemp1 = fSlow5 * (fRec3[1] + fSlow6 * (fSlow0 * fTemp0 + fSlow7 * fRec1[1] - fRec2[1])) - fRec1[1];
+			float fTemp1 = fSlow5 * (fSlow6 * (fSlow0 * fTemp0 + fSlow7 * fRec1[1] - fRec2[1]) + fRec3[1]) - fRec1[1];
 			float fTemp2 = fRec1[1] + fSlow2 * fTemp1;
 			float fRec0 = fTemp2;
 			fRec1[0] = fRec1[1] + fSlow8 * fTemp1;
 			fRec2[0] = fRec2[1] + fSlow8 * (fSlow9 * fTemp2 - fRec2[1]);
-			fRec3[0] = fRec3[1] + fSlow8 * fTemp0;
+			fRec3[0] = fSlow8 * fTemp0 + fRec3[1];
 			output0[i0] = FAUSTFLOAT(fRec0);
 			float fTemp3 = float(input1[i0]) - fRec7[1];
 			float fTemp4 = fSlow5 * (fRec7[1] + fSlow6 * (fSlow0 * fTemp3 + fSlow7 * fRec5[1] - fRec6[1])) - fRec5[1];
