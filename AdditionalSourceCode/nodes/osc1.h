@@ -208,13 +208,24 @@ using pma1_t = control::pma<NV,
 
 template <int NV> using pma9_t = pma1_t<NV>;
 
+template <int NV>
+using converter5_mod = parameter::chain<ranges::Identity, 
+                                        parameter::plain<core::phasor_fm<NV>, 2>, 
+                                        parameter::plain<core::phasor_fm<NV>, 2>>;
+
+template <int NV>
+using converter5_t = control::converter<converter5_mod<NV>, 
+                                        conversion_logic::ms2freq>;
+template <int NV>
+using tempo_sync_t = wrap::mod<parameter::plain<converter5_t<NV>, 0>, 
+                               control::tempo_sync<NV>>;
 DECLARE_PARAMETER_RANGE_STEP(pma8_modRange, 
                              0., 
                              18., 
                              1.);
 
 template <int NV>
-using pma8_mod = parameter::from0To1<control::tempo_sync<NV>, 
+using pma8_mod = parameter::from0To1<tempo_sync_t<NV>, 
                                      0, 
                                      pma8_modRange>;
 
@@ -227,7 +238,7 @@ DECLARE_PARAMETER_RANGE_STEP(pma11_modRange,
                              0.1);
 
 template <int NV>
-using pma11_mod = parameter::from0To1<control::tempo_sync<NV>, 
+using pma11_mod = parameter::from0To1<tempo_sync_t<NV>, 
                                       3, 
                                       pma11_modRange>;
 
@@ -286,14 +297,9 @@ using minmax1_t = control::minmax<NV,
                                   parameter::plain<core::phasor_fm<NV>, 2>>;
 
 template <int NV>
-using converter5_t = control::converter<parameter::plain<core::phasor_fm<NV>, 2>, 
-                                        conversion_logic::ms2freq>;
-
-template <int NV>
 using peak_mod = parameter::chain<ranges::Identity, 
                                   parameter::plain<minmax2_t<NV>, 0>, 
-                                  parameter::plain<minmax1_t<NV>, 0>, 
-                                  parameter::plain<converter5_t<NV>, 0>>;
+                                  parameter::plain<minmax1_t<NV>, 0>>;
 
 template <int NV>
 using peak_t = wrap::mod<peak_mod<NV>, 
@@ -707,7 +713,7 @@ using chain10_t = container::chain<parameter::empty,
 
 template <int NV>
 using chain12_t = container::chain<parameter::empty, 
-                                   wrap::fix<1, control::tempo_sync<NV>>, 
+                                   wrap::fix<1, tempo_sync_t<NV>>, 
                                    converter5_t<NV>>;
 
 template <int NV>
@@ -731,13 +737,16 @@ template <int NV> using chain3_t = chain1_t<NV>;
 
 template <int NV> using chain2_t = chain1_t<NV>;
 
-template <int NV> using chain14_t = chain1_t<NV>;
+template <int NV> using no_midi_t_ = chain1_t<NV>;
+
+template <int NV>
+using no_midi_t = wrap::no_midi<no_midi_t_<NV>>;
 template <int NV>
 using branch1_t = container::branch<parameter::empty, 
                                     wrap::fix<2, chain1_t<NV>>, 
                                     chain3_t<NV>, 
                                     chain2_t<NV>, 
-                                    chain14_t<NV>>;
+                                    no_midi_t<NV>>;
 using peak1_t = wrap::no_data<core::peak>;
 
 template <int NV>
@@ -901,7 +910,7 @@ using Bend = parameter::from0To1<core::smoother<NV>,
                                  BendRange>;
 
 template <int NV>
-using div = parameter::plain<control::tempo_sync<NV>, 
+using div = parameter::plain<osc1_impl::tempo_sync_t<NV>, 
                              1>;
 template <int NV>
 using Input = parameter::plain<osc1_impl::pma2_t<NV>, 2>;
@@ -914,7 +923,7 @@ template <int NV>
 using OutMod = parameter::plain<control::pma<NV, parameter::empty>, 
                                 1>;
 template <int NV>
-using sync = parameter::plain<control::tempo_sync<NV>, 
+using sync = parameter::plain<osc1_impl::tempo_sync_t<NV>, 
                               2>;
 template <int NV>
 using LfoUnsync = parameter::plain<osc1_impl::minmax_t<NV>, 
@@ -990,7 +999,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
             0x0000, 0x7973, 0x636E, 0x0000, 0x0000, 0x0000, 0x8000, 0x003F, 
             0x8000, 0x003F, 0x8000, 0x003F, 0x0000, 0x5B00, 0x000C, 0x0000, 
             0x664C, 0x556F, 0x736E, 0x6E79, 0x0063, 0x0000, 0x0000, 0x0000, 
-            0x3F80, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0D5B, 
+            0x3F80, 0xCDEA, 0x3F3B, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0D5B, 
             0x0000, 0x5800, 0x7366, 0x6174, 0x6567, 0x6950, 0x6374, 0x0068, 
             0x0000, 0x3F80, 0x0000, 0x4080, 0x0000, 0x3F80, 0x0000, 0x3F80, 
             0x0000, 0x0000, 0x0E5B, 0x0000, 0x4D00, 0x6469, 0x5369, 0x6F6C, 
@@ -1212,7 +1221,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		auto& chain10 = this->getT(2).getT(0).getT(0).getT(1);                           // osc1_impl::chain10_t<NV>
 		auto& minmax1 = this->getT(2).getT(0).getT(0).getT(1).getT(0);                   // osc1_impl::minmax1_t<NV>
 		auto& chain12 = this->getT(2).getT(0).getT(0).getT(2);                           // osc1_impl::chain12_t<NV>
-		auto& tempo_sync = this->getT(2).getT(0).getT(0).getT(2).getT(0);                // control::tempo_sync<NV>
+		auto& tempo_sync = this->getT(2).getT(0).getT(0).getT(2).getT(0);                // osc1_impl::tempo_sync_t<NV>
 		auto& converter5 = this->getT(2).getT(0).getT(0).getT(2).getT(1);                // osc1_impl::converter5_t<NV>
 		auto& branch1 = this->getT(2).getT(1);                                           // osc1_impl::branch1_t<NV>
 		auto& chain1 = this->getT(2).getT(1).getT(0);                                    // osc1_impl::chain1_t<NV>
@@ -1221,7 +1230,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		auto& phasor_fm4 = this->getT(2).getT(1).getT(1).getT(0);                        // core::phasor_fm<NV>
 		auto& chain2 = this->getT(2).getT(1).getT(2);                                    // osc1_impl::chain2_t<NV>
 		auto& phasor_fm3 = this->getT(2).getT(1).getT(2).getT(0);                        // core::phasor_fm<NV>
-		auto& chain14 = this->getT(2).getT(1).getT(3);                                   // osc1_impl::chain14_t<NV>
+		auto& no_midi = this->getT(2).getT(1).getT(3);                                   // osc1_impl::no_midi_t<NV>
 		auto& phasor_fm1 = this->getT(2).getT(1).getT(3).getT(0);                        // core::phasor_fm<NV>
 		auto& mono2stereo = this->getT(2).getT(2);                                       // core::mono2stereo
 		auto& peak1 = this->getT(2).getT(3);                                             // osc1_impl::peak1_t
@@ -1302,6 +1311,9 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		midi8.getParameter().connectT(0, add56);                              // midi8 -> add56::Value
 		pma1.getWrappedObject().getParameter().connectT(0, add);              // pma1 -> add::Value
 		pma9.getWrappedObject().getParameter().connectT(0, add2);             // pma9 -> add2::Value
+		converter5.getWrappedObject().getParameter().connectT(0, phasor_fm3); // converter5 -> phasor_fm3::FreqRatio
+		converter5.getWrappedObject().getParameter().connectT(1, phasor_fm1); // converter5 -> phasor_fm1::FreqRatio
+		tempo_sync.getParameter().connectT(0, converter5);                    // tempo_sync -> converter5::Value
 		pma8.getWrappedObject().getParameter().connectT(0, tempo_sync);       // pma8 -> tempo_sync::Tempo
 		pma11.getWrappedObject().getParameter().connectT(0, tempo_sync);      // pma11 -> tempo_sync::UnsyncedTime
 		peak3.getParameter().connectT(0, pma1);                               // peak3 -> pma1::Value
@@ -1312,10 +1324,8 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		converter.getWrappedObject().getParameter().connectT(0, phasor_fm);   // converter -> phasor_fm::FreqRatio
 		minmax2.getWrappedObject().getParameter().connectT(0, converter);     // minmax2 -> converter::Value
 		minmax1.getWrappedObject().getParameter().connectT(0, phasor_fm4);    // minmax1 -> phasor_fm4::FreqRatio
-		converter5.getWrappedObject().getParameter().connectT(0, phasor_fm3); // converter5 -> phasor_fm3::FreqRatio
 		peak.getParameter().connectT(0, minmax2);                             // peak -> minmax2::Value
 		peak.getParameter().connectT(1, minmax1);                             // peak -> minmax1::Value
-		peak.getParameter().connectT(2, converter5);                          // peak -> converter5::Value
 		auto& sliderbank4_p = sliderbank4.getWrappedObject().getParameter();
 		sliderbank4_p.getParameterT(0).connectT(0, gain17);                  // sliderbank4 -> gain17::Gain
 		sliderbank4_p.getParameterT(1).connectT(0, gain18);                  // sliderbank4 -> gain18::Gain
@@ -1746,7 +1756,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		
 		phasor_fm1.setParameterT(0, 1.);   // core::phasor_fm::Gate
 		phasor_fm1.setParameterT(1, 110.); // core::phasor_fm::Frequency
-		phasor_fm1.setParameterT(2, 0.);   // core::phasor_fm::FreqRatio
+		;                                  // phasor_fm1::FreqRatio is automated
 		phasor_fm1.setParameterT(3, 0.);   // core::phasor_fm::Phase
 		
 		this->setParameterT(0, 0.);
@@ -1761,7 +1771,7 @@ template <int NV> struct instance: public osc1_impl::osc1_t_<NV>
 		this->setParameterT(9, 0.);
 		this->setParameterT(10, 1.);
 		this->setParameterT(11, 1.);
-		this->setParameterT(12, 0.);
+		this->setParameterT(12, 0.733611);
 		this->setParameterT(13, 1.);
 		this->setParameterT(14, 1.);
 		this->setParameterT(15, 1.);

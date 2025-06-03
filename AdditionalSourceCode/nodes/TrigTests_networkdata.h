@@ -1,0 +1,20 @@
+namespace project
+{
+
+struct TrigTests_networkdata: public scriptnode::dll::InterpretedNetworkData
+{
+	String getId() const override
+	{
+		return "TrigTests";
+	}
+	bool isModNode() const override
+	{
+		return false;
+	}
+	String getNetworkData() const override
+	{
+		return "614.nT6K8CV0ETtD.X5lXcB7Raa.nZRaegVjNhLl4jxMnJYPypUEybS2UwYunyggIas4esITNkxR.vD.IA..7i4c1l6oTOqDEanqo4GedMJu5C3MT0qJMk0KWS.79NYGl2oVOg2n7QmeFKUe8hxPYkfxJOjPnkkVouEn2zpKfWLahvqnozi52IPUS4i2mru9YaSs.jbNKUEJp1DOP0nlZMB79ifdFwGml2H0oWsK0BMo2E2v7RmOGbLhhRNLi9vv7td0wP5gYXxK.vS+rfMCymsjl2kFk9Wc9YxoATl9Cu5IUr6WcPsjnFj9H0s45iwkVePS2JJeUGNxI4DgE4eVOgYdBqd869UuhVxVmd8SlTdQahp6VGvNYermkS9leTcLYcjEHhvgGjn0ffRnq5qZ2VkFZRrc3dLUgiEMXXfRSHDLxf4BOZzv5RFK7fQEHsBr6cteCrLvmF4yMxhnKuZ9tG7yB2vsZppLzmO5oIvsAdoGHnFpg1pHyHjEFHjfn..P..J0Q1lL4SwRy3HLAVmfiDdoI+qsvQNHPuVkKDg.TQxsK.QN2ZBOK016h3cCi9NCYknoH5asGNUU8r37IEDFarnY8lpwsyv9HzI9U77QiXvgcHCAPnftJ21iD7TUbFD3tpyz.vCzsMU9eY.dshzB9DCHWfyQAi5M6kc4VcDd4iu0slESi0cTUX3FgaVaFPXhOTYdLqtjG10LLtxfqYt75SAejZY2MYiVNLP4yRk014+YFXTeBM8vv10yTuDvRnHP0XdC1bXkzc5gunqou+mErXlQruOEzbR22VyLjqgOBE600kt75S4FNO.";
+	}
+};
+}
+

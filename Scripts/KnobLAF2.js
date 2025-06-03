@@ -219,3 +219,19 @@ const var LfoKnbs1 = [Content.getComponent("Adj1"),
       
   for(s in LfoKnbs1)
         s.setLocalLookAndFeel(KnobLaf2b);    
+
+const var SeqKnbs = [Content.getComponent("SeqDiv1"),
+                     Content.getComponent("SeqGateTempo1"),
+                     Content.getComponent("SeqClock1"),
+                     Content.getComponent("SeqDiv2"),
+                     Content.getComponent("SeqGateTempo2"),
+                     Content.getComponent("SeqClock2"),
+					 Content.getComponent("SeqDiv3"),
+                     Content.getComponent("SeqGateTempo3"),
+                     Content.getComponent("SeqClock3"),
+                     Content.getComponent("SeqDiv4"),
+                     Content.getComponent("SeqGateTempo4"),
+                     Content.getComponent("SeqClock4")];
+
+for(s in SeqKnbs)
+        s.setLocalLookAndFeel(KnobLaf2b);   

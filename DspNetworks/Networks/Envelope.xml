@@ -1650,7 +1650,8 @@
       </Node>
     </Nodes>
     <Parameters>
-      <Parameter ID="tempo" MinValue="0.0" MaxValue="18.0" StepSize="1.0" Value="0.0">
+      <Parameter ID="tempo" MinValue="0.0" MaxValue="18.0" StepSize="1.0" Value="10.0"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma1" ParameterId="Add"/>
         </Connections>
@@ -1658,7 +1659,7 @@
       <Parameter MinValue="0.0" MaxValue="2.0" ID="Dest" Value="0.0" StepSize="1.0">
         <Connections/>
       </Parameter>
-      <Parameter MinValue="1.0" MaxValue="3.0" StepSize="1.0" ID="AjustMode" Value="3.0"
+      <Parameter MinValue="1.0" MaxValue="3.0" StepSize="1.0" ID="AjustMode" Value="1.0"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="branch4" ParameterId="Index"/>
@@ -1672,7 +1673,7 @@
           <Connection NodeId="branch6" ParameterId="Index"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="1.0" MaxValue="32.0" ID="Div" Value="1.0" DefaultValue="0.0">
+      <Parameter MinValue="1.0" MaxValue="32.0" ID="Div" Value="4.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="pma2" ParameterId="Add"/>
           <Connection NodeId="tempo_sync" ParameterId="Multiplier"/>
@@ -1689,7 +1690,7 @@
           <Connection NodeId="pma3" ParameterId="Add"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="1.0" MaxValue="6.0" StepSize="1.0" ID="Shape" Value="2.0"
+      <Parameter MinValue="1.0" MaxValue="6.0" StepSize="1.0" ID="Shape" Value="6.0"
                  DefaultValue="0.0">
         <Connections>
           <Connection NodeId="branch2" ParameterId="Index"/>
@@ -1710,7 +1711,7 @@
           <Connection NodeId="pma1" ParameterId="Multiply"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="-1.0" MaxValue="1.0" ID="AdjMod" Value="1.0" DefaultValue="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="AdjMod" Value="0.0">
         <Connections>
           <Connection NodeId="pma3" ParameterId="Multiply"/>
         </Connections>

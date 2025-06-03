@@ -139,7 +139,7 @@
       </Node>
     </Nodes>
     <Parameters>
-      <Parameter ID="NoteSrc" MinValue="1.0" MaxValue="7.0" StepSize="1.0" Value="3.0"
+      <Parameter ID="NoteSrc" MinValue="1.0" MaxValue="7.0" StepSize="1.0" Value="2.0"
                  DefaultValue="1.0">
         <Connections>
           <Connection NodeId="branch" ParameterId="Index"/>

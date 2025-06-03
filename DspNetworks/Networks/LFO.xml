@@ -555,8 +555,8 @@
                       <Connection NodeId="expr4" ParameterId="Value"/>
                       <Connection NodeId="expr1" ParameterId="Value"/>
                       <Connection NodeId="expr2" ParameterId="Value"/>
-                      <Connection NodeId="smoother" ParameterId="SmoothingTime"/>
                       <Connection NodeId="smoother1" ParameterId="SmoothingTime"/>
+                      <Connection NodeId="gain" ParameterId="Gain"/>
                     </ModulationTargets>
                     <Parameters>
                       <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Automated="1"/>
@@ -1531,12 +1531,14 @@
                           <Parameter MinValue="0.0" MaxValue="1" StepSize="1.0" ID="Index" Automated="1"/>
                         </Parameters>
                       </Node>
-                      <Node ID="smoother" FactoryPath="core.smoother" Bypassed="0" Name="smoother">
+                      <Node ID="gain" FactoryPath="core.gain" Bypassed="0" Name="gain">
                         <Parameters>
-                          <Parameter MinValue="0.0" MaxValue="2000.0" StepSize="0.1000000014901161"
-                                     SkewFactor="0.2313782125711441" ID="SmoothingTime" DefaultValue="100.0"
-                                     Automated="1"/>
-                          <Parameter MinValue="0.0" MaxValue="1.0" ID="DefaultValue" Value="0.0"/>
+                          <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                     SkewFactor="5.422270774841309" ID="Gain" Automated="1"/>
+                          <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
+                                     SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
+                          <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
+                                     SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
                         </Parameters>
                       </Node>
                       <Node ID="sig2mod2" FactoryPath="math.sig2mod" Bypassed="1" Name="sig2mod2">

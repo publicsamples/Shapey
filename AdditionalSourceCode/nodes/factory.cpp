@@ -28,19 +28,20 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		// Node registrations ----------------------------------------------------------------------
 		
 		registerPolyNode<project::shfiter<1>, project::shfiter<NUM_POLYPHONIC_VOICES>>();
-		registerPolyNode<project::psfine<1>, scriptnode::wrap::illegal_poly<project::psfine<1>>>();
+		registerPolyNode<project::psfine<1>, project::psfine<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::ps2<1>, project::ps2<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::klp2<1>, project::klp2<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::klp<1>, project::klp<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::khp2<1>, project::khp2<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::khp<1>, project::khp<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::hole<1>, scriptnode::wrap::illegal_poly<project::hole<1>>>();
-		registerPolyNode<project::gran<1>, scriptnode::wrap::illegal_poly<project::gran<1>>>();
+		registerPolyNode<project::gran<1>, project::gran<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::Comb<1>, project::Comb<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::files<1>, project::files<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::HpLp<1>, project::HpLp<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::lfo<1>, wrap::illegal_poly<project::lfo<1>>>();
-		registerPolyNode<project::NoteSelector<1>, wrap::illegal_poly<project::NoteSelector<1>>>();
+		registerPolyNode<project::NewArrange<1>, project::NewArrange<NUM_POLYPHONIC_VOICES>>();
+		registerPolyNode<project::NoteSelector<1>, project::NoteSelector<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::NoteSelector2<1>, wrap::illegal_poly<project::NoteSelector2<1>>>();
 		registerPolyNode<project::osc1<1>, project::osc1<NUM_POLYPHONIC_VOICES>>();
 		registerPolyNode<project::oscshaper<1>, project::oscshaper<NUM_POLYPHONIC_VOICES>>();
@@ -63,6 +64,7 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		registerDataNode<project::Input3_networkdata>();
 		registerDataNode<project::Input4_networkdata>();
 		registerDataNode<project::_networkdata>();
+		registerDataNode<project::invgate_networkdata>();
 		registerDataNode<project::lfo2_networkdata>();
 		registerDataNode<project::lfo3_networkdata>();
 		registerDataNode<project::lfo4_networkdata>();
@@ -73,7 +75,6 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		registerDataNode<project::ModOut1_networkdata>();
 		registerDataNode<project::modtest1_networkdata>();
 		registerDataNode<project::ModToNote_networkdata>();
-		registerDataNode<project::NewArrange_networkdata>();
 		registerDataNode<project::OscOut1_networkdata>();
 		registerDataNode<project::OscOut2_networkdata>();
 		registerDataNode<project::OscOut3_networkdata>();
@@ -92,11 +93,19 @@ struct Factory: public scriptnode::dll::StaticLibraryHostFactory
 		registerDataNode<project::send5_networkdata>();
 		registerDataNode<project::send6_networkdata>();
 		registerDataNode<project::send7_networkdata>();
+		registerDataNode<project::seq1_networkdata>();
 		registerDataNode<project::ShaperMod_networkdata>();
 		registerDataNode<project::Step_networkdata>();
 		registerDataNode<project::subby_networkdata>();
 		registerDataNode<project::subs_networkdata>();
+		registerDataNode<project::timertest_networkdata>();
 		registerDataNode<project::Trig1_networkdata>();
+		registerDataNode<project::TrigIn_networkdata>();
+		registerDataNode<project::TrigSeq5_networkdata>();
+		registerDataNode<project::TrigSeq6_networkdata>();
+		registerDataNode<project::TrigSeq7_networkdata>();
+		registerDataNode<project::TrigSeq8_networkdata>();
+		registerDataNode<project::TrigTests_networkdata>();
 		registerDataNode<project::VcaAdsr_networkdata>();
 		registerDataNode<project::voice_networkdata>();
 		registerDataNode<project::VoiceOut1_networkdata>();

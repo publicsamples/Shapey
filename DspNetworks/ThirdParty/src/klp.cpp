@@ -39,12 +39,12 @@ struct _klp final : public ::faust::dsp {
 	float fConst0;
 	FAUSTFLOAT fHslider0;
 	FAUSTFLOAT fHslider1;
+	float fRec0[2];
 	float fRec1[2];
 	float fRec2[2];
-	float fRec3[2];
+	float fRec4[2];
 	float fRec5[2];
 	float fRec6[2];
-	float fRec7[2];
 	
 	_klp() {
 	}
@@ -96,22 +96,22 @@ struct _klp final : public ::faust::dsp {
 	
 	void instanceClear() {
 		for (int l0 = 0; l0 < 2; l0 = l0 + 1) {
-			fRec1[l0] = 0.0f;
+			fRec0[l0] = 0.0f;
 		}
 		for (int l1 = 0; l1 < 2; l1 = l1 + 1) {
-			fRec2[l1] = 0.0f;
+			fRec1[l1] = 0.0f;
 		}
 		for (int l2 = 0; l2 < 2; l2 = l2 + 1) {
-			fRec3[l2] = 0.0f;
+			fRec2[l2] = 0.0f;
 		}
 		for (int l3 = 0; l3 < 2; l3 = l3 + 1) {
-			fRec5[l3] = 0.0f;
+			fRec4[l3] = 0.0f;
 		}
 		for (int l4 = 0; l4 < 2; l4 = l4 + 1) {
-			fRec6[l4] = 0.0f;
+			fRec5[l4] = 0.0f;
 		}
 		for (int l5 = 0; l5 < 2; l5 = l5 + 1) {
-			fRec7[l5] = 0.0f;
+			fRec6[l5] = 0.0f;
 		}
 	}
 	
@@ -149,36 +149,35 @@ struct _klp final : public ::faust::dsp {
 		float fSlow0 = std::tan(fConst0 * std::pow(1e+01f, 3.0f * std::max<float>(0.0f, std::min<float>(1.0f, float(fHslider0))) + 1.0f));
 		float fSlow1 = fSlow0 + 1.0f;
 		float fSlow2 = fSlow0 / fSlow1;
-		float fSlow3 = std::max<float>(0.5f, std::min<float>(1e+01f, float(fHslider1))) + -0.70710677f;
-		float fSlow4 = fSlow3 * (1.0f - fSlow2);
-		float fSlow5 = 1.0f / (1.0f - 0.21521823f * (fSlow4 * fSlow0 / fSlow1));
+		float fSlow3 = 2.0f * fSlow2;
+		float fSlow4 = std::max<float>(0.5f, std::min<float>(1e+01f, float(fHslider1))) + -0.70710677f;
+		float fSlow5 = 1.0f / (0.21521823f * ((fSlow2 + -1.0f) * fSlow0 * fSlow4 / fSlow1) + 1.0f);
 		float fSlow6 = 1.0f / fSlow1;
-		float fSlow7 = 0.21521823f * fSlow4;
-		float fSlow8 = 2.0f * fSlow2;
-		float fSlow9 = 0.21521823f * fSlow3;
+		float fSlow7 = 0.21521823f * fSlow4 * (1.0f - fSlow2);
+		float fSlow8 = 0.21521823f * fSlow4;
 		for (int i0 = 0; i0 < count; i0 = i0 + 1) {
-			float fTemp0 = float(input0[i0]) - fRec3[1];
-			float fTemp1 = fSlow5 * (fSlow6 * (fSlow0 * fTemp0 + fSlow7 * fRec1[1] - fRec2[1]) + fRec3[1]) - fRec1[1];
-			float fTemp2 = fRec1[1] + fSlow2 * fTemp1;
-			float fRec0 = fTemp2;
-			fRec1[0] = fRec1[1] + fSlow8 * fTemp1;
-			fRec2[0] = fRec2[1] + fSlow8 * (fSlow9 * fTemp2 - fRec2[1]);
-			fRec3[0] = fSlow8 * fTemp0 + fRec3[1];
-			output0[i0] = FAUSTFLOAT(fRec0);
-			float fTemp3 = float(input1[i0]) - fRec7[1];
-			float fTemp4 = fSlow5 * (fRec7[1] + fSlow6 * (fSlow0 * fTemp3 + fSlow7 * fRec5[1] - fRec6[1])) - fRec5[1];
-			float fTemp5 = fRec5[1] + fSlow2 * fTemp4;
-			float fRec4 = fTemp5;
-			fRec5[0] = fRec5[1] + fSlow8 * fTemp4;
-			fRec6[0] = fRec6[1] + fSlow8 * (fSlow9 * fTemp5 - fRec6[1]);
-			fRec7[0] = fRec7[1] + fSlow8 * fTemp3;
-			output1[i0] = FAUSTFLOAT(fRec4);
+			float fTemp0 = float(input0[i0]) - fRec2[1];
+			float fTemp1 = fSlow5 * (fSlow6 * (fSlow0 * fTemp0 + fSlow7 * fRec0[1] - fRec1[1]) + fRec2[1]) - fRec0[1];
+			fRec0[0] = fSlow3 * fTemp1 + fRec0[1];
+			float fTemp2 = fSlow2 * fTemp1 + fRec0[1];
+			fRec1[0] = fSlow3 * (fSlow8 * fTemp2 - fRec1[1]) + fRec1[1];
+			fRec2[0] = fSlow3 * fTemp0 + fRec2[1];
+			float fRec3 = fTemp2;
+			output0[i0] = FAUSTFLOAT(fRec3);
+			float fTemp3 = float(input1[i0]) - fRec6[1];
+			float fTemp4 = fSlow5 * (fRec6[1] + fSlow6 * (fSlow0 * fTemp3 + fSlow7 * fRec4[1] - fRec5[1])) - fRec4[1];
+			fRec4[0] = fRec4[1] + fSlow3 * fTemp4;
+			float fTemp5 = fRec4[1] + fSlow2 * fTemp4;
+			fRec5[0] = fRec5[1] + fSlow3 * (fSlow8 * fTemp5 - fRec5[1]);
+			fRec6[0] = fRec6[1] + fSlow3 * fTemp3;
+			float fRec7 = fTemp5;
+			output1[i0] = FAUSTFLOAT(fRec7);
+			fRec0[1] = fRec0[0];
 			fRec1[1] = fRec1[0];
 			fRec2[1] = fRec2[0];
-			fRec3[1] = fRec3[0];
+			fRec4[1] = fRec4[0];
 			fRec5[1] = fRec5[0];
 			fRec6[1] = fRec6[0];
-			fRec7[1] = fRec7[0];
 		}
 	}
 

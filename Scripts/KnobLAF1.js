@@ -264,6 +264,16 @@ const var LfoMods1 = [Content.getComponent("LfoGateMod1"),
 for(s in LfoMods1)
       s.setLocalLookAndFeel(KnobLaf);  
 
+const var SeqMods = [Content.getComponent("SeqTempoMod1"),
+                     Content.getComponent("SeqClockMod1"),
+                     Content.getComponent("SeqTempoMod2"),
+                     Content.getComponent("SeqClockMod2"),
+					 Content.getComponent("SeqTempoMod3"),
+                     Content.getComponent("SeqClockMod3"),
+                     Content.getComponent("SeqTempoMod4"),
+                     Content.getComponent("SeqClockMod4")];
+
  
 
-      
+  for(s in SeqMods)
+        s.setLocalLookAndFeel(KnobLaf);      

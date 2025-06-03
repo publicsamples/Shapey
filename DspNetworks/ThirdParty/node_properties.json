@@ -2,6 +2,9 @@
   "Comb": [
     "AllowPolyphonic"
   ],
+  "gran": [
+    "AllowPolyphonic"
+  ],
   "hole": [
     "IsPolyphonic"
   ],
@@ -17,8 +20,12 @@
   "klp2": [
     "AllowPolyphonic"
   ],
-  "ps2": [],
-  "psfine": [],
+  "ps2": [
+    "AllowPolyphonic"
+  ],
+  "psfine": [
+    "AllowPolyphonic"
+  ],
   "shfiter": [
     "AllowPolyphonic"
   ]

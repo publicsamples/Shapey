@@ -383,7 +383,7 @@ using pma3_mod_5 = parameter::from0To1<core::smoother<NV>,
                                        0, 
                                        pma3_mod_5Range>;
 
-template <int NV> using pma3_mod_6 = pma3_mod_5<NV>;
+template <int NV> using pma3_mod_6 = xfader_c0<NV>;
 
 template <int NV>
 using pma3_mod = parameter::chain<ranges::Identity, 
@@ -859,7 +859,7 @@ using branch6_t = container::branch<parameter::empty,
 template <int NV>
 using chain22_t = container::chain<parameter::empty, 
                                    wrap::fix<1, branch6_t<NV>>, 
-                                   core::smoother<NV>, 
+                                   core::gain<NV>, 
                                    wrap::no_process<math::sig2mod<NV>>, 
                                    wrap::no_process<math::sin<NV>>>;
 
@@ -1740,7 +1740,7 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
 		auto& branch6 = this->getT(2).getT(2).getT(2).getT(2).getT(0);                        // lfo_impl::branch6_t<NV>
 		auto& sampleandhold = this->getT(2).getT(2).getT(2).getT(2).getT(0).getT(0);          // fx::sampleandhold<NV>
 		auto& sampleandhold2 = this->getT(2).getT(2).getT(2).getT(2).getT(0).getT(1);         // fx::sampleandhold<NV>
-		auto& smoother = this->getT(2).getT(2).getT(2).getT(2).getT(1);                       // core::smoother<NV>
+		auto& gain = this->getT(2).getT(2).getT(2).getT(2).getT(1);                           // core::gain<NV>
 		auto& sig2mod2 = this->getT(2).getT(2).getT(2).getT(2).getT(2);                       // wrap::no_process<math::sig2mod<NV>>
 		auto& sin4 = this->getT(2).getT(2).getT(2).getT(2).getT(3);                           // wrap::no_process<math::sin<NV>>
 		auto& chain26 = this->getT(2).getT(2).getT(2).getT(3);                                // lfo_impl::chain26_t<NV>
@@ -1972,8 +1972,8 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
 		pma3.getWrappedObject().getParameter().connectT(2, expr4);           // pma3 -> expr4::Value
 		pma3.getWrappedObject().getParameter().connectT(3, expr1);           // pma3 -> expr1::Value
 		pma3.getWrappedObject().getParameter().connectT(4, expr2);           // pma3 -> expr2::Value
-		pma3.getWrappedObject().getParameter().connectT(5, smoother);        // pma3 -> smoother::SmoothingTime
-		pma3.getWrappedObject().getParameter().connectT(6, smoother1);       // pma3 -> smoother1::SmoothingTime
+		pma3.getWrappedObject().getParameter().connectT(5, smoother1);       // pma3 -> smoother1::SmoothingTime
+		pma3.getWrappedObject().getParameter().connectT(6, gain);            // pma3 -> gain::Gain
 		peak8.getParameter().connectT(0, pma3);                              // peak8 -> pma3::Value
 		auto& xfader1_p = xfader1.getWrappedObject().getParameter();
 		xfader1_p.getParameterT(0).connectT(0, gain28);                      // xfader1 -> gain28::Gain
@@ -2373,8 +2373,9 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
 		
 		; // sampleandhold2::Counter is automated
 		
-		;                              // smoother::SmoothingTime is automated
-		smoother.setParameterT(1, 0.); // core::smoother::DefaultValue
+		;                           // gain::Gain is automated
+		gain.setParameterT(1, 20.); // core::gain::Smoothing
+		gain.setParameterT(2, 0.);  // core::gain::ResetValue
 		
 		sig2mod2.setParameterT(0, 0.); // math::sig2mod::Value
 		

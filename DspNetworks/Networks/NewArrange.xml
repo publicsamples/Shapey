@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Network ID="NewArrange" AllowPolyphonic="1" Version="0.0.0">
+<Network ID="NewArrange" AllowPolyphonic="1" Version="0.0.0" AllowCompilation="1">
   <Node FactoryPath="container.chain" ID="NewArrange" Bypassed="0" Name="NewArrange"
         ShowParameters="1">
     <Nodes>
@@ -30,7 +30,8 @@
                          Automated="1"/>
               <Parameter MinValue="-1.0" MaxValue="1.0" ID="InputMod" DefaultValue="0.0"
                          Automated="1"/>
-              <Parameter MinValue="0.0" MaxValue="1.0" ID="OutPut" DefaultValue="0.1058933436870575"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="OutPut" DefaultValue="0.1058933436870575"
+                         Value="0.0"/>
               <Parameter MinValue="-1.0" MaxValue="1.0" ID="OutMod" DefaultValue="0.0"/>
               <Parameter MinValue="1.0" MaxValue="16.0" ID="harm" DefaultValue="1.0" Automated="1"/>
               <Parameter MinValue="0.0" MaxValue="1.0" ID="sync" DefaultValue="1.0" Automated="1"/>
@@ -95,7 +96,7 @@
                 <Table Index="-1"/>
               </Tables>
               <SliderPacks>
-                <SliderPack Index="-1" EmbeddedData="64....f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+....9C...3O...f+."/>
+                <SliderPack Index="-1" EmbeddedData="16....f+....9C...3O...f+."/>
                 <SliderPack Index="6"/>
                 <SliderPack Index="7"/>
                 <SliderPack Index="8"/>
@@ -112,9 +113,9 @@
                 <SliderPack Index="-1"/>
               </SliderPacks>
               <AudioFiles>
-                <AudioFile Index="0" MinValue="0" MaxValue="0"/>
+                <AudioFile Index="0" MinValue="0" MaxValue="2097152"/>
                 <AudioFile Index="1" EmbeddedData="{PROJECT_FOLDER}Misc/Quetzalcoatl/Q-chum.wav"
-                           MinValue="0" MaxValue="0"/>
+                           MinValue="0" MaxValue="2097152"/>
                 <AudioFile Index="-1"/>
               </AudioFiles>
             </ComplexData>
@@ -131,52 +132,77 @@
                          Automated="1"/>
               <Parameter MinValue="0.0" MaxValue="1000.0" ID="Xf" DefaultValue="881.3499755859375"
                          Automated="1"/>
-              <Parameter MinValue="1.0" MaxValue="3.0" StepSize="1.0" ID="shift" Value="1.0"
-                         DefaultValue="3.0"/>
-              <Parameter MinValue="-24.0" MaxValue="24.0" ID="pitch" Value="0.4720000000000013"
-                         DefaultValue="10.0"/>
-              <Parameter MinValue="0.0" MaxValue="1.0" ID="Mix" Value="1.0"/>
-              <Parameter MinValue="-1.0" MaxValue="1.0" ID="PositionTempoMod" Value="0.0"/>
-              <Parameter MinValue="-1.0" MaxValue="1.0" ID="PitchMod" Value="0.0"/>
-              <Parameter MinValue="-1.0" MaxValue="1.0" ID="InputMod" Value="0.0"/>
-              <Parameter MinValue="1.0" MaxValue="4.0" StepSize="1.0" ID="XfStage" Value="1.0"/>
-              <Parameter MinValue="-1.0" MaxValue="1.0" ID="IntMod" Value="0.1000624999999999"
-                         DefaultValue="1.0"/>
+              <Parameter MinValue="1.0" MaxValue="3.0" StepSize="1.0" ID="shift" DefaultValue="3.0"
+                         Automated="1"/>
+              <Parameter MinValue="-24.0" MaxValue="24.0" ID="pitch" DefaultValue="10.0"
+                         Automated="1"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="Mix" DefaultValue="1.0" Automated="1"/>
+              <Parameter MinValue="-1.0" MaxValue="1.0" ID="PositionTempoMod" DefaultValue="0.0"
+                         Automated="1"/>
+              <Parameter MinValue="-1.0" MaxValue="1.0" ID="PitchMod" DefaultValue="0.0"
+                         Automated="1"/>
+              <Parameter MinValue="-1.0" MaxValue="1.0" ID="InputMod" DefaultValue="0.0"
+                         Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="4.0" StepSize="1.0" ID="XfStage" DefaultValue="1.0"
+                         Automated="1"/>
+              <Parameter MinValue="-1.0" MaxValue="1.0" ID="IntMod" DefaultValue="1.0"
+                         Automated="1"/>
               <Parameter MinValue="4.0" MaxValue="64.0" StepSize="1.0" ID="IntModSteps"
-                         Value="16.0"/>
-              <Parameter MinValue="0.0" MaxValue="1.0" ID="IntmodOne" Value="0.0908203125"/>
+                         DefaultValue="16.0" Automated="1"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="IntmodOne" DefaultValue="0.0908203125"
+                         Automated="1"/>
               <Parameter MinValue="0.0" MaxValue="18.0" StepSize="1.0" ID="intmodtempo"
-                         Value="0.0"/>
-              <Parameter MinValue="1.0" MaxValue="32.0" StepSize="1.0" ID="InmodDiv" Value="4.0"/>
-              <Parameter MinValue="0.0" MaxValue="1.0" ID="fb" Value="0.8999999761581421"/>
-              <Parameter MinValue="0.0" MaxValue="1.0" ID="tablestep" Value="0.0"/>
-              <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1.0" ID="Midi1" Value="1.0"/>
-              <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1.0" ID="Midi2" Value="1.0"/>
-              <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1.0" ID="Midi3" Value="1.0"/>
-              <Parameter MinValue="1.0" MaxValue="4.0" ID="xf2" Value="1.0"/>
-              <Parameter MinValue="1.0" MaxValue="4.0" StepSize="1.0" ID="xf3" Value="1.0"/>
-              <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="UserMode" Value="0.0"/>
-              <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="WinSync" Value="0.0"/>
+                         DefaultValue="0.0" Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="32.0" StepSize="1.0" ID="InmodDiv" DefaultValue="4.0"
+                         Automated="1"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="fb" DefaultValue="0.8999999761581421"
+                         Automated="1"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" ID="tablestep" DefaultValue="0.0"
+                         Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1.0" ID="Midi1" DefaultValue="1.0"
+                         Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1.0" ID="Midi2" DefaultValue="1.0"
+                         Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1.0" ID="Midi3" DefaultValue="1.0"
+                         Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="4.0" ID="xf2" DefaultValue="1.0" Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="4.0" StepSize="1.0" ID="xf3" DefaultValue="1.0"
+                         Automated="1"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="UserMode" DefaultValue="0.0"
+                         Automated="1"/>
+              <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="WinSync" DefaultValue="0.0"
+                         Automated="1"/>
               <Parameter MinValue="-16.0" MaxValue="18.0" StepSize="1.0" ID="WinTempo"
-                         Value="0.0"/>
+                         DefaultValue="0.0" Automated="1"/>
               <Parameter MinValue="-16.0" MaxValue="18.0" StepSize="1.0" ID="XfTempo"
-                         Value="0.0"/>
-              <Parameter MinValue="-1.0" MaxValue="1.0" ID="WinMod" Value="0.0"/>
-              <Parameter MinValue="-1.0" MaxValue="1.0" ID="XfMod" Value="0.0"/>
-              <Parameter MinValue="1.0" MaxValue="4.0" StepSize="1.0" ID="xf4" Value="1.0"/>
-              <Parameter MinValue="1.0" MaxValue="4.0" ID="xf5" Value="1.0"/>
-              <Parameter MinValue="1.0" MaxValue="7.0" ID="midi4" Value="1.0"/>
-              <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1.0" ID="mid5" Value="1.0"/>
-              <Parameter MinValue="0.0" MaxValue="2.0" ID="InmodClk" Value="2.0"/>
-              <Parameter MinValue="-1.0" MaxValue="1.0" ID="InTempoMod" Value="0.0"/>
-              <Parameter MinValue="-1.0" MaxValue="1.0" ID="SmoothMod" Value="0.0"/>
-              <Parameter MinValue="-1.0" MaxValue="1.0" ID="MixMod" Value="0.0"/>
-              <Parameter MinValue="1.0" MaxValue="7.0" ID="Midi6" Value="1.0"/>
-              <Parameter MinValue="1.0" MaxValue="7.0" ID="Midi7" Value="1.0"/>
-              <Parameter MinValue="1.0" MaxValue="7.0" ID="Midi8" Value="1.0"/>
-              <Parameter MinValue="1.0" MaxValue="4.0" ID="XfStage6" Value="1.0"/>
-              <Parameter MinValue="1.0" MaxValue="4.0" ID="XfStage7" Value="1.0"/>
-              <Parameter MinValue="1.0" MaxValue="4.0" ID="XfStage8" Value="1.0"/>
+                         DefaultValue="0.0" Automated="1"/>
+              <Parameter MinValue="-1.0" MaxValue="1.0" ID="WinMod" DefaultValue="0.0"
+                         Automated="1"/>
+              <Parameter MinValue="-1.0" MaxValue="1.0" ID="XfMod" DefaultValue="0.0"
+                         Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="4.0" StepSize="1.0" ID="xf4" DefaultValue="1.0"
+                         Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="4.0" ID="xf5" DefaultValue="1.0" Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="7.0" ID="midi4" DefaultValue="1.0" Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1.0" ID="mid5" DefaultValue="1.0"
+                         Automated="1"/>
+              <Parameter MinValue="0.0" MaxValue="2.0" ID="InmodClk" DefaultValue="2.0"
+                         Automated="1"/>
+              <Parameter MinValue="-1.0" MaxValue="1.0" ID="InTempoMod" DefaultValue="0.0"
+                         Automated="1"/>
+              <Parameter MinValue="-1.0" MaxValue="1.0" ID="SmoothMod" DefaultValue="0.0"
+                         Automated="1"/>
+              <Parameter MinValue="-1.0" MaxValue="1.0" ID="MixMod" DefaultValue="0.0"
+                         Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="7.0" ID="Midi6" DefaultValue="1.0" Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="7.0" ID="Midi7" DefaultValue="1.0" Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="7.0" ID="Midi8" DefaultValue="1.0" Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="4.0" ID="XfStage6" DefaultValue="1.0"
+                         Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="4.0" ID="XfStage7" DefaultValue="1.0"
+                         Automated="1"/>
+              <Parameter MinValue="1.0" MaxValue="4.0" ID="XfStage8" DefaultValue="1.0"
+                         Automated="1"/>
             </Parameters>
           </Node>
         </Nodes>
@@ -184,22 +210,26 @@
       </Node>
     </Nodes>
     <Parameters>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Pitch" Value="0.0">
+      <Parameter MinValue="-24.0" MaxValue="24.0" ID="Pitch" Value="-14.74728260869565"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="osc1" ParameterId="Pitch"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="tempo" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="18.0" ID="tempo" Value="2.265285326086957"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="osc1" ParameterId="tempo"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="div" Value="0.0">
+      <Parameter MinValue="1.0" MaxValue="32.0" ID="div" Value="32.0" DefaultValue="0.0"
+                 StepSize="1.0">
         <Connections>
           <Connection NodeId="osc1" ParameterId="div"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="pitchmode" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="4.0" ID="pitchmode" Value="1.0" DefaultValue="0.0"
+                 StepSize="1.0">
         <Connections>
           <Connection NodeId="osc1" ParameterId="pitchmode"/>
         </Connections>
@@ -214,17 +244,18 @@
           <Connection NodeId="osc1" ParameterId="Input"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="PitchMod" Value="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="PitchMod" Value="0.0">
         <Connections>
           <Connection NodeId="osc1" ParameterId="PitchMod"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="InputMod" Value="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="InputMod" Value="-0.1020720108695652"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="osc1" ParameterId="InputMod"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="harm" Value="0.0">
+      <Parameter MinValue="1.0" MaxValue="16.0" ID="harm" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="osc1" ParameterId="harm"/>
         </Connections>
@@ -239,150 +270,352 @@
           <Connection NodeId="osc1" ParameterId="LfoUnsync"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="XfstagePitch" Value="0.0">
+      <Parameter MinValue="1.0" MaxValue="4.0" ID="XfstagePitch" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="osc1" ParameterId="XfstagePitch"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="MidiSlotPitch" Value="0.0">
+      <Parameter MinValue="1.0" MaxValue="7.0" ID="MidiSlotPitch" Value="1.0"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="osc1" ParameterId="MidiSlotPitch"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="XfstageInput" Value="0.0">
+      <Parameter MinValue="1.0" MaxValue="4.0" ID="XfstageInput" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="osc1" ParameterId="XfstageInput"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="MidiSlotIn" Value="0.0">
+      <Parameter MinValue="1.0" MaxValue="7.0" ID="MidiSlotIn" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="osc1" ParameterId="MidiSlotIn"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="XfstageOut" Value="0.0">
+      <Parameter MinValue="1.0" MaxValue="4.0" ID="XfstageOut" Value="1.052734375"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="osc1" ParameterId="XfstageOut"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="MidiSlotOut" Value="0.0">
+      <Parameter MinValue="1.0" MaxValue="7.0" ID="MidiSlotOut" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="osc1" ParameterId="MidiSlotOut"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Bend" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="Bend" Value="0.4678158967391304"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="osc1" ParameterId="Bend"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="shaper" Value="0.0">
+      <Parameter MinValue="1.0" MaxValue="8.0" ID="shaper" Value="2.991932744565217"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="oscshaper" ParameterId="shaper"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="width" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="width" Value="0.4126188858695652"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="oscshaper" ParameterId="width"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="out" Value="0.4828125" DefaultValue="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="out" Value="0.1835088315217391"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="oscshaper" ParameterId="out"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="shapemod" Value="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="shapemod" Value="0.0">
         <Connections>
           <Connection NodeId="oscshaper" ParameterId="shapemod"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="widthmod" Value="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="widthmod" Value="0.0">
         <Connections>
           <Connection NodeId="oscshaper" ParameterId="widthmod"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="outmod" Value="0.0">
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="outmod" Value="0.0">
         <Connections>
           <Connection NodeId="oscshaper" ParameterId="outmod"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="XfStage" Value="0.0">
+      <Parameter MinValue="1.0" MaxValue="4.0" ID="XfStage" Value="1.0" DefaultValue="0.0"
+                 StepSize="1.0">
         <Connections>
           <Connection NodeId="oscshaper" ParameterId="XfStage"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Midi1" Value="0.0">
+      <Parameter MinValue="1.0" MaxValue="7.0" ID="Midi1" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="oscshaper" ParameterId="Midi1"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="xf2" Value="0.0">
+      <Parameter MinValue="1.0" MaxValue="4.0" ID="xf2" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="oscshaper" ParameterId="xf2"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="xf3" Value="0.0">
+      <Parameter MinValue="1.0" MaxValue="4.0" ID="xf3" Value="1.00791015625"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="oscshaper" ParameterId="xf3"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="midi2" Value="0.5249999999999999"
-                 DefaultValue="0.0">
+      <Parameter MinValue="1.0" MaxValue="7.0" ID="midi2" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="oscshaper" ParameterId="midi2"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="midi3" Value="0.0">
+      <Parameter MinValue="1.0" MaxValue="7.0" ID="midi3" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="oscshaper" ParameterId="midi3"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="smooth" Value="0.41103515625"
-                 DefaultValue="0.0">
+      <Parameter MinValue="0.0" MaxValue="2000.0" ID="smooth" Value="1.000000014901161"
+                 DefaultValue="0.0" StepSize="0.1000000014901161" SkewFactor="0.2313782125711441">
         <Connections>
           <Connection NodeId="files" ParameterId="smooth"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="quant" Value="0.0">
+      <Parameter MinValue="1.0" MaxValue="9.0" ID="quant" Value="1.0" DefaultValue="0.0"
+                 StepSize="1.0">
         <Connections>
           <Connection NodeId="files" ParameterId="quant"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Position" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="Position" Value="0.3302479619565217"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="files" ParameterId="Position"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="input" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="input" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="files" ParameterId="Input"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Win" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="1000.0" ID="Win" Value="0.0">
         <Connections>
           <Connection NodeId="files" ParameterId="Win"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Xf" Value="0.0">
+      <Parameter MinValue="0.0" MaxValue="1000.0" ID="Xf" Value="5.069208559782608"
+                 DefaultValue="0.0">
         <Connections>
           <Connection NodeId="files" ParameterId="Xf"/>
         </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="shift" Value="0.0">
-        <Connections/>
+      <Parameter MinValue="1.0" MaxValue="3.0" ID="shift" Value="1.0" DefaultValue="0.0"
+                 StepSize="1.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="shift"/>
+        </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="pitch" Value="0.0">
-        <Connections/>
+      <Parameter MinValue="-24.0" MaxValue="24.0" ID="pitch" Value="0.00097265625"
+                 DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="pitch"/>
+        </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="Mix" Value="0.0">
-        <Connections/>
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="Mix" Value="1.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="Mix"/>
+        </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="PositionTempoMod" Value="0.0">
-        <Connections/>
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="PositionTempoMod" Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="PositionTempoMod"/>
+        </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="PsMod" Value="0.0">
-        <Connections/>
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="PsMod" Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="PitchMod"/>
+        </Connections>
       </Parameter>
-      <Parameter MinValue="0.0" MaxValue="1.0" ID="FileInMod" Value="0.0">
-        <Connections/>
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="FileInMod" Value="0.0009578857421875001"
+                 DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="InputMod"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="4.0" StepSize="1.0" ID="XfFStage1" Value="1.0"
+                 DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="XfStage"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="IntMod" Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="IntMod"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="4.0" MaxValue="64.0" StepSize="1.0" ID="IntModSteps\"
+                 Value="4.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="IntModSteps"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="IntModOne" Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="IntmodOne"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="0.0" MaxValue="18.0" StepSize="1.0" ID="intmodtempo"
+                 Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="intmodtempo"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="32.0" StepSize="1.0" ID="Inmoddiv" Value="1.0"
+                 DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="InmodDiv"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="fb" Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="fb"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="0.0" MaxValue="1.0" ID="tablestep" Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="tablestep"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1.0" ID="Fmidi1" Value="1.0"
+                 DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="Midi1"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1.0" ID="fmidi2" Value="1.0"
+                 DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="Midi2"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1.0" ID="fmidi3" Value="1.0"
+                 DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="Midi3"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="7.0" ID="fmidi4" Value="1.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="midi4"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="7.0" StepSize="1.0" ID="fmidi5" Value="1.0"
+                 DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="mid5"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="7.0" ID="fmidi6" Value="1.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="Midi6"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="7.0" ID="fmidi7" Value="1.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="Midi7"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="7.0" ID="fmidi8" Value="1.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="Midi8"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="4.0" ID="Xfstg2" Value="1.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="xf2"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="4.0" StepSize="1.0" ID="XfStg3" Value="1.0"
+                 DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="xf3"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="4.0" StepSize="1.0" ID="XfStg4" Value="1.0"
+                 DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="xf4"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="4.0" ID="XfStg5" Value="1.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="xf5"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="4.0" ID="XfStg6" Value="1.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="XfStage6"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="4.0" ID="XfStg7" Value="1.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="XfStage7"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="1.0" MaxValue="4.0" ID="XfStg8" Value="1.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="XfStage8"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="UserMode" Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="UserMode"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="0.0" MaxValue="1.0" StepSize="1.0" ID="WinSync" Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="WinSync"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="-16.0" MaxValue="18.0" StepSize="1.0" ID="WinTempo"
+                 Value="-9.0" DefaultValue="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="WinTempo"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="-16.0" MaxValue="18.0" StepSize="1.0" ID="XfTempo"
+                 Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="XfTempo"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="WinMod" Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="WinMod"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="XfMod" Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="XfMod"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="0.0" MaxValue="2.0" ID="InmodClk" Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="InmodClk"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="InTempoMod" Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="InTempoMod"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="SmoothMod" Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="SmoothMod"/>
+        </Connections>
+      </Parameter>
+      <Parameter MinValue="-1.0" MaxValue="1.0" ID="MixMod" Value="0.0">
+        <Connections>
+          <Connection NodeId="files" ParameterId="MixMod"/>
+        </Connections>
       </Parameter>
     </Parameters>
   </Node>
