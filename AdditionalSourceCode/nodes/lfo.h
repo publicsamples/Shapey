@@ -770,13 +770,6 @@ using split8_t = container::split<parameter::empty,
                                   modchain3_t<NV>>;
 
 template <int NV>
-using wrapevent_data_reader41_t_ = container::chain<parameter::empty, 
-                                                    wrap::fix<2, split8_t<NV>>>;
-
-template <int NV>
-using wrapevent_data_reader41_t = wrap::event<wrapevent_data_reader41_t_<NV>>;
-
-template <int NV>
 using chain3_t = container::chain<parameter::empty, 
                                   wrap::fix<1, tempo_sync_t<NV>>, 
                                   ramp_t<NV>>;
@@ -1248,6 +1241,19 @@ using modchain4_t_ = container::chain<parameter::empty,
 template <int NV>
 using modchain4_t = wrap::control_rate<modchain4_t_<NV>>;
 
+template <int NV>
+using fix8_block_t = container::chain<parameter::empty, 
+                                      wrap::fix<2, split8_t<NV>>, 
+                                      modchain4_t<NV>, 
+                                      math::clear<NV>>;
+
+template <int NV>
+using wrapevent_data_reader41_t_ = container::chain<parameter::empty, 
+                                                    wrap::fix<2, fix8_block_t<NV>>>;
+
+template <int NV>
+using wrapevent_data_reader41_t = wrap::event<wrapevent_data_reader41_t_<NV>>;
+
 namespace lfo_t_parameters
 {
 // Parameter list for lfo_impl::lfo_t --------------------------------------------------------------
@@ -1416,9 +1422,7 @@ using lfo_t_plist = parameter::list<tempo<NV>,
 template <int NV>
 using lfo_t_ = container::chain<lfo_t_parameters::lfo_t_plist<NV>, 
                                 wrap::fix<2, math::clear<NV>>, 
-                                wrapevent_data_reader41_t<NV>, 
-                                modchain4_t<NV>, 
-                                math::clear<NV>>;
+                                wrapevent_data_reader41_t<NV>>;
 
 // =================================| Root node initialiser class |=================================
 
@@ -1449,7 +1453,7 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
             0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x055B, 0x0000, 0x4700, 
             0x7461, 0x0065, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x0000, 
             0x0000, 0x3F80, 0x0000, 0x3F80, 0x065B, 0x0000, 0x4100, 0x6A64, 
-            0x7375, 0x0074, 0x0000, 0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 
+            0x7375, 0x0074, 0x0000, 0x0000, 0x0000, 0x3F80, 0xA164, 0x3F73, 
             0x0000, 0x3F80, 0x0000, 0x0000, 0x075B, 0x0000, 0x5300, 0x6168, 
             0x6570, 0x0000, 0x8000, 0x003F, 0xE000, 0x0040, 0x8000, 0x003F, 
             0x8000, 0x003F, 0x8000, 0x5B3F, 0x0008, 0x0000, 0x694D, 0x006E, 
@@ -1457,11 +1461,11 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
             0x0000, 0x3F80, 0x095B, 0x0000, 0x4D00, 0x7861, 0x0000, 0xC000, 
             0x0041, 0xC000, 0x0042, 0xC000, 0x0042, 0x8000, 0x003F, 0x0000, 
             0x5B00, 0x000A, 0x0000, 0x7453, 0x7065, 0x0000, 0x0000, 0x0000, 
-            0x4000, 0x0041, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 0x5B00, 
+            0x4000, 0x0041, 0x4000, 0x0041, 0x8000, 0x003F, 0x0000, 0x5B00, 
             0x000B, 0x0000, 0x6554, 0x706D, 0x4D6F, 0x646F, 0x0000, 0x8000, 
             0x00BF, 0x8000, 0x003F, 0x0000, 0x0000, 0x8000, 0x003F, 0x0000, 
             0x5B00, 0x000C, 0x0000, 0x6441, 0x4D6A, 0x646F, 0x0000, 0x8000, 
-            0x00BF, 0x8000, 0x6F3F, 0x0312, 0x00BB, 0x8000, 0x003F, 0x0000, 
+            0x00BF, 0x8000, 0x383F, 0x32BD, 0x003F, 0x8000, 0x003F, 0x0000, 
             0x5B00, 0x000D, 0x0000, 0x6147, 0x6574, 0x6F4D, 0x0064, 0x0000, 
             0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 
             0x3F80, 0x0E5B, 0x0000, 0x4400, 0x7669, 0x6F4D, 0x0064, 0x0000, 
@@ -1482,381 +1486,592 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
 	{
 		// Node References -------------------------------------------------------------------------
 		
-		auto& clear11 = this->getT(0);                                                        // math::clear<NV>
-		auto& wrapevent_data_reader41 = this->getT(1);                                        // lfo_impl::wrapevent_data_reader41_t<NV>
-		auto& split8 = this->getT(1).getT(0);                                                 // lfo_impl::split8_t<NV>
-		auto& modchain = this->getT(1).getT(0).getT(0);                                       // lfo_impl::modchain_t<NV>
-		auto& split7 = this->getT(1).getT(0).getT(0).getT(0);                                 // lfo_impl::split7_t<NV>
-		auto& chain29 = this->getT(1).getT(0).getT(0).getT(0).getT(0);                        // lfo_impl::chain29_t<NV>
-		auto& xfader = this->getT(1).getT(0).getT(0).getT(0).getT(0).getT(0);                 // lfo_impl::xfader_t<NV>
-		auto& split5 = this->getT(1).getT(0).getT(0).getT(0).getT(0).getT(1);                 // lfo_impl::split5_t<NV>
-		auto& chain30 = this->getT(1).getT(0).getT(0).getT(0).getT(0).getT(1).getT(0);        // lfo_impl::chain30_t<NV>
-		auto& global_cable9 = this->getT(1).getT(0).getT(0).getT(0).                          // lfo_impl::global_cable9_t<NV>
-                              getT(0).getT(1).getT(0).getT(0);
-		auto& add13 = this->getT(1).getT(0).getT(0).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(0).getT(1);
-		auto& gain1 = this->getT(1).getT(0).getT(0).getT(0).                                  // core::gain<NV>
-                      getT(0).getT(1).getT(0).getT(2);
-		auto& chain44 = this->getT(1).getT(0).getT(0).getT(0).getT(0).getT(1).getT(1);        // lfo_impl::chain44_t<NV>
-		auto& global_cable11 = this->getT(1).getT(0).getT(0).getT(0).                         // lfo_impl::global_cable11_t<NV>
-                               getT(0).getT(1).getT(1).getT(0);
-		auto& add14 = this->getT(1).getT(0).getT(0).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(1).getT(1);
-		auto& gain10 = this->getT(1).getT(0).getT(0).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(1).getT(2);
-		auto& chain43 = this->getT(1).getT(0).getT(0).getT(0).getT(0).getT(1).getT(2);        // lfo_impl::chain43_t<NV>
-		auto& global_cable10 = this->getT(1).getT(0).getT(0).getT(0).                         // lfo_impl::global_cable10_t<NV>
-                               getT(0).getT(1).getT(2).getT(0);
-		auto& add15 = this->getT(1).getT(0).getT(0).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(2).getT(1);
-		auto& gain12 = this->getT(1).getT(0).getT(0).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(2).getT(2);
-		auto& chain45 = this->getT(1).getT(0).getT(0).getT(0).getT(0).getT(1).getT(3);        // lfo_impl::chain45_t<NV>
-		auto& global_cable12 = this->getT(1).getT(0).getT(0).getT(0).                         // lfo_impl::global_cable12_t<NV>
-                               getT(0).getT(1).getT(3).getT(0);
-		auto& add16 = this->getT(1).getT(0).getT(0).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(3).getT(1);
-		auto& gain17 = this->getT(1).getT(0).getT(0).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(3).getT(2);
-		auto& chain46 = this->getT(1).getT(0).getT(0).getT(0).getT(0).getT(1).getT(4);        // lfo_impl::chain46_t<NV>
-		auto& event_data_reader5 = this->getT(1).getT(0).getT(0).getT(0).                     // lfo_impl::event_data_reader5_t<NV>
-                                   getT(0).getT(1).getT(4).getT(0);
-		auto& add17 = this->getT(1).getT(0).getT(0).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(4).getT(1);
-		auto& gain18 = this->getT(1).getT(0).getT(0).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(4).getT(2);
-		auto& chain47 = this->getT(1).getT(0).getT(0).getT(0).getT(0).getT(1).getT(5);        // lfo_impl::chain47_t<NV>
-		auto& event_data_reader6 = this->getT(1).getT(0).getT(0).getT(0).                     // lfo_impl::event_data_reader6_t<NV>
-                                   getT(0).getT(1).getT(5).getT(0);
-		auto& add18 = this->getT(1).getT(0).getT(0).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(5).getT(1);
-		auto& gain25 = this->getT(1).getT(0).getT(0).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(5).getT(2);
-		auto& peak5 = this->getT(1).getT(0).getT(0).getT(0).getT(0).getT(2);                  // lfo_impl::peak5_t<NV>
-		auto& pma1 = this->getT(1).getT(0).getT(0).getT(1);                                   // lfo_impl::pma1_t<NV>
-		auto& modchain2 = this->getT(1).getT(0).getT(1);                                      // lfo_impl::modchain2_t<NV>
-		auto& split11 = this->getT(1).getT(0).getT(1).getT(0);                                // lfo_impl::split11_t<NV>
-		auto& chain62 = this->getT(1).getT(0).getT(1).getT(0).getT(0);                        // lfo_impl::chain62_t<NV>
-		auto& xfader2 = this->getT(1).getT(0).getT(1).getT(0).getT(0).getT(0);                // lfo_impl::xfader2_t<NV>
-		auto& split12 = this->getT(1).getT(0).getT(1).getT(0).getT(0).getT(1);                // lfo_impl::split12_t<NV>
-		auto& chain63 = this->getT(1).getT(0).getT(1).getT(0).getT(0).getT(1).getT(0);        // lfo_impl::chain63_t<NV>
-		auto& global_cable16 = this->getT(1).getT(0).getT(1).getT(0).                         // lfo_impl::global_cable16_t<NV>
-                               getT(0).getT(1).getT(0).getT(0);
-		auto& add25 = this->getT(1).getT(0).getT(1).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(0).getT(1);
-		auto& gain42 = this->getT(1).getT(0).getT(1).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(0).getT(2);
-		auto& chain64 = this->getT(1).getT(0).getT(1).getT(0).getT(0).getT(1).getT(1);        // lfo_impl::chain64_t<NV>
-		auto& global_cable17 = this->getT(1).getT(0).getT(1).getT(0).                         // lfo_impl::global_cable17_t<NV>
-                               getT(0).getT(1).getT(1).getT(0);
-		auto& add26 = this->getT(1).getT(0).getT(1).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(1).getT(1);
-		auto& gain52 = this->getT(1).getT(0).getT(1).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(1).getT(2);
-		auto& chain69 = this->getT(1).getT(0).getT(1).getT(0).getT(0).getT(1).getT(2);        // lfo_impl::chain69_t<NV>
-		auto& global_cable18 = this->getT(1).getT(0).getT(1).getT(0).                         // lfo_impl::global_cable18_t<NV>
-                               getT(0).getT(1).getT(2).getT(0);
-		auto& add27 = this->getT(1).getT(0).getT(1).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(2).getT(1);
-		auto& gain53 = this->getT(1).getT(0).getT(1).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(2).getT(2);
-		auto& chain70 = this->getT(1).getT(0).getT(1).getT(0).getT(0).getT(1).getT(3);        // lfo_impl::chain70_t<NV>
-		auto& global_cable22 = this->getT(1).getT(0).getT(1).getT(0).                         // lfo_impl::global_cable22_t<NV>
-                               getT(0).getT(1).getT(3).getT(0);
-		auto& add28 = this->getT(1).getT(0).getT(1).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(3).getT(1);
-		auto& gain54 = this->getT(1).getT(0).getT(1).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(3).getT(2);
-		auto& chain71 = this->getT(1).getT(0).getT(1).getT(0).getT(0).getT(1).getT(4);        // lfo_impl::chain71_t<NV>
-		auto& event_data_reader11 = this->getT(1).getT(0).getT(1).getT(0).                    // lfo_impl::event_data_reader11_t<NV>
-                                    getT(0).getT(1).getT(4).getT(0);
-		auto& add29 = this->getT(1).getT(0).getT(1).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(4).getT(1);
-		auto& gain55 = this->getT(1).getT(0).getT(1).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(4).getT(2);
-		auto& chain72 = this->getT(1).getT(0).getT(1).getT(0).getT(0).getT(1).getT(5);        // lfo_impl::chain72_t<NV>
-		auto& event_data_reader12 = this->getT(1).getT(0).getT(1).getT(0).                    // lfo_impl::event_data_reader12_t<NV>
-                                    getT(0).getT(1).getT(5).getT(0);
-		auto& add30 = this->getT(1).getT(0).getT(1).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(5).getT(1);
-		auto& gain56 = this->getT(1).getT(0).getT(1).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(5).getT(2);
-		auto& peak8 = this->getT(1).getT(0).getT(1).getT(0).getT(0).getT(2);                  // lfo_impl::peak8_t<NV>
-		auto& pma3 = this->getT(1).getT(0).getT(1).getT(1);                                   // lfo_impl::pma3_t<NV>
-		auto& modchain1 = this->getT(1).getT(0).getT(2);                                      // lfo_impl::modchain1_t<NV>
-		auto& split9 = this->getT(1).getT(0).getT(2).getT(0);                                 // lfo_impl::split9_t<NV>
-		auto& chain53 = this->getT(1).getT(0).getT(2).getT(0).getT(0);                        // lfo_impl::chain53_t<NV>
-		auto& xfader1 = this->getT(1).getT(0).getT(2).getT(0).getT(0).getT(0);                // lfo_impl::xfader1_t<NV>
-		auto& split10 = this->getT(1).getT(0).getT(2).getT(0).getT(0).getT(1);                // lfo_impl::split10_t<NV>
-		auto& chain54 = this->getT(1).getT(0).getT(2).getT(0).getT(0).getT(1).getT(0);        // lfo_impl::chain54_t<NV>
-		auto& global_cable13 = this->getT(1).getT(0).getT(2).getT(0).                         // lfo_impl::global_cable13_t<NV>
-                               getT(0).getT(1).getT(0).getT(0);
-		auto& add19 = this->getT(1).getT(0).getT(2).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(0).getT(1);
-		auto& gain28 = this->getT(1).getT(0).getT(2).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(0).getT(2);
-		auto& chain55 = this->getT(1).getT(0).getT(2).getT(0).getT(0).getT(1).getT(1);        // lfo_impl::chain55_t<NV>
-		auto& global_cable14 = this->getT(1).getT(0).getT(2).getT(0).                         // lfo_impl::global_cable14_t<NV>
-                               getT(0).getT(1).getT(1).getT(0);
-		auto& add20 = this->getT(1).getT(0).getT(2).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(1).getT(1);
-		auto& gain29 = this->getT(1).getT(0).getT(2).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(1).getT(2);
-		auto& chain58 = this->getT(1).getT(0).getT(2).getT(0).getT(0).getT(1).getT(2);        // lfo_impl::chain58_t<NV>
-		auto& global_cable15 = this->getT(1).getT(0).getT(2).getT(0).                         // lfo_impl::global_cable15_t<NV>
-                               getT(0).getT(1).getT(2).getT(0);
-		auto& add21 = this->getT(1).getT(0).getT(2).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(2).getT(1);
-		auto& gain30 = this->getT(1).getT(0).getT(2).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(2).getT(2);
-		auto& chain59 = this->getT(1).getT(0).getT(2).getT(0).getT(0).getT(1).getT(3);        // lfo_impl::chain59_t<NV>
-		auto& global_cable23 = this->getT(1).getT(0).getT(2).getT(0).                         // lfo_impl::global_cable23_t<NV>
-                               getT(0).getT(1).getT(3).getT(0);
-		auto& add22 = this->getT(1).getT(0).getT(2).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(3).getT(1);
-		auto& gain31 = this->getT(1).getT(0).getT(2).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(3).getT(2);
-		auto& chain60 = this->getT(1).getT(0).getT(2).getT(0).getT(0).getT(1).getT(4);        // lfo_impl::chain60_t<NV>
-		auto& event_data_reader8 = this->getT(1).getT(0).getT(2).getT(0).                     // lfo_impl::event_data_reader8_t<NV>
-                                   getT(0).getT(1).getT(4).getT(0);
-		auto& add23 = this->getT(1).getT(0).getT(2).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(4).getT(1);
-		auto& gain32 = this->getT(1).getT(0).getT(2).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(4).getT(2);
-		auto& chain61 = this->getT(1).getT(0).getT(2).getT(0).getT(0).getT(1).getT(5);        // lfo_impl::chain61_t<NV>
-		auto& event_data_reader9 = this->getT(1).getT(0).getT(2).getT(0).                     // lfo_impl::event_data_reader9_t<NV>
-                                   getT(0).getT(1).getT(5).getT(0);
-		auto& add24 = this->getT(1).getT(0).getT(2).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(5).getT(1);
-		auto& gain41 = this->getT(1).getT(0).getT(2).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(5).getT(2);
-		auto& peak6 = this->getT(1).getT(0).getT(2).getT(0).getT(0).getT(2);                  // lfo_impl::peak6_t<NV>
-		auto& pma2 = this->getT(1).getT(0).getT(2).getT(1);                                   // control::pma<NV, parameter::empty>
-		auto& modchain3 = this->getT(1).getT(0).getT(3);                                      // lfo_impl::modchain3_t<NV>
-		auto& split13 = this->getT(1).getT(0).getT(3).getT(0);                                // lfo_impl::split13_t<NV>
-		auto& chain75 = this->getT(1).getT(0).getT(3).getT(0).getT(0);                        // lfo_impl::chain75_t<NV>
-		auto& xfader3 = this->getT(1).getT(0).getT(3).getT(0).getT(0).getT(0);                // lfo_impl::xfader3_t<NV>
-		auto& split14 = this->getT(1).getT(0).getT(3).getT(0).getT(0).getT(1);                // lfo_impl::split14_t<NV>
-		auto& chain76 = this->getT(1).getT(0).getT(3).getT(0).getT(0).getT(1).getT(0);        // lfo_impl::chain76_t<NV>
-		auto& global_cable19 = this->getT(1).getT(0).getT(3).getT(0).                         // lfo_impl::global_cable19_t<NV>
-                               getT(0).getT(1).getT(0).getT(0);
-		auto& add31 = this->getT(1).getT(0).getT(3).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(0).getT(1);
-		auto& gain58 = this->getT(1).getT(0).getT(3).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(0).getT(2);
-		auto& chain77 = this->getT(1).getT(0).getT(3).getT(0).getT(0).getT(1).getT(1);        // lfo_impl::chain77_t<NV>
-		auto& global_cable20 = this->getT(1).getT(0).getT(3).getT(0).                         // lfo_impl::global_cable20_t<NV>
-                               getT(0).getT(1).getT(1).getT(0);
-		auto& add32 = this->getT(1).getT(0).getT(3).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(1).getT(1);
-		auto& gain59 = this->getT(1).getT(0).getT(3).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(1).getT(2);
-		auto& chain78 = this->getT(1).getT(0).getT(3).getT(0).getT(0).getT(1).getT(2);        // lfo_impl::chain78_t<NV>
-		auto& global_cable24 = this->getT(1).getT(0).getT(3).getT(0).                         // lfo_impl::global_cable24_t<NV>
-                               getT(0).getT(1).getT(2).getT(0);
-		auto& add33 = this->getT(1).getT(0).getT(3).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(2).getT(1);
-		auto& gain60 = this->getT(1).getT(0).getT(3).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(2).getT(2);
-		auto& chain79 = this->getT(1).getT(0).getT(3).getT(0).getT(0).getT(1).getT(3);        // lfo_impl::chain79_t<NV>
-		auto& global_cable25 = this->getT(1).getT(0).getT(3).getT(0).                         // lfo_impl::global_cable25_t<NV>
-                               getT(0).getT(1).getT(3).getT(0);
-		auto& add34 = this->getT(1).getT(0).getT(3).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(3).getT(1);
-		auto& gain61 = this->getT(1).getT(0).getT(3).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(3).getT(2);
-		auto& chain80 = this->getT(1).getT(0).getT(3).getT(0).getT(0).getT(1).getT(4);        // lfo_impl::chain80_t<NV>
-		auto& event_data_reader14 = this->getT(1).getT(0).getT(3).getT(0).                    // lfo_impl::event_data_reader14_t<NV>
-                                    getT(0).getT(1).getT(4).getT(0);
-		auto& add35 = this->getT(1).getT(0).getT(3).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(4).getT(1);
-		auto& gain62 = this->getT(1).getT(0).getT(3).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(4).getT(2);
-		auto& chain81 = this->getT(1).getT(0).getT(3).getT(0).getT(0).getT(1).getT(5);        // lfo_impl::chain81_t<NV>
-		auto& event_data_reader15 = this->getT(1).getT(0).getT(3).getT(0).                    // lfo_impl::event_data_reader15_t<NV>
-                                    getT(0).getT(1).getT(5).getT(0);
-		auto& add36 = this->getT(1).getT(0).getT(3).getT(0).                                  // math::add<NV>
-                      getT(0).getT(1).getT(5).getT(1);
-		auto& gain63 = this->getT(1).getT(0).getT(3).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(5).getT(2);
-		auto& chain82 = this->getT(1).getT(0).getT(3).getT(0).getT(0).getT(1).getT(6);        // lfo_impl::chain82_t<NV>
-		auto& midi = this->getT(1).getT(0).getT(3).getT(0).                                   // lfo_impl::midi_t<NV>
-                     getT(0).getT(1).getT(6).getT(0);
-		auto& add3 = this->getT(1).getT(0).getT(3).getT(0).                                   // math::add<NV>
-                     getT(0).getT(1).getT(6).getT(1);
-		auto& gain64 = this->getT(1).getT(0).getT(3).getT(0).                                 // core::gain<NV>
-                       getT(0).getT(1).getT(6).getT(2);
-		auto& peak10 = this->getT(1).getT(0).getT(3).getT(0).getT(0).getT(2);                 // lfo_impl::peak10_t<NV>
-		auto& cable_table2 = this->getT(1).getT(0).getT(3).getT(1);                           // lfo_impl::cable_table2_t<NV>
-		auto& pma5 = this->getT(1).getT(0).getT(3).getT(2);                                   // lfo_impl::pma5_t<NV>
-		auto& modchain4 = this->getT(2);                                                      // lfo_impl::modchain4_t<NV>
-		auto& branch1 = this->getT(2).getT(0);                                                // lfo_impl::branch1_t<NV>
-		auto& chain3 = this->getT(2).getT(0).getT(0);                                         // lfo_impl::chain3_t<NV>
-		auto& tempo_sync = this->getT(2).getT(0).getT(0).getT(0);                             // lfo_impl::tempo_sync_t<NV>
-		auto& ramp = this->getT(2).getT(0).getT(0).getT(1);                                   // lfo_impl::ramp_t<NV>
-		auto& clock_ramp = this->getT(2).getT(0).getT(1);                                     // lfo_impl::clock_ramp_t<NV>
-		auto& peak3 = this->getT(2).getT(1);                                                  // lfo_impl::peak3_t
-		auto& chain11 = this->getT(2).getT(2);                                                // lfo_impl::chain11_t<NV>
-		auto& branch2 = this->getT(2).getT(2).getT(0);                                        // lfo_impl::branch2_t<NV>
-		auto& chain25 = this->getT(2).getT(2).getT(0).getT(0);                                // lfo_impl::chain25_t<NV>
-		auto& pi2 = this->getT(2).getT(2).getT(0).getT(0).getT(0);                            // math::pi<NV>
-		auto& sin3 = this->getT(2).getT(2).getT(0).getT(0).getT(1);                           // math::sin<NV>
-		auto& sig2mod4 = this->getT(2).getT(2).getT(0).getT(0).getT(2);                       // wrap::no_process<math::sig2mod<NV>>
-		auto& chain24 = this->getT(2).getT(2).getT(0).getT(1);                                // lfo_impl::chain24_t<NV>
-		auto& mul2 = this->getT(2).getT(2).getT(0).getT(1).getT(0);                           // wrap::no_process<math::mul<NV>>
-		auto& sig2mod3 = this->getT(2).getT(2).getT(0).getT(1).getT(1);                       // wrap::no_process<math::sig2mod<NV>>
-		auto& chain14 = this->getT(2).getT(2).getT(0).getT(2);                                // lfo_impl::chain14_t<NV>
-		auto& add6 = this->getT(2).getT(2).getT(0).getT(2).getT(0);                           // math::add<NV>
-		auto& fmod3 = this->getT(2).getT(2).getT(0).getT(2).getT(1);                          // math::fmod<NV>
-		auto& sub = this->getT(2).getT(2).getT(0).getT(2).getT(2);                            // math::sub<NV>
-		auto& abs = this->getT(2).getT(2).getT(0).getT(2).getT(3);                            // math::abs<NV>
-		auto& mul1 = this->getT(2).getT(2).getT(0).getT(2).getT(4);                           // math::mul<NV>
-		auto& chain18 = this->getT(2).getT(2).getT(0).getT(3);                                // lfo_impl::chain18_t<NV>
-		auto& mod_inv1 = this->getT(2).getT(2).getT(0).getT(3).getT(0);                       // math::mod_inv<NV>
-		auto& rect3 = this->getT(2).getT(2).getT(0).getT(3).getT(1);                          // math::rect<NV>
-		auto& chain31 = this->getT(2).getT(2).getT(0).getT(4);                                // lfo_impl::chain31_t<NV>
-		auto& oscillator = this->getT(2).getT(2).getT(0).getT(4).getT(0);                     // lfo_impl::oscillator_t<NV>
-		auto& sig2mod1 = this->getT(2).getT(2).getT(0).getT(4).getT(1);                       // math::sig2mod<NV>
-		auto& chain32 = this->getT(2).getT(2).getT(0).getT(5);                                // lfo_impl::chain32_t<NV>
-		auto& clear1 = this->getT(2).getT(2).getT(0).getT(5).getT(0);                         // wrap::no_process<math::clear<NV>>
-		auto& input_toggle = this->getT(2).getT(2).getT(0).getT(5).getT(1);                   // lfo_impl::input_toggle_t<NV>
-		auto& cable_table = this->getT(2).getT(2).getT(0).getT(5).getT(2);                    // lfo_impl::cable_table_t<NV>
-		auto& add8 = this->getT(2).getT(2).getT(0).getT(5).getT(3);                           // math::add<NV>
-		auto& chain33 = this->getT(2).getT(2).getT(0).getT(6);                                // lfo_impl::chain33_t<NV>
-		auto& clear2 = this->getT(2).getT(2).getT(0).getT(6).getT(0);                         // math::clear<NV>
-		auto& input_toggle1 = this->getT(2).getT(2).getT(0).getT(6).getT(1);                  // lfo_impl::input_toggle1_t<NV>
-		auto& cable_pack = this->getT(2).getT(2).getT(0).getT(6).getT(2);                     // lfo_impl::cable_pack_t<NV>
-		auto& add9 = this->getT(2).getT(2).getT(0).getT(6).getT(3);                           // math::add<NV>
-		auto& peak9 = this->getT(2).getT(2).getT(1);                                          // lfo_impl::peak9_t
-		auto& branch4 = this->getT(2).getT(2).getT(2);                                        // lfo_impl::branch4_t<NV>
-		auto& chain73 = this->getT(2).getT(2).getT(2).getT(0);                                // lfo_impl::chain73_t<NV>
-		auto& pma4 = this->getT(2).getT(2).getT(2).getT(0).getT(0);                           // lfo_impl::pma4_t<NV>
-		auto& gain57 = this->getT(2).getT(2).getT(2).getT(0).getT(1);                         // core::gain<NV>
-		auto& chain74 = this->getT(2).getT(2).getT(2).getT(1);                                // lfo_impl::chain74_t<NV>
-		auto& smoother1 = this->getT(2).getT(2).getT(2).getT(1).getT(0);                      // core::smoother<NV>
-		auto& sig2mod5 = this->getT(2).getT(2).getT(2).getT(1).getT(1);                       // wrap::no_process<math::sig2mod<NV>>
-		auto& sin13 = this->getT(2).getT(2).getT(2).getT(1).getT(2);                          // wrap::no_process<math::sin<NV>>
-		auto& chain22 = this->getT(2).getT(2).getT(2).getT(2);                                // lfo_impl::chain22_t<NV>
-		auto& branch6 = this->getT(2).getT(2).getT(2).getT(2).getT(0);                        // lfo_impl::branch6_t<NV>
-		auto& sampleandhold = this->getT(2).getT(2).getT(2).getT(2).getT(0).getT(0);          // fx::sampleandhold<NV>
-		auto& sampleandhold2 = this->getT(2).getT(2).getT(2).getT(2).getT(0).getT(1);         // fx::sampleandhold<NV>
-		auto& gain = this->getT(2).getT(2).getT(2).getT(2).getT(1);                           // core::gain<NV>
-		auto& sig2mod2 = this->getT(2).getT(2).getT(2).getT(2).getT(2);                       // wrap::no_process<math::sig2mod<NV>>
-		auto& sin4 = this->getT(2).getT(2).getT(2).getT(2).getT(3);                           // wrap::no_process<math::sin<NV>>
-		auto& chain26 = this->getT(2).getT(2).getT(2).getT(3);                                // lfo_impl::chain26_t<NV>
-		auto& gain37 = this->getT(2).getT(2).getT(2).getT(3).getT(0);                         // core::gain<NV>
-		auto& pi5 = this->getT(2).getT(2).getT(2).getT(3).getT(1);                            // math::pi<NV>
-		auto& fmod2 = this->getT(2).getT(2).getT(2).getT(3).getT(2);                          // math::fmod<NV>
-		auto& chain65 = this->getT(2).getT(2).getT(2).getT(4);                                // lfo_impl::chain65_t<NV>
-		auto& expr4 = this->getT(2).getT(2).getT(2).getT(4).getT(0);                          // math::expr<NV, custom::expr4>
-		auto& chain27 = this->getT(2).getT(2).getT(2).getT(5);                                // lfo_impl::chain27_t<NV>
-		auto& sin = this->getT(2).getT(2).getT(2).getT(5).getT(0);                            // wrap::no_process<math::sin<NV>>
-		auto& expr1 = this->getT(2).getT(2).getT(2).getT(5).getT(1);                          // math::expr<NV, custom::expr1>
-		auto& chain56 = this->getT(2).getT(2).getT(2).getT(6);                                // lfo_impl::chain56_t<NV>
-		auto& expr2 = this->getT(2).getT(2).getT(2).getT(6).getT(0);                          // math::expr<NV, custom::expr2>
-		auto& peak11 = this->getT(2).getT(2).getT(3);                                         // lfo_impl::peak11_t
-		auto& branch = this->getT(2).getT(2).getT(4);                                         // lfo_impl::branch_t<NV>
-		auto& chain = this->getT(2).getT(2).getT(4).getT(0);                                  // lfo_impl::chain_t<NV>
-		auto& peak1 = this->getT(2).getT(2).getT(4).getT(0).getT(0);                          // lfo_impl::peak1_t<NV>
-		auto& split = this->getT(2).getT(2).getT(4).getT(0).getT(1);                          // lfo_impl::split_t<NV>
-		auto& chain4 = this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(0);                 // lfo_impl::chain4_t
-		auto& global_cable = this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(0).getT(0);   // routing::global_cable<global_cable_t_index, parameter::empty>
-		auto& chain5 = this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(1);                 // lfo_impl::chain5_t<NV>
-		auto& clear = this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(1).getT(0);          // math::clear<NV>
-		auto& add = this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(1).getT(1);            // math::add<NV>
-		auto& rect = this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(1).getT(2);           // math::rect<NV>
-		auto& peak = this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(1).getT(3);           // lfo_impl::peak_t<NV>
-		auto& change = this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(1).getT(4);         // lfo_impl::change_t<NV>
-		auto& global_cable2 = this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(1).getT(5);  // routing::global_cable<global_cable2_t_index, parameter::empty>
-		auto& chain112 = this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(2);               // lfo_impl::chain112_t<NV>
-		auto& clear3 = this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(2).getT(0);         // math::clear<NV>
-		auto& add43 = this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(2).getT(1);          // math::add<NV>
-		auto& peak14 = this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(2).getT(2);         // lfo_impl::peak14_t<NV>
-		auto& change3 = this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(2).getT(3);        // lfo_impl::change3_t<NV>
-		auto& chain169 = this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(2).getT(4);       // lfo_impl::chain169_t<NV>
-		auto& minmax2 = this->getT(2).getT(2).getT(4).getT(0).                                // lfo_impl::minmax2_t<NV>
-                        getT(1).getT(2).getT(4).getT(0);
-		auto& chain170 = this->getT(2).getT(2).getT(4).getT(0).                               // lfo_impl::chain170_t
-                         getT(1).getT(2).getT(4).getT(1);
-		auto& global_cable21 = this->getT(2).getT(2).getT(4).getT(0).                         // routing::global_cable<global_cable21_t_index, parameter::empty>
-                               getT(1).getT(2).getT(4).getT(1).
+		auto& clear11 = this->getT(0);                                                       // math::clear<NV>
+		auto& wrapevent_data_reader41 = this->getT(1);                                       // lfo_impl::wrapevent_data_reader41_t<NV>
+		auto& fix8_block = this->getT(1).getT(0);                                            // lfo_impl::fix8_block_t<NV>
+		auto& split8 = this->getT(1).getT(0).getT(0);                                        // lfo_impl::split8_t<NV>
+		auto& modchain = this->getT(1).getT(0).getT(0).getT(0);                              // lfo_impl::modchain_t<NV>
+		auto& split7 = this->getT(1).getT(0).getT(0).getT(0).getT(0);                        // lfo_impl::split7_t<NV>
+		auto& chain29 = this->getT(1).getT(0).getT(0).getT(0).getT(0).getT(0);               // lfo_impl::chain29_t<NV>
+		auto& xfader = this->getT(1).getT(0).getT(0).getT(0).getT(0).getT(0).getT(0);        // lfo_impl::xfader_t<NV>
+		auto& split5 = this->getT(1).getT(0).getT(0).getT(0).getT(0).getT(0).getT(1);        // lfo_impl::split5_t<NV>
+		auto& chain30 = this->getT(1).getT(0).getT(0).getT(0).                               // lfo_impl::chain30_t<NV>
+                        getT(0).getT(0).getT(1).getT(0);
+		auto& global_cable9 = this->getT(1).getT(0).getT(0).getT(0).                         // lfo_impl::global_cable9_t<NV>
+                              getT(0).getT(0).getT(1).getT(0).
+                              getT(0);
+		auto& add13 = this->getT(1).getT(0).getT(0).getT(0).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(0).
+                      getT(1);
+		auto& gain1 = this->getT(1).getT(0).getT(0).getT(0).                                 // core::gain<NV>
+                      getT(0).getT(0).getT(1).getT(0).
+                      getT(2);
+		auto& chain44 = this->getT(1).getT(0).getT(0).getT(0).                               // lfo_impl::chain44_t<NV>
+                        getT(0).getT(0).getT(1).getT(1);
+		auto& global_cable11 = this->getT(1).getT(0).getT(0).getT(0).                        // lfo_impl::global_cable11_t<NV>
+                               getT(0).getT(0).getT(1).getT(1).
                                getT(0);
-		auto& chain16 = this->getT(2).getT(2).getT(4).getT(1);                                // lfo_impl::chain16_t<NV>
-		auto& peak12 = this->getT(2).getT(2).getT(4).getT(1).getT(0);                         // lfo_impl::peak12_t<NV>
-		auto& split6 = this->getT(2).getT(2).getT(4).getT(1).getT(1);                         // lfo_impl::split6_t<NV>
-		auto& chain17 = this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(0);                // lfo_impl::chain17_t
-		auto& global_cable8 = this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(0).getT(0);  // routing::global_cable<global_cable8_t_index, parameter::empty>
-		auto& chain19 = this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(1);                // lfo_impl::chain19_t<NV>
-		auto& clear12 = this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(1).getT(0);        // math::clear<NV>
-		auto& add5 = this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(1).getT(1);           // math::add<NV>
-		auto& rect5 = this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(1).getT(2);          // math::rect<NV>
-		auto& peak13 = this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(1).getT(3);         // lfo_impl::peak13_t<NV>
-		auto& change8 = this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(1).getT(4);        // lfo_impl::change8_t<NV>
-		auto& global_cable29 = this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(1).getT(5); // routing::global_cable<global_cable29_t_index, parameter::empty>
-		auto& chain116 = this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(2);               // lfo_impl::chain116_t<NV>
-		auto& clear13 = this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(2).getT(0);        // math::clear<NV>
-		auto& add47 = this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(2).getT(1);          // math::add<NV>
-		auto& peak18 = this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(2).getT(2);         // lfo_impl::peak18_t<NV>
-		auto& change9 = this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(2).getT(3);        // lfo_impl::change9_t<NV>
-		auto& chain177 = this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(2).getT(4);       // lfo_impl::chain177_t<NV>
-		auto& minmax6 = this->getT(2).getT(2).getT(4).getT(1).                                // lfo_impl::minmax6_t<NV>
-                        getT(1).getT(2).getT(4).getT(0);
-		auto& chain178 = this->getT(2).getT(2).getT(4).getT(1).                               // lfo_impl::chain178_t
-                         getT(1).getT(2).getT(4).getT(1);
-		auto& global_cable30 = this->getT(2).getT(2).getT(4).getT(1).                         // routing::global_cable<global_cable30_t_index, parameter::empty>
-                               getT(1).getT(2).getT(4).getT(1).
+		auto& add14 = this->getT(1).getT(0).getT(0).getT(0).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(1).
+                      getT(1);
+		auto& gain10 = this->getT(1).getT(0).getT(0).getT(0).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(1).
+                       getT(2);
+		auto& chain43 = this->getT(1).getT(0).getT(0).getT(0).                               // lfo_impl::chain43_t<NV>
+                        getT(0).getT(0).getT(1).getT(2);
+		auto& global_cable10 = this->getT(1).getT(0).getT(0).getT(0).                        // lfo_impl::global_cable10_t<NV>
+                               getT(0).getT(0).getT(1).getT(2).
                                getT(0);
-		auto& chain20 = this->getT(2).getT(2).getT(4).getT(2);                                // lfo_impl::chain20_t<NV>
-		auto& peak19 = this->getT(2).getT(2).getT(4).getT(2).getT(0);                         // lfo_impl::peak19_t<NV>
-		auto& split15 = this->getT(2).getT(2).getT(4).getT(2).getT(1);                        // lfo_impl::split15_t<NV>
-		auto& chain21 = this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(0);                // lfo_impl::chain21_t
-		auto& global_cable31 = this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(0).getT(0); // routing::global_cable<global_cable31_t_index, parameter::empty>
-		auto& chain23 = this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(1);                // lfo_impl::chain23_t<NV>
-		auto& clear14 = this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(1).getT(0);        // math::clear<NV>
-		auto& add7 = this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(1).getT(1);           // math::add<NV>
-		auto& rect6 = this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(1).getT(2);          // math::rect<NV>
-		auto& peak20 = this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(1).getT(3);         // lfo_impl::peak20_t<NV>
-		auto& change10 = this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(1).getT(4);       // lfo_impl::change10_t<NV>
-		auto& global_cable32 = this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(1).getT(5); // routing::global_cable<global_cable32_t_index, parameter::empty>
-		auto& chain117 = this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(2);               // lfo_impl::chain117_t<NV>
-		auto& clear15 = this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(2).getT(0);        // math::clear<NV>
-		auto& add48 = this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(2).getT(1);          // math::add<NV>
-		auto& peak21 = this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(2).getT(2);         // lfo_impl::peak21_t<NV>
-		auto& change11 = this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(2).getT(3);       // lfo_impl::change11_t<NV>
-		auto& chain179 = this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(2).getT(4);       // lfo_impl::chain179_t<NV>
-		auto& minmax7 = this->getT(2).getT(2).getT(4).getT(2).                                // lfo_impl::minmax7_t<NV>
-                        getT(1).getT(2).getT(4).getT(0);
-		auto& chain180 = this->getT(2).getT(2).getT(4).getT(2).                               // lfo_impl::chain180_t
-                         getT(1).getT(2).getT(4).getT(1);
-		auto& global_cable33 = this->getT(2).getT(2).getT(4).getT(2).                         // routing::global_cable<global_cable33_t_index, parameter::empty>
-                               getT(1).getT(2).getT(4).getT(1).
+		auto& add15 = this->getT(1).getT(0).getT(0).getT(0).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(2).
+                      getT(1);
+		auto& gain12 = this->getT(1).getT(0).getT(0).getT(0).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(2).
+                       getT(2);
+		auto& chain45 = this->getT(1).getT(0).getT(0).getT(0).                               // lfo_impl::chain45_t<NV>
+                        getT(0).getT(0).getT(1).getT(3);
+		auto& global_cable12 = this->getT(1).getT(0).getT(0).getT(0).                        // lfo_impl::global_cable12_t<NV>
+                               getT(0).getT(0).getT(1).getT(3).
                                getT(0);
-		auto& chain28 = this->getT(2).getT(2).getT(4).getT(3);                                // lfo_impl::chain28_t<NV>
-		auto& peak22 = this->getT(2).getT(2).getT(4).getT(3).getT(0);                         // lfo_impl::peak22_t<NV>
-		auto& split16 = this->getT(2).getT(2).getT(4).getT(3).getT(1);                        // lfo_impl::split16_t<NV>
-		auto& chain34 = this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(0);                // lfo_impl::chain34_t
-		auto& global_cable34 = this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(0).getT(0); // routing::global_cable<global_cable34_t_index, parameter::empty>
-		auto& chain35 = this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(1);                // lfo_impl::chain35_t<NV>
-		auto& clear16 = this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(1).getT(0);        // math::clear<NV>
-		auto& add10 = this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(1).getT(1);          // math::add<NV>
-		auto& rect7 = this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(1).getT(2);          // math::rect<NV>
-		auto& peak23 = this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(1).getT(3);         // lfo_impl::peak23_t<NV>
-		auto& change12 = this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(1).getT(4);       // lfo_impl::change12_t<NV>
-		auto& global_cable35 = this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(1).getT(5); // routing::global_cable<global_cable35_t_index, parameter::empty>
-		auto& chain118 = this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(2);               // lfo_impl::chain118_t<NV>
-		auto& clear17 = this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(2).getT(0);        // math::clear<NV>
-		auto& add49 = this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(2).getT(1);          // math::add<NV>
-		auto& peak24 = this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(2).getT(2);         // lfo_impl::peak24_t<NV>
-		auto& change13 = this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(2).getT(3);       // lfo_impl::change13_t<NV>
-		auto& chain181 = this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(2).getT(4);       // lfo_impl::chain181_t<NV>
-		auto& minmax8 = this->getT(2).getT(2).getT(4).getT(3).                                // lfo_impl::minmax8_t<NV>
-                        getT(1).getT(2).getT(4).getT(0);
-		auto& chain182 = this->getT(2).getT(2).getT(4).getT(3).        // lfo_impl::chain182_t
-                         getT(1).getT(2).getT(4).getT(1);
-		auto& global_cable36 = this->getT(2).getT(2).getT(4).getT(3).  // routing::global_cable<global_cable36_t_index, parameter::empty>
-                               getT(1).getT(2).getT(4).getT(1).
+		auto& add16 = this->getT(1).getT(0).getT(0).getT(0).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(3).
+                      getT(1);
+		auto& gain17 = this->getT(1).getT(0).getT(0).getT(0).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(3).
+                       getT(2);
+		auto& chain46 = this->getT(1).getT(0).getT(0).getT(0).                               // lfo_impl::chain46_t<NV>
+                        getT(0).getT(0).getT(1).getT(4);
+		auto& event_data_reader5 = this->getT(1).getT(0).getT(0).getT(0).                    // lfo_impl::event_data_reader5_t<NV>
+                                   getT(0).getT(0).getT(1).getT(4).
+                                   getT(0);
+		auto& add17 = this->getT(1).getT(0).getT(0).getT(0).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(4).
+                      getT(1);
+		auto& gain18 = this->getT(1).getT(0).getT(0).getT(0).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(4).
+                       getT(2);
+		auto& chain47 = this->getT(1).getT(0).getT(0).getT(0).                               // lfo_impl::chain47_t<NV>
+                        getT(0).getT(0).getT(1).getT(5);
+		auto& event_data_reader6 = this->getT(1).getT(0).getT(0).getT(0).                    // lfo_impl::event_data_reader6_t<NV>
+                                   getT(0).getT(0).getT(1).getT(5).
+                                   getT(0);
+		auto& add18 = this->getT(1).getT(0).getT(0).getT(0).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(5).
+                      getT(1);
+		auto& gain25 = this->getT(1).getT(0).getT(0).getT(0).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(5).
+                       getT(2);
+		auto& peak5 = this->getT(1).getT(0).getT(0).getT(0).getT(0).getT(0).getT(2);         // lfo_impl::peak5_t<NV>
+		auto& pma1 = this->getT(1).getT(0).getT(0).getT(0).getT(1);                          // lfo_impl::pma1_t<NV>
+		auto& modchain2 = this->getT(1).getT(0).getT(0).getT(1);                             // lfo_impl::modchain2_t<NV>
+		auto& split11 = this->getT(1).getT(0).getT(0).getT(1).getT(0);                       // lfo_impl::split11_t<NV>
+		auto& chain62 = this->getT(1).getT(0).getT(0).getT(1).getT(0).getT(0);               // lfo_impl::chain62_t<NV>
+		auto& xfader2 = this->getT(1).getT(0).getT(0).getT(1).getT(0).getT(0).getT(0);       // lfo_impl::xfader2_t<NV>
+		auto& split12 = this->getT(1).getT(0).getT(0).getT(1).getT(0).getT(0).getT(1);       // lfo_impl::split12_t<NV>
+		auto& chain63 = this->getT(1).getT(0).getT(0).getT(1).                               // lfo_impl::chain63_t<NV>
+                        getT(0).getT(0).getT(1).getT(0);
+		auto& global_cable16 = this->getT(1).getT(0).getT(0).getT(1).                        // lfo_impl::global_cable16_t<NV>
+                               getT(0).getT(0).getT(1).getT(0).
                                getT(0);
-		auto& clear10 = this->getT(3); // math::clear<NV>
+		auto& add25 = this->getT(1).getT(0).getT(0).getT(1).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(0).
+                      getT(1);
+		auto& gain42 = this->getT(1).getT(0).getT(0).getT(1).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(0).
+                       getT(2);
+		auto& chain64 = this->getT(1).getT(0).getT(0).getT(1).                               // lfo_impl::chain64_t<NV>
+                        getT(0).getT(0).getT(1).getT(1);
+		auto& global_cable17 = this->getT(1).getT(0).getT(0).getT(1).                        // lfo_impl::global_cable17_t<NV>
+                               getT(0).getT(0).getT(1).getT(1).
+                               getT(0);
+		auto& add26 = this->getT(1).getT(0).getT(0).getT(1).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(1).
+                      getT(1);
+		auto& gain52 = this->getT(1).getT(0).getT(0).getT(1).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(1).
+                       getT(2);
+		auto& chain69 = this->getT(1).getT(0).getT(0).getT(1).                               // lfo_impl::chain69_t<NV>
+                        getT(0).getT(0).getT(1).getT(2);
+		auto& global_cable18 = this->getT(1).getT(0).getT(0).getT(1).                        // lfo_impl::global_cable18_t<NV>
+                               getT(0).getT(0).getT(1).getT(2).
+                               getT(0);
+		auto& add27 = this->getT(1).getT(0).getT(0).getT(1).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(2).
+                      getT(1);
+		auto& gain53 = this->getT(1).getT(0).getT(0).getT(1).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(2).
+                       getT(2);
+		auto& chain70 = this->getT(1).getT(0).getT(0).getT(1).                               // lfo_impl::chain70_t<NV>
+                        getT(0).getT(0).getT(1).getT(3);
+		auto& global_cable22 = this->getT(1).getT(0).getT(0).getT(1).                        // lfo_impl::global_cable22_t<NV>
+                               getT(0).getT(0).getT(1).getT(3).
+                               getT(0);
+		auto& add28 = this->getT(1).getT(0).getT(0).getT(1).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(3).
+                      getT(1);
+		auto& gain54 = this->getT(1).getT(0).getT(0).getT(1).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(3).
+                       getT(2);
+		auto& chain71 = this->getT(1).getT(0).getT(0).getT(1).                               // lfo_impl::chain71_t<NV>
+                        getT(0).getT(0).getT(1).getT(4);
+		auto& event_data_reader11 = this->getT(1).getT(0).getT(0).getT(1).                   // lfo_impl::event_data_reader11_t<NV>
+                                    getT(0).getT(0).getT(1).getT(4).
+                                    getT(0);
+		auto& add29 = this->getT(1).getT(0).getT(0).getT(1).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(4).
+                      getT(1);
+		auto& gain55 = this->getT(1).getT(0).getT(0).getT(1).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(4).
+                       getT(2);
+		auto& chain72 = this->getT(1).getT(0).getT(0).getT(1).                               // lfo_impl::chain72_t<NV>
+                        getT(0).getT(0).getT(1).getT(5);
+		auto& event_data_reader12 = this->getT(1).getT(0).getT(0).getT(1).                   // lfo_impl::event_data_reader12_t<NV>
+                                    getT(0).getT(0).getT(1).getT(5).
+                                    getT(0);
+		auto& add30 = this->getT(1).getT(0).getT(0).getT(1).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(5).
+                      getT(1);
+		auto& gain56 = this->getT(1).getT(0).getT(0).getT(1).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(5).
+                       getT(2);
+		auto& peak8 = this->getT(1).getT(0).getT(0).getT(1).getT(0).getT(0).getT(2);         // lfo_impl::peak8_t<NV>
+		auto& pma3 = this->getT(1).getT(0).getT(0).getT(1).getT(1);                          // lfo_impl::pma3_t<NV>
+		auto& modchain1 = this->getT(1).getT(0).getT(0).getT(2);                             // lfo_impl::modchain1_t<NV>
+		auto& split9 = this->getT(1).getT(0).getT(0).getT(2).getT(0);                        // lfo_impl::split9_t<NV>
+		auto& chain53 = this->getT(1).getT(0).getT(0).getT(2).getT(0).getT(0);               // lfo_impl::chain53_t<NV>
+		auto& xfader1 = this->getT(1).getT(0).getT(0).getT(2).getT(0).getT(0).getT(0);       // lfo_impl::xfader1_t<NV>
+		auto& split10 = this->getT(1).getT(0).getT(0).getT(2).getT(0).getT(0).getT(1);       // lfo_impl::split10_t<NV>
+		auto& chain54 = this->getT(1).getT(0).getT(0).getT(2).                               // lfo_impl::chain54_t<NV>
+                        getT(0).getT(0).getT(1).getT(0);
+		auto& global_cable13 = this->getT(1).getT(0).getT(0).getT(2).                        // lfo_impl::global_cable13_t<NV>
+                               getT(0).getT(0).getT(1).getT(0).
+                               getT(0);
+		auto& add19 = this->getT(1).getT(0).getT(0).getT(2).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(0).
+                      getT(1);
+		auto& gain28 = this->getT(1).getT(0).getT(0).getT(2).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(0).
+                       getT(2);
+		auto& chain55 = this->getT(1).getT(0).getT(0).getT(2).                               // lfo_impl::chain55_t<NV>
+                        getT(0).getT(0).getT(1).getT(1);
+		auto& global_cable14 = this->getT(1).getT(0).getT(0).getT(2).                        // lfo_impl::global_cable14_t<NV>
+                               getT(0).getT(0).getT(1).getT(1).
+                               getT(0);
+		auto& add20 = this->getT(1).getT(0).getT(0).getT(2).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(1).
+                      getT(1);
+		auto& gain29 = this->getT(1).getT(0).getT(0).getT(2).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(1).
+                       getT(2);
+		auto& chain58 = this->getT(1).getT(0).getT(0).getT(2).                               // lfo_impl::chain58_t<NV>
+                        getT(0).getT(0).getT(1).getT(2);
+		auto& global_cable15 = this->getT(1).getT(0).getT(0).getT(2).                        // lfo_impl::global_cable15_t<NV>
+                               getT(0).getT(0).getT(1).getT(2).
+                               getT(0);
+		auto& add21 = this->getT(1).getT(0).getT(0).getT(2).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(2).
+                      getT(1);
+		auto& gain30 = this->getT(1).getT(0).getT(0).getT(2).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(2).
+                       getT(2);
+		auto& chain59 = this->getT(1).getT(0).getT(0).getT(2).                               // lfo_impl::chain59_t<NV>
+                        getT(0).getT(0).getT(1).getT(3);
+		auto& global_cable23 = this->getT(1).getT(0).getT(0).getT(2).                        // lfo_impl::global_cable23_t<NV>
+                               getT(0).getT(0).getT(1).getT(3).
+                               getT(0);
+		auto& add22 = this->getT(1).getT(0).getT(0).getT(2).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(3).
+                      getT(1);
+		auto& gain31 = this->getT(1).getT(0).getT(0).getT(2).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(3).
+                       getT(2);
+		auto& chain60 = this->getT(1).getT(0).getT(0).getT(2).                               // lfo_impl::chain60_t<NV>
+                        getT(0).getT(0).getT(1).getT(4);
+		auto& event_data_reader8 = this->getT(1).getT(0).getT(0).getT(2).                    // lfo_impl::event_data_reader8_t<NV>
+                                   getT(0).getT(0).getT(1).getT(4).
+                                   getT(0);
+		auto& add23 = this->getT(1).getT(0).getT(0).getT(2).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(4).
+                      getT(1);
+		auto& gain32 = this->getT(1).getT(0).getT(0).getT(2).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(4).
+                       getT(2);
+		auto& chain61 = this->getT(1).getT(0).getT(0).getT(2).                               // lfo_impl::chain61_t<NV>
+                        getT(0).getT(0).getT(1).getT(5);
+		auto& event_data_reader9 = this->getT(1).getT(0).getT(0).getT(2).                    // lfo_impl::event_data_reader9_t<NV>
+                                   getT(0).getT(0).getT(1).getT(5).
+                                   getT(0);
+		auto& add24 = this->getT(1).getT(0).getT(0).getT(2).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(5).
+                      getT(1);
+		auto& gain41 = this->getT(1).getT(0).getT(0).getT(2).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(5).
+                       getT(2);
+		auto& peak6 = this->getT(1).getT(0).getT(0).getT(2).getT(0).getT(0).getT(2);         // lfo_impl::peak6_t<NV>
+		auto& pma2 = this->getT(1).getT(0).getT(0).getT(2).getT(1);                          // control::pma<NV, parameter::empty>
+		auto& modchain3 = this->getT(1).getT(0).getT(0).getT(3);                             // lfo_impl::modchain3_t<NV>
+		auto& split13 = this->getT(1).getT(0).getT(0).getT(3).getT(0);                       // lfo_impl::split13_t<NV>
+		auto& chain75 = this->getT(1).getT(0).getT(0).getT(3).getT(0).getT(0);               // lfo_impl::chain75_t<NV>
+		auto& xfader3 = this->getT(1).getT(0).getT(0).getT(3).getT(0).getT(0).getT(0);       // lfo_impl::xfader3_t<NV>
+		auto& split14 = this->getT(1).getT(0).getT(0).getT(3).getT(0).getT(0).getT(1);       // lfo_impl::split14_t<NV>
+		auto& chain76 = this->getT(1).getT(0).getT(0).getT(3).                               // lfo_impl::chain76_t<NV>
+                        getT(0).getT(0).getT(1).getT(0);
+		auto& global_cable19 = this->getT(1).getT(0).getT(0).getT(3).                        // lfo_impl::global_cable19_t<NV>
+                               getT(0).getT(0).getT(1).getT(0).
+                               getT(0);
+		auto& add31 = this->getT(1).getT(0).getT(0).getT(3).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(0).
+                      getT(1);
+		auto& gain58 = this->getT(1).getT(0).getT(0).getT(3).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(0).
+                       getT(2);
+		auto& chain77 = this->getT(1).getT(0).getT(0).getT(3).                               // lfo_impl::chain77_t<NV>
+                        getT(0).getT(0).getT(1).getT(1);
+		auto& global_cable20 = this->getT(1).getT(0).getT(0).getT(3).                        // lfo_impl::global_cable20_t<NV>
+                               getT(0).getT(0).getT(1).getT(1).
+                               getT(0);
+		auto& add32 = this->getT(1).getT(0).getT(0).getT(3).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(1).
+                      getT(1);
+		auto& gain59 = this->getT(1).getT(0).getT(0).getT(3).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(1).
+                       getT(2);
+		auto& chain78 = this->getT(1).getT(0).getT(0).getT(3).                               // lfo_impl::chain78_t<NV>
+                        getT(0).getT(0).getT(1).getT(2);
+		auto& global_cable24 = this->getT(1).getT(0).getT(0).getT(3).                        // lfo_impl::global_cable24_t<NV>
+                               getT(0).getT(0).getT(1).getT(2).
+                               getT(0);
+		auto& add33 = this->getT(1).getT(0).getT(0).getT(3).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(2).
+                      getT(1);
+		auto& gain60 = this->getT(1).getT(0).getT(0).getT(3).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(2).
+                       getT(2);
+		auto& chain79 = this->getT(1).getT(0).getT(0).getT(3).                               // lfo_impl::chain79_t<NV>
+                        getT(0).getT(0).getT(1).getT(3);
+		auto& global_cable25 = this->getT(1).getT(0).getT(0).getT(3).                        // lfo_impl::global_cable25_t<NV>
+                               getT(0).getT(0).getT(1).getT(3).
+                               getT(0);
+		auto& add34 = this->getT(1).getT(0).getT(0).getT(3).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(3).
+                      getT(1);
+		auto& gain61 = this->getT(1).getT(0).getT(0).getT(3).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(3).
+                       getT(2);
+		auto& chain80 = this->getT(1).getT(0).getT(0).getT(3).                               // lfo_impl::chain80_t<NV>
+                        getT(0).getT(0).getT(1).getT(4);
+		auto& event_data_reader14 = this->getT(1).getT(0).getT(0).getT(3).                   // lfo_impl::event_data_reader14_t<NV>
+                                    getT(0).getT(0).getT(1).getT(4).
+                                    getT(0);
+		auto& add35 = this->getT(1).getT(0).getT(0).getT(3).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(4).
+                      getT(1);
+		auto& gain62 = this->getT(1).getT(0).getT(0).getT(3).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(4).
+                       getT(2);
+		auto& chain81 = this->getT(1).getT(0).getT(0).getT(3).                               // lfo_impl::chain81_t<NV>
+                        getT(0).getT(0).getT(1).getT(5);
+		auto& event_data_reader15 = this->getT(1).getT(0).getT(0).getT(3).                   // lfo_impl::event_data_reader15_t<NV>
+                                    getT(0).getT(0).getT(1).getT(5).
+                                    getT(0);
+		auto& add36 = this->getT(1).getT(0).getT(0).getT(3).                                 // math::add<NV>
+                      getT(0).getT(0).getT(1).getT(5).
+                      getT(1);
+		auto& gain63 = this->getT(1).getT(0).getT(0).getT(3).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(5).
+                       getT(2);
+		auto& chain82 = this->getT(1).getT(0).getT(0).getT(3).                               // lfo_impl::chain82_t<NV>
+                        getT(0).getT(0).getT(1).getT(6);
+		auto& midi = this->getT(1).getT(0).getT(0).getT(3).                                  // lfo_impl::midi_t<NV>
+                     getT(0).getT(0).getT(1).getT(6).
+                     getT(0);
+		auto& add3 = this->getT(1).getT(0).getT(0).getT(3).                                  // math::add<NV>
+                     getT(0).getT(0).getT(1).getT(6).
+                     getT(1);
+		auto& gain64 = this->getT(1).getT(0).getT(0).getT(3).                                // core::gain<NV>
+                       getT(0).getT(0).getT(1).getT(6).
+                       getT(2);
+		auto& peak10 = this->getT(1).getT(0).getT(0).getT(3).getT(0).getT(0).getT(2);        // lfo_impl::peak10_t<NV>
+		auto& cable_table2 = this->getT(1).getT(0).getT(0).getT(3).getT(1);                  // lfo_impl::cable_table2_t<NV>
+		auto& pma5 = this->getT(1).getT(0).getT(0).getT(3).getT(2);                          // lfo_impl::pma5_t<NV>
+		auto& modchain4 = this->getT(1).getT(0).getT(1);                                     // lfo_impl::modchain4_t<NV>
+		auto& branch1 = this->getT(1).getT(0).getT(1).getT(0);                               // lfo_impl::branch1_t<NV>
+		auto& chain3 = this->getT(1).getT(0).getT(1).getT(0).getT(0);                        // lfo_impl::chain3_t<NV>
+		auto& tempo_sync = this->getT(1).getT(0).getT(1).getT(0).getT(0).getT(0);            // lfo_impl::tempo_sync_t<NV>
+		auto& ramp = this->getT(1).getT(0).getT(1).getT(0).getT(0).getT(1);                  // lfo_impl::ramp_t<NV>
+		auto& clock_ramp = this->getT(1).getT(0).getT(1).getT(0).getT(1);                    // lfo_impl::clock_ramp_t<NV>
+		auto& peak3 = this->getT(1).getT(0).getT(1).getT(1);                                 // lfo_impl::peak3_t
+		auto& chain11 = this->getT(1).getT(0).getT(1).getT(2);                               // lfo_impl::chain11_t<NV>
+		auto& branch2 = this->getT(1).getT(0).getT(1).getT(2).getT(0);                       // lfo_impl::branch2_t<NV>
+		auto& chain25 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(0);               // lfo_impl::chain25_t<NV>
+		auto& pi2 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(0).getT(0);           // math::pi<NV>
+		auto& sin3 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(0).getT(1);          // math::sin<NV>
+		auto& sig2mod4 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(0).getT(2);      // wrap::no_process<math::sig2mod<NV>>
+		auto& chain24 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(1);               // lfo_impl::chain24_t<NV>
+		auto& mul2 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(1).getT(0);          // wrap::no_process<math::mul<NV>>
+		auto& sig2mod3 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(1).getT(1);      // wrap::no_process<math::sig2mod<NV>>
+		auto& chain14 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(2);               // lfo_impl::chain14_t<NV>
+		auto& add6 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(2).getT(0);          // math::add<NV>
+		auto& fmod3 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(2).getT(1);         // math::fmod<NV>
+		auto& sub = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(2).getT(2);           // math::sub<NV>
+		auto& abs = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(2).getT(3);           // math::abs<NV>
+		auto& mul1 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(2).getT(4);          // math::mul<NV>
+		auto& chain18 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(3);               // lfo_impl::chain18_t<NV>
+		auto& mod_inv1 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(3).getT(0);      // math::mod_inv<NV>
+		auto& rect3 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(3).getT(1);         // math::rect<NV>
+		auto& chain31 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(4);               // lfo_impl::chain31_t<NV>
+		auto& oscillator = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(4).getT(0);    // lfo_impl::oscillator_t<NV>
+		auto& sig2mod1 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(4).getT(1);      // math::sig2mod<NV>
+		auto& chain32 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(5);               // lfo_impl::chain32_t<NV>
+		auto& clear1 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(5).getT(0);        // wrap::no_process<math::clear<NV>>
+		auto& input_toggle = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(5).getT(1);  // lfo_impl::input_toggle_t<NV>
+		auto& cable_table = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(5).getT(2);   // lfo_impl::cable_table_t<NV>
+		auto& add8 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(5).getT(3);          // math::add<NV>
+		auto& chain33 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(6);               // lfo_impl::chain33_t<NV>
+		auto& clear2 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(6).getT(0);        // math::clear<NV>
+		auto& input_toggle1 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(6).getT(1); // lfo_impl::input_toggle1_t<NV>
+		auto& cable_pack = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(6).getT(2);    // lfo_impl::cable_pack_t<NV>
+		auto& add9 = this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(6).getT(3);          // math::add<NV>
+		auto& peak9 = this->getT(1).getT(0).getT(1).getT(2).getT(1);                         // lfo_impl::peak9_t
+		auto& branch4 = this->getT(1).getT(0).getT(1).getT(2).getT(2);                       // lfo_impl::branch4_t<NV>
+		auto& chain73 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(0);               // lfo_impl::chain73_t<NV>
+		auto& pma4 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(0).getT(0);          // lfo_impl::pma4_t<NV>
+		auto& gain57 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(0).getT(1);        // core::gain<NV>
+		auto& chain74 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(1);               // lfo_impl::chain74_t<NV>
+		auto& smoother1 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(1).getT(0);     // core::smoother<NV>
+		auto& sig2mod5 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(1).getT(1);      // wrap::no_process<math::sig2mod<NV>>
+		auto& sin13 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(1).getT(2);         // wrap::no_process<math::sin<NV>>
+		auto& chain22 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(2);               // lfo_impl::chain22_t<NV>
+		auto& branch6 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(2).getT(0);       // lfo_impl::branch6_t<NV>
+		auto& sampleandhold = this->getT(1).getT(0).getT(1).getT(2).                         // fx::sampleandhold<NV>
+                              getT(2).getT(2).getT(0).getT(0);
+		auto& sampleandhold2 = this->getT(1).getT(0).getT(1).getT(2).                   // fx::sampleandhold<NV>
+                               getT(2).getT(2).getT(0).getT(1);
+		auto& gain = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(2).getT(1);     // core::gain<NV>
+		auto& sig2mod2 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(2).getT(2); // wrap::no_process<math::sig2mod<NV>>
+		auto& sin4 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(2).getT(3);     // wrap::no_process<math::sin<NV>>
+		auto& chain26 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(3);          // lfo_impl::chain26_t<NV>
+		auto& gain37 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(3).getT(0);   // core::gain<NV>
+		auto& pi5 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(3).getT(1);      // math::pi<NV>
+		auto& fmod2 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(3).getT(2);    // math::fmod<NV>
+		auto& chain65 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(4);          // lfo_impl::chain65_t<NV>
+		auto& expr4 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(4).getT(0);    // math::expr<NV, custom::expr4>
+		auto& chain27 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(5);          // lfo_impl::chain27_t<NV>
+		auto& sin = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(5).getT(0);      // wrap::no_process<math::sin<NV>>
+		auto& expr1 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(5).getT(1);    // math::expr<NV, custom::expr1>
+		auto& chain56 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(6);          // lfo_impl::chain56_t<NV>
+		auto& expr2 = this->getT(1).getT(0).getT(1).getT(2).getT(2).getT(6).getT(0);    // math::expr<NV, custom::expr2>
+		auto& peak11 = this->getT(1).getT(0).getT(1).getT(2).getT(3);                   // lfo_impl::peak11_t
+		auto& branch = this->getT(1).getT(0).getT(1).getT(2).getT(4);                   // lfo_impl::branch_t<NV>
+		auto& chain = this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(0);            // lfo_impl::chain_t<NV>
+		auto& peak1 = this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(0).getT(0);    // lfo_impl::peak1_t<NV>
+		auto& split = this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(0).getT(1);    // lfo_impl::split_t<NV>
+		auto& chain4 = this->getT(1).getT(0).getT(1).getT(2).                           // lfo_impl::chain4_t
+                       getT(4).getT(0).getT(1).getT(0);
+		auto& global_cable = this->getT(1).getT(0).getT(1).getT(2).                    // routing::global_cable<global_cable_t_index, parameter::empty>
+                             getT(4).getT(0).getT(1).getT(0).
+                             getT(0);
+		auto& chain5 = this->getT(1).getT(0).getT(1).getT(2).                          // lfo_impl::chain5_t<NV>
+                       getT(4).getT(0).getT(1).getT(1);
+		auto& clear = this->getT(1).getT(0).getT(1).getT(2).                           // math::clear<NV>
+                      getT(4).getT(0).getT(1).getT(1).
+                      getT(0);
+		auto& add = this->getT(1).getT(0).getT(1).getT(2).                             // math::add<NV>
+                    getT(4).getT(0).getT(1).getT(1).
+                    getT(1);
+		auto& rect = this->getT(1).getT(0).getT(1).getT(2).                            // math::rect<NV>
+                     getT(4).getT(0).getT(1).getT(1).
+                     getT(2);
+		auto& peak = this->getT(1).getT(0).getT(1).getT(2).                            // lfo_impl::peak_t<NV>
+                     getT(4).getT(0).getT(1).getT(1).
+                     getT(3);
+		auto& change = this->getT(1).getT(0).getT(1).getT(2).                          // lfo_impl::change_t<NV>
+                       getT(4).getT(0).getT(1).getT(1).
+                       getT(4);
+		auto& global_cable2 = this->getT(1).getT(0).getT(1).getT(2).                   // routing::global_cable<global_cable2_t_index, parameter::empty>
+                              getT(4).getT(0).getT(1).getT(1).
+                              getT(5);
+		auto& chain112 = this->getT(1).getT(0).getT(1).getT(2).                        // lfo_impl::chain112_t<NV>
+                         getT(4).getT(0).getT(1).getT(2);
+		auto& clear3 = this->getT(1).getT(0).getT(1).getT(2).                          // math::clear<NV>
+                       getT(4).getT(0).getT(1).getT(2).
+                       getT(0);
+		auto& add43 = this->getT(1).getT(0).getT(1).getT(2).                           // math::add<NV>
+                      getT(4).getT(0).getT(1).getT(2).
+                      getT(1);
+		auto& peak14 = this->getT(1).getT(0).getT(1).getT(2).                          // lfo_impl::peak14_t<NV>
+                       getT(4).getT(0).getT(1).getT(2).
+                       getT(2);
+		auto& change3 = this->getT(1).getT(0).getT(1).getT(2).                         // lfo_impl::change3_t<NV>
+                        getT(4).getT(0).getT(1).getT(2).
+                        getT(3);
+		auto& chain169 = this->getT(1).getT(0).getT(1).getT(2).                        // lfo_impl::chain169_t<NV>
+                         getT(4).getT(0).getT(1).getT(2).
+                         getT(4);
+		auto& minmax2 = this->getT(1).getT(0).getT(1).getT(2).getT(4).                 // lfo_impl::minmax2_t<NV>
+                        getT(0).getT(1).getT(2).getT(4).getT(0);
+		auto& chain170 = this->getT(1).getT(0).getT(1).getT(2).getT(4).                // lfo_impl::chain170_t
+                         getT(0).getT(1).getT(2).getT(4).getT(1);
+		auto& global_cable21 = this->getT(1).getT(0).getT(1).getT(2).getT(4).          // routing::global_cable<global_cable21_t_index, parameter::empty>
+                               getT(0).getT(1).getT(2).getT(4).getT(1).
+                               getT(0);
+		auto& chain16 = this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(1);         // lfo_impl::chain16_t<NV>
+		auto& peak12 = this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(1).getT(0);  // lfo_impl::peak12_t<NV>
+		auto& split6 = this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(1).getT(1);  // lfo_impl::split6_t<NV>
+		auto& chain17 = this->getT(1).getT(0).getT(1).getT(2).                         // lfo_impl::chain17_t
+                        getT(4).getT(1).getT(1).getT(0);
+		auto& global_cable8 = this->getT(1).getT(0).getT(1).getT(2).                   // routing::global_cable<global_cable8_t_index, parameter::empty>
+                              getT(4).getT(1).getT(1).getT(0).
+                              getT(0);
+		auto& chain19 = this->getT(1).getT(0).getT(1).getT(2).                         // lfo_impl::chain19_t<NV>
+                        getT(4).getT(1).getT(1).getT(1);
+		auto& clear12 = this->getT(1).getT(0).getT(1).getT(2).                         // math::clear<NV>
+                        getT(4).getT(1).getT(1).getT(1).
+                        getT(0);
+		auto& add5 = this->getT(1).getT(0).getT(1).getT(2).                            // math::add<NV>
+                     getT(4).getT(1).getT(1).getT(1).
+                     getT(1);
+		auto& rect5 = this->getT(1).getT(0).getT(1).getT(2).                           // math::rect<NV>
+                      getT(4).getT(1).getT(1).getT(1).
+                      getT(2);
+		auto& peak13 = this->getT(1).getT(0).getT(1).getT(2).                          // lfo_impl::peak13_t<NV>
+                       getT(4).getT(1).getT(1).getT(1).
+                       getT(3);
+		auto& change8 = this->getT(1).getT(0).getT(1).getT(2).                         // lfo_impl::change8_t<NV>
+                        getT(4).getT(1).getT(1).getT(1).
+                        getT(4);
+		auto& global_cable29 = this->getT(1).getT(0).getT(1).getT(2).                  // routing::global_cable<global_cable29_t_index, parameter::empty>
+                               getT(4).getT(1).getT(1).getT(1).
+                               getT(5);
+		auto& chain116 = this->getT(1).getT(0).getT(1).getT(2).                        // lfo_impl::chain116_t<NV>
+                         getT(4).getT(1).getT(1).getT(2);
+		auto& clear13 = this->getT(1).getT(0).getT(1).getT(2).                         // math::clear<NV>
+                        getT(4).getT(1).getT(1).getT(2).
+                        getT(0);
+		auto& add47 = this->getT(1).getT(0).getT(1).getT(2).                           // math::add<NV>
+                      getT(4).getT(1).getT(1).getT(2).
+                      getT(1);
+		auto& peak18 = this->getT(1).getT(0).getT(1).getT(2).                          // lfo_impl::peak18_t<NV>
+                       getT(4).getT(1).getT(1).getT(2).
+                       getT(2);
+		auto& change9 = this->getT(1).getT(0).getT(1).getT(2).                         // lfo_impl::change9_t<NV>
+                        getT(4).getT(1).getT(1).getT(2).
+                        getT(3);
+		auto& chain177 = this->getT(1).getT(0).getT(1).getT(2).                        // lfo_impl::chain177_t<NV>
+                         getT(4).getT(1).getT(1).getT(2).
+                         getT(4);
+		auto& minmax6 = this->getT(1).getT(0).getT(1).getT(2).getT(4).                 // lfo_impl::minmax6_t<NV>
+                        getT(1).getT(1).getT(2).getT(4).getT(0);
+		auto& chain178 = this->getT(1).getT(0).getT(1).getT(2).getT(4).                // lfo_impl::chain178_t
+                         getT(1).getT(1).getT(2).getT(4).getT(1);
+		auto& global_cable30 = this->getT(1).getT(0).getT(1).getT(2).getT(4).          // routing::global_cable<global_cable30_t_index, parameter::empty>
+                               getT(1).getT(1).getT(2).getT(4).getT(1).
+                               getT(0);
+		auto& chain20 = this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(2);         // lfo_impl::chain20_t<NV>
+		auto& peak19 = this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(2).getT(0);  // lfo_impl::peak19_t<NV>
+		auto& split15 = this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(2).getT(1); // lfo_impl::split15_t<NV>
+		auto& chain21 = this->getT(1).getT(0).getT(1).getT(2).                         // lfo_impl::chain21_t
+                        getT(4).getT(2).getT(1).getT(0);
+		auto& global_cable31 = this->getT(1).getT(0).getT(1).getT(2).                  // routing::global_cable<global_cable31_t_index, parameter::empty>
+                               getT(4).getT(2).getT(1).getT(0).
+                               getT(0);
+		auto& chain23 = this->getT(1).getT(0).getT(1).getT(2).                         // lfo_impl::chain23_t<NV>
+                        getT(4).getT(2).getT(1).getT(1);
+		auto& clear14 = this->getT(1).getT(0).getT(1).getT(2).                         // math::clear<NV>
+                        getT(4).getT(2).getT(1).getT(1).
+                        getT(0);
+		auto& add7 = this->getT(1).getT(0).getT(1).getT(2).                            // math::add<NV>
+                     getT(4).getT(2).getT(1).getT(1).
+                     getT(1);
+		auto& rect6 = this->getT(1).getT(0).getT(1).getT(2).                           // math::rect<NV>
+                      getT(4).getT(2).getT(1).getT(1).
+                      getT(2);
+		auto& peak20 = this->getT(1).getT(0).getT(1).getT(2).                          // lfo_impl::peak20_t<NV>
+                       getT(4).getT(2).getT(1).getT(1).
+                       getT(3);
+		auto& change10 = this->getT(1).getT(0).getT(1).getT(2).                        // lfo_impl::change10_t<NV>
+                         getT(4).getT(2).getT(1).getT(1).
+                         getT(4);
+		auto& global_cable32 = this->getT(1).getT(0).getT(1).getT(2).                  // routing::global_cable<global_cable32_t_index, parameter::empty>
+                               getT(4).getT(2).getT(1).getT(1).
+                               getT(5);
+		auto& chain117 = this->getT(1).getT(0).getT(1).getT(2).                        // lfo_impl::chain117_t<NV>
+                         getT(4).getT(2).getT(1).getT(2);
+		auto& clear15 = this->getT(1).getT(0).getT(1).getT(2).                         // math::clear<NV>
+                        getT(4).getT(2).getT(1).getT(2).
+                        getT(0);
+		auto& add48 = this->getT(1).getT(0).getT(1).getT(2).                           // math::add<NV>
+                      getT(4).getT(2).getT(1).getT(2).
+                      getT(1);
+		auto& peak21 = this->getT(1).getT(0).getT(1).getT(2).                          // lfo_impl::peak21_t<NV>
+                       getT(4).getT(2).getT(1).getT(2).
+                       getT(2);
+		auto& change11 = this->getT(1).getT(0).getT(1).getT(2).                        // lfo_impl::change11_t<NV>
+                         getT(4).getT(2).getT(1).getT(2).
+                         getT(3);
+		auto& chain179 = this->getT(1).getT(0).getT(1).getT(2).                        // lfo_impl::chain179_t<NV>
+                         getT(4).getT(2).getT(1).getT(2).
+                         getT(4);
+		auto& minmax7 = this->getT(1).getT(0).getT(1).getT(2).getT(4).                 // lfo_impl::minmax7_t<NV>
+                        getT(2).getT(1).getT(2).getT(4).getT(0);
+		auto& chain180 = this->getT(1).getT(0).getT(1).getT(2).getT(4).                // lfo_impl::chain180_t
+                         getT(2).getT(1).getT(2).getT(4).getT(1);
+		auto& global_cable33 = this->getT(1).getT(0).getT(1).getT(2).getT(4).          // routing::global_cable<global_cable33_t_index, parameter::empty>
+                               getT(2).getT(1).getT(2).getT(4).getT(1).
+                               getT(0);
+		auto& chain28 = this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(3);         // lfo_impl::chain28_t<NV>
+		auto& peak22 = this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(3).getT(0);  // lfo_impl::peak22_t<NV>
+		auto& split16 = this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(3).getT(1); // lfo_impl::split16_t<NV>
+		auto& chain34 = this->getT(1).getT(0).getT(1).getT(2).                         // lfo_impl::chain34_t
+                        getT(4).getT(3).getT(1).getT(0);
+		auto& global_cable34 = this->getT(1).getT(0).getT(1).getT(2).          // routing::global_cable<global_cable34_t_index, parameter::empty>
+                               getT(4).getT(3).getT(1).getT(0).
+                               getT(0);
+		auto& chain35 = this->getT(1).getT(0).getT(1).getT(2).                 // lfo_impl::chain35_t<NV>
+                        getT(4).getT(3).getT(1).getT(1);
+		auto& clear16 = this->getT(1).getT(0).getT(1).getT(2).                 // math::clear<NV>
+                        getT(4).getT(3).getT(1).getT(1).
+                        getT(0);
+		auto& add10 = this->getT(1).getT(0).getT(1).getT(2).                   // math::add<NV>
+                      getT(4).getT(3).getT(1).getT(1).
+                      getT(1);
+		auto& rect7 = this->getT(1).getT(0).getT(1).getT(2).                   // math::rect<NV>
+                      getT(4).getT(3).getT(1).getT(1).
+                      getT(2);
+		auto& peak23 = this->getT(1).getT(0).getT(1).getT(2).                  // lfo_impl::peak23_t<NV>
+                       getT(4).getT(3).getT(1).getT(1).
+                       getT(3);
+		auto& change12 = this->getT(1).getT(0).getT(1).getT(2).                // lfo_impl::change12_t<NV>
+                         getT(4).getT(3).getT(1).getT(1).
+                         getT(4);
+		auto& global_cable35 = this->getT(1).getT(0).getT(1).getT(2).          // routing::global_cable<global_cable35_t_index, parameter::empty>
+                               getT(4).getT(3).getT(1).getT(1).
+                               getT(5);
+		auto& chain118 = this->getT(1).getT(0).getT(1).getT(2).                // lfo_impl::chain118_t<NV>
+                         getT(4).getT(3).getT(1).getT(2);
+		auto& clear17 = this->getT(1).getT(0).getT(1).getT(2).                 // math::clear<NV>
+                        getT(4).getT(3).getT(1).getT(2).
+                        getT(0);
+		auto& add49 = this->getT(1).getT(0).getT(1).getT(2).                   // math::add<NV>
+                      getT(4).getT(3).getT(1).getT(2).
+                      getT(1);
+		auto& peak24 = this->getT(1).getT(0).getT(1).getT(2).                  // lfo_impl::peak24_t<NV>
+                       getT(4).getT(3).getT(1).getT(2).
+                       getT(2);
+		auto& change13 = this->getT(1).getT(0).getT(1).getT(2).                // lfo_impl::change13_t<NV>
+                         getT(4).getT(3).getT(1).getT(2).
+                         getT(3);
+		auto& chain181 = this->getT(1).getT(0).getT(1).getT(2).                // lfo_impl::chain181_t<NV>
+                         getT(4).getT(3).getT(1).getT(2).
+                         getT(4);
+		auto& minmax8 = this->getT(1).getT(0).getT(1).getT(2).getT(4).         // lfo_impl::minmax8_t<NV>
+                        getT(3).getT(1).getT(2).getT(4).getT(0);
+		auto& chain182 = this->getT(1).getT(0).getT(1).getT(2).getT(4).        // lfo_impl::chain182_t
+                         getT(3).getT(1).getT(2).getT(4).getT(1);
+		auto& global_cable36 = this->getT(1).getT(0).getT(1).getT(2).getT(4).  // routing::global_cable<global_cable36_t_index, parameter::empty>
+                               getT(3).getT(1).getT(2).getT(4).getT(1).
+                               getT(0);
+		auto& clear10 = this->getT(1).getT(0).getT(2); // math::clear<NV>
 		
 		// Parameter Connections -------------------------------------------------------------------
 		
@@ -2523,13 +2738,13 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
 		this->setParameterT(3, 0.);
 		this->setParameterT(4, 1.);
 		this->setParameterT(5, 0.);
-		this->setParameterT(6, 1.);
+		this->setParameterT(6, 0.951681);
 		this->setParameterT(7, 1.);
 		this->setParameterT(8, 24.);
 		this->setParameterT(9, 96.);
-		this->setParameterT(10, 0.);
+		this->setParameterT(10, 12.);
 		this->setParameterT(11, 0.);
-		this->setParameterT(12, -0.002);
+		this->setParameterT(12, 0.6982);
 		this->setParameterT(13, 1.);
 		this->setParameterT(14, 0.);
 		this->setParameterT(15, 1.);
@@ -2557,57 +2772,89 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
 	{
 		// Runtime target Connections --------------------------------------------------------------
 		
-		this->getT(1).getT(0).getT(0).getT(0).                                                                  // lfo_impl::global_cable9_t<NV>
-        getT(0).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(1).getT(0).getT(0).getT(0).                                                                  // lfo_impl::global_cable11_t<NV>
-        getT(0).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(1).getT(0).getT(0).getT(0).                                                                  // lfo_impl::global_cable10_t<NV>
-        getT(0).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(1).getT(0).getT(0).getT(0).                                                                  // lfo_impl::global_cable12_t<NV>
-        getT(0).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(1).getT(0).getT(1).getT(0).                                                                  // lfo_impl::global_cable16_t<NV>
-        getT(0).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(1).getT(0).getT(1).getT(0).                                                                  // lfo_impl::global_cable17_t<NV>
-        getT(0).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(1).getT(0).getT(1).getT(0).                                                                  // lfo_impl::global_cable18_t<NV>
-        getT(0).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(1).getT(0).getT(1).getT(0).                                                                  // lfo_impl::global_cable22_t<NV>
-        getT(0).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(1).getT(0).getT(2).getT(0).                                                                  // lfo_impl::global_cable13_t<NV>
-        getT(0).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(1).getT(0).getT(2).getT(0).                                                                  // lfo_impl::global_cable14_t<NV>
-        getT(0).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(1).getT(0).getT(2).getT(0).                                                                  // lfo_impl::global_cable15_t<NV>
-        getT(0).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(1).getT(0).getT(2).getT(0).                                                                  // lfo_impl::global_cable23_t<NV>
-        getT(0).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(1).getT(0).getT(3).getT(0).                                                                  // lfo_impl::global_cable19_t<NV>
-        getT(0).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(1).getT(0).getT(3).getT(0).                                                                  // lfo_impl::global_cable20_t<NV>
-        getT(0).getT(1).getT(1).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(1).getT(0).getT(3).getT(0).                                                                  // lfo_impl::global_cable24_t<NV>
-        getT(0).getT(1).getT(2).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(1).getT(0).getT(3).getT(0).                                                                  // lfo_impl::global_cable25_t<NV>
-        getT(0).getT(1).getT(3).getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // routing::global_cable<global_cable_t_index, parameter::empty>
-		this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(1).getT(5).connectToRuntimeTarget(addConnection, c); // routing::global_cable<global_cable2_t_index, parameter::empty>
-		this->getT(2).getT(2).getT(4).getT(0).                                                                  // routing::global_cable<global_cable21_t_index, parameter::empty>
-        getT(1).getT(2).getT(4).getT(1).
+		this->getT(1).getT(0).getT(0).getT(0).          // lfo_impl::global_cable9_t<NV>
+        getT(0).getT(0).getT(1).getT(0).
         getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // routing::global_cable<global_cable8_t_index, parameter::empty>
-		this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(1).getT(5).connectToRuntimeTarget(addConnection, c); // routing::global_cable<global_cable29_t_index, parameter::empty>
-		this->getT(2).getT(2).getT(4).getT(1).                                                                  // routing::global_cable<global_cable30_t_index, parameter::empty>
-        getT(1).getT(2).getT(4).getT(1).
+		this->getT(1).getT(0).getT(0).getT(0).          // lfo_impl::global_cable11_t<NV>
+        getT(0).getT(0).getT(1).getT(1).
         getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // routing::global_cable<global_cable31_t_index, parameter::empty>
-		this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(1).getT(5).connectToRuntimeTarget(addConnection, c); // routing::global_cable<global_cable32_t_index, parameter::empty>
-		this->getT(2).getT(2).getT(4).getT(2).                                                                  // routing::global_cable<global_cable33_t_index, parameter::empty>
-        getT(1).getT(2).getT(4).getT(1).
+		this->getT(1).getT(0).getT(0).getT(0).          // lfo_impl::global_cable10_t<NV>
+        getT(0).getT(0).getT(1).getT(2).
         getT(0).connectToRuntimeTarget(addConnection, c);
-		this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(0).getT(0).connectToRuntimeTarget(addConnection, c); // routing::global_cable<global_cable34_t_index, parameter::empty>
-		this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(1).getT(5).connectToRuntimeTarget(addConnection, c); // routing::global_cable<global_cable35_t_index, parameter::empty>
-		this->getT(2).getT(2).getT(4).getT(3).                                                                  // routing::global_cable<global_cable36_t_index, parameter::empty>
-        getT(1).getT(2).getT(4).getT(1).
+		this->getT(1).getT(0).getT(0).getT(0).          // lfo_impl::global_cable12_t<NV>
+        getT(0).getT(0).getT(1).getT(3).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(0).getT(1).          // lfo_impl::global_cable16_t<NV>
+        getT(0).getT(0).getT(1).getT(0).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(0).getT(1).          // lfo_impl::global_cable17_t<NV>
+        getT(0).getT(0).getT(1).getT(1).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(0).getT(1).          // lfo_impl::global_cable18_t<NV>
+        getT(0).getT(0).getT(1).getT(2).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(0).getT(1).          // lfo_impl::global_cable22_t<NV>
+        getT(0).getT(0).getT(1).getT(3).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(0).getT(2).          // lfo_impl::global_cable13_t<NV>
+        getT(0).getT(0).getT(1).getT(0).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(0).getT(2).          // lfo_impl::global_cable14_t<NV>
+        getT(0).getT(0).getT(1).getT(1).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(0).getT(2).          // lfo_impl::global_cable15_t<NV>
+        getT(0).getT(0).getT(1).getT(2).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(0).getT(2).          // lfo_impl::global_cable23_t<NV>
+        getT(0).getT(0).getT(1).getT(3).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(0).getT(3).          // lfo_impl::global_cable19_t<NV>
+        getT(0).getT(0).getT(1).getT(0).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(0).getT(3).          // lfo_impl::global_cable20_t<NV>
+        getT(0).getT(0).getT(1).getT(1).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(0).getT(3).          // lfo_impl::global_cable24_t<NV>
+        getT(0).getT(0).getT(1).getT(2).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(0).getT(3).          // lfo_impl::global_cable25_t<NV>
+        getT(0).getT(0).getT(1).getT(3).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(1).getT(2).          // routing::global_cable<global_cable_t_index, parameter::empty>
+        getT(4).getT(0).getT(1).getT(0).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(1).getT(2).          // routing::global_cable<global_cable2_t_index, parameter::empty>
+        getT(4).getT(0).getT(1).getT(1).
+        getT(5).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(1).getT(2).getT(4).  // routing::global_cable<global_cable21_t_index, parameter::empty>
+        getT(0).getT(1).getT(2).getT(4).getT(1).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(1).getT(2).          // routing::global_cable<global_cable8_t_index, parameter::empty>
+        getT(4).getT(1).getT(1).getT(0).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(1).getT(2).          // routing::global_cable<global_cable29_t_index, parameter::empty>
+        getT(4).getT(1).getT(1).getT(1).
+        getT(5).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(1).getT(2).getT(4).  // routing::global_cable<global_cable30_t_index, parameter::empty>
+        getT(1).getT(1).getT(2).getT(4).getT(1).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(1).getT(2).          // routing::global_cable<global_cable31_t_index, parameter::empty>
+        getT(4).getT(2).getT(1).getT(0).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(1).getT(2).          // routing::global_cable<global_cable32_t_index, parameter::empty>
+        getT(4).getT(2).getT(1).getT(1).
+        getT(5).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(1).getT(2).getT(4).  // routing::global_cable<global_cable33_t_index, parameter::empty>
+        getT(2).getT(1).getT(2).getT(4).getT(1).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(1).getT(2).          // routing::global_cable<global_cable34_t_index, parameter::empty>
+        getT(4).getT(3).getT(1).getT(0).
+        getT(0).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(1).getT(2).          // routing::global_cable<global_cable35_t_index, parameter::empty>
+        getT(4).getT(3).getT(1).getT(1).
+        getT(5).connectToRuntimeTarget(addConnection, c);
+		this->getT(1).getT(0).getT(1).getT(2).getT(4).  // routing::global_cable<global_cable36_t_index, parameter::empty>
+        getT(3).getT(1).getT(2).getT(4).getT(1).
         getT(0).connectToRuntimeTarget(addConnection, c);
 	}
 	
@@ -2615,31 +2862,47 @@ template <int NV> struct instance: public lfo_impl::lfo_t_<NV>
 	{
 		// External Data Connections ---------------------------------------------------------------
 		
-		this->getT(1).getT(0).getT(0).getT(0).getT(0).getT(2).setExternalData(b, index);         // lfo_impl::peak5_t<NV>
-		this->getT(1).getT(0).getT(1).getT(0).getT(0).getT(2).setExternalData(b, index);         // lfo_impl::peak8_t<NV>
-		this->getT(1).getT(0).getT(2).getT(0).getT(0).getT(2).setExternalData(b, index);         // lfo_impl::peak6_t<NV>
-		this->getT(1).getT(0).getT(3).getT(0).getT(0).getT(2).setExternalData(b, index);         // lfo_impl::peak10_t<NV>
-		this->getT(1).getT(0).getT(3).getT(1).setExternalData(b, index);                         // lfo_impl::cable_table2_t<NV>
-		this->getT(2).getT(0).getT(0).getT(1).setExternalData(b, index);                         // lfo_impl::ramp_t<NV>
-		this->getT(2).getT(0).getT(1).setExternalData(b, index);                                 // lfo_impl::clock_ramp_t<NV>
-		this->getT(2).getT(1).setExternalData(b, index);                                         // lfo_impl::peak3_t
-		this->getT(2).getT(2).getT(0).getT(4).getT(0).setExternalData(b, index);                 // lfo_impl::oscillator_t<NV>
-		this->getT(2).getT(2).getT(0).getT(5).getT(2).setExternalData(b, index);                 // lfo_impl::cable_table_t<NV>
-		this->getT(2).getT(2).getT(0).getT(6).getT(2).setExternalData(b, index);                 // lfo_impl::cable_pack_t<NV>
-		this->getT(2).getT(2).getT(1).setExternalData(b, index);                                 // lfo_impl::peak9_t
-		this->getT(2).getT(2).getT(3).setExternalData(b, index);                                 // lfo_impl::peak11_t
-		this->getT(2).getT(2).getT(4).getT(0).getT(0).setExternalData(b, index);                 // lfo_impl::peak1_t<NV>
-		this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(1).getT(3).setExternalData(b, index); // lfo_impl::peak_t<NV>
-		this->getT(2).getT(2).getT(4).getT(0).getT(1).getT(2).getT(2).setExternalData(b, index); // lfo_impl::peak14_t<NV>
-		this->getT(2).getT(2).getT(4).getT(1).getT(0).setExternalData(b, index);                 // lfo_impl::peak12_t<NV>
-		this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(1).getT(3).setExternalData(b, index); // lfo_impl::peak13_t<NV>
-		this->getT(2).getT(2).getT(4).getT(1).getT(1).getT(2).getT(2).setExternalData(b, index); // lfo_impl::peak18_t<NV>
-		this->getT(2).getT(2).getT(4).getT(2).getT(0).setExternalData(b, index);                 // lfo_impl::peak19_t<NV>
-		this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(1).getT(3).setExternalData(b, index); // lfo_impl::peak20_t<NV>
-		this->getT(2).getT(2).getT(4).getT(2).getT(1).getT(2).getT(2).setExternalData(b, index); // lfo_impl::peak21_t<NV>
-		this->getT(2).getT(2).getT(4).getT(3).getT(0).setExternalData(b, index);                 // lfo_impl::peak22_t<NV>
-		this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(1).getT(3).setExternalData(b, index); // lfo_impl::peak23_t<NV>
-		this->getT(2).getT(2).getT(4).getT(3).getT(1).getT(2).getT(2).setExternalData(b, index); // lfo_impl::peak24_t<NV>
+		this->getT(1).getT(0).getT(0).getT(0).getT(0).getT(0).getT(2).setExternalData(b, index); // lfo_impl::peak5_t<NV>
+		this->getT(1).getT(0).getT(0).getT(1).getT(0).getT(0).getT(2).setExternalData(b, index); // lfo_impl::peak8_t<NV>
+		this->getT(1).getT(0).getT(0).getT(2).getT(0).getT(0).getT(2).setExternalData(b, index); // lfo_impl::peak6_t<NV>
+		this->getT(1).getT(0).getT(0).getT(3).getT(0).getT(0).getT(2).setExternalData(b, index); // lfo_impl::peak10_t<NV>
+		this->getT(1).getT(0).getT(0).getT(3).getT(1).setExternalData(b, index);                 // lfo_impl::cable_table2_t<NV>
+		this->getT(1).getT(0).getT(1).getT(0).getT(0).getT(1).setExternalData(b, index);         // lfo_impl::ramp_t<NV>
+		this->getT(1).getT(0).getT(1).getT(0).getT(1).setExternalData(b, index);                 // lfo_impl::clock_ramp_t<NV>
+		this->getT(1).getT(0).getT(1).getT(1).setExternalData(b, index);                         // lfo_impl::peak3_t
+		this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(4).getT(0).setExternalData(b, index); // lfo_impl::oscillator_t<NV>
+		this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(5).getT(2).setExternalData(b, index); // lfo_impl::cable_table_t<NV>
+		this->getT(1).getT(0).getT(1).getT(2).getT(0).getT(6).getT(2).setExternalData(b, index); // lfo_impl::cable_pack_t<NV>
+		this->getT(1).getT(0).getT(1).getT(2).getT(1).setExternalData(b, index);                 // lfo_impl::peak9_t
+		this->getT(1).getT(0).getT(1).getT(2).getT(3).setExternalData(b, index);                 // lfo_impl::peak11_t
+		this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(0).getT(0).setExternalData(b, index); // lfo_impl::peak1_t<NV>
+		this->getT(1).getT(0).getT(1).getT(2).                                                   // lfo_impl::peak_t<NV>
+        getT(4).getT(0).getT(1).getT(1).
+        getT(3).setExternalData(b, index);
+		this->getT(1).getT(0).getT(1).getT(2).                                                   // lfo_impl::peak14_t<NV>
+        getT(4).getT(0).getT(1).getT(2).
+        getT(2).setExternalData(b, index);
+		this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(1).getT(0).setExternalData(b, index); // lfo_impl::peak12_t<NV>
+		this->getT(1).getT(0).getT(1).getT(2).                                                   // lfo_impl::peak13_t<NV>
+        getT(4).getT(1).getT(1).getT(1).
+        getT(3).setExternalData(b, index);
+		this->getT(1).getT(0).getT(1).getT(2).                                                   // lfo_impl::peak18_t<NV>
+        getT(4).getT(1).getT(1).getT(2).
+        getT(2).setExternalData(b, index);
+		this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(2).getT(0).setExternalData(b, index); // lfo_impl::peak19_t<NV>
+		this->getT(1).getT(0).getT(1).getT(2).                                                   // lfo_impl::peak20_t<NV>
+        getT(4).getT(2).getT(1).getT(1).
+        getT(3).setExternalData(b, index);
+		this->getT(1).getT(0).getT(1).getT(2).                                                   // lfo_impl::peak21_t<NV>
+        getT(4).getT(2).getT(1).getT(2).
+        getT(2).setExternalData(b, index);
+		this->getT(1).getT(0).getT(1).getT(2).getT(4).getT(3).getT(0).setExternalData(b, index); // lfo_impl::peak22_t<NV>
+		this->getT(1).getT(0).getT(1).getT(2).                                                   // lfo_impl::peak23_t<NV>
+        getT(4).getT(3).getT(1).getT(1).
+        getT(3).setExternalData(b, index);
+		this->getT(1).getT(0).getT(1).getT(2).  // lfo_impl::peak24_t<NV>
+        getT(4).getT(3).getT(1).getT(2).
+        getT(2).setExternalData(b, index);
 	}
 };
 }

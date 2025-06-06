@@ -153,69 +153,13 @@ const var WinUnsync1 = [Content.getComponent("FileWin1"),
 const var WinSync1 = [Content.getComponent("FileXfTempo1"),
                      Content.getComponent("FileWinTempo1")];
                   
-const var Files1 = Synth.getEffect("Files1");                  
-
-inline function onWinSync1Control(component, value)
-{
-		 
-	 if (value == 0){
-	
-		 for(s in WinUnsync1)
-		         s.showControl(1);  
-		         
-		 for(s in WinSync1)
-		 		 s.showControl(0);           
-	 
-		 Files1.setAttribute(Files1.WinSync, 0);
-		 }
-		 
-	
-		 if (value == 1){
-		
-			 for(s in WinUnsync1)
-			         s.showControl(0);  
-			         
-			 for(s in WinSync1)
-			 		 s.showControl(1);           
-		 
-			 Files1.setAttribute(Files1.WinSync, 1);
-			 }	 
-};
-
-Content.getComponent("WinSync1").setControlCallback(onWinSync1Control);
+const var Files1 = Synth.getEffect("Osc1");                  
 
 
 const var CutLabel1 = Content.getComponent("CutLabel1");
 const var CutLabel2 = Content.getComponent("CutLabel2");
 const var CutLabel9 = Content.getComponent("CutLabel9");
 
-
-inline function onFilterType1Control(component, value)
-{
-	Filter1.setAttribute(Filter1.type, value);
-
-	if (value == 1){
-		CutLabel1.setValue("Low Pass");
-		CutLabel2.setValue("High Pass");
-		CutLabel9.setValue("Serial/ Paralel");
-	}
-	
-	if (value == 2){
-			CutLabel1.setValue("Low Shelf");
-			CutLabel2.setValue("High Shelf");
-			CutLabel9.setValue("Serial/ Paralel");
-		}
-			
-		
-	if (value == 3){
-			CutLabel1.setValue("Freq");
-			CutLabel2.setValue("Low Pass");
-			CutLabel9.setValue("FFWD/ Allpass");
-			}		
-	
-};
-
-Content.getComponent("FilterType1").setControlCallback(onFilterType1Control);
 
 const var PosTable1 = Content.getComponent("PosTable1");
 const var PosSp1 = Content.getComponent("PosSp1");

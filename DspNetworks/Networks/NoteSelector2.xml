@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Network ID="NoteSelector2" Version="0.0.0" AllowCompilation="1" CompileChannelAmount="1">
+<Network ID="NoteSelector2" Version="0.0.0" CompileChannelAmount="1" AllowPolyphonic="1">
   <Node FactoryPath="container.chain" ID="NoteSelector2" Bypassed="0"
         Name="NoteSelector2" ShowParameters="1">
     <Nodes>

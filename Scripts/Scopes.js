@@ -1,13 +1,13 @@
 //osc1
 
-const var OsdDp1 = Synth.getDisplayBufferSource("OscOut1");
-const var rb1 = OsdDp1.getDisplayBuffer(1);
-const var OsdDp2 = Synth.getDisplayBufferSource("OscOut2");
-const var rb2 = OsdDp2.getDisplayBuffer(1);
-const var OsdDp3 = Synth.getDisplayBufferSource("OscOut3");
-const var rb3 = OsdDp3.getDisplayBuffer(1);
-const var OsdDp4 = Synth.getDisplayBufferSource("OscOut4");
-const var rb4 = OsdDp4.getDisplayBuffer(1);
+const var OsdDp1 = Synth.getDisplayBufferSource("Osc1");
+const var rb1 = OsdDp1.getDisplayBuffer(0);
+const var OsdDp2 = Synth.getDisplayBufferSource("Osc2");
+const var rb2 = OsdDp2.getDisplayBuffer(0);
+const var OsdDp3 = Synth.getDisplayBufferSource("Osc3");
+const var rb3 = OsdDp3.getDisplayBuffer(0);
+const var OsdDp4 = Synth.getDisplayBufferSource("Osc4");
+const var rb4 = OsdDp4.getDisplayBuffer(0);
 
 const var BUFFER_LENGTH1 = 256;
 const var P1 = Content.getComponent("VisPanel");

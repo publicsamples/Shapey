@@ -8,30 +8,10 @@
         <Nodes>
           <Node ID="xfader" FactoryPath="control.xfader" Bypassed="0" Name="xfader">
             <Properties>
-              <Property ID="NumParameters" Value="8"/>
+              <Property ID="NumParameters" Value="4"/>
               <Property ID="Mode" Value="Switch"/>
             </Properties>
             <SwitchTargets>
-              <SwitchTarget>
-                <Connections>
-                  <Connection NodeId="gain" ParameterId="Gain"/>
-                </Connections>
-              </SwitchTarget>
-              <SwitchTarget>
-                <Connections>
-                  <Connection NodeId="gain9" ParameterId="Gain"/>
-                </Connections>
-              </SwitchTarget>
-              <SwitchTarget>
-                <Connections>
-                  <Connection NodeId="gain8" ParameterId="Gain"/>
-                </Connections>
-              </SwitchTarget>
-              <SwitchTarget>
-                <Connections>
-                  <Connection NodeId="gain10" ParameterId="Gain"/>
-                </Connections>
-              </SwitchTarget>
               <SwitchTarget>
                 <Connections>
                   <Connection NodeId="gain11" ParameterId="Gain"/>
@@ -59,106 +39,6 @@
           </Node>
           <Node ID="split1" FactoryPath="container.split" Bypassed="0" Name="split1">
             <Nodes>
-              <Node ID="chain" FactoryPath="container.chain" Bypassed="0" Name="chain"
-                    ShowParameters="0">
-                <Nodes>
-                  <Node ID="global_receive" FactoryPath="routing.global_receive" Bypassed="0"
-                        Name="global_receive" NodeColour="4289874083">
-                    <Properties>
-                      <Property ID="Connection" Value="Osc1Out"/>
-                    </Properties>
-                    <Parameters>
-                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
-                    </Parameters>
-                  </Node>
-                  <Node ID="gain" FactoryPath="core.gain" Bypassed="0" Name="gain">
-                    <Parameters>
-                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                                 SkewFactor="5.422270774841309" ID="Gain" DefaultValue="0.0" Automated="1"/>
-                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
-                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
-                    </Parameters>
-                  </Node>
-                </Nodes>
-                <Parameters/>
-              </Node>
-              <Node ID="chain9" FactoryPath="container.chain" Bypassed="0" Name="chain"
-                    ShowParameters="0">
-                <Nodes>
-                  <Node ID="global_receive9" FactoryPath="routing.global_receive" Bypassed="0"
-                        Name="global_receive" NodeColour="4289889863">
-                    <Properties>
-                      <Property ID="Connection" Value="osc2out"/>
-                    </Properties>
-                    <Parameters>
-                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
-                    </Parameters>
-                  </Node>
-                  <Node ID="gain9" FactoryPath="core.gain" Bypassed="0" Name="gain">
-                    <Parameters>
-                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                                 SkewFactor="5.422270774841309" ID="Gain" DefaultValue="0.0" Automated="1"/>
-                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
-                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
-                    </Parameters>
-                  </Node>
-                </Nodes>
-                <Parameters/>
-              </Node>
-              <Node ID="chain1" FactoryPath="container.chain" Bypassed="0" Name="chain"
-                    ShowParameters="0">
-                <Nodes>
-                  <Node ID="global_receive8" FactoryPath="routing.global_receive" Bypassed="0"
-                        Name="global_receive" NodeColour="4289882183">
-                    <Properties>
-                      <Property ID="Connection" Value="OscOut3"/>
-                    </Properties>
-                    <Parameters>
-                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
-                    </Parameters>
-                  </Node>
-                  <Node ID="gain8" FactoryPath="core.gain" Bypassed="0" Name="gain">
-                    <Parameters>
-                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                                 SkewFactor="5.422270774841309" ID="Gain" DefaultValue="0.0" Automated="1"/>
-                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
-                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
-                    </Parameters>
-                  </Node>
-                </Nodes>
-                <Parameters/>
-              </Node>
-              <Node ID="chain2" FactoryPath="container.chain" Bypassed="0" Name="chain"
-                    ShowParameters="0">
-                <Nodes>
-                  <Node ID="global_receive10" FactoryPath="routing.global_receive" Bypassed="0"
-                        Name="global_receive" NodeColour="4289881927">
-                    <Properties>
-                      <Property ID="Connection" Value="OscOut4"/>
-                    </Properties>
-                    <Parameters>
-                      <Parameter MinValue="0.0" MaxValue="1.0" ID="Value" Value="1.0"/>
-                    </Parameters>
-                  </Node>
-                  <Node ID="gain10" FactoryPath="core.gain" Bypassed="0" Name="gain">
-                    <Parameters>
-                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                                 SkewFactor="5.422270774841309" ID="Gain" DefaultValue="0.0" Automated="1"/>
-                      <Parameter MinValue="0.0" MaxValue="1000.0" StepSize="0.1000000014901161"
-                                 SkewFactor="0.3010300099849701" ID="Smoothing" Value="20.0"/>
-                      <Parameter MinValue="-100.0" MaxValue="0.0" StepSize="0.1000000014901161"
-                                 SkewFactor="5.422270774841309" ID="ResetValue" Value="0.0"/>
-                    </Parameters>
-                  </Node>
-                </Nodes>
-                <Parameters/>
-              </Node>
               <Node ID="chain3" FactoryPath="container.chain" Bypassed="0" Name="chain"
                     ShowParameters="0">
                 <Nodes>
@@ -267,7 +147,7 @@
       </Node>
     </Nodes>
     <Parameters>
-      <Parameter MinValue="1.0" MaxValue="8.0" ID="Input" Value="1.0" DefaultValue="0.0">
+      <Parameter MinValue="1.0" MaxValue="4.0" ID="Input" Value="1.0" DefaultValue="0.0">
         <Connections>
           <Connection NodeId="xfader" ParameterId="Value"/>
         </Connections>

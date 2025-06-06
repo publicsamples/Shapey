@@ -137,75 +137,6 @@ Osc2.setAttribute(Osc2.pitchmode, value);
  
  Content.getComponent("PitchMode3").setControlCallback(onPitchMode3Control);
  
- 
-const var WinUnsync2 = [Content.getComponent("FileWin2"),
-                       Content.getComponent("FileXf2")];
-
-const var WinSync2 = [Content.getComponent("FileXfTempo3"),
-                     Content.getComponent("FileWinTempo3")];
-                                    
-
-inline function onWinSync2Control(component, value)
-{
-		 
-	 if (value == 0){
-	
-		 for(s in WinUnsync2)
-		         s.showControl(1);  
-		         
-		 for(s in WinSync2)
-		 		 s.showControl(0);           
-	 
-		 Files1.setAttribute(Files1.WinSync, 0);
-		 }
-		 
-	
-		 if (value == 1){
-		
-			 for(s in WinUnsync2)
-			         s.showControl(0);  
-			         
-			 for(s in WinSync2)
-			 		 s.showControl(1);           
-		 
-			 Files1.setAttribute(Files1.WinSync, 1);
-			 }	 
-};
-
-Content.getComponent("WinSync2").setControlCallback(onWinSync2Control);
-
-const var CutLabel3 = Content.getComponent("CutLabel3");
-const var CutLabel4 = Content.getComponent("CutLabel4");
-const var CutLabel10 = Content.getComponent("CutLabel10");
-
-
-inline function onFilterType2Control(component, value)
-{
-	Filter1.setAttribute(Filter1.type, value);
-
-	if (value == 1){
-		CutLabel3.setValue("Low Pass");
-		CutLabel4.setValue("High Pass");
-		CutLabel10.setValue("Serial/ Paralel");
-	}
-	
-	if (value == 2){
-			CutLabel3.setValue("Low Shelf");
-			CutLabel4.setValue("High Shelf");
-			CutLabel10.setValue("Serial/ Paralel");
-		}
-	
-		
-	if (value == 3){
-			CutLabel3.setValue("Freq");
-			CutLabel4.setValue("Low Pass");
-			CutLabel10.setValue("FFWD/ Allpass");
-			}		
-	
-};
-
-Content.getComponent("FilterType2").setControlCallback(onFilterType2Control);
-
 const var PosTable2 = Content.getComponent("PosTable2");
 const var PosSp2 = Content.getComponent("PosSp2");
 
@@ -215,7 +146,7 @@ const var PosSp2 = Content.getComponent("PosSp2");
  	PosTable2.showControl(value-1);
  	PosSp2.showControl(value);
  	
- 	f2.setAttribute(f2.tablestep, value);
+ //	f2.setAttribute(f2.tablestep, value);
  };
  
  Content.getComponent("PosModMode2").setControlCallback(onPosModMode2Control);

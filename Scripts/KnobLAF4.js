@@ -140,4 +140,9 @@ const var LfoMidiVal1 = [Content.getComponent("LfoMidiMin1"),
 for(s in LfoMidiVal1)
       s.setLocalLookAndFeel(KnobLaf4);  
 
+const var PitchShiftSmall = [Content.getComponent("FilePitch1"),
+                             Content.getComponent("FileXf1"),
+                             Content.getComponent("Feed1")];
+for(s in PitchShiftSmall)
+      s.setLocalLookAndFeel(KnobLaf4);  
 

@@ -137,7 +137,7 @@
       </Node>
     </Nodes>
     <Parameters>
-      <Parameter ID="note" MinValue="1.0" MaxValue="9.0" StepSize="1.0" Value="6.0"
+      <Parameter ID="note" MinValue="1.0" MaxValue="9.0" StepSize="1.0" Value="2.0"
                  DefaultValue="1.0">
         <Connections>
           <Connection NodeId="NoteSelector" ParameterId="NoteSrc"/>

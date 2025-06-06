@@ -1,6 +1,10 @@
 
 //File Manager 
  
+ const var SynthesiserGroup1 = Synth.getChildSynth("Synthesiser Group1");
+ const var SynthesiserGroup2 = Synth.getChildSynth("Synthesiser Group2");
+ const var SynthesiserGroup3 = Synth.getChildSynth("Synthesiser Group3");
+ const var SynthesiserGroup4 = Synth.getChildSynth("Synthesiser Group4");
 
 inline function onFolderSelect1Control(component, value)
 {
@@ -41,10 +45,10 @@ const var AudioList = Engine.loadAudioFilesIntoPool();
 
 const Folder = [];
 
-const var File1 = Synth.getAudioSampleProcessor("Files1");
-const var File2 = Synth.getAudioSampleProcessor("Files2");
-const var File3 = Synth.getAudioSampleProcessor("Files3");
-const var File4 = Synth.getAudioSampleProcessor("Files4");
+const var File1 = Synth.getAudioSampleProcessor("Osc1");
+const var File2 = Synth.getAudioSampleProcessor("Osc2");
+const var File3 = Synth.getAudioSampleProcessor("Osc3");
+const var File4 = Synth.getAudioSampleProcessor("Osc4");
 
 const slot1 = File1.getAudioFile(1);
 const slot2 = File2.getAudioFile(1);
@@ -190,7 +194,6 @@ inline function onSecondCBControl(component, value) {
 
 Content.getComponent("SecondCB").setControlCallback(onSecondCBControl);
 
-const var SynthesiserGroup1 = Synth.getChildSynth("Synthesiser Group1");
 
 inline function onThirdCBControl(component, value) 
 {
@@ -363,7 +366,7 @@ inline function onSecondCB1Control(component, value) {
 
 Content.getComponent("SecondCB1").setControlCallback(onSecondCB1Control);
 
-const var SynthesiserGroup2 = Synth.getChildSynth("Synthesiser Group2");
+
 
 inline function onThirdCB1Control(component, value) 
 {
@@ -378,14 +381,14 @@ inline function onThirdCB1Control(component, value)
        local fullPath = "{PROJECT_FOLDER}" + selectedGenre + "/" + selectedInstrument + "/" + selectedSample;
 
 	
-	SynthesiserGroup2.setBypassed(false);
+	SynthesiserGroup1.setBypassed(false);
 	reg voc2 = value-1;
 	
 	Content.callAfterDelay(300, function()
 	{
 		Engine.allNotesOff();
 	
-		SynthesiserGroup2.setBypassed(true);
+		SynthesiserGroup1.setBypassed(true);
 		
 		Content.callAfterDelay(300, function()
 		{
@@ -401,7 +404,7 @@ inline function onThirdCB1Control(component, value)
     
     }, this);
 
-	}, ScriptnodeSynthesiser2);
+	}, ScriptnodeSynthesiser1);
 }
 }
 
@@ -536,7 +539,7 @@ inline function onSecondCB2Control(component, value) {
 
 Content.getComponent("SecondCB2").setControlCallback(onSecondCB2Control);
 
-const var SynthesiserGroup3 = Synth.getChildSynth("Synthesiser Group3");
+
 
 inline function onThirdCB2Control(component, value) 
 {
@@ -551,20 +554,20 @@ inline function onThirdCB2Control(component, value)
        local fullPath = "{PROJECT_FOLDER}" + selectedGenre + "/" + selectedInstrument + "/" + selectedSample;
 
 	
-	SynthesiserGroup3.setBypassed(false);
+	SynthesiserGroup1.setBypassed(false);
 	reg voc3 = value-1;
 	
 	Content.callAfterDelay(300, function()
 	{
 		Engine.allNotesOff();
 	
-		SynthesiserGroup3.setBypassed(true);
+		SynthesiserGroup1.setBypassed(true);
 		
 		Content.callAfterDelay(300, function()
 		{
 	
 	
-		SynthesiserGroup3.setBypassed(false);
+		SynthesiserGroup1.setBypassed(false);
 
    
         // Load the sample using the full path
@@ -574,7 +577,7 @@ inline function onThirdCB2Control(component, value)
     
     }, this);
 
-	}, ScriptnodeSynthesiser2);
+	}, ScriptnodeSynthesiser1);
 }
 }
 
@@ -709,7 +712,7 @@ inline function onSecondCB3Control(component, value) {
 
 Content.getComponent("SecondCB3").setControlCallback(onSecondCB3Control);
 
-const var SynthesiserGroup4 = Synth.getChildSynth("Synthesiser Group4");
+
 
 inline function onThirdCB3Control(component, value) 
 {
@@ -724,20 +727,20 @@ inline function onThirdCB3Control(component, value)
        local fullPath = "{PROJECT_FOLDER}" + selectedGenre + "/" + selectedInstrument + "/" + selectedSample;
 
 	
-	SynthesiserGroup4.setBypassed(false);
+	SynthesiserGroup1.setBypassed(false);
 	reg voc4 = value-1;
 	
 	Content.callAfterDelay(400, function()
 	{
 		Engine.allNotesOff();
 	
-		SynthesiserGroup4.setBypassed(true);
+		SynthesiserGroup1.setBypassed(true);
 		
 		Content.callAfterDelay(400, function()
 		{
 	
 	
-		SynthesiserGroup4.setBypassed(false);
+		SynthesiserGroup1.setBypassed(false);
 
    
         // Load the sample using the full path
@@ -747,7 +750,7 @@ inline function onThirdCB3Control(component, value)
     
     }, this);
 
-	}, ScriptnodeSynthesiser4);
+	}, ScriptnodeSynthesiser1);
 }
 }
 
@@ -801,7 +804,7 @@ Content.getComponent("ThirdSp3").setControlCallback(onThirdSp3Control);
  
  inline function onUserModeControl(component, value)
  {
- Files1.setAttribute(Files1.UserMode, value-1);
+ Osc1.setAttribute(Osc1.FileUser, value-1);
  
  	for(s in FactoryFile1)
  		s.showControl(value);  

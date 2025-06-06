@@ -70,10 +70,10 @@ struct _gran final : public ::faust::dsp {
 	FAUSTFLOAT fHslider3;
 	int iRec4[2];
 	int iVec0[2];
-	int iRec3[2];
 	FAUSTFLOAT fHslider4;
-	float fRec6[2];
 	float fRec5[2];
+	float fRec3[2];
+	int iRec6[2];
 	float fConst4;
 	float fRec8[2];
 	float fRec7[2];
@@ -135,7 +135,7 @@ struct _gran final : public ::faust::dsp {
 		m->declare("filters.lib/dcblockerat:author", "Julius O. Smith III");
 		m->declare("filters.lib/dcblockerat:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/dcblockerat:license", "MIT-style STK-4.3 license");
-		m->declare("filters.lib/lowpass0_highpass1", "MIT-style STK-4.3 license");
+		m->declare("filters.lib/lowpass0_highpass1", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/name", "Faust Filters Library");
 		m->declare("filters.lib/pole:author", "Julius O. Smith III");
 		m->declare("filters.lib/pole:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
@@ -144,7 +144,7 @@ struct _gran final : public ::faust::dsp {
 		m->declare("filters.lib/zero:author", "Julius O. Smith III");
 		m->declare("filters.lib/zero:copyright", "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>");
 		m->declare("filters.lib/zero:license", "MIT-style STK-4.3 license");
-		m->declare("hoa.lib/author", "Julien Colafrancesco");
+		m->declare("hoa.lib/author", "Pierre Guillot");
 		m->declare("hoa.lib/copyright", "2012-2013 Guillot, Paris, Colafrancesco, CICM labex art H2H, U. Paris 8, 2019 Wargreen, 2022 Bonardi, Goutmann");
 		m->declare("hoa.lib/name", "High Order Ambisonics library");
 		m->declare("hoa.lib/version", "1.4.0");
@@ -236,8 +236,8 @@ struct _gran final : public ::faust::dsp {
 	void instanceResetUserInterface() {
 		fHslider0 = FAUSTFLOAT(0.0f);
 		fHslider1 = FAUSTFLOAT(0.0f);
-		fHslider2 = FAUSTFLOAT(1e+01f);
-		fHslider3 = FAUSTFLOAT(1.0f);
+		fHslider2 = FAUSTFLOAT(1.0f);
+		fHslider3 = FAUSTFLOAT(1e+01f);
 		fHslider4 = FAUSTFLOAT(1e+01f);
 	}
 	
@@ -252,13 +252,13 @@ struct _gran final : public ::faust::dsp {
 			iVec0[l2] = 0;
 		}
 		for (int l3 = 0; l3 < 2; l3 = l3 + 1) {
-			iRec3[l3] = 0;
+			fRec5[l3] = 0.0f;
 		}
 		for (int l4 = 0; l4 < 2; l4 = l4 + 1) {
-			fRec6[l4] = 0.0f;
+			fRec3[l4] = 0.0f;
 		}
 		for (int l5 = 0; l5 < 2; l5 = l5 + 1) {
-			fRec5[l5] = 0.0f;
+			iRec6[l5] = 0;
 		}
 		for (int l6 = 0; l6 < 2; l6 = l6 + 1) {
 			fRec8[l6] = 0.0f;
@@ -365,12 +365,12 @@ struct _gran final : public ::faust::dsp {
 		ui_interface->addHorizontalSlider("decal", &fHslider1, FAUSTFLOAT(0.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.001f));
 		ui_interface->declare(&fHslider0, "BELA", "ANALOG_4");
 		ui_interface->addHorizontalSlider("feedback", &fHslider0, FAUSTFLOAT(0.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(2.0f), FAUSTFLOAT(0.001f));
-		ui_interface->declare(&fHslider3, "BELA", "ANALOG_0");
-		ui_interface->addHorizontalSlider("population", &fHslider3, FAUSTFLOAT(1.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.001f));
+		ui_interface->declare(&fHslider2, "BELA", "ANALOG_0");
+		ui_interface->addHorizontalSlider("population", &fHslider2, FAUSTFLOAT(1.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.001f));
 		ui_interface->declare(&fHslider4, "BELA", "ANALOG_3");
 		ui_interface->addHorizontalSlider("speed", &fHslider4, FAUSTFLOAT(1e+01f), FAUSTFLOAT(-24.0f), FAUSTFLOAT(24.0f), FAUSTFLOAT(0.1f));
-		ui_interface->declare(&fHslider2, "BELA", "ANALOG_1");
-		ui_interface->addHorizontalSlider("taille", &fHslider2, FAUSTFLOAT(1e+01f), FAUSTFLOAT(4.0f), FAUSTFLOAT(1.2e+04f), FAUSTFLOAT(0.001f));
+		ui_interface->declare(&fHslider3, "BELA", "ANALOG_1");
+		ui_interface->addHorizontalSlider("taille", &fHslider3, FAUSTFLOAT(1e+01f), FAUSTFLOAT(4.0f), FAUSTFLOAT(1.2e+04f), FAUSTFLOAT(0.001f));
 		ui_interface->closeBox();
 	}
 	
@@ -381,71 +381,71 @@ struct _gran final : public ::faust::dsp {
 		FAUSTFLOAT* output1 = outputs[1];
 		float fSlow0 = std::max<float>(0.0f, std::min<float>(2.0f, float(fHslider0)));
 		int iSlow1 = int(4.41e+04f * (1.0f - std::max<float>(0.0f, std::min<float>(1.0f, float(fHslider1)))));
-		float fSlow2 = std::max<float>(4.0f, std::min<float>(1.2e+04f, float(fHslider2)));
-		int iSlow3 = int(fConst0 * fSlow2 * (0.01f * (1.0f - std::max<float>(0.0f, std::min<float>(1.0f, float(fHslider3)))) + 0.001f));
-		int iSlow4 = iSlow3 + -10;
-		float fSlow5 = std::max<float>(-24.0f, std::min<float>(24.0f, float(fHslider4)));
-		float fSlow6 = 1e+03f / fSlow2;
-		float fSlow7 = 0.33333334f * float(iSlow3);
-		float fSlow8 = fSlow7 + 1e+01f;
-		float fSlow9 = 0.33333334f * float(2 * iSlow3);
-		float fSlow10 = fSlow9 + 1e+01f;
+		float fSlow2 = std::max<float>(4.0f, std::min<float>(1.2e+04f, float(fHslider3)));
+		int iSlow3 = int(fConst0 * (0.01f * (1.0f - std::max<float>(0.0f, std::min<float>(1.0f, float(fHslider2)))) + 0.001f) * fSlow2);
+		float fSlow4 = std::max<float>(-24.0f, std::min<float>(24.0f, float(fHslider4)));
+		float fSlow5 = 1e+03f / fSlow2;
+		float fSlow6 = 0.33333334f * float(iSlow3);
+		float fSlow7 = fSlow6 + 1e+01f;
+		float fSlow8 = 0.33333334f * float(2 * iSlow3);
+		float fSlow9 = fSlow8 + 1e+01f;
+		int iSlow10 = iSlow3 + -10;
 		for (int i0 = 0; i0 < count; i0 = i0 + 1) {
 			iRec2[0] = (iRec2[1] + 1) % 44100;
-			ftbl0[iRec2[0]] = float(input0[i0]) + fSlow0 * fRec0[1];
+			ftbl0[iRec2[0]] = fSlow0 * fRec0[1] + float(input0[i0]);
 			iRec4[0] = (iRec4[1] + 1) % iSlow3;
-			int iTemp0 = ((iRec4[0] > iSlow4) ? 1 : 0);
+			int iTemp0 = ((iRec4[0] < 10) ? 1 : 0);
 			iVec0[0] = iTemp0;
 			int iTemp1 = iTemp0 > iVec0[1];
-			iRec3[0] = ((iTemp1) ? iRec2[0] : iRec3[1]);
-			fRec6[0] = ((iTemp1) ? fSlow5 : fRec6[1]);
-			fRec5[0] = std::max<float>(0.0f, ((iTemp1) ? float(fRec6[0] < 0.0f) : fRec5[1] + fRec6[0]));
-			int iTemp2 = (iSlow1 + iRec3[0] + int(fRec5[0])) % 44100;
-			fRec8[0] = ((iTemp1) ? fSlow6 : fRec8[1]);
+			fRec5[0] = ((iTemp1) ? fSlow4 : fRec5[1]);
+			fRec3[0] = std::max<float>(0.0f, ((iTemp1) ? float(fRec5[0] < 0.0f) : fRec3[1] + fRec5[0]));
+			iRec6[0] = ((iTemp1) ? iRec2[0] : iRec6[1]);
+			int iTemp2 = (iSlow1 + int(fRec3[0]) + iRec6[0]) % 44100;
+			fRec8[0] = ((iTemp1) ? fSlow5 : fRec8[1]);
 			float fTemp3 = fConst4 * fRec8[0];
 			fRec7[0] = std::max<float>(0.0f, ((iTemp1) ? float(fTemp3 < 0.0f) : fRec7[1] + fTemp3));
 			float fTemp4 = std::cos(6.2831855f * ((fRec7[0] > 1.0f) ? 0.0f : fRec7[0]) + 3.1415927f) + 1.0f;
-			int iTemp5 = ((iRec4[0] < 10) ? 1 : 0);
-			iVec1[0] = iTemp5;
-			int iTemp6 = iTemp5 > iVec1[1];
-			fRec10[0] = ((iTemp6) ? fSlow5 : fRec10[1]);
-			fRec9[0] = std::max<float>(0.0f, ((iTemp6) ? float(fRec10[0] < 0.0f) : fRec10[0] + fRec9[1]));
-			iRec11[0] = ((iTemp6) ? iRec2[0] : iRec11[1]);
-			int iTemp7 = (iSlow1 + int(fRec9[0]) + iRec11[0]) % 44100;
-			fRec13[0] = ((iTemp6) ? fSlow6 : fRec13[1]);
-			float fTemp8 = fConst4 * fRec13[0];
-			fRec12[0] = std::max<float>(0.0f, ((iTemp6) ? float(fTemp8 < 0.0f) : fRec12[1] + fTemp8));
-			float fTemp9 = std::cos(6.2831855f * ((fRec12[0] > 1.0f) ? 0.0f : fRec12[0]) + 3.1415927f) + 1.0f;
-			float fTemp10 = float(iRec4[0]);
-			int iTemp11 = ((fTemp10 < fSlow8) ? ((fTemp10 > fSlow7) ? 1 : 0) : 0);
+			float fTemp5 = float(iRec4[0]);
+			int iTemp6 = ((fTemp5 < fSlow7) ? ((fTemp5 > fSlow6) ? 1 : 0) : 0);
+			iVec1[0] = iTemp6;
+			int iTemp7 = iTemp6 > iVec1[1];
+			fRec10[0] = ((iTemp7) ? fSlow4 : fRec10[1]);
+			fRec9[0] = std::max<float>(0.0f, ((iTemp7) ? float(fRec10[0] < 0.0f) : fRec9[1] + fRec10[0]));
+			iRec11[0] = ((iTemp7) ? iRec2[0] : iRec11[1]);
+			int iTemp8 = (iSlow1 + int(fRec9[0]) + iRec11[0]) % 44100;
+			fRec13[0] = ((iTemp7) ? fSlow5 : fRec13[1]);
+			float fTemp9 = fConst4 * fRec13[0];
+			fRec12[0] = std::max<float>(0.0f, ((iTemp7) ? float(fTemp9 < 0.0f) : fRec12[1] + fTemp9));
+			float fTemp10 = std::cos(6.2831855f * ((fRec12[0] > 1.0f) ? 0.0f : fRec12[0]) + 3.1415927f) + 1.0f;
+			int iTemp11 = ((fTemp5 < fSlow9) ? ((fTemp5 > fSlow8) ? 1 : 0) : 0);
 			iVec2[0] = iTemp11;
 			int iTemp12 = iTemp11 > iVec2[1];
-			fRec15[0] = ((iTemp12) ? fSlow5 : fRec15[1]);
-			fRec14[0] = std::max<float>(0.0f, ((iTemp12) ? float(fRec15[0] < 0.0f) : fRec15[0] + fRec14[1]));
+			fRec15[0] = ((iTemp12) ? fSlow4 : fRec15[1]);
+			fRec14[0] = std::max<float>(0.0f, ((iTemp12) ? float(fRec15[0] < 0.0f) : fRec14[1] + fRec15[0]));
 			iRec16[0] = ((iTemp12) ? iRec2[0] : iRec16[1]);
 			int iTemp13 = (iSlow1 + int(fRec14[0]) + iRec16[0]) % 44100;
-			fRec18[0] = ((iTemp12) ? fSlow6 : fRec18[1]);
+			fRec18[0] = ((iTemp12) ? fSlow5 : fRec18[1]);
 			float fTemp14 = fConst4 * fRec18[0];
 			fRec17[0] = std::max<float>(0.0f, ((iTemp12) ? float(fTemp14 < 0.0f) : fRec17[1] + fTemp14));
 			float fTemp15 = std::cos(6.2831855f * ((fRec17[0] > 1.0f) ? 0.0f : fRec17[0]) + 3.1415927f) + 1.0f;
-			int iTemp16 = ((fTemp10 < fSlow10) ? ((fTemp10 > fSlow9) ? 1 : 0) : 0);
+			int iTemp16 = ((iRec4[0] > iSlow10) ? 1 : 0);
 			iVec3[0] = iTemp16;
 			int iTemp17 = iTemp16 > iVec3[1];
-			fRec20[0] = ((iTemp17) ? fSlow5 : fRec20[1]);
-			fRec19[0] = std::max<float>(0.0f, ((iTemp17) ? float(fRec20[0] < 0.0f) : fRec20[0] + fRec19[1]));
+			fRec20[0] = ((iTemp17) ? fSlow4 : fRec20[1]);
+			fRec19[0] = std::max<float>(0.0f, ((iTemp17) ? float(fRec20[0] < 0.0f) : fRec19[1] + fRec20[0]));
 			iRec21[0] = ((iTemp17) ? iRec2[0] : iRec21[1]);
 			int iTemp18 = (iSlow1 + int(fRec19[0]) + iRec21[0]) % 44100;
-			fRec23[0] = ((iTemp17) ? fSlow6 : fRec23[1]);
+			fRec23[0] = ((iTemp17) ? fSlow5 : fRec23[1]);
 			float fTemp19 = fConst4 * fRec23[0];
 			fRec22[0] = std::max<float>(0.0f, ((iTemp17) ? float(fTemp19 < 0.0f) : fRec22[1] + fTemp19));
 			float fTemp20 = std::cos(6.2831855f * ((fRec22[0] > 1.0f) ? 0.0f : fRec22[0]) + 3.1415927f) + 1.0f;
-			float fTemp21 = ftbl0[iTemp2] * fTemp4 + ftbl0[iTemp7] * fTemp9 + ftbl0[iTemp13] * fTemp15 + ftbl0[iTemp18] * fTemp20;
+			float fTemp21 = ftbl0[iTemp2] * fTemp4 + ftbl0[iTemp8] * fTemp10 + ftbl0[iTemp13] * fTemp15 + ftbl0[iTemp18] * fTemp20;
 			fVec4[0] = fTemp21;
 			fRec1[0] = fConst2 * (fConst3 * fRec1[1] + 0.1f * (fTemp21 - fVec4[1]));
 			fRec0[0] = fRec1[0];
 			output0[i0] = FAUSTFLOAT(fRec0[0]);
-			ftbl1[iRec2[0]] = float(input1[i0]) + fSlow0 * fRec24[1];
-			float fTemp22 = ftbl1[iTemp7] * fTemp9 + ftbl1[iTemp13] * fTemp15 + ftbl1[iTemp18] * fTemp20 + fTemp4 * ftbl1[iTemp2];
+			ftbl1[iRec2[0]] = fSlow0 * fRec24[1] + float(input1[i0]);
+			float fTemp22 = fTemp4 * ftbl1[iTemp2] + fTemp10 * ftbl1[iTemp8] + fTemp15 * ftbl1[iTemp13] + fTemp20 * ftbl1[iTemp18];
 			fVec5[0] = fTemp22;
 			fRec25[0] = fConst2 * (fConst3 * fRec25[1] + 0.1f * (fTemp22 - fVec5[1]));
 			fRec24[0] = fRec25[0];
@@ -453,9 +453,9 @@ struct _gran final : public ::faust::dsp {
 			iRec2[1] = iRec2[0];
 			iRec4[1] = iRec4[0];
 			iVec0[1] = iVec0[0];
-			iRec3[1] = iRec3[0];
-			fRec6[1] = fRec6[0];
 			fRec5[1] = fRec5[0];
+			fRec3[1] = fRec3[0];
+			iRec6[1] = iRec6[0];
 			fRec8[1] = fRec8[0];
 			fRec7[1] = fRec7[0];
 			iVec1[1] = iVec1[0];
@@ -499,16 +499,16 @@ struct _gran final : public ::faust::dsp {
 
 	FAUST_ADDHORIZONTALSLIDER("decal", fHslider1, 0.0f, 0.0f, 1.0f, 0.001f);
 	FAUST_ADDHORIZONTALSLIDER("feedback", fHslider0, 0.0f, 0.0f, 2.0f, 0.001f);
-	FAUST_ADDHORIZONTALSLIDER("population", fHslider3, 1.0f, 0.0f, 1.0f, 0.001f);
+	FAUST_ADDHORIZONTALSLIDER("population", fHslider2, 1.0f, 0.0f, 1.0f, 0.001f);
 	FAUST_ADDHORIZONTALSLIDER("speed", fHslider4, 1e+01f, -24.0f, 24.0f, 0.1f);
-	FAUST_ADDHORIZONTALSLIDER("taille", fHslider2, 1e+01f, 4.0f, 1.2e+04f, 0.001f);
+	FAUST_ADDHORIZONTALSLIDER("taille", fHslider3, 1e+01f, 4.0f, 1.2e+04f, 0.001f);
 
 	#define FAUST_LIST_ACTIVES(p) \
 		p(HORIZONTALSLIDER, decal, "decal", fHslider1, 0.0f, 0.0f, 1.0f, 0.001f) \
 		p(HORIZONTALSLIDER, feedback, "feedback", fHslider0, 0.0f, 0.0f, 2.0f, 0.001f) \
-		p(HORIZONTALSLIDER, population, "population", fHslider3, 1.0f, 0.0f, 1.0f, 0.001f) \
+		p(HORIZONTALSLIDER, population, "population", fHslider2, 1.0f, 0.0f, 1.0f, 0.001f) \
 		p(HORIZONTALSLIDER, speed, "speed", fHslider4, 1e+01f, -24.0f, 24.0f, 0.1f) \
-		p(HORIZONTALSLIDER, taille, "taille", fHslider2, 1e+01f, 4.0f, 1.2e+04f, 0.001f) \
+		p(HORIZONTALSLIDER, taille, "taille", fHslider3, 1e+01f, 4.0f, 1.2e+04f, 0.001f) \
 
 	#define FAUST_LIST_PASSIVES(p) \
 

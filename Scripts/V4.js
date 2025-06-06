@@ -91,7 +91,7 @@ const var Tempo4 = [Content.getComponent("Tempo4"),
  inline function onPitchMode4Control(component, value)
  {
 	
-Osc4.setAttribute(Osc4.pitchmode, value);           
+f1.setAttribute(Osc1.pitchmode, value);           
 
  if (value == 1){
 	 
@@ -138,90 +138,3 @@ Osc4.setAttribute(Osc4.pitchmode, value);
  };
  
  Content.getComponent("PitchMode4").setControlCallback(onPitchMode4Control);
- 
-const var WinUnsync4 = [Content.getComponent("FileWin4"),
-                       Content.getComponent("FileXf4")];
-
-const var WinSync4 = [Content.getComponent("FileXfTempo4"),
-                     Content.getComponent("FileWinTempo4")];
-      
-  const var Osc4 = Synth.getEffect("Osc4");   
- const var Files4 = Synth.getEffect("Files4");                              
-
-inline function onWinSync4Control(component, value)
-{
-		 
-	 if (value == 0){
-	
-		 for(s in WinUnsync4)
-		         s.showControl(1);  
-		         
-		 for(s in WinSync4)
-		 		 s.showControl(0);           
-	 
-		 Files4.setAttribute(Files4.WinSync, 0);
-		 }
-		 
-	
-		 if (value == 1){
-		
-			 for(s in WinUnsync4)
-			         s.showControl(0);  
-			         
-			 for(s in WinSync4)
-			 		 s.showControl(1);           
-		 
-			 Files4.setAttribute(Files4.WinSync, 1);
-			 }	 
-};
-
-Content.getComponent("WinSync4").setControlCallback(onWinSync4Control);
-
-const var CutLabel7 = Content.getComponent("CutLabel7");
-const var CutLabel8 = Content.getComponent("CutLabel8");
-const var CutLabel12 = Content.getComponent("CutLabel12");
-
-
-inline function onFilterType4Control(component, value)
-{
-	Filter1.setAttribute(Filter1.type, value);
-
-	if (value == 1){
-		CutLabel7.setValue("Low Pass");
-		CutLabel8.setValue("High Pass");
-		CutLabel12.setValue("Serial/ Paralel");
-	}
-	
-	if (value == 2){
-			CutLabel7.setValue("Low Shelf");
-			CutLabel8.setValue("High Shelf");
-			CutLabel12.setValue("Serial/ Paralel");
-		}
-
-		
-	if (value == 3){
-			CutLabel7.setValue("Freq");
-			CutLabel8.setValue("Low Pass");
-			CutLabel12.setValue("FFWD/ Allpass");
-			}		
-	
-};
-
-Content.getComponent("FilterType4").setControlCallback(onFilterType4Control);
-
-const var PosTable4 = Content.getComponent("PosTable4");
-const var PosSp4 = Content.getComponent("PosSp4");
-
- 
- inline function onPosModMode4Control(component, value)
- {
- 	PosTable4.showControl(value-1);
- 	PosSp4.showControl(value);
- 	
- 	f4.setAttribute(f4.tablestep, value);
- };
- 
- Content.getComponent("PosModMode4").setControlCallback(onPosModMode4Control);
- 
-
- 
